@@ -1,0 +1,3 @@
+-- BAHNSCHRIFT_regular = asset.Clock
+-- KEEP CALM = font.priceBoard
+-- ROCKWELL_extraBold = font.UI
