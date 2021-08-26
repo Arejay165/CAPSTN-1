@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Soda
   price: 10
   itemSprite: {fileID: 21300000, guid: e5fcfd9f88c7d4e479270e70a77c265e, type: 3}
+  quantity: 1

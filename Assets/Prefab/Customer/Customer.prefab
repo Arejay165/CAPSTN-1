@@ -277,6 +277,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87836c5b82a02974e8c7896ea2b12950, type: 2}
   - {fileID: 11400000, guid: 1b4e9c8be2b8c6140b15940d95f143b3, type: 2}
   - {fileID: 11400000, guid: 91214d50da5b8b9429a73182d2db72fb, type: 2}
+  - {fileID: 11400000, guid: cab1686393119d548a64534ee32f9096, type: 2}
   itemInCart: []
   itemsWanted: []
   itemSprites: []

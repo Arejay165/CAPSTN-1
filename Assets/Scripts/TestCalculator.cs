@@ -10,7 +10,7 @@ public class ItemUIClass
     public Sprite icon;
     public string name;
     public float price;
-    public int quantity;
+    public float quantity;
     public float totalPriceAnswer;
 }
 public class TestCalculator : MonoBehaviour
@@ -38,7 +38,7 @@ public class TestCalculator : MonoBehaviour
         newItemUIClass.icon = p_item.itemSprite;
         newItemUIClass.name = p_item.itemName;
         newItemUIClass.price = p_item.price;
-        newItemUIClass.quantity = 1;
+        newItemUIClass.quantity = p_item.quantity;
         newItemUIClass.totalPriceAnswer = newItemUIClass.quantity * newItemUIClass.price;
         return newItemUIClass;
     }
@@ -95,7 +95,7 @@ public class TestCalculator : MonoBehaviour
                 {
                    // Debug.Log(" Item UI Count : " + itemUIClassList.Count + "Customer Item Check x " + customer.itemCheck[x].itemName);
                     uniqueItem = false;
-                    itemUIClassList[i].quantity++;
+                    itemUIClassList[i].quantity += customer.itemInCart[x].quantity;
                     itemUIClassList[i].totalPriceAnswer = itemUIClassList[i].quantity * itemUIClassList[i].price;
                     //  return;
                     break;
