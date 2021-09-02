@@ -161,17 +161,21 @@ public class TestCalculator : MonoBehaviour
                 Debug.Log("Correct");
                 StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
 
-                if (index < answerFields.Count)
+                //Change select to next input field if correct
+                index++;
+                if (index < answerFields.Count) 
                 {
-                    index++;
+                    Debug.Log("List still has inputfield");
                     answerFields[index].Select();
 
                 }
+                else
+                {
+                    Debug.Log("All correct answer");
+                    SpawnAnswerField();
+                }
+            
                
-
-
-
-                SpawnAnswerField();
             }
             //If it doesnt match its wrong
             else
@@ -193,17 +197,10 @@ public class TestCalculator : MonoBehaviour
     {
         if(answerFields.Count == index)
         {
-            totalPriceAnswerField.enabled = true;
+           totalPriceAnswerField.enabled = true;
             
-            if (index < answerFields.Count)
-            {
-                index++;
-                answerFields[index].Select();
-            }
-            else
-            {
-                totalPriceAnswerField.Select();
-            }
+           totalPriceAnswerField.Select();
+            
         }
     }
 
@@ -212,9 +209,6 @@ public class TestCalculator : MonoBehaviour
 
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
       
-
-      
-
         yield return new WaitForSeconds(0.25f);
         p_correct = true;
     }
