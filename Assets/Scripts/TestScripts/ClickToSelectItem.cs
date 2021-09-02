@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class ClickToSelectItem : MonoBehaviour
 {
-    public GameObject itemSpawnedPrefab;
-    public bool canSpawn;
-    public Sprite highlightedSprite;
-    public Sprite itemSprite;
+    [SerializeField]
+    GameObject   itemSpawnedPrefab;
+    public bool         canSpawn;
+    [SerializeField]
+    Sprite       highlightedSprite;
+    [SerializeField]
+    Sprite       itemSprite;
     //Testing for click to go to counter
 
     //Set the location where the item will go
@@ -29,13 +32,23 @@ public class ClickToSelectItem : MonoBehaviour
 
 
         //}
+
         //Sprite change to highlighted 
-        for(int i = 0; i < this.transform.childCount; i++)
+        if(this.transform.childCount > 0)
         {
-            GameObject itemChild = this.transform.GetChild(i).gameObject;
-            itemChild.GetComponent<SpriteRenderer>().sprite = highlightedSprite;
-            
+            for(int i = 0; i < this.transform.childCount; i++)
+            {
+                SpriteRenderer itemChild = this.transform.GetChild(i).GetComponent<SpriteRenderer>();
+                Vector2 defaultSize = itemChild.size;
+                itemChild.sprite = highlightedSprite;
+                itemChild.size = defaultSize;
+            }
         }
+        else
+        {
+            this.transform.gameObject.GetComponent<SpriteRenderer>().sprite = highlightedSprite;
+        }
+        
       
         if (Input.GetMouseButtonDown(0))
         {

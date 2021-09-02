@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeDragged: 1
-  isBeingDragged: 0
+  isBeingDragged: 1
 --- !u!61 &8129509566145490285
 BoxCollider2D:
   m_ObjectHideFlags: 0
