@@ -31,12 +31,12 @@ public class DragDrop : MonoBehaviour
         {
             this.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetMouseButtonUp(0))
             {
-                return;
-            }
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
 
             if(PlayerManager.instance.isStaying == true)
             {
@@ -70,21 +70,21 @@ public class DragDrop : MonoBehaviour
 
                 }
             }
-            Debug.Log("delete");
+                Debug.Log("delete");
             
-            Destroy(PlayerManager.instance.currentSelectedItem);
-            PlayerManager.instance.currentSelectedItem = null;
-            PlayerManager.instance.isHolding = false;
-            if (GameManager.instance.orderSheetShowing)
-            {
-                PlayerManager.instance.lastItemSpawner.canSpawn = false;
-            }
-            else
-            {
-                PlayerManager.instance.lastItemSpawner.canSpawn = true;
-            }
+                Destroy(PlayerManager.instance.currentSelectedItem);
+                PlayerManager.instance.currentSelectedItem = null;
+                PlayerManager.instance.isHolding = false;
+                if (GameManager.instance.orderSheetShowing)
+                {
+                    PlayerManager.instance.lastItemSpawner.canSpawn = false;
+                }
+                else
+                {
+                    PlayerManager.instance.lastItemSpawner.canSpawn = true;
+                }
        
-            PlayerManager.instance.lastItemSpawner = null;
+                PlayerManager.instance.lastItemSpawner = null;
         }
     }
 

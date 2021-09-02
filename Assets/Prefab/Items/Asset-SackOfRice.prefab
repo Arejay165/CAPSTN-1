@@ -95,13 +95,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8129509566145490273}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebc499b1e66b71b46941ce8b8cf5a9c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canBeDragged: 1
-  isBeingDragged: 1
+  isBeingDragged: 0
 --- !u!61 &8129509566145490285
 BoxCollider2D:
   m_ObjectHideFlags: 0

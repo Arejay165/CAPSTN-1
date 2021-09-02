@@ -5,16 +5,17 @@ using UnityEngine;
 public class ClickToSelectItem : MonoBehaviour
 {
     [SerializeField]
-    GameObject   itemSpawnedPrefab;
-    public bool         canSpawn;
+    GameObject      itemSpawnedPrefab;
+    public bool     canSpawn;
     [SerializeField]
-    Sprite       highlightedSprite;
+    Sprite          highlightedSprite;
     [SerializeField]
-    Sprite       itemSprite;
+    Sprite          defaultItemSprite;
     //Testing for click to go to counter
 
     //Set the location where the item will go
-    [SerializeField] Transform targetLocation;
+    [SerializeField] 
+    Transform       targetPosition;
 
     private void Start()
     {
@@ -34,35 +35,39 @@ public class ClickToSelectItem : MonoBehaviour
         //}
 
         //Sprite change to highlighted 
+        //Since the Assets are a child of a gameObject, get the the child of the parent to access the assets (Children)
         if(this.transform.childCount > 0)
         {
+            //Get all the child assets 
             for(int i = 0; i < this.transform.childCount; i++)
             {
+                //Access the item 
                 SpriteRenderer itemChild = this.transform.GetChild(i).GetComponent<SpriteRenderer>();
-                //Vector2 defaultSize = itemChild.size;
+                //Change the current sprite to the highlighted sprite 
                 itemChild.sprite = highlightedSprite;
-                // itemChild.size = defaultSize;
             }
         }
+        // in the case that there is no child, access the parent 
         else
         {
             this.transform.gameObject.GetComponent<SpriteRenderer>().sprite = highlightedSprite;
         }
         
-      
+        //If the item is clicked
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Clicked");
-            GameObject spawnedItem = Instantiate(itemSpawnedPrefab, targetLocation.position, Quaternion.identity);
+            GameObject spawnedItem = Instantiate(itemSpawnedPrefab, targetPosition.position, Quaternion.identity);
         }
 
     }
     private void OnMouseExit()
     {
+        //When mouse exited the item bounds, return the current sprite to the defaultItemSprite
         for (int i = 0; i < this.transform.childCount; i++)
         {
             GameObject itemChild = this.transform.GetChild(i).gameObject;
-            itemChild.GetComponent<SpriteRenderer>().sprite = itemSprite;
+            itemChild.GetComponent<SpriteRenderer>().sprite = defaultItemSprite;
 
         }
     }
