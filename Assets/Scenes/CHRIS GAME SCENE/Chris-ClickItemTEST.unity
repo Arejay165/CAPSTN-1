@@ -7341,8 +7341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f9518c976899b94ca777c6c12ac4296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnedPrefab: {fileID: 2936979158446194314, guid: 2ba5c8defbcab644692c2b9553fd7c19, type: 3}
-  canSpawn: 1
+  itemSpawnedPrefab: {fileID: 6924695454901390742, guid: 439c5e01488faac40be7b9ea81f92753, type: 3}
+  canSpawn: 0
 --- !u!61 &1215365144
 BoxCollider2D:
   m_ObjectHideFlags: 0

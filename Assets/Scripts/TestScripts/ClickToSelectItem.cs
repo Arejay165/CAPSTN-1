@@ -39,9 +39,9 @@ public class ClickToSelectItem : MonoBehaviour
             for(int i = 0; i < this.transform.childCount; i++)
             {
                 SpriteRenderer itemChild = this.transform.GetChild(i).GetComponent<SpriteRenderer>();
-                Vector2 defaultSize = itemChild.size;
+                //Vector2 defaultSize = itemChild.size;
                 itemChild.sprite = highlightedSprite;
-                itemChild.size = defaultSize;
+                // itemChild.size = defaultSize;
             }
         }
         else
