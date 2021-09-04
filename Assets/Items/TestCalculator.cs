@@ -17,6 +17,9 @@ public class TestCalculator : MonoBehaviour
 {
     [Header("Stats")]
     public List<ItemUIClass> itemUIClassList = new List<ItemUIClass>(); // Datas for the Item UIs that will be in the answer pad
+    public List<float> itemsAnswer = new List<float>();
+    public List<float> changeAnswers = new List<float>();
+
     [SerializeField] List<InputField> answerFields = new List<InputField>();
 
     [SerializeField] InputField totalPriceAnswerField, changeAnswerField;
@@ -28,7 +31,8 @@ public class TestCalculator : MonoBehaviour
     [SerializeField] Transform displayPanel;
 
     public List<ItemSpawner> clickableItems;
-
+    public bool isCountingTime;
+    public float timeSpent;
     public int index;
     ItemUIClass CreateItemUI(Item p_item)
     {
@@ -40,9 +44,17 @@ public class TestCalculator : MonoBehaviour
         newItemUIClass.price = p_item.price;
         newItemUIClass.quantity = 1;
         newItemUIClass.totalPriceAnswer = newItemUIClass.quantity * newItemUIClass.price;
+        itemsAnswer.Add(newItemUIClass.totalPriceAnswer);
         return newItemUIClass;
     }
-
+    private void Update()
+    {
+        if (isCountingTime)
+        {
+            timeSpent += Time.deltaTime;
+        }
+        
+    }
     //private void Start()
     //{
     //    StackDuplicateItems();
@@ -52,13 +64,18 @@ public class TestCalculator : MonoBehaviour
         StackDuplicateItems();
         GameManager.instance.orderSheetShowing = true;
         totalPriceAnswerField.enabled = false;
+        isCountingTime = true;
     }
 
     private void OnDisable()
     {
         itemUIClassList.Clear();
+        itemsAnswer.Clear();
+        changeAnswers.Clear();
         totalPriceCorrectAnswer = 0;
         changeCorrectAnswer = 0;
+        isCountingTime = false;
+        timeSpent = 0;
         totalPriceAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
         changeAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
         if (GameManager.instance.customer)
@@ -146,15 +163,18 @@ public class TestCalculator : MonoBehaviour
         {
             playerInputValue = inputVal;
         }
+        
 
-       
+
         if (playerInputValue != -1 ) // If input is valid (any number)
         {
             //If it matches, it is correct
             if (playerInputValue == itemUIClassList[itemOrderIndex].totalPriceAnswer)
             {
                 Debug.Log("Correct");
+
                 StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
+                RecordAnswerResult(itemOrderIndex, true);
                 index++;
                 SpawnAnswerField();
             }
@@ -163,12 +183,14 @@ public class TestCalculator : MonoBehaviour
             {
                 Debug.Log("Wrong");
                 StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
+                RecordAnswerResult(itemOrderIndex, false);
             }
         }
         else //If input is invalid (not a number)
         {
             Debug.Log("Invalid Input, retry again");
             StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
+            RecordAnswerResult(itemOrderIndex, false);
         }
     }
 
@@ -212,8 +234,39 @@ public class TestCalculator : MonoBehaviour
         //yield return new WaitForSeconds(1f);
         p_inputField.text = "";
         p_inputField.Select();
+
+    }
+    public void RecordAnswerResult(int p_index, bool p_isCorrect)
+    {
+        AnsweredProblemData newAnswer = new AnsweredProblemData();
+        newAnswer.operatingNumbers.Add(itemUIClassList[p_index].price);
+        newAnswer.operatingNumbers.Add(itemUIClassList[p_index].quantity);
+        newAnswer.answer = itemUIClassList[p_index].totalPriceAnswer;
+        newAnswer.mathOperator = MathProblemOperator.multiplication;
+        newAnswer.isCorrect = p_isCorrect;
+        newAnswer.timeSpent = timeSpent;
+        timeSpent = 0f;
+        PerformanceManager.instance.answeredProblemDatas.Add(newAnswer);
     }
 
+    public void RecordAnswerResult(List<float> p_numbers, float p_answer, MathProblemOperator p_mathOperator, bool p_isCorrect)
+    {
+        Debug.Log("alter");
+        AnsweredProblemData newAnswer = new AnsweredProblemData();
+        foreach (float selectedNumber in p_numbers)
+        {
+            newAnswer.operatingNumbers.Add(selectedNumber);
+        }
+       
+        newAnswer.answer = p_answer;
+        newAnswer.mathOperator = p_mathOperator;
+        newAnswer.isCorrect = p_isCorrect;
+        newAnswer.timeSpent = timeSpent;
+        timeSpent = 0;
+        PerformanceManager.instance.answeredProblemDatas.Add(newAnswer);
+       
+        
+    }
     public void ShowChangeText()
     {
         changeText.gameObject.SetActive(true);
@@ -239,19 +292,24 @@ public class TestCalculator : MonoBehaviour
             {
                 ShowChangeText();
                 StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect));
-
+                RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, true);
+                
+                changeAnswers.Add(GameManager.instance.customer.randomExtraMoney);
+                changeAnswers.Add(totalPriceCorrectAnswer);
             }
             else // Answer is wrong
             {
                 Debug.Log("RIGHT ANSWER IS : " + totalPriceCorrectAnswer);
                 StartCoroutine(WrongInputted(totalPriceAnswerField));
-
+                RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, false);
             }
         }
         else
         {
             Debug.Log("Invalid Input, retry again");
             StartCoroutine(WrongInputted(totalPriceAnswerField));
+            RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, false);
+
         }
 
     }
@@ -272,6 +330,8 @@ public class TestCalculator : MonoBehaviour
             if (playerInputValue == changeCorrectAnswer)
             {
                 StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
+                RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, true);
+
                 //awards score
                 for (int i = 0; i < answerFields.Count;)
                 {
@@ -292,8 +352,10 @@ public class TestCalculator : MonoBehaviour
             else// Answer is wrong
             {
 
-                
+
                 StartCoroutine(WrongInputted(changeAnswerField));
+                RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, false);
+
             }
         }
         else
@@ -301,6 +363,8 @@ public class TestCalculator : MonoBehaviour
             Debug.Log("Invalid Input, retry again");
             
             StartCoroutine(WrongInputted(changeAnswerField));
+            RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, false);
+
         }
     }
     public void OrderSheetFinish()

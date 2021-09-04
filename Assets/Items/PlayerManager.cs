@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     public bool isHolding;
     public GameObject currentSelectedItem;
     public ItemSpawner lastItemSpawner;
+    public static event Action OnMouseClick; 
     public bool isStaying = false;
     private void Awake()
     {
@@ -29,6 +31,13 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (TutorialManager.instance)
+            {
+                
+                OnMouseClick?.Invoke();
+            }
+        }
     }
 }

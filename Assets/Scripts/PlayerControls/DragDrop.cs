@@ -30,6 +30,7 @@ public class DragDrop : MonoBehaviour
         if (PlayerManager.instance.isHolding && Input.GetMouseButton(0))
         {
             this.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            
         }
         if (Input.GetMouseButtonUp(0))
         {

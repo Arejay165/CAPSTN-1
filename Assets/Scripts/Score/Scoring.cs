@@ -19,7 +19,8 @@ public class Scoring : MonoBehaviour
     public Sprite failImage;
     public Image levelPasserImage;
     public GameObject failPrompt, successPrompt;
-
+    public Text performanceFactName;
+    public Text performanceFactValue;
     public int GetScore()
     {
         return score;
@@ -71,7 +72,9 @@ public class Scoring : MonoBehaviour
             levelPasserImage.sprite = failImage;
             failPrompt.SetActive(true);
             successPrompt.SetActive(false);
+            
         }
-
+        PerformanceManager.instance.ChoosePerformanceFact();
+        PerformanceManager.instance.answeredProblemDatas.Clear();
     }
 }

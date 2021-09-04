@@ -61,11 +61,11 @@ public class DayAndNightCycle : MonoBehaviour
                 }
             }
         }
-        else
+        else if (!isStoreClosed)
         {
             isStoreClosed = true;
             uIManager.ActivateGameObjects(uIManager.endGameUI.name);
-            TransitionManager.instances.MoveTransition(new Vector2(0, 0), 1f, uIManager.endGamePanel, uIManager.endGamePanel.gameObject, true);
+            TransitionManager.instances.MoveTransition(new Vector2(0, 0), 1f, uIManager.endGameUI.GetComponent<RectTransform>(), uIManager.endGameUI.gameObject, true);
             Scoring.instance.Results();
             Debug.Log("Level Over");
         }
