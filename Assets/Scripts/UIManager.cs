@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject endGameUI;
     public GameObject pauseGameUI;
     public RectTransform endGamePanel;
+    public GameObject upgradeUI;
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class UIManager : MonoBehaviour
         inGameUI.SetActive(inGameUI.name.Equals(nameOfGameObject));
         endGameUI.SetActive(endGameUI.name.Equals(nameOfGameObject));
         pauseGameUI.SetActive(pauseGameUI.name.Equals(nameOfGameObject));
+        upgradeUI.SetActive(upgradeUI.name.Equals(nameOfGameObject));
     }
 
     public void Pause()
@@ -71,5 +73,10 @@ public class UIManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void Continue() // Next Level
+    {
+        ActivateGameObjects(upgradeUI.name);
     }
 }
