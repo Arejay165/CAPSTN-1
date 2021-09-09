@@ -6,11 +6,14 @@ public class CustomerSpawner : MonoBehaviour
 {
     public GameObject   customerPrefab;
     public Transform      spawnPoint;
-    public TestCalculator displayOrder; 
-   
+    public TestCalculator displayOrder;
+    // 
+    [SerializeField]
+    public DetectItemInWindow orderWindow;
     void Start()
     {
         SpawnCustomer();
+        orderWindow = GameManager.instance.window;
     }
 
  
@@ -24,5 +27,6 @@ public class CustomerSpawner : MonoBehaviour
         GameObject obj = Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
         GameManager.instance.customer = obj.GetComponent<Customer>();
         obj.GetComponent<Customer>().displayOrder = this.displayOrder;
+        orderWindow.GetComponent<DetectItemInWindow>().SetCustomer(obj.GetComponent<Customer>());
     }
 }

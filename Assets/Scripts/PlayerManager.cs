@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject currentSelectedItem;
     public ItemSpawner lastItemSpawner;
     public bool isStaying = false;
+
     private void Awake()
     {
         if (instance == null)

@@ -13,6 +13,12 @@ public class DetectItemInWindow : MonoBehaviour
     void Start()
     {
         GameManager.instance.window = this;
+        
+    }
+
+    public void SetCustomer(Customer currentCustomer)
+    {
+        customer = currentCustomer;
     }
 
     // Update is called once per frame
@@ -20,26 +26,62 @@ public class DetectItemInWindow : MonoBehaviour
     {
         
     }
-    private void OnTriggerStay2D(Collider2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Item")
         {
-            PlayerManager.instance.isStaying = true;
-            Debug.Log("Item");
-
-            if (Input.GetMouseButtonUp(0))
+            ItemDescription itemInCounter = collision.GetComponent<ItemDescription>();
+            if (customer)
             {
-                
+                for(int i = 0; i < customer.itemsWanted.Count; i++)
+                {
+                    if(itemInCounter.item.itemName == customer.itemsWanted[i].itemName)
+                    {
+                        Scoring.instance.addScore(100);
+                        Scoring.instance.starCheck();
+                        customer.itemInCart.Add(customer.itemsWanted[i]);
+                        customer.itemsWanted.RemoveAt(i);
+                        customer.itemSprites[i].color = GameManager.instance.window.darkenImage;
+                        customer.itemSprites.RemoveAt(i);
+                        if (customer.itemSprites.Count <= 0)
+                        {
+                            TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 1f, TransitionManager.instances.noteBookTransform, GameManager.instance.testCalculator.transform.root.gameObject, true);
+
+                        }
+                        Destroy(itemInCounter.gameObject, 1);
+                        break;
+                    }
+                    else
+                    {
+                        Debug.Log("Wrong Item");
+                    }
+                }
             }
-            
             
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        PlayerManager.instance.isStaying = false;
-    }
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if(collision.gameObject.tag == "Item")
+    //    {
+    //        PlayerManager.instance.isStaying = true;
+    //        Debug.Log("Item");
+
+    //        if (Input.GetMouseButtonUp(0))
+    //        {
+
+    //        }
+
+
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    PlayerManager.instance.isStaying = false;
+    //}
 
 
 }
