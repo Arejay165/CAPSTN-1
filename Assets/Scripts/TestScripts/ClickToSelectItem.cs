@@ -26,6 +26,7 @@ public class ClickToSelectItem : MonoBehaviour
         HighlightItem();
         
         //If the item is clicked
+        //Spawn one at a time
         if (Input.GetMouseButtonDown(0) && canSpawn)
         {
             SpawnItem();

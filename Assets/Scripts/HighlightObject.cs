@@ -15,7 +15,11 @@ public class HighlightObject : MonoBehaviour
 
     private void OnMouseOver()
     {
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = highlightObj;
+        if (highlightObj)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = highlightObj;
+        }
+        
         // Destroy when not accepted by customer 
         if (PlayerManager.instance.isStaying && Input.GetMouseButton(0))
         {
@@ -25,6 +29,10 @@ public class HighlightObject : MonoBehaviour
 
     void OnMouseExit()
     {
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = unhighlightObj;
+        if (unhighlightObj)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = unhighlightObj;
+        }
+       
     }
 }

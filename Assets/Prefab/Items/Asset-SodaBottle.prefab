@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 9090815431289364503}
   - component: {fileID: 2285643593444300449}
-  - component: {fileID: -3924884392460435240}
   - component: {fileID: 7974648183073868423}
   - component: {fileID: 8299493791097526063}
   - component: {fileID: -3079717791673288681}
+  - component: {fileID: 4497480398730023289}
   m_Layer: 0
   m_Name: Asset-SodaBottle
   m_TagString: Item
@@ -87,20 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-3924884392460435240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6924695454901390742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebc499b1e66b71b46941ce8b8cf5a9c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canBeDragged: 1
-  isBeingDragged: 0
 --- !u!61 &7974648183073868423
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -161,3 +147,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4497480398730023289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6924695454901390742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d98838e5e2a59e498cfb58bda9c29a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unhighlightObj: {fileID: 21300000, guid: 99cb122b05a7fc249be6901aabf57c27, type: 3}
+  highlightObj: {fileID: 21300000, guid: 3d534bc0dea80764db25bf1d14caec17, type: 3}

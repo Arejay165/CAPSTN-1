@@ -2219,7 +2219,6 @@ GameObject:
   - component: {fileID: 345924476}
   - component: {fileID: 345924479}
   - component: {fileID: 345924478}
-  - component: {fileID: 345924477}
   - component: {fileID: 345924480}
   m_Layer: 0
   m_Name: CandyJar
@@ -2243,20 +2242,6 @@ Transform:
   m_Father: {fileID: 1233030674}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &345924477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345924475}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f9518c976899b94ca777c6c12ac4296, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemSpawnedPrefab: {fileID: 1190130604822716557, guid: e6f22f9ead74e154da5d9f7270373f93, type: 3}
-  canSpawn: 1
 --- !u!61 &345924478
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3214,7 +3199,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1225489903}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5313,6 +5298,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943501299}
   m_CullTransparentMesh: 1
+--- !u!1 &947852472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 947852473}
+  - component: {fileID: 947852475}
+  - component: {fileID: 947852474}
+  m_Layer: 5
+  m_Name: RawImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &947852473
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947852472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1225489903}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 2560, y: 1440}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &947852474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947852472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &947852475
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947852472}
+  m_CullTransparentMesh: 1
 --- !u!1 &961274443
 GameObject:
   m_ObjectHideFlags: 0
@@ -6712,7 +6769,6 @@ GameObject:
   - component: {fileID: 1153890155}
   - component: {fileID: 1153890159}
   - component: {fileID: 1153890158}
-  - component: {fileID: 1153890157}
   - component: {fileID: 1153890156}
   m_Layer: 0
   m_Name: Bottle of Soda (1)
@@ -6767,20 +6823,6 @@ MonoBehaviour:
   highlightedSprite: {fileID: 21300000, guid: 3d534bc0dea80764db25bf1d14caec17, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: 99cb122b05a7fc249be6901aabf57c27, type: 3}
   targetPosition: {fileID: 1904060022}
---- !u!114 &1153890157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1153890154}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f9518c976899b94ca777c6c12ac4296, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemSpawnedPrefab: {fileID: 6924695454901390742, guid: 439c5e01488faac40be7b9ea81f92753, type: 3}
-  canSpawn: 0
 --- !u!61 &1153890158
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7420,6 +7462,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 947852473}
   - {fileID: 1831685254}
   - {fileID: 537285170}
   m_Father: {fileID: 0}
@@ -9913,7 +9956,7 @@ RectTransform:
   - {fileID: 961274447}
   - {fileID: 2021156538}
   m_Father: {fileID: 1225489903}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9945,7 +9988,7 @@ MonoBehaviour:
   clickableItems:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 345924477}
+  - {fileID: 0}
   index: 0
 --- !u!114 &1831685256
 MonoBehaviour:
