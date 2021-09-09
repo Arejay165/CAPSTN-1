@@ -285,6 +285,7 @@ MonoBehaviour:
   panel: {fileID: 3181422572498091490}
   displayOrder: {fileID: 0}
   randomExtraMoney: 0
+  RNG: 0
 --- !u!1 &8861441445217577714
 GameObject:
   m_ObjectHideFlags: 0

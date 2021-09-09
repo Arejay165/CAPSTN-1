@@ -2458,6 +2458,58 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &305667658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 305667660}
+  - component: {fileID: 305667659}
+  m_Layer: 0
+  m_Name: Upgrades
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &305667659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305667658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0946dd44f12cc946932c38229081637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newItems:
+  - {fileID: 11400000, guid: 7af5cde3f34f0bd40ae36bb7bc477142, type: 2}
+  - {fileID: 11400000, guid: 2b39c7befa8e551438de0b6b51701d4d, type: 2}
+  itemSprite:
+  - {fileID: 2085933032}
+  - {fileID: 982540467}
+  itemName:
+  - {fileID: 1315999958}
+  - {fileID: 2118245758}
+--- !u!4 &305667660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305667658}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 664.36115, y: 656.57605, z: -76.89812}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &327717842
 GameObject:
   m_ObjectHideFlags: 0
@@ -9108,7 +9160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1440104807
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12554,7 +12606,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2085933032}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 305667659}
+        m_TargetAssemblyTypeName: Upgrades, Assembly-CSharp
+        m_MethodName: selectItems
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2085933032
 MonoBehaviour:
   m_ObjectHideFlags: 0

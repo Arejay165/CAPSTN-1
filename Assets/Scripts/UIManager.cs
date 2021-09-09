@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         ActivateGameObjects(inGameUI.name);
+        ActivateGameObjects(upgradeUI.name);
+
     }
 
     // Update is called once per frame
