@@ -24,20 +24,24 @@ public class DetectItemInWindow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+      
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Item")
         {
+            collision.gameObject.transform.SetParent(this.gameObject.transform);
             ItemDescription itemInCounter = collision.GetComponent<ItemDescription>();
+            PlayerManager.instance.isStaying = true;
+            
             if (customer)
             {
                 for(int i = 0; i < customer.itemsWanted.Count; i++)
                 {
                     if(itemInCounter.item.itemName == customer.itemsWanted[i].itemName)
                     {
+                        
                         Scoring.instance.addScore(100);
                         Scoring.instance.starCheck();
                         customer.itemInCart.Add(customer.itemsWanted[i]);
@@ -47,14 +51,16 @@ public class DetectItemInWindow : MonoBehaviour
                         if (customer.itemSprites.Count <= 0)
                         {
                             TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 1f, TransitionManager.instances.noteBookTransform, GameManager.instance.testCalculator.transform.root.gameObject, true);
-
                         }
-                        Destroy(itemInCounter.gameObject, 1);
+                        PlayerManager.instance.isStaying = false;
+                        Destroy(itemInCounter.gameObject, 0.2f);
                         break;
                     }
                     else
                     {
                         Debug.Log("Wrong Item");
+                        PlayerManager.instance.isStaying = true;
+                        
                     }
                 }
             }
