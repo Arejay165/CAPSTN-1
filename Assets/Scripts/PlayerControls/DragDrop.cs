@@ -56,7 +56,7 @@ public class DragDrop : MonoBehaviour
                         customer.itemSprites.RemoveAt(i);
                         if (customer.itemSprites.Count <= 0)
                         {
-                            TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 1f, TransitionManager.instances.noteBookTransform, GameManager.instance.testCalculator.transform.root.gameObject, true);
+                            TransitionManager.instances.MoveTransition(new Vector2(-703f, 0), 1f, TransitionManager.instances.noteBookTransform, GameManager.instance.testCalculator.transform.root.gameObject, true);
 
                         }
                       

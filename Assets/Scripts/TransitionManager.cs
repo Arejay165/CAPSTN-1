@@ -35,8 +35,4 @@ public class TransitionManager : MonoBehaviour
 
     }
     
-    public void Initialized()
-    {
-
-    }
 }

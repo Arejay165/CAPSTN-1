@@ -309,7 +309,7 @@ public class TestCalculator : MonoBehaviour
       //  UIManager.instance.inGameUI.GetComponent<InGameUI>().scoring.gameObject.GetComponent<Text>().text = "Score: " + GameManager.instance.score.ToString(); //Very temporary until restructured codes
         TransitionManager.instances.MoveTransition(new Vector2(507.0f, 1387.0f), 1f, TransitionManager.instances.noteBookTransform, gameObject.transform.parent.gameObject, false);
    
-  //      gameObject.transform.root.gameObject.SetActive(false);
+      //      gameObject.transform.root.gameObject.SetActive(false);
        
     }
 
