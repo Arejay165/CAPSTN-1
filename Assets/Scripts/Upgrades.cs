@@ -12,7 +12,9 @@ public class Upgrades : MonoBehaviour
     public List<Item> newItems;
 
     public Image[] itemSprite;
-    public TextMeshProUGUI[] itemName; 
+    public TextMeshProUGUI[] itemName;
+
+    public List<GameObject> newInteractables;
 
     private void Awake()
     {
@@ -29,6 +31,11 @@ public class Upgrades : MonoBehaviour
     public void Start() //Temp Fix
     {
         initializeItem();
+
+        for(int i = 0; i < newInteractables.Count;i++)
+        {
+            newInteractables[i].SetActive(false);
+        }
     }
 
     public void selectItems(int itemIndex)
@@ -37,6 +44,7 @@ public class Upgrades : MonoBehaviour
         newItems.RemoveAt(itemIndex);
 
         UIManager.instance.upgradeUI.SetActive(false);
+        newInteractables[itemIndex].SetActive(true);
    }
    
    public void initializeItem()
