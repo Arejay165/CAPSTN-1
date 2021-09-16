@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ClickToSelectItem : MonoBehaviour
 {
@@ -84,6 +85,8 @@ public class ClickToSelectItem : MonoBehaviour
 
     void SpawnItem()
     {
-        GameObject spawnedItem = Instantiate(itemSpawnedPrefab, targetPosition.position, Quaternion.identity);
+        GameObject spawnedItem = Instantiate(itemSpawnedPrefab, this.transform.position, Quaternion.identity);
+        //Animate to go to the counter 
+        spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, 1.0f);
     }
 }
