@@ -30,7 +30,7 @@ public class TestCalculator : MonoBehaviour
     [SerializeField] GameObject itemDisplay;
     [SerializeField] Transform displayPanel;
 
-    public List<ItemSpawner> clickableItems;
+ 
     public bool isCountingTime;
     public float timeSpent;
     public int index;
@@ -88,11 +88,7 @@ public class TestCalculator : MonoBehaviour
         
  
         GameManager.instance.orderSheetShowing = false;
-        foreach (ItemSpawner item in clickableItems)
-        {
-            item.canSpawn = true;
-
-        }
+ 
     }
     //private void OnDisable()
     //{
@@ -273,7 +269,6 @@ public class TestCalculator : MonoBehaviour
 
     public void RecordAnswerResult(List<float> p_numbers, float p_answer, MathProblemOperator p_mathOperator, bool p_isCorrect)
     {
-        Debug.Log("alter");
         AnsweredProblemData newAnswer = new AnsweredProblemData();
         foreach (float selectedNumber in p_numbers)
         {
@@ -398,8 +393,9 @@ public class TestCalculator : MonoBehaviour
     public void OrderSheetFinish()
     {
         GameManager.instance.score+= 100;
-      //  UIManager.instance.inGameUI.GetComponent<InGameUI>().scoring.gameObject.GetComponent<Text>().text = "Score: " + GameManager.instance.score.ToString(); //Very temporary until restructured codes
-        TransitionManager.instances.MoveTransition(new Vector2(-743f, 1387.0f), 1f, TransitionManager.instances.noteBookTransform, gameObject.transform.parent.gameObject, false);
+        //  UIManager.instance.inGameUI.GetComponent<InGameUI>().scoring.gameObject.GetComponent<Text>().text = "Score: " + GameManager.instance.score.ToString(); //Very temporary until restructured codes
+        
+        TransitionManager.instances.MoveTransition(new Vector2(-743f, 1387.0f), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
         if (GameManager.instance.customer)
         {
             Destroy(GameManager.instance.customer.gameObject);
@@ -433,11 +429,7 @@ public class TestCalculator : MonoBehaviour
 
         }
 
-        foreach (ItemSpawner item in clickableItems)
-        {
-            item.canSpawn = false;
 
-        }
     }
 
 }

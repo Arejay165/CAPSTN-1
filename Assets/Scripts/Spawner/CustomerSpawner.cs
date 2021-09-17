@@ -23,7 +23,10 @@ public class CustomerSpawner : MonoBehaviour
     {
         GameObject obj = Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
         GameManager.instance.customer = obj.GetComponent<Customer>();
+        
         obj.GetComponent<Customer>().displayOrder = this.displayOrder;
         PerformanceManager.instance.customersEntertained++;
+
+        
     }
 }

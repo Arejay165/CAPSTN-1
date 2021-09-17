@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     public ItemSpawner lastItemSpawner;
     public static event Action OnMouseClick; 
     public bool isStaying = false;
+
     private void Awake()
     {
         if (instance == null)

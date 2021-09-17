@@ -26,7 +26,8 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
 
     void ChangeUI()
     {
-        TransitionManager.instances.MoveTransition(new Vector2(523f, 0), 1f, TransitionManager.instances.changeTransform, GameManager.instance.testCalculator.transform.root.gameObject, true);
+        
+        TransitionManager.instances.MoveTransition(new Vector2(523f, 0), 1f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, true);
 
     }
 }

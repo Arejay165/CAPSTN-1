@@ -17,13 +17,14 @@ public class ItemSpawner : MonoBehaviour
             Debug.Log("SPAWNED");
             canSpawn = false;
             PlayerManager.instance.isHolding = true;
-            Vector3 spawnPosition = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y,transform.position.z);
-            GameObject newItemInstance = Instantiate(itemSpawnedPrefab,spawnPosition, Quaternion.identity);
-            
+            Vector3 spawnPosition = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, transform.position.z);
+            GameObject newItemInstance = Instantiate(itemSpawnedPrefab, spawnPosition, Quaternion.identity);
+
             PlayerManager.instance.lastItemSpawner = this;
         }
 
 
     }
- 
+
+
 }

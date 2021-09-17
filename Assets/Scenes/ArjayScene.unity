@@ -1341,10 +1341,6 @@ MonoBehaviour:
   changeCorrectAnswer: 0
   itemDisplay: {fileID: 9068897536480803543, guid: a9dda260f09cdd94e8e11614ebaff31f, type: 3}
   displayPanel: {fileID: 428277805}
-  clickableItems:
-  - {fileID: 170177132}
-  - {fileID: 552556819}
-  - {fileID: 138169380}
   isCountingTime: 0
   timeSpent: 0
   index: 0
@@ -6155,7 +6151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 0}
-  customer: {fileID: 0}
   darkenImage: {r: 0.56753856, g: 0.9433962, b: 0.5473478, a: 0.6509804}
 --- !u!61 &1090088539
 BoxCollider2D:
@@ -6476,6 +6471,8 @@ MonoBehaviour:
   billCounter: {fileID: 503735727}
   changeInputField: {fileID: 1650515065}
   cash: {fileID: 0}
+  isCountingTime: 0
+  timeSpent: 0
 --- !u!1 &1137177039
 GameObject:
   m_ObjectHideFlags: 0
