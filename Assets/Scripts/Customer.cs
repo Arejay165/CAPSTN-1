@@ -82,7 +82,7 @@ public class Customer : MonoBehaviour
         for (int i = 0; i < maxInventory; i++)
         {
 
-            RNG = Random.Range(0, maxItem);
+            RNG = Random.Range(0, maxInventory);
             Debug.Log("Customer wants: " + items[RNG].itemName);
             itemSprites[i].sprite = items[RNG].itemSprite;
             itemsWanted.Add(items[RNG]);
