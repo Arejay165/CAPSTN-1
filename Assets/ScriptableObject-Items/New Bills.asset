@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
-  m_Name: Rice
+  m_Script: {fileID: 11500000, guid: d557dedcb80ef52429230f368b983345, type: 3}
+  m_Name: New Bills
   m_EditorClassIdentifier: 
-  itemName: Rice
-  price: 125
-  itemSprite: {fileID: 21300000, guid: a2ffcc6eeeaa9b1498811958fb3ab36a, type: 3}
+  itemName: Cash
+  price: 0
+  itemSprite: {fileID: 0}
+  numValue: 0
+  denValue: 0

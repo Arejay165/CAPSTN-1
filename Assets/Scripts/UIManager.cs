@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     public GameObject inGameUI;
     public GameObject endGameUI;
     public GameObject pauseGameUI;
+    public RectTransform endGamePanel;
+    public GameObject upgradeUI;
+
    
     public List<GameObject> tutorialUIs = new List<GameObject>();
   
@@ -82,6 +85,8 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         ActivateGameObjects(inGameUI.name);
+        ActivateGameObjects(upgradeUI.name);
+
         if (TutorialManager.instance)
         {
             
@@ -127,6 +132,7 @@ public class UIManager : MonoBehaviour
         inGameUI.SetActive(inGameUI.name.Equals(nameOfGameObject));
         endGameUI.SetActive(endGameUI.name.Equals(nameOfGameObject));
         pauseGameUI.SetActive(pauseGameUI.name.Equals(nameOfGameObject));
+        upgradeUI.SetActive(upgradeUI.name.Equals(nameOfGameObject));
         
     }
 
@@ -179,6 +185,11 @@ public class UIManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void Continue() // Next Level
+    {
+        ActivateGameObjects(upgradeUI.name);
     }
 
     #region Tutorial Functions

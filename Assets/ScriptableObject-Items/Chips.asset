@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
-  m_Name: Softdrinks
+  m_Name: Chips
   m_EditorClassIdentifier: 
-  itemName: Soda
-  price: 10
-  itemSprite: {fileID: 21300000, guid: e5fcfd9f88c7d4e479270e70a77c265e, type: 3}
+  itemName: Chips
+  price: 5
+  itemSprite: {fileID: 21300000, guid: 56c74ff37e617474a9b7eea4cee510f3, type: 3}
+  quantity: 1
