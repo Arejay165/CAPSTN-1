@@ -66,7 +66,7 @@ public class TestCalculator : MonoBehaviour
         StackDuplicateItems();
         GameManager.instance.orderSheetShowing = true;
         totalPriceAnswerField.enabled = false;
-        if(answerFields != null)
+        if(answerFields.Count > 0)
         {
             answerFields[0].Select();
         }
@@ -84,12 +84,9 @@ public class TestCalculator : MonoBehaviour
         timeSpent = 0;
         totalPriceAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
         changeAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
-        if (GameManager.instance.customer)
-        {
-            Destroy(GameManager.instance.customer.gameObject);
-        }
+       
         
-        GameManager.instance.customerSpawner.SpawnCustomer();
+ 
         GameManager.instance.orderSheetShowing = false;
         foreach (ItemSpawner item in clickableItems)
         {
@@ -403,14 +400,18 @@ public class TestCalculator : MonoBehaviour
         GameManager.instance.score+= 100;
       //  UIManager.instance.inGameUI.GetComponent<InGameUI>().scoring.gameObject.GetComponent<Text>().text = "Score: " + GameManager.instance.score.ToString(); //Very temporary until restructured codes
         TransitionManager.instances.MoveTransition(new Vector2(-743f, 1387.0f), 1f, TransitionManager.instances.noteBookTransform, gameObject.transform.parent.gameObject, false);
-   
-  //      gameObject.transform.root.gameObject.SetActive(false);
-       
+        if (GameManager.instance.customer)
+        {
+            Destroy(GameManager.instance.customer.gameObject);
+        }
+        GameManager.instance.customerSpawner.SpawnCustomer();
+        //      gameObject.transform.root.gameObject.SetActive(false);
+
     }
 
     public void DisplayItemOrders()
     {
-;
+
         for (int i = 0; i < itemUIClassList.Count; i++)
         {
 

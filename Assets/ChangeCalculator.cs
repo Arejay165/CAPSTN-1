@@ -23,11 +23,7 @@ public class ChangeCalculator : MonoBehaviour
         billCounter.isChangeUIActive = false;
         changeInputField.text = "";
         changeInputField.Select();
-        if (GameManager.instance.customer)
-        {
-            Destroy(GameManager.instance.customer.gameObject);
-        }
-        GameManager.instance.customerSpawner.SpawnCustomer();
+      
     }
 
     public void OnPriceInputted()
@@ -63,5 +59,10 @@ public class ChangeCalculator : MonoBehaviour
     public void ChangeOrderFinish()
     {
         TransitionManager.instances.MoveTransition(new Vector2(523f, 1386f), 1f, TransitionManager.instances.changeTransform, gameObject.transform.parent.gameObject, false);
+        if (GameManager.instance.customer)
+        {
+            Destroy(GameManager.instance.customer.gameObject);
+        }
+        GameManager.instance.customerSpawner.SpawnCustomer();
     }
 }
