@@ -7,19 +7,22 @@ using System.Linq;
 public class Customer : MonoBehaviour
 {
     public Item[] items;
+    public Item cash;
     public List<Item> itemInCart = new List<Item>();
     public List<Item> itemsWanted = new List<Item>();
     public List<Image> itemSprites = new List<Image>();
     public GameObject itemPrefab;
     public Transform panel;
     public TestCalculator displayOrder;
+    public bool willBuy;
 
     private int maxInventory;
     public float randomExtraMoney;
 
     private int RNG;
 
-    int placeHolder = 0;    
+    public Sprite exchangeSprite;
+
     public int GetMaxInventory()
     {
         return maxInventory;
@@ -27,18 +30,44 @@ public class Customer : MonoBehaviour
 
     void Start()
     {
+        float identifier = Random.Range(0, 100);
 
-        maxInventory = Random.Range(1, 4);
-        //Instatiating Customer Order 
-        // For display 
-        for (int i = 0; i < maxInventory; i++)
+        Debug.Log(identifier);
+        if(identifier > 50)
         {
+            willBuy = true;
+        }
+        else
+        {
+            willBuy = false;
+        }
+
+
+        if (willBuy)
+        {
+            maxInventory = Random.Range(1, 4);
+            //Instatiating Customer Order 
+            // For display 
+            for (int i = 0; i < maxInventory; i++)
+            {
+                GameObject obj = Instantiate(itemPrefab);
+                itemSprites.Add(obj.GetComponent<Image>());
+                obj.transform.SetParent(panel);
+                obj.GetComponent<Image>().preserveAspect = true;
+            }
+            RNG_item();
+        }
+        else
+        {
+            //Not buying 
             GameObject obj = Instantiate(itemPrefab);
             itemSprites.Add(obj.GetComponent<Image>());
             obj.transform.SetParent(panel);
             obj.GetComponent<Image>().preserveAspect = true;
+            obj.GetComponent<Image>().sprite = exchangeSprite;
+            itemsWanted.Add(cash);
         }
-        RNG_item();
+      
     }
 
     void RNG_item()

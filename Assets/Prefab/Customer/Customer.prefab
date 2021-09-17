@@ -277,13 +277,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87836c5b82a02974e8c7896ea2b12950, type: 2}
   - {fileID: 11400000, guid: 1b4e9c8be2b8c6140b15940d95f143b3, type: 2}
   - {fileID: 11400000, guid: 91214d50da5b8b9429a73182d2db72fb, type: 2}
+  cash: {fileID: 11400000, guid: e1cd0f1b1dde5fa4f95b81f56f29df38, type: 2}
   itemInCart: []
   itemsWanted: []
   itemSprites: []
   itemPrefab: {fileID: 3094970959184182628, guid: 36faa6dedfb75cb44ab1108fa40bc0c4, type: 3}
   panel: {fileID: 3181422572498091490}
   displayOrder: {fileID: 0}
+  willBuy: 0
   randomExtraMoney: 0
+  exchangeSprite: {fileID: 21300000, guid: 7525b0f7acac4d941b758383ee5cf404, type: 3}
 --- !u!1 &8861441445217577714
 GameObject:
   m_ObjectHideFlags: 0
