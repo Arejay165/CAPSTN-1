@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: HalfRice
   price: 125
-  itemSprite: {fileID: 21300000, guid: 480344d55c3f1924eb82c2b1fb9678ed, type: 3}
+  itemSprite: {fileID: 21300000, guid: 3ca60f6d87b1a2c43add9ca8898db5cf, type: 3}
   quantity: 0.5

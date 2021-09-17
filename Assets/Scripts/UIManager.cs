@@ -85,6 +85,7 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         ActivateGameObjects(inGameUI.name);
+        //ActivateGameObjects(upgradeUI.name);
 
 
         if (TutorialManager.instance)
@@ -186,14 +187,10 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    public void Continue() // Next Level
+    public void Continue() // Open Upgrade
     {
         ActivateGameObjects(upgradeUI.name);
+        Debug.Log("Continue");
     }
 
-    #region Tutorial Functions
-    
-
-    
-    #endregion
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6716624539858281822}
   - component: {fileID: -4219041979957250388}
   m_Layer: 0
-  m_Name: Biscuit_Placeholder
+  m_Name: Chip2_Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 120
-  m_Sprite: {fileID: 21300000, guid: 43a772f5a3ea5274b87df8fe25deec2a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a040e2da4668084e866b90b068760e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,18 +114,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0049347878, y: 0.007402301}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.94, y: 1.66}
+    oldSize: {x: 0.85, y: 1.24}
     newSize: {x: 1.94, y: 1.66}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.94, y: 1.66}
+  m_Size: {x: 0.8445034, y: 1.2405536}
   m_EdgeRadius: 0
 --- !u!114 &6716624539858281822
 MonoBehaviour:
