@@ -11,5 +11,6 @@ public class Item : ScriptableObject
     public int numValue;
     public int denValue;
     public Sprite itemSprite;
+    public float quantity;
 
 }

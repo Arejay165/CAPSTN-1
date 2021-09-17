@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
-  m_Name: Drinks
+  m_Name: Candy
   m_EditorClassIdentifier: 
-  itemName: Drink
-  price: 15
-  itemSprite: {fileID: 21300000, guid: 99cb122b05a7fc249be6901aabf57c27, type: 3}
+  itemName: Candy
+  price: 1
+  itemSprite: {fileID: 21300000, guid: e139fd1b43145294388b8516b83b124f, type: 3}
+  quantity: 1

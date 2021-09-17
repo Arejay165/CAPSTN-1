@@ -6,7 +6,7 @@ using System.Linq;
 
 public class Customer : MonoBehaviour
 {
-    public Item[] items;
+    public List<Item> items;
     public Item cash;
     public List<Item> itemInCart = new List<Item>();
     public List<Item> itemsWanted = new List<Item>();
@@ -21,6 +21,7 @@ public class Customer : MonoBehaviour
 
     private int RNG;
 
+    int placeHolder = 0;
     public Sprite exchangeSprite;
 
     public int GetMaxInventory()
@@ -30,10 +31,13 @@ public class Customer : MonoBehaviour
 
     void Start()
     {
+
+        //Instatiating Customer Order 
+
         float identifier = Random.Range(0, 100);
 
         Debug.Log(identifier);
-        if(identifier > 50)
+        if (identifier > 50)
         {
             willBuy = true;
         }
@@ -67,6 +71,8 @@ public class Customer : MonoBehaviour
             obj.GetComponent<Image>().sprite = exchangeSprite;
             itemsWanted.Add(cash);
         }
+
+        // For display 
       
     }
 
@@ -76,12 +82,16 @@ public class Customer : MonoBehaviour
         for (int i = 0; i < maxInventory; i++)
         {
 
-            RNG = Random.Range(0, items.Length);
+            RNG = Random.Range(0, maxItem);
             Debug.Log("Customer wants: " + items[RNG].itemName);
             itemSprites[i].sprite = items[RNG].itemSprite;
             itemsWanted.Add(items[RNG]);
+
         }
+
     }
+
+
 }
 
    

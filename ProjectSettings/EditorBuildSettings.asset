@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameScene.unity
     guid: 0ca53b232e0ac5e49a071e0a0cab8183
+  - enabled: 1
+    path: Assets/Scenes/JACE_Prototype.unity
+    guid: 605f3b921218bdf4793b71d8a9c37326
   m_configObjects: {}

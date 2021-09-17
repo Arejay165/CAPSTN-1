@@ -15,3 +15,4 @@ MonoBehaviour:
   itemName: Rice
   price: 125
   itemSprite: {fileID: 21300000, guid: a2ffcc6eeeaa9b1498811958fb3ab36a, type: 3}
+  quantity: 1

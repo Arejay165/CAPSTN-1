@@ -10,7 +10,7 @@ public class ItemUIClass
     public Sprite icon;
     public string name;
     public float price;
-    public int quantity;
+    public float quantity;
     public float totalPriceAnswer;
 }
 public class TestCalculator : MonoBehaviour
@@ -38,7 +38,7 @@ public class TestCalculator : MonoBehaviour
         newItemUIClass.icon = p_item.itemSprite;
         newItemUIClass.name = p_item.itemName;
         newItemUIClass.price = p_item.price;
-        newItemUIClass.quantity = 1;
+        newItemUIClass.quantity = p_item.quantity;
         newItemUIClass.totalPriceAnswer = newItemUIClass.quantity * newItemUIClass.price;
         return newItemUIClass;
     }
@@ -52,6 +52,11 @@ public class TestCalculator : MonoBehaviour
         StackDuplicateItems();
         GameManager.instance.orderSheetShowing = true;
         totalPriceAnswerField.enabled = false;
+        if(answerFields != null)
+        {
+            answerFields[0].Select();
+        }
+       
     }
 
     private void OnDisable()
@@ -95,7 +100,7 @@ public class TestCalculator : MonoBehaviour
                 {
                    // Debug.Log(" Item UI Count : " + itemUIClassList.Count + "Customer Item Check x " + customer.itemCheck[x].itemName);
                     uniqueItem = false;
-                    itemUIClassList[i].quantity++;
+                    itemUIClassList[i].quantity += customer.itemInCart[x].quantity;
                     itemUIClassList[i].totalPriceAnswer = itemUIClassList[i].quantity * itemUIClassList[i].price;
                     //  return;
                     break;
@@ -155,20 +160,36 @@ public class TestCalculator : MonoBehaviour
             {
                 Debug.Log("Correct");
                 StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
+
+                //Change select to next input field if correct
                 index++;
-                SpawnAnswerField();
+                if (index < answerFields.Count) 
+                {
+                    Debug.Log("List still has inputfield");
+                    answerFields[index].Select();
+
+                }
+                else
+                {
+                    Debug.Log("All correct answer");
+                    SpawnAnswerField();
+                }
+            
+               
             }
             //If it doesnt match its wrong
             else
             {
                 Debug.Log("Wrong");
                 StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
+                answerFields[itemOrderIndex].Select();
             }
         }
         else //If input is invalid (not a number)
         {
             Debug.Log("Invalid Input, retry again");
             StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
+            answerFields[itemOrderIndex].Select();
         }
     }
 
@@ -176,7 +197,10 @@ public class TestCalculator : MonoBehaviour
     {
         if(answerFields.Count == index)
         {
-            totalPriceAnswerField.enabled = true;
+           totalPriceAnswerField.enabled = true;
+            
+           totalPriceAnswerField.Select();
+            
         }
     }
 
@@ -184,8 +208,7 @@ public class TestCalculator : MonoBehaviour
     {
 
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
-
-
+      
         yield return new WaitForSeconds(0.25f);
         p_correct = true;
     }
@@ -210,6 +233,7 @@ public class TestCalculator : MonoBehaviour
 
         yield return new WaitForSeconds(0.05f);
         //yield return new WaitForSeconds(1f);
+       
         p_inputField.text = "";
         p_inputField.Select();
     }
@@ -218,14 +242,17 @@ public class TestCalculator : MonoBehaviour
     {
         changeText.gameObject.SetActive(true);
         changeAnswerField.gameObject.SetActive(true);
+        changeAnswerField.Select();
     }
 
     public void OnTotalPriceInputted()
     {
+       
         string playerInputString = totalPriceAnswerField.text;
      
         float playerInputValue = -1;
 
+       
         if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
         {
             
@@ -258,9 +285,11 @@ public class TestCalculator : MonoBehaviour
 
     public void OnChangeInputted()
     {
-      
+        
         string playerInputString = changeAnswerField.text;
         float playerInputValue = -1;
+
+       
 
         if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
         {
@@ -276,6 +305,7 @@ public class TestCalculator : MonoBehaviour
                 for (int i = 0; i < answerFields.Count;)
                 {
                     InputField currentlySelectedItemUI = answerFields[0];
+                    currentlySelectedItemUI.Select();
 
                     answerFields.RemoveAt(0);
                     changeAnswerField.text = "";
@@ -344,4 +374,9 @@ public class TestCalculator : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        Debug.Log(index + " Index");
+        Debug.Log(answerFields.Count + " AnswerField");
+    }
 }
