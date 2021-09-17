@@ -14,11 +14,11 @@ public enum PerformanceFact
 {
     //In General
     //Equations like 5 + 4 = 9
-    mostCommonCorrectMathProblems,
-    mostCommonWrongMathProblems,
+    mostCommonCorrectMathProblems, // 1 + 1 = 2 
+    mostCommonWrongMathProblems, // 1 + 3 = 4
     mathProblemAverageTime, //how long does the player spent on each math problem
     //Student's most wrong
-    mostDifficultOperator,
+    mostDifficultOperator, // Addition 
     //Order sheet's overall cost
     additionCorrects,
     additionWrongs,
@@ -35,6 +35,8 @@ public enum PerformanceFact
     divisionCorrects,
     divisionWrongs,
     divisionAverageTime,
+    //Example:
+    //Addition 3/4 correct (instead of having a separate counter for corrects and wrongs)
 }
 
 [System.Serializable]
@@ -59,7 +61,7 @@ public class AnsweredProblemData
 public class PerformanceManager : MonoBehaviour
 {
     public static PerformanceManager instance;
-    
+    public int customersEntertained = 0;
     public List<AnsweredProblemData> answeredProblemDatas = new List<AnsweredProblemData>();
     public int rerollAttempts = 0;
     public int maxRerollAttempts = System.Enum.GetValues(typeof(PerformanceFact)).Length;
@@ -86,12 +88,13 @@ public class PerformanceManager : MonoBehaviour
     }
 
     #region Public Functions
+  
     public void ChoosePerformanceFact()
     {
  
         if (rerollAttempts < maxRerollAttempts)
         {
-            int chosenPerformanceFactIndex = 0;// Random.Range(0,System.Enum.GetValues(typeof(PerformanceFact)).Length);
+            int chosenPerformanceFactIndex = Random.Range(0,System.Enum.GetValues(typeof(PerformanceFact)).Length);
             string performanceFactName = "";
             string performanceFactValue = "";
             if ((PerformanceFact)chosenPerformanceFactIndex == PerformanceFact.mostCommonCorrectMathProblems)
@@ -198,15 +201,15 @@ public class PerformanceManager : MonoBehaviour
             else
             {
 
-                Scoring.instance.performanceFactName.text = performanceFactName;
-                Scoring.instance.performanceFactValue.text = performanceFactValue;
+                //Scoring.instance.performanceFactName.text = performanceFactName;
+                //Scoring.instance.performanceFactValue.text = performanceFactValue;
                 rerollAttempts = 0;
             }
         }
         else
         {
-            Scoring.instance.performanceFactName.text = "";
-            Scoring.instance.performanceFactValue.text = "";
+            //Scoring.instance.performanceFactName.text = "";
+            //Scoring.instance.performanceFactValue.text = "";
             rerollAttempts = 0;
         }
         
@@ -307,12 +310,67 @@ public class PerformanceManager : MonoBehaviour
         return null;
     }
 
-
-    public List<List<AnsweredProblemData>> SortMathProblemsByOperator(bool p_isCorrect)
+    public List<List<AnsweredProblemData>> SortMathProblemsByOperator()
     {
         List<List<AnsweredProblemData>> sortedMathProblems = new List<List<AnsweredProblemData>>();
         //List<AnsweredProblemData> mostCommonCorrectMathProblems = new List<AnsweredProblemData>();
         //int operatorIndex = 0;
+        //Check each problem data and sort them into operator lists
+        foreach (AnsweredProblemData selectedAnsweredProblemData in answeredProblemDatas)
+        {
+            bool makeNewOperatorList = true;
+            //Look For Which Operator list will it be sorted into
+            //if (operatorIndex < sortedMathProblems.Count)
+
+            //{
+            for (int i = 0; i < sortedMathProblems.Count;)
+            {
+                makeNewOperatorList = false;
+                //If matching operator found from the list, add it to the operator's list
+                if (selectedAnsweredProblemData.mathOperator == sortedMathProblems[i][0].mathOperator)
+                {
+                    
+                    //Add it into the sorted operator
+                    sortedMathProblems[i].Add(selectedAnsweredProblemData);
+                    
+
+                    break;
+                }
+                i++;
+                if (i >= sortedMathProblems.Count)
+                {
+                    makeNewOperatorList = true;
+                }
+
+
+            }
+            if (makeNewOperatorList)
+            {
+                //If matching operator not found from the list, add it as new operator list
+
+                
+                //Add new operator
+                List<AnsweredProblemData> newOperatorList = new List<AnsweredProblemData>();
+                newOperatorList.Add(selectedAnsweredProblemData);
+                sortedMathProblems.Add(newOperatorList);
+                
+
+
+            }
+    
+
+        }
+        foreach (List<AnsweredProblemData> operatorList in sortedMathProblems)
+        {
+            Debug.Log("COUNT: " + operatorList.Count);
+        }
+        return sortedMathProblems;
+    }
+
+    public List<List<AnsweredProblemData>> SortMathProblemsByOperator(bool p_isCorrect)
+    {
+        List<List<AnsweredProblemData>> sortedMathProblems = new List<List<AnsweredProblemData>>();
+ 
         //Check each problem data and sort them into operator lists
         foreach (AnsweredProblemData selectedAnsweredProblemData in answeredProblemDatas)
         {
@@ -357,25 +415,64 @@ public class PerformanceManager : MonoBehaviour
                     
                 
             }
-           // }
-            //else
-            //{
-            //    if (selectedAnsweredProblemData.isCorrect == p_isCorrect)
-            //    {
-            //        //Create new operator
-            //        List<AnsweredProblemData> newOperatorList = new List<AnsweredProblemData>();
-            //        newOperatorList.Add(selectedAnsweredProblemData);
-            //        sortedMathProblems.Add(newOperatorList);
-            //    }
-            //}
+
        
         }
-        Debug.Log("NSASMDLKASMDLKAMSDLSAMD: " + sortedMathProblems.Count);
-        foreach(List<AnsweredProblemData> operatorList in sortedMathProblems)
-        {
-            Debug.Log("COUNT: " + operatorList.Count);
-        }
+
         return sortedMathProblems;
+    }
+
+    public string GetOperatorCount(MathProblemOperator p_operator)
+    {
+        string mostOperator = "0";
+        List<List<AnsweredProblemData>> mostOperatorCounts = new List<List<AnsweredProblemData>>();
+        int highestQuantity = 0;
+        foreach (List<AnsweredProblemData> selectedOperatorList in SortMathProblemsByOperator())
+        {
+            //If the currently selected answered problem stack's quantity is bigger than the recorded highest quantity
+            if (selectedOperatorList[0].mathOperator == p_operator)
+            {
+                if (highestQuantity < selectedOperatorList.Count)
+                {
+                    //Remove all math problems that has the same quantity as the highest quantity
+                    mostOperatorCounts.Clear();
+                    //And update the highest quantity to the quantity of the currently selected answered problem stack
+                    mostOperatorCounts.Add(selectedOperatorList);
+                    highestQuantity = selectedOperatorList.Count;
+                }
+                //If the currently selected answered problem stack has the same quantity as the recorded highest quantity
+                else if (highestQuantity == selectedOperatorList.Count)
+                {
+                    //Add the currently selected answered problem stack to the options to be chosen later
+                    mostOperatorCounts.Add(selectedOperatorList);
+                }
+            }
+
+        }
+        int chosenIndex = 0;
+        //If there is more than 1 math problem that is the most common, randomly choose one of them to be the most common
+        ////(example : the quantity for math problem (1 + 1 = 2) is 2 while another math problem (3 + 1 = 4) also has a quantity of 2 
+        if (mostOperatorCounts.Count > 1)
+        {
+            chosenIndex = Random.Range(0, mostOperatorCounts.Count);
+        }
+        if (mostOperatorCounts.Count > 0)
+        {
+            mostOperator = mostOperatorCounts[chosenIndex].Count.ToString();
+
+            //Clear all lists in list
+            foreach (List<AnsweredProblemData> selectedOperator in mostOperatorCounts)
+            {
+                selectedOperator.Clear();
+            }
+            mostOperatorCounts.Clear();
+            
+            return mostOperator;
+        }
+        else
+        {
+            return "0";
+        }
     }
     public string GetOperatorCount(MathProblemOperator p_operator,bool p_isCorrect)
     {
@@ -431,7 +528,7 @@ public class PerformanceManager : MonoBehaviour
         }
         else
         {
-            return "";
+            return "0";
         }    
          
     }
@@ -515,7 +612,10 @@ public class PerformanceManager : MonoBehaviour
         }
 
         averageTime = totalTime / amount;
-
+        if (float.IsNaN(averageTime))
+        {
+            averageTime = 0f;
+        }
         return averageTime.ToString();
     }
     public string GetMostCommonMathProblem(bool p_isCorrect)

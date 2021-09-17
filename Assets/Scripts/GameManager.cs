@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     public DetectItemInWindow window;
     public bool orderSheetShowing = false;
+
+
  
     private void Awake()
     {
@@ -23,7 +25,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+
+
     }
+
+
 
     virtual protected void Start()
     {

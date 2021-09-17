@@ -30,7 +30,7 @@ public class TutorialPanel : MonoBehaviour
         if (TutorialManager.instance)
         {
           
-            PlayerManager.OnMouseClick += SelectTutorialPanel;
+            //PlayerManager.OnMouseClick += SelectTutorialPanel;
         }
         ShowText();
     
@@ -41,7 +41,7 @@ public class TutorialPanel : MonoBehaviour
         if (TutorialManager.instance)
         {
           
-            PlayerManager.OnMouseClick -= SelectTutorialPanel;
+            //PlayerManager.OnMouseClick -= SelectTutorialPanel;
         }
         currentIndex = 0;
 

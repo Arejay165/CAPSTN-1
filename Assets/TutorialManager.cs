@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using UnityEngine.Playables;
 
 
 [System.Serializable]
@@ -25,6 +25,9 @@ public class TutorialManager : MonoBehaviour
     public static event Action OnTutorialDialogueEnded;
     public static event Action OnTutorialSectionEnded;
 
+    public PlayableDirector director;
+    public GameObject controlPanel;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,17 +38,28 @@ public class TutorialManager : MonoBehaviour
         {
             Destroy(this);
         }
-
+       
+        director.played += Director_Played;
+        director.stopped += Director_Stopped;
     }
 
     public void OnEnable()
     {
-       // OnTutorialSectionEnded += TutorialPanelStart;
+        // OnTutorialSectionEnded += TutorialPanelStart;
+        if (PlayerManager.instance)
+        {
 
+            PlayerManager.OnMouseClick += StartTimeline;
+        }
     }
     public void OnDisable()
     {
-       // OnTutorialSectionEnded -= TutorialPanelStart;
+        // OnTutorialSectionEnded -= TutorialPanelStart;
+        if (PlayerManager.instance)
+        {
+
+            PlayerManager.OnMouseClick -= StartTimeline;
+        }
     }
     public void Start()
     {
@@ -56,6 +70,23 @@ public class TutorialManager : MonoBehaviour
 
 
     }
+    public void Director_Played(PlayableDirector obj)
+    {
+        controlPanel.SetActive(false);
+    }
+
+    private void Director_Stopped(PlayableDirector obj)
+    {
+        controlPanel.SetActive(true);
+    }
+
+    public void StartTimeline()
+    {
+        Debug.Log("ITS STARTING");
+        
+        director.Play();
+    }
+
     public void TutorialSectionStart()
     {
         OnTutorialSectionStarted.Invoke();
