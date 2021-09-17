@@ -52,6 +52,8 @@ public class TestCalculator : MonoBehaviour
         if (isCountingTime)
         {
             timeSpent += Time.deltaTime;
+            Debug.Log(index + " Index");
+            Debug.Log(answerFields.Count + " AnswerField");
         }
         
     }
@@ -437,9 +439,4 @@ public class TestCalculator : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        Debug.Log(index + " Index");
-        Debug.Log(answerFields.Count + " AnswerField");
-    }
 }

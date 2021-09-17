@@ -1330,6 +1330,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemUIClassList: []
+  itemsAnswer: []
+  changeAnswers: []
   answerFields: []
   totalPriceAnswerField: {fileID: 409148191}
   changeAnswerField: {fileID: 561329128}
@@ -1343,6 +1345,8 @@ MonoBehaviour:
   - {fileID: 170177132}
   - {fileID: 552556819}
   - {fileID: 138169380}
+  isCountingTime: 0
+  timeSpent: 0
   index: 0
 --- !u!114 &272067762
 MonoBehaviour:
@@ -7987,6 +7991,7 @@ GameObject:
   - component: {fileID: 1488818646}
   - component: {fileID: 1488818648}
   - component: {fileID: 1488818647}
+  - component: {fileID: 1488818650}
   m_Layer: 0
   m_Name: ~GameManager
   m_TagString: Untagged
@@ -8025,6 +8030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHolding: 0
+  canBroadcastMouseClick: 0
   currentSelectedItem: {fileID: 0}
   lastItemSpawner: {fileID: 0}
   isStaying: 0
@@ -8060,6 +8066,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1488818650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488818645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2362d12b0a060934e9a3f8250e39b53f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customersEntertained: 0
+  answeredProblemDatas: []
+  rerollAttempts: 0
+  maxRerollAttempts: 16
 --- !u!1 &1508151673
 GameObject:
   m_ObjectHideFlags: 0
@@ -10738,6 +10760,16 @@ MonoBehaviour:
   levelPasserImage: {fileID: 1660809786}
   failPrompt: {fileID: 195284587}
   successPrompt: {fileID: 1765318033}
+  customersEntertained: {fileID: 0}
+  totalSolvingTime: {fileID: 0}
+  additionSolvingTime: {fileID: 0}
+  additionEvaluation: {fileID: 0}
+  subtractionSolvingTime: {fileID: 0}
+  subtractionEvaluation: {fileID: 0}
+  multiplicationSolvingTime: {fileID: 0}
+  multiplicationEvaluation: {fileID: 0}
+  divisionSolvingTime: {fileID: 0}
+  divisionEvaluation: {fileID: 0}
 --- !u!114 &2022069737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10769,6 +10801,7 @@ MonoBehaviour:
   pauseGameUI: {fileID: 984760235}
   endGamePanel: {fileID: 1338223150}
   upgradeUI: {fileID: 0}
+  tutorialUIs: []
 --- !u!4 &2022069739
 Transform:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("SKDALISMDALKDMA");
         if (!isChangeUIActive && !GameManager.instance.customer.willBuy)
         {
             isChangeUIActive = true;

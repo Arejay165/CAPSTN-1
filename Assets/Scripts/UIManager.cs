@@ -85,7 +85,7 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         ActivateGameObjects(inGameUI.name);
-        ActivateGameObjects(upgradeUI.name);
+
 
         if (TutorialManager.instance)
         {
@@ -132,8 +132,7 @@ public class UIManager : MonoBehaviour
         inGameUI.SetActive(inGameUI.name.Equals(nameOfGameObject));
         endGameUI.SetActive(endGameUI.name.Equals(nameOfGameObject));
         pauseGameUI.SetActive(pauseGameUI.name.Equals(nameOfGameObject));
-        upgradeUI.SetActive(upgradeUI.name.Equals(nameOfGameObject));
-        
+        upgradeUI.SetActive(upgradeUI.name.Equals(nameOfGameObject)); 
     }
 
     public void ActivateTutorialPanel()
