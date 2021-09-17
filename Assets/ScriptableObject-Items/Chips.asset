@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Chips
   price: 5
-  itemSprite: {fileID: 21300000, guid: 56c74ff37e617474a9b7eea4cee510f3, type: 3}
+  itemSprite: {fileID: 21300000, guid: e6585eb644f31d248a9a05e6a02e5279, type: 3}
   quantity: 1

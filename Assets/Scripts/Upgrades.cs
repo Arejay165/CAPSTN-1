@@ -45,6 +45,8 @@ public class Upgrades : MonoBehaviour
 
         UIManager.instance.upgradeUI.SetActive(false);
         newInteractables[itemIndex].SetActive(true);
+
+       // UIManager.instance.Restart(); // restart the level with a new item
    }
    
    public void initializeItem()

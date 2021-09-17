@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         ActivateGameObjects(inGameUI.name);
-        ActivateGameObjects(upgradeUI.name);
+        //ActivateGameObjects(upgradeUI.name);
 
     }
 
@@ -77,8 +77,10 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    public void Continue() // Next Level
+    public void Continue() // Open Upgrade
     {
-        ActivateGameObjects(upgradeUI.name);
+        //ActivateGameObjects(upgradeUI.name); // not sure Y is not working
+        upgradeUI.SetActive(true); 
+        Debug.Log("Continue");
     }
 }

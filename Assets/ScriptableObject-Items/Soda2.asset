@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
-  m_Name: Softdrinks
+  m_Name: Soda2
   m_EditorClassIdentifier: 
   itemName: Soda
   price: 10
-  itemSprite: {fileID: 21300000, guid: e5fcfd9f88c7d4e479270e70a77c265e, type: 3}
+  itemSprite: {fileID: 21300000, guid: 2f30931a86c52804085e56e1914fad4e, type: 3}
   quantity: 1
