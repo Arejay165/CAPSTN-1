@@ -19,7 +19,7 @@ public class ChangeCalculator : MonoBehaviour
         
         cash = GameManager.instance.customer.itemsWanted[0];
         numeratorText.text = cash.numValue.ToString();
-        denominatorText.text = cash.denValue.ToString();
+        denominatorText.text = cash.price.ToString();
         isCountingTime = true;
     }
 
@@ -54,7 +54,7 @@ public class ChangeCalculator : MonoBehaviour
         }
         if (playerInputValue != -1)
         {
-            if (playerInputValue == cash.price)
+            if (playerInputValue == cash.denValue)
             {
                 //Answer is correct
                 ChangeOrderFinish();
