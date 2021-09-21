@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2936979158446194327}
   - component: {fileID: 2936979158446194312}
   - component: {fileID: 2936979158446194325}
-  - component: {fileID: 2936979158446194324}
   - component: {fileID: 4892750244522790991}
   m_Layer: 0
   m_Name: Asset-SodaBottle
@@ -126,20 +125,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 87836c5b82a02974e8c7896ea2b12950, type: 2}
---- !u!114 &2936979158446194324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2936979158446194314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebc499b1e66b71b46941ce8b8cf5a9c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canBeDragged: 1
-  isBeingDragged: 0
 --- !u!50 &4892750244522790991
 Rigidbody2D:
   serializedVersion: 4

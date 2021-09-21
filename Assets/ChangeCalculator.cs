@@ -93,7 +93,6 @@ public class ChangeCalculator : MonoBehaviour
         {
             Destroy(GameManager.instance.customer.gameObject);
         }
-        GameManager.instance.customerSpawner.SpawnCustomer();
-        
+        GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
     }
 }

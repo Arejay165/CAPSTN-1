@@ -45,7 +45,7 @@ public class Upgrades : MonoBehaviour
 
         UIManager.instance.upgradeUI.SetActive(false);
         newInteractables[itemIndex].SetActive(true);
-
+        GameManager.instance.SetUpGame();
        // UIManager.instance.Restart(); // restart the level with a new item
    }
    

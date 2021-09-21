@@ -5,28 +5,19 @@ using System;
 using UnityEngine.Playables;
 
 
-[System.Serializable]
-public enum TutorialSection
-{
-    none = -1,
-    tutorialStart,
-    tutorialDrag,
-    tutorialtest,
-    reset,
-    
 
-}
 public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager instance;
+    public bool tutorialQuestActive = false;
+    public bool canTutorial = true;
+    public PlayableDirector currentTutorial;
 
-    public TutorialSection currentTutorialSection;
-    public static event Action OnTutorialSectionStarted;
-    public static event Action OnTutorialDialogueEnded;
-    public static event Action OnTutorialSectionEnded;
+    public List<PlayableDirector> tutorials;
+    
 
-    public PlayableDirector director;
-    public GameObject controlPanel;
+ 
+   // public GameObject controlPanel;
 
     private void Awake()
     {
@@ -38,85 +29,74 @@ public class TutorialManager : MonoBehaviour
         {
             Destroy(this);
         }
-       
-        director.played += Director_Played;
-        director.stopped += Director_Stopped;
+
     }
 
-    public void OnEnable()
-    {
-        // OnTutorialSectionEnded += TutorialPanelStart;
-        if (PlayerManager.instance)
-        {
-
-            PlayerManager.OnMouseClick += StartTimeline;
-        }
-    }
-    public void OnDisable()
-    {
-        // OnTutorialSectionEnded -= TutorialPanelStart;
-        if (PlayerManager.instance)
-        {
-
-            PlayerManager.OnMouseClick -= StartTimeline;
-        }
-    }
+    
     public void Start()
     {
 
-        currentTutorialSection = (TutorialSection)0;
-        
-        
+      
+    
 
 
-    }
-    public void Director_Played(PlayableDirector obj)
-    {
-        controlPanel.SetActive(false);
-    }
 
-    private void Director_Stopped(PlayableDirector obj)
-    {
-        controlPanel.SetActive(true);
     }
 
     public void StartTimeline()
     {
-        Debug.Log("ITS STARTING");
-        
-        director.Play();
-    }
-
-    public void TutorialSectionStart()
-    {
-        OnTutorialSectionStarted.Invoke();
-    }
-   
-    public void TutorialDialogueEnd()
-    {
-
-        OnTutorialDialogueEnded.Invoke();
-
-
-    }
-    public void TutorialSectionEnd()
-    {
        
-        Debug.Log((int)currentTutorialSection + " - " + (UIManager.instance.tutorialUIs.Count));
-        if ((int)currentTutorialSection >= 0 && (int)currentTutorialSection < UIManager.instance.tutorialUIs.Count)
+        if (canTutorial)
         {
+            if (currentTutorial)
+            {
+                currentTutorial.gameObject.SetActive(false);
+                //if (tutorialQuestActive)
+                //{
+                //    ToggleTutorialQuest();
+                //}
 
-            int i = (int)currentTutorialSection;
-            i++;
-            currentTutorialSection = (TutorialSection)i;
-            Debug.Log("NEW! " + (int)currentTutorialSection + " - " + (UIManager.instance.tutorialUIs.Count));
-            OnTutorialSectionEnded.Invoke();
+
+
+            }
+
+            if (tutorials.IndexOf(currentTutorial) < tutorials.Count - 1)
+            {
+                int i = 0;
+                if (currentTutorial)
+                {
+                    i = tutorials.IndexOf(currentTutorial);
+                    i++;
+                }
+
+
+                currentTutorial = tutorials[i];
+                currentTutorial.gameObject.SetActive(true);
+                currentTutorial.Play();
+            }
+            else
+            {
+
+                currentTutorial.gameObject.SetActive(false);
+                currentTutorial = null;
+                canTutorial = false;
+
+            }
+
+
+            //currentTutorial.timelineClip.gameObject.SetActive(false);
         }
-        else
-        {
-            currentTutorialSection = (TutorialSection)0;
-        }
+
+
 
     }
+
+    public void ToggleTutorialQuest()
+    {
+      
+        //tutorialQuestActive = true;
+        tutorialQuestActive = tutorialQuestActive ? false : true;
+    }
+
 
 }

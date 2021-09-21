@@ -33,6 +33,10 @@ public class Scoring : MonoBehaviour
     public Text divisionSolvingTime;
     public Text divisionEvaluation;
 
+    public void SetScore(int p_newScore)
+    {
+        score = p_newScore;
+    }
     public int GetScore()
     {
         return score;

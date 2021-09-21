@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 
 public class DetectItemInWindow : MonoBehaviour
 {
@@ -49,13 +49,17 @@ public class DetectItemInWindow : MonoBehaviour
                         }
                         PlayerManager.instance.isStaying = false;
                         Destroy(itemInCounter.gameObject, 0.2f);
+                        Debug.Log("DESTROYING THRU DETECT CORRECT");
+                        PlayerManager.instance.lastItemSpawner = null;
                         break;
                     }
                     else
                     {
                         Debug.Log("Wrong Item");
-                        PlayerManager.instance.isStaying = true;
-                        
+                        PlayerManager.instance.isStaying = false;
+
+                    
+
                     }
                 }
             }

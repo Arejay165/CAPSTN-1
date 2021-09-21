@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     public DetectItemInWindow window;
     public bool orderSheetShowing = false;
+    public bool isPlaying = false;
 
 
  
@@ -29,7 +30,25 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void TogglePlaying()
+    {
+        isPlaying = isPlaying ? false : true;
+    }
 
+    public void SetUpGame() //TEMPORARY FIX FOR RESTARTING GAME AFTER UPGRADING, I THINK ITS BEST TO USE OBSERVER PATTERN UNITY EVENTS 
+    {                       
+        isPlaying = true;
+        UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
+        Destroy(customer.gameObject);
+        StartCoroutine(customerSpawner.SpawnRate());
+        Scoring.instance.SetScore(0);
+        PerformanceManager.instance.customersEntertained = 0;
+        DayAndNightCycle.instance.SetGameTime(0);
+        DayAndNightCycle.instance.SetStoreClosed(false);
+        TransitionManager.instances.changeTransform.gameObject.SetActive(false);
+        TransitionManager.instances.noteBookTransform.gameObject.SetActive(false);
+
+    }
 
     virtual protected void Start()
     {

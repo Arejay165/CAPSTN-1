@@ -7,10 +7,8 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
     public bool isHolding;
-    public bool canBroadcastMouseClick = false;
     public GameObject currentSelectedItem;
-    public ItemSpawner lastItemSpawner;
-    public static event Action OnMouseClick; 
+    public ClickToSelectItem lastItemSpawner;
     public bool isStaying = false;
 
     private void Awake()
@@ -34,11 +32,11 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canBroadcastMouseClick)
+        if (!TutorialManager.instance.tutorialQuestActive)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.anyKeyDown)
             {
-                OnMouseClick?.Invoke();
+                TutorialManager.instance.StartTimeline();
                 
             }
         }

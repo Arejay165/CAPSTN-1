@@ -447,11 +447,12 @@ public class PerformanceManager : MonoBehaviour
         }
 
         averageTime = totalTime / amount;
+        
         if (float.IsNaN(averageTime))
         {
-            averageTime = 0f;
+            averageTime = 0.00f;
         }
-        return averageTime.ToString();
+        return averageTime.ToString("F2");
     }
     public string GetMostCommonMathProblem(bool p_isCorrect)
     {

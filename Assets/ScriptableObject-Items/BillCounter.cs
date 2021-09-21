@@ -15,12 +15,22 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("SKDALISMDALKDMA");
+
         if (!isChangeUIActive && !GameManager.instance.customer.willBuy)
         {
             isChangeUIActive = true;
             ChangeUI();
-            Debug.Log("Clicked: " + eventData.pointerCurrentRaycast.gameObject.name);
+            if (TutorialManager.instance)
+            {
+                if (TutorialManager.instance.tutorialQuestActive)
+                {
+                    if (TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 4)
+                    {
+                        TutorialManager.instance.ToggleTutorialQuest();
+                        TutorialManager.instance.StartTimeline();
+                    }
+                }
+            }
         }
     }
 
