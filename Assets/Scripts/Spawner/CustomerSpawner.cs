@@ -8,17 +8,12 @@ public class CustomerSpawner : MonoBehaviour
     public Transform      spawnPoint;
     public TestCalculator displayOrder;
     public bool canSpawn = false;
-    void Start()
-    {
-  
-    }
 
- 
-    void Update()
-    {
-        
-    }
 
+    private void Start()
+    {
+        StartCoroutine(SpawnRate());
+    }
     public void ToggleSpawn()
     {
         canSpawn = canSpawn ? false : true;

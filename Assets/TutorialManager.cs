@@ -33,15 +33,6 @@ public class TutorialManager : MonoBehaviour
     }
 
     
-    public void Start()
-    {
-
-      
-    
-
-
-
-    }
 
     public void StartTimeline()
     {
