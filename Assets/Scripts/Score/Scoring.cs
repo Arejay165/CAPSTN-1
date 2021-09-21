@@ -20,6 +20,8 @@ public class Scoring : MonoBehaviour
     public Sprite failImage;
     public Image levelPasserImage;
     public GameObject failPrompt, successPrompt;
+    public GameObject coinPrefab;
+    public GameObject targetLocation;
     //public Text performanceFactName;
     //public Text performanceFactValue;
 
@@ -46,6 +48,7 @@ public class Scoring : MonoBehaviour
     public void addScore(int gainScore)
     {
         TextAnimaation();
+        CoinActivator();
         score += gainScore;
         scoreText.text = score.ToString();
       
@@ -121,4 +124,31 @@ public class Scoring : MonoBehaviour
     {
        scoreText.gameObject.transform.DOShakeScale(1, 0.3f,10, 90, true);
     }
+
+   public void CoinActivator()
+    {
+       // TransitionManager.instances.MoveTransition();
+        for(int i = 0; i < ObjectPool.instances.amountToPool; i++)
+        {
+             ObjectPool.instances.pooledGameobjects[i].SetActive(true);
+            // ObjectPool.instances.pooledGameobjects[i].
+            // CoinAnimation(i);
+           ObjectPool.instances.RandomPosition();
+          StartCoroutine(CoinAnimation(i));
+
+        }
+
+    }
+
+    IEnumerator CoinAnimation(int index)
+    {
+
+        Tween tween = ObjectPool.instances.pooledGameobjects[index].GetComponent<Transform>().DOMove(new Vector3(targetLocation.transform.position.x, targetLocation.transform.position.y, targetLocation.transform.position.z), 0.5f);
+        yield return tween.WaitForCompletion();
+
+        ObjectPool.instances.pooledGameobjects[index].SetActive(false);
+        ObjectPool.instances.ResetPosition();
+    }
+
+
 }
