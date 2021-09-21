@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Scoring : MonoBehaviour
 {
     public static Scoring   instance;
-    public GameObject[]     Stars;
+    public GameObject[]     stars;
     [SerializeField] 
     private int             score;
     [SerializeField]
-    Text                    scoreUI;
+    Text                    scoreText;
     public Sprite starShine;
 
     public int starIndex;
@@ -44,8 +45,10 @@ public class Scoring : MonoBehaviour
 
     public void addScore(int gainScore)
     {
+        TextAnimaation();
         score += gainScore;
-        scoreUI.text = score.ToString();
+        scoreText.text = score.ToString();
+      
     }
 
     private void Start()
@@ -60,9 +63,10 @@ public class Scoring : MonoBehaviour
 
     public void starCheck()
     {
-        if(score % 300 == 0 && Stars[starIndex] != null)
+        if(score % 300 == 0 && stars[starIndex] != null)
         {
-            Stars[starIndex].transform.GetComponent<Image>().sprite = starShine;
+            StarAnimation();
+            stars[starIndex].transform.GetComponent<Image>().sprite = starShine;
             starIndex++;
         }
         else
@@ -103,5 +107,18 @@ public class Scoring : MonoBehaviour
         divisionEvaluation.text = "Division: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division);
         PerformanceManager.instance.answeredProblemDatas.Clear();
         PerformanceManager.instance.customersEntertained = 0;
+    }
+
+    public void StarAnimation()
+    {
+        for(int i = 0; i < stars.Length; i++)
+        {
+            stars[i].gameObject.transform.DOShakeScale(1,1,10,90,true);
+        }
+    }
+
+    public void TextAnimaation() 
+    {
+       scoreText.gameObject.transform.DOShakeScale(1, 0.3f,10, 90, true);
     }
 }
