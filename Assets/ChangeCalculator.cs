@@ -13,14 +13,18 @@ public class ChangeCalculator : MonoBehaviour
     public bool isCountingTime;
     public float timeSpent;
 
+
     private void OnEnable()
     {
+        changeInputField.Select();
         GameManager.instance.orderSheetShowing = true;
         
         cash = GameManager.instance.customer.itemsWanted[0];
         numeratorText.text = cash.numValue.ToString();
         denominatorText.text = cash.price.ToString();
         isCountingTime = true;
+
+        Debug.Log("Enable Change Calculator");
     }
 
     private void OnDisable()
