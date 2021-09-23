@@ -37,7 +37,7 @@ public class ClickToSelectItem : MonoBehaviour
             {
                 if (GameManager.instance.orderSheetShowing)
                 {
-                    Debug.Log("Clicking over UI Element: ");
+                    Debug.Log("Order Sheet is Active");
                     return;
                 }
                 SpawnItem();
