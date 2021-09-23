@@ -7,7 +7,7 @@ public class ClickToSelectItem : MonoBehaviour
 {
     [SerializeField]
     GameObject      itemSpawnedPrefab;
-    bool            canSpawn;
+    public bool            canSpawn;
     [SerializeField]
     Sprite          highlightedSprite;
     [SerializeField]
