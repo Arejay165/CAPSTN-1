@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     {                       
         isPlaying = true;
         UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
-        Destroy(customer.gameObject);
+      //  Destroy(customer.gameObject);
         StartCoroutine(customerSpawner.SpawnRate());
         Scoring.instance.SetScore(0);
         PerformanceManager.instance.customersEntertained = 0;

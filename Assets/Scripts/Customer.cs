@@ -64,16 +64,20 @@ public class Customer : MonoBehaviour
         else
         {
             //Not buying 
+            cash.numValue = Random.Range(60, 500);
+            cash.denValue = cash.numValue / Random.Range(2, 50);
+            cash.price = cash.numValue / cash.denValue;
             GameObject obj = Instantiate(itemPrefab);
             itemSprites.Add(obj.GetComponent<Image>());
             obj.transform.SetParent(panel);
             obj.GetComponent<Image>().preserveAspect = true;
             obj.GetComponent<Image>().sprite = exchangeSprite;
             itemsWanted.Add(cash);
+           
         }
 
         // For display 
-      
+
     }
 
     void RNG_item()

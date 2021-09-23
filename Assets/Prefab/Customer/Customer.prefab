@@ -286,7 +286,7 @@ MonoBehaviour:
   displayOrder: {fileID: 0}
   willBuy: 0
   randomExtraMoney: 0
-  exchangeSprite: {fileID: 21300000, guid: 8b68be0a6c97ad14db2a0f5c89c68e89, type: 3}
+  exchangeSprite: {fileID: 21300000, guid: 233b05a9e7afdcb4b85028e1edf251e6, type: 3}
 --- !u!1 &8861441445217577714
 GameObject:
   m_ObjectHideFlags: 0

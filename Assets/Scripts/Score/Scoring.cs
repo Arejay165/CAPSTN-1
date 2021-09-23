@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Scoring : MonoBehaviour
 {
     public static Scoring   instance;
-    public GameObject[]     Stars;
+    public GameObject[]     stars;
     [SerializeField] 
     private int             score;
     [SerializeField]
-    Text                    scoreUI;
+    Text                    scoreText;
     public Sprite starShine;
 
     public int starIndex;
@@ -19,6 +20,8 @@ public class Scoring : MonoBehaviour
     public Sprite failImage;
     public Image levelPasserImage;
     public GameObject failPrompt, successPrompt;
+    public GameObject coinPrefab;
+    public GameObject targetLocation;
     //public Text performanceFactName;
     //public Text performanceFactValue;
 
@@ -44,8 +47,11 @@ public class Scoring : MonoBehaviour
 
     public void addScore(int gainScore)
     {
+        TextAnimaation();
+        CoinActivator();
         score += gainScore;
-        scoreUI.text = score.ToString();
+        scoreText.text = score.ToString();
+      
     }
 
     private void Start()
@@ -60,9 +66,10 @@ public class Scoring : MonoBehaviour
 
     public void starCheck()
     {
-        if(score % 300 == 0 && Stars[starIndex] != null)
+        if(score % 300 == 0 && stars[starIndex] != null)
         {
-            Stars[starIndex].transform.GetComponent<Image>().sprite = starShine;
+            StarAnimation();
+            stars[starIndex].transform.GetComponent<Image>().sprite = starShine;
             starIndex++;
         }
         else
@@ -104,4 +111,44 @@ public class Scoring : MonoBehaviour
         PerformanceManager.instance.answeredProblemDatas.Clear();
         PerformanceManager.instance.customersEntertained = 0;
     }
+
+    public void StarAnimation()
+    {
+        for(int i = 0; i < stars.Length; i++)
+        {
+            stars[i].gameObject.transform.DOShakeScale(1,1,10,90,true);
+        }
+    }
+
+    public void TextAnimaation() 
+    {
+       scoreText.gameObject.transform.DOShakeScale(1, 0.3f,10, 90, true);
+    }
+
+   public void CoinActivator()
+    {
+       // TransitionManager.instances.MoveTransition();
+        for(int i = 0; i < ObjectPool.instances.amountToPool; i++)
+        {
+             ObjectPool.instances.pooledGameobjects[i].SetActive(true);
+            // ObjectPool.instances.pooledGameobjects[i].
+            // CoinAnimation(i);
+           ObjectPool.instances.RandomPosition();
+          StartCoroutine(CoinAnimation(i));
+
+        }
+
+    }
+
+    IEnumerator CoinAnimation(int index)
+    {
+
+        Tween tween = ObjectPool.instances.pooledGameobjects[index].GetComponent<Transform>().DOMove(new Vector3(targetLocation.transform.position.x, targetLocation.transform.position.y, targetLocation.transform.position.z), 0.5f);
+        yield return tween.WaitForCompletion();
+
+        ObjectPool.instances.pooledGameobjects[index].SetActive(false);
+        ObjectPool.instances.ResetPosition();
+    }
+
+
 }
