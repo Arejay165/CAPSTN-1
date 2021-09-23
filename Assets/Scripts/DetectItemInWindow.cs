@@ -1,26 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 
 public class DetectItemInWindow : MonoBehaviour
 {
 
     [SerializeField] private Scoring score;
-    [SerializeField] Customer customer;
     [SerializeField] public Color darkenImage;
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.instance.window = this;
+        global::GameManager.instance.window = this;
         
     }
-
-    public void SetCustomer(Customer currentCustomer)
-    {
-        customer = currentCustomer;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -29,38 +22,44 @@ public class DetectItemInWindow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if(collision.gameObject.tag == "Item")
         {
             collision.gameObject.transform.SetParent(this.gameObject.transform);
             ItemDescription itemInCounter = collision.GetComponent<ItemDescription>();
             PlayerManager.instance.isStaying = true;
             
-            if (customer)
+            if (GameManager.instance.customer)
             {
-                for(int i = 0; i < customer.itemsWanted.Count; i++)
+                for(int i = 0; i < GameManager.instance.customer.itemsWanted.Count; i++)
                 {
-                    if(itemInCounter.item.itemName == customer.itemsWanted[i].itemName)
+                    if(itemInCounter.item.itemName == GameManager.instance.customer.itemsWanted[i].itemName)
                     {
                         
                         Scoring.instance.addScore(100);
                         Scoring.instance.starCheck();
-                        customer.itemInCart.Add(customer.itemsWanted[i]);
-                        customer.itemsWanted.RemoveAt(i);
-                        customer.itemSprites[i].color = GameManager.instance.window.darkenImage;
-                        customer.itemSprites.RemoveAt(i);
-                        if (customer.itemSprites.Count <= 0)
+                        GameManager.instance.customer.itemInCart.Add(GameManager.instance.customer.itemsWanted[i]);
+                        GameManager.instance.customer.itemsWanted.RemoveAt(i);
+                        GameManager.instance.customer.itemSprites[i].color = global::GameManager.instance.window.darkenImage;
+                        GameManager.instance.customer.itemSprites.RemoveAt(i);
+                        if (GameManager.instance.customer.itemSprites.Count <= 0)
                         {
-                            TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 1f, TransitionManager.instances.noteBookTransform, GameManager.instance.testCalculator.transform.root.gameObject, true);
+
+                            TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
                         }
                         PlayerManager.instance.isStaying = false;
                         Destroy(itemInCounter.gameObject, 0.2f);
+                        Debug.Log("DESTROYING THRU DETECT CORRECT");
+                        PlayerManager.instance.lastItemSpawner = null;
                         break;
                     }
                     else
                     {
                         Debug.Log("Wrong Item");
-                        PlayerManager.instance.isStaying = true;
-                        
+                        PlayerManager.instance.isStaying = false;
+
+                    
+
                     }
                 }
             }

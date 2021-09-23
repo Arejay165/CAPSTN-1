@@ -19,7 +19,24 @@ public class Scoring : MonoBehaviour
     public Sprite failImage;
     public Image levelPasserImage;
     public GameObject failPrompt, successPrompt;
+    //public Text performanceFactName;
+    //public Text performanceFactValue;
 
+    public Text customersEntertained;
+    public Text totalSolvingTime;
+    public Text additionSolvingTime;
+    public Text additionEvaluation;
+    public Text subtractionSolvingTime;
+    public Text subtractionEvaluation;
+    public Text multiplicationSolvingTime;
+    public Text multiplicationEvaluation;
+    public Text divisionSolvingTime;
+    public Text divisionEvaluation;
+
+    public void SetScore(int p_newScore)
+    {
+        score = p_newScore;
+    }
     public int GetScore()
     {
         return score;
@@ -71,7 +88,20 @@ public class Scoring : MonoBehaviour
             levelPasserImage.sprite = failImage;
             failPrompt.SetActive(true);
             successPrompt.SetActive(false);
+            
         }
-
+        //PerformanceManager.instance.ChoosePerformanceFact();
+        customersEntertained.text = "Customer Entertained: " + PerformanceManager.instance.customersEntertained.ToString();
+        totalSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.none) + " seconds";
+        additionSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.addition) + " seconds";
+        additionEvaluation.text = "Addition: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition);
+        subtractionSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.subtraction) + " seconds";
+        subtractionEvaluation.text = "Subtraction: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction);
+        multiplicationSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.multiplication) + " seconds";
+        multiplicationEvaluation.text = "Multiplication: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication);
+        divisionSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.division) + " seconds";
+        divisionEvaluation.text = "Division: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division);
+        PerformanceManager.instance.answeredProblemDatas.Clear();
+        PerformanceManager.instance.customersEntertained = 0;
     }
 }

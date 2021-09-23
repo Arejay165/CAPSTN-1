@@ -21,9 +21,10 @@ public class HighlightObject : MonoBehaviour
         }
         
         // Destroy when not accepted by customer 
-        if (PlayerManager.instance.isStaying && Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Destroy(gameObject, 0.2f);
+            Debug.Log("DESTROYING THRU CLICK");
         }
     }
 

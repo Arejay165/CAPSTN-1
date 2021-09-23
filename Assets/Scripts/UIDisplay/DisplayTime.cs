@@ -27,39 +27,47 @@ public class DisplayTime : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Run the clock if the Store is not closed
-        // Time scale must be adjusted in order to reach the intended clock time in the end of the level 
-        if (minutes < 59.0f && !time.GetIsStoreClosed())
+        if (GameManager.instance)
         {
-            minutes += timeScale * Time.deltaTime;
-            timeDisplay.text = Mathf.Ceil(hour).ToString("00") + ":" + minutes.ToString("00");
-            
-            // Checks if it AM or PM
-            if (time.GetIsMorning())
+            if (GameManager.instance.isPlaying) //If game isn't paused
             {
-                // Display the Sun Sprite
-                timeImage.GetComponent<Image>().sprite = sunAndMoon[0];
-            }
-            else
-            {
-                // Display the Moon Sprite 
-                timeImage.GetComponent<Image>().sprite = sunAndMoon[1];
+                // Run the clock if the Store is not closed
+                // Time scale must be adjusted in order to reach the intended clock time in the end of the level 
+                if (minutes < 59.0f && !time.GetIsStoreClosed())
+                {
+                    minutes += timeScale * Time.deltaTime;
+                    timeDisplay.text = Mathf.Ceil(hour).ToString("00") + ":" + minutes.ToString("00");
+
+                    // Checks if it AM or PM
+                    if (time.GetIsMorning())
+                    {
+                        // Display the Sun Sprite
+                        timeImage.GetComponent<Image>().sprite = sunAndMoon[0];
+                    }
+                    else
+                    {
+                        // Display the Moon Sprite 
+                        timeImage.GetComponent<Image>().sprite = sunAndMoon[1];
+                    }
+                }
+
+                if (minutes > 59.0f)
+                {
+                    if (hour < 12)
+                    {
+                        hour += 1;
+                    }
+                    else
+                    {
+                        hour = 1;
+                    }
+
+                    minutes = 0;
+                }
             }
         }
-
-        if (minutes > 59.0f)
-        {
-            if (hour < 12)
-            {
-                hour += 1;
-            }
-            else
-            {
-                hour = 1;
-            }
-
-            minutes = 0;
-        }
+        
+       
        
     }
 }

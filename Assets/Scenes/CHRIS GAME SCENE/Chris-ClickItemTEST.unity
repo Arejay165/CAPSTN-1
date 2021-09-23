@@ -802,6 +802,7 @@ GameObject:
   - component: {fileID: 105356687}
   - component: {fileID: 105356689}
   - component: {fileID: 105356688}
+  - component: {fileID: 105356691}
   m_Layer: 0
   m_Name: ~GameManager
   m_TagString: Untagged
@@ -840,6 +841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHolding: 0
+  canBroadcastMouseClick: 0
   currentSelectedItem: {fileID: 0}
   lastItemSpawner: {fileID: 0}
   isStaying: 0
@@ -875,6 +877,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &105356691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105356686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2362d12b0a060934e9a3f8250e39b53f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customersEntertained: 0
+  answeredProblemDatas: []
+  rerollAttempts: 0
+  maxRerollAttempts: 16
 --- !u!1 &123657794
 GameObject:
   m_ObjectHideFlags: 0
@@ -2555,6 +2573,16 @@ MonoBehaviour:
   levelPasserImage: {fileID: 0}
   failPrompt: {fileID: 0}
   successPrompt: {fileID: 0}
+  customersEntertained: {fileID: 0}
+  totalSolvingTime: {fileID: 0}
+  additionSolvingTime: {fileID: 0}
+  additionEvaluation: {fileID: 0}
+  subtractionSolvingTime: {fileID: 0}
+  subtractionEvaluation: {fileID: 0}
+  multiplicationSolvingTime: {fileID: 0}
+  multiplicationEvaluation: {fileID: 0}
+  divisionSolvingTime: {fileID: 0}
+  divisionEvaluation: {fileID: 0}
 --- !u!114 &429350743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3375,6 +3403,16 @@ MonoBehaviour:
   levelPasserImage: {fileID: 27260206}
   failPrompt: {fileID: 651678685}
   successPrompt: {fileID: 1128581049}
+  customersEntertained: {fileID: 0}
+  totalSolvingTime: {fileID: 0}
+  additionSolvingTime: {fileID: 0}
+  additionEvaluation: {fileID: 0}
+  subtractionSolvingTime: {fileID: 0}
+  subtractionEvaluation: {fileID: 0}
+  multiplicationSolvingTime: {fileID: 0}
+  multiplicationEvaluation: {fileID: 0}
+  divisionSolvingTime: {fileID: 0}
+  divisionEvaluation: {fileID: 0}
 --- !u!114 &547003738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3388,6 +3426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noteBookTransform: {fileID: 1831685254}
+  changeTransform: {fileID: 0}
 --- !u!114 &547003739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3404,6 +3443,8 @@ MonoBehaviour:
   endGameUI: {fileID: 1660398339}
   pauseGameUI: {fileID: 1650197385}
   endGamePanel: {fileID: 1660398340}
+  upgradeUI: {fileID: 0}
+  tutorialUIs: []
 --- !u!4 &547003740
 Transform:
   m_ObjectHideFlags: 0
@@ -9976,6 +10017,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemUIClassList: []
+  itemsAnswer: []
+  changeAnswers: []
   answerFields: []
   totalPriceAnswerField: {fileID: 961274444}
   changeAnswerField: {fileID: 2021156539}
@@ -9989,6 +10032,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  isCountingTime: 0
+  timeSpent: 0
   index: 0
 --- !u!114 &1831685256
 MonoBehaviour:
@@ -10625,7 +10670,6 @@ MonoBehaviour:
   customerPrefab: {fileID: 7605085325810736498, guid: ad6796c86a2013649b0986b66fe78334, type: 3}
   spawnPoint: {fileID: 1964127359}
   displayOrder: {fileID: 1831685255}
-  orderWindow: {fileID: 1904060020}
 --- !u!4 &1966842963
 Transform:
   m_ObjectHideFlags: 0

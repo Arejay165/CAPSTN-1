@@ -7,13 +7,10 @@ public class CustomerSpawner : MonoBehaviour
     public GameObject   customerPrefab;
     public Transform      spawnPoint;
     public TestCalculator displayOrder;
-    // 
-    [SerializeField]
-    public DetectItemInWindow orderWindow;
+    public bool canSpawn = false;
     void Start()
     {
-        SpawnCustomer();
-        orderWindow = GameManager.instance.window;
+  
     }
 
  
@@ -22,11 +19,43 @@ public class CustomerSpawner : MonoBehaviour
         
     }
 
+    public void ToggleSpawn()
+    {
+        canSpawn = canSpawn ? false : true;
+        if (canSpawn)
+        {
+            if (GameManager.instance.isPlaying)
+            {
+                StartCoroutine(SpawnRate());
+            }
+        }
+    }
+
     public void SpawnCustomer()
     {
         GameObject obj = Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
         GameManager.instance.customer = obj.GetComponent<Customer>();
+        
         obj.GetComponent<Customer>().displayOrder = this.displayOrder;
-        orderWindow.GetComponent<DetectItemInWindow>().SetCustomer(obj.GetComponent<Customer>());
+        PerformanceManager.instance.customersEntertained++;
+
+        //for tutorial
+        if (TutorialManager.instance)
+        {
+            if (TutorialManager.instance.tutorialQuestActive && TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 1)
+            {
+                TutorialManager.instance.ToggleTutorialQuest();
+                TutorialManager.instance.StartTimeline();
+            }
+        }
+    
+    }
+
+    public IEnumerator SpawnRate()
+    {
+       
+        float spawnTime = Random.Range(3, 3);
+        yield return new WaitForSeconds(spawnTime);
+        SpawnCustomer();
     }
 }

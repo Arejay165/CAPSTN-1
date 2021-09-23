@@ -27,18 +27,41 @@ public class ClickToSelectItem : MonoBehaviour
     private void OnMouseOver()
     {
         HighlightItem();
-        
+
         //If the item is clicked
         //Spawn one at a time
-        if (Input.GetMouseButtonDown(0) && canSpawn)
+        if (GameManager.instance.isPlaying)
         {
-            SpawnItem();
-            canSpawn = false;
+            if (Input.GetMouseButtonDown(0) && canSpawn)
+            {
+                
+                SpawnItem();
+                canSpawn = false;
+
+                if (TutorialManager.instance)
+                {
+                    if (TutorialManager.instance.tutorialQuestActive && TutorialManager.instance.canTutorial)
+                    {
+                        if (TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 4)
+                        {
+                            TutorialManager.instance.ToggleTutorialQuest();
+                            TutorialManager.instance.StartTimeline();
+                        }
+
+                    }
+                }
+                
+                
+               
+                
+             
+            }
+            if (Input.GetMouseButtonUp(0) && !canSpawn)
+            {
+                canSpawn = true;
+            }
         }
-        if (Input.GetMouseButtonUp(0) && !canSpawn)
-        {
-            canSpawn = true;
-        }
+       
 
     }
     private void OnMouseExit()
@@ -89,6 +112,8 @@ public class ClickToSelectItem : MonoBehaviour
     {
         GameObject spawnedItem = Instantiate(itemSpawnedPrefab, this.transform.position, Quaternion.identity);
         //Animate to go to the counter 
+        spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, 1.0f);
+
         spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, animationTravelTime);
     }
 }
