@@ -7,7 +7,7 @@ public class ClickToSelectItem : MonoBehaviour
 {
     [SerializeField]
     GameObject      itemSpawnedPrefab;
-    public bool     canSpawn;
+    bool            canSpawn;
     [SerializeField]
     Sprite          highlightedSprite;
     [SerializeField]
@@ -17,6 +17,8 @@ public class ClickToSelectItem : MonoBehaviour
     //Set the location where the item will go
     [SerializeField] 
     Transform       targetPosition;
+    [SerializeField]
+    float animationTravelTime;
 
     private void Start()
     {
@@ -87,6 +89,6 @@ public class ClickToSelectItem : MonoBehaviour
     {
         GameObject spawnedItem = Instantiate(itemSpawnedPrefab, this.transform.position, Quaternion.identity);
         //Animate to go to the counter 
-        spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, 1.0f);
+        spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, animationTravelTime);
     }
 }
