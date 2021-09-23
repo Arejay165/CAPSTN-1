@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public DetectItemInWindow window;
     public bool orderSheetShowing = false;
     public bool isPlaying = false;
-
+    public int scoreGoal;
 
  
     private void Awake()

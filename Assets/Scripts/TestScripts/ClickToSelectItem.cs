@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using UnityEngine.EventSystems;
 public class ClickToSelectItem : MonoBehaviour
 {
     [SerializeField]
@@ -24,6 +24,7 @@ public class ClickToSelectItem : MonoBehaviour
     {
         canSpawn = true;
     }
+
     private void OnMouseOver()
     {
         HighlightItem();
@@ -34,7 +35,11 @@ public class ClickToSelectItem : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && canSpawn)
             {
-                
+                if (GameManager.instance.orderSheetShowing)
+                {
+                    Debug.Log("Clicking over UI Element: ");
+                    return;
+                }
                 SpawnItem();
                 canSpawn = false;
 
