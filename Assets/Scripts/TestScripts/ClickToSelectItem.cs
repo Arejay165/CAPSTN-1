@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using UnityEngine.EventSystems;
 public class ClickToSelectItem : MonoBehaviour
 {
     [SerializeField]
     GameObject      itemSpawnedPrefab;
-    public bool     canSpawn;
+    public bool            canSpawn;
     [SerializeField]
     Sprite          highlightedSprite;
     [SerializeField]
@@ -17,11 +17,14 @@ public class ClickToSelectItem : MonoBehaviour
     //Set the location where the item will go
     [SerializeField] 
     Transform       targetPosition;
+    [SerializeField]
+    float animationTravelTime;
 
     private void Start()
     {
         canSpawn = true;
     }
+
     private void OnMouseOver()
     {
         HighlightItem();
@@ -32,7 +35,11 @@ public class ClickToSelectItem : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && canSpawn)
             {
-                
+                if (GameManager.instance.orderSheetShowing)
+                {
+                    Debug.Log("Order Sheet is Active");
+                    return;
+                }
                 SpawnItem();
                 canSpawn = false;
 
@@ -112,5 +119,6 @@ public class ClickToSelectItem : MonoBehaviour
         //Animate to go to the counter 
         spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, 1.0f);
 
+        spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, animationTravelTime);
     }
 }

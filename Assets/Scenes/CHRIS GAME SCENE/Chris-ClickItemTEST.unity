@@ -2351,10 +2351,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSpawnedPrefab: {fileID: 1190130604822716557, guid: e6f22f9ead74e154da5d9f7270373f93, type: 3}
-  canSpawn: 1
   highlightedSprite: {fileID: 21300000, guid: b6d6be5f2358f844ba8d39bd07e13764, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: 2c23a5bb823c7cc4db2cedcaf4af9783, type: 3}
   targetPosition: {fileID: 1904060022}
+  animationTravelTime: 0.5
 --- !u!1 &355636827
 GameObject:
   m_ObjectHideFlags: 0
@@ -4325,10 +4325,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSpawnedPrefab: {fileID: 8129509566145490273, guid: fb0c25d6106d8834986d1f1fa3f8a01d, type: 3}
-  canSpawn: 0
   highlightedSprite: {fileID: 21300000, guid: a9a38669cbf7c944698b96d9fe39180c, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: e29e5f8482572904caa57618d4d6eb81, type: 3}
   targetPosition: {fileID: 1904060022}
+  animationTravelTime: 0.5
 --- !u!61 &690932046
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6860,10 +6860,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSpawnedPrefab: {fileID: 6924695454901390742, guid: 439c5e01488faac40be7b9ea81f92753, type: 3}
-  canSpawn: 0
   highlightedSprite: {fileID: 21300000, guid: 3d534bc0dea80764db25bf1d14caec17, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: 99cb122b05a7fc249be6901aabf57c27, type: 3}
   targetPosition: {fileID: 1904060022}
+  animationTravelTime: 0.5
 --- !u!61 &1153890158
 BoxCollider2D:
   m_ObjectHideFlags: 0
