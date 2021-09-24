@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         TransitionManager.instances?.changeTransform.gameObject.SetActive(false);
         TransitionManager.instances?.noteBookTransform.gameObject.SetActive(false);
         Scoring.instance?.UpdateGameScoreGoal();
+        Scoring.instance?.ResetMultiplier();
 
     }
 

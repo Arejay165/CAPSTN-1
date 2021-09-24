@@ -16,6 +16,8 @@ public class ItemUIClass
 public class TestCalculator : MonoBehaviour
 {
     [Header("Stats")]
+    public int answerAttempts;
+    public int perfectAttempts;
     public List<ItemUIClass> itemUIClassList = new List<ItemUIClass>(); // Datas for the Item UIs that will be in the answer pad
     public List<float> itemsAnswer = new List<float>();
     public List<float> changeAnswers = new List<float>();
@@ -23,6 +25,7 @@ public class TestCalculator : MonoBehaviour
     [SerializeField] List<InputField> answerFields = new List<InputField>();
 
     [SerializeField] InputField totalPriceAnswerField, changeAnswerField;
+    [SerializeField] GameObject customerPaidTitle;
     [SerializeField] Text customerPaidText,changeText;
     [SerializeField] float totalPriceCorrectAnswer, changeCorrectAnswer;
     bool totalPriceIsCorrect, changeIsCorrect;
@@ -52,8 +55,7 @@ public class TestCalculator : MonoBehaviour
         if (isCountingTime)
         {
             timeSpent += Time.deltaTime;
-            Debug.Log(index + " Index");
-            Debug.Log(answerFields.Count + " AnswerField");
+
         }
         
     }
@@ -66,6 +68,10 @@ public class TestCalculator : MonoBehaviour
         StackDuplicateItems();
         GameManager.instance.orderSheetShowing = true;
         totalPriceAnswerField.enabled = false;
+        changeAnswerField.gameObject.SetActive(false);
+        changeText.gameObject.SetActive(false);
+        customerPaidText.gameObject.SetActive(false);
+        customerPaidTitle.gameObject.SetActive(false);
         if(answerFields.Count > 0)
         {
             answerFields[0].Select();
@@ -101,9 +107,12 @@ public class TestCalculator : MonoBehaviour
     public void StackDuplicateItems()
     {
         Customer customer = GameManager.instance.customer;
+        answerAttempts = 0;
+        perfectAttempts = 0;
         for (int x = 0; x < customer.itemInCart.Count; x++)
         {
             bool uniqueItem = true;
+           
             for (int i = 0; i < itemUIClassList.Count; i++)
             {
                // Debug.Log("Customer item check count: " + customer.itemCheck.Count + " Item UI Count : " + itemUIClassList.Count + "Customer Item Check x " + customer.itemCheck[x].itemName);
@@ -120,6 +129,7 @@ public class TestCalculator : MonoBehaviour
             if (uniqueItem == true)//If it's a unique item (No duplicates yet in the list)
             {
                 itemUIClassList.Add(CreateItemUI(customer.itemInCart[x]));
+                perfectAttempts++;
             }
             uniqueItem = true;
         }
@@ -129,12 +139,16 @@ public class TestCalculator : MonoBehaviour
         {
             totalPriceCorrectAnswer += itemUIClassList[i].totalPriceAnswer;
         }
+
+        perfectAttempts += 2;
+
         GameManager.instance.customer.randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 20);
         changeCorrectAnswer = GameManager.instance.customer.randomExtraMoney - totalPriceCorrectAnswer;
+        
         DisplayItemOrders();
         customerPaidText.text = GameManager.instance.customer.randomExtraMoney.ToString();
+        
 
-     
     }
 
     public int IdentifyAnswerfieldIndex(string p_playerInput)
@@ -188,7 +202,7 @@ public class TestCalculator : MonoBehaviour
                     Debug.Log("All correct answer");
                     SpawnAnswerField();
                 }
-            
+                answerAttempts++;
                
             }
             //If it doesnt match its wrong
@@ -198,6 +212,7 @@ public class TestCalculator : MonoBehaviour
                 StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
                 RecordAnswerResult(itemOrderIndex, false);
                 answerFields[itemOrderIndex].Select();
+                Scoring.instance.ModifyMultiplier(-1f);
             }
         }
         else //If input is invalid (not a number)
@@ -205,7 +220,8 @@ public class TestCalculator : MonoBehaviour
             Debug.Log("Invalid Input, retry again");
             StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
             answerFields[itemOrderIndex].Select();
-            RecordAnswerResult(itemOrderIndex, false);
+
+            
         }
     }
 
@@ -286,6 +302,8 @@ public class TestCalculator : MonoBehaviour
     }
     public void ShowChangeText()
     {
+        customerPaidTitle.gameObject.SetActive(true);
+        customerPaidText.gameObject.SetActive(true);
         changeText.gameObject.SetActive(true);
         changeAnswerField.gameObject.SetActive(true);
         changeAnswerField.Select();
@@ -313,7 +331,8 @@ public class TestCalculator : MonoBehaviour
                 ShowChangeText();
                 StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect));
                 RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, true);
-                
+
+               
                 changeAnswers.Add(GameManager.instance.customer.randomExtraMoney);
                 changeAnswers.Add(totalPriceCorrectAnswer);
             }
@@ -322,13 +341,15 @@ public class TestCalculator : MonoBehaviour
                 Debug.Log("RIGHT ANSWER IS : " + totalPriceCorrectAnswer);
                 StartCoroutine(WrongInputted(totalPriceAnswerField));
                 RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, false);
+                Scoring.instance.ModifyMultiplier(-1f);
             }
+            answerAttempts++;
         }
         else
         {
             Debug.Log("Invalid Input, retry again");
             StartCoroutine(WrongInputted(totalPriceAnswerField));
-            RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, false);
+            
 
         }
 
@@ -349,6 +370,7 @@ public class TestCalculator : MonoBehaviour
         }
         if (playerInputValue != -1)
         {
+            answerAttempts++;
             if (playerInputValue == changeCorrectAnswer)
             {
                 StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
@@ -368,7 +390,7 @@ public class TestCalculator : MonoBehaviour
                    
                     Destroy(currentlySelectedItemUI.gameObject.transform.parent.gameObject);
                 }
-
+                
                 OrderSheetFinish();
                 index = 0;
             }
@@ -378,21 +400,29 @@ public class TestCalculator : MonoBehaviour
 
                 StartCoroutine(WrongInputted(changeAnswerField));
                 RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, false);
-
+                Scoring.instance.ModifyMultiplier(-1f);
             }
+            
         }
         else
         {
             Debug.Log("Invalid Input, retry again");
             
             StartCoroutine(WrongInputted(changeAnswerField));
-            RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, false);
+            
 
         }
     }
     public void OrderSheetFinish()
     {
-        Scoring.instance.addScore(100);
+        Debug.Log("PPPPPPPPPPPPPPPPPPPPPPPP: " + answerAttempts + " [] " + perfectAttempts);
+        if (answerAttempts == perfectAttempts)
+        {
+            Scoring.instance.ModifyMultiplier(1f);
+        }
+        
+        Scoring.instance.addScore((int) (100*Scoring.instance.multiplier));
+
         //  UIManager.instance.inGameUI.GetComponent<InGameUI>().scoring.gameObject.GetComponent<Text>().text = "Score: " + GameManager.instance.score.ToString(); //Very temporary until restructured codes
         
         TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);

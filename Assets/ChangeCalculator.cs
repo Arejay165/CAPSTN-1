@@ -13,7 +13,8 @@ public class ChangeCalculator : MonoBehaviour
     public bool isCountingTime;
     public float timeSpent;
 
-
+    public int answerAttempts;
+    public int perfectAttempts;
     private void OnEnable()
     {
         changeInputField.Select();
@@ -23,7 +24,7 @@ public class ChangeCalculator : MonoBehaviour
         numeratorText.text = cash.numValue.ToString();
         denominatorText.text = cash.price.ToString();
         isCountingTime = true;
-
+        perfectAttempts = 1;
         Debug.Log("Enable Change Calculator");
     }
 
@@ -58,13 +59,21 @@ public class ChangeCalculator : MonoBehaviour
         }
         if (playerInputValue != -1)
         {
+
             if (playerInputValue == cash.denValue)
             {
                 //Answer is correct
                 ChangeOrderFinish();
-                Scoring.instance.addScore(100);
+                answerAttempts++;
+                if (answerAttempts == perfectAttempts)
+                {
+                    Scoring.instance.ModifyMultiplier(1f);
+                }
+                
+                Scoring.instance.addScore((int) (100 * Scoring.instance.multiplier));
                 RecordAnswerResult(MathProblemOperator.division, true);
                 Debug.Log("Is Correct");
+                
             }
             else
             {
@@ -72,6 +81,7 @@ public class ChangeCalculator : MonoBehaviour
                 RecordAnswerResult(MathProblemOperator.division, false);
                 changeInputField.text = "";
                 changeInputField.Select();
+                Scoring.instance.ModifyMultiplier(-1f);
             }
         }
      }

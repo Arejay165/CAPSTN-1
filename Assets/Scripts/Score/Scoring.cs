@@ -12,10 +12,13 @@ public class Scoring : MonoBehaviour
    // private int             score;
     [SerializeField]
     Text                    scoreText;
-    
-    
 
-    
+
+
+    public float multiplier;
+    public float maxMultiplier;
+    public Text gameMultiplierText;
+
     public Text endScoreText;
     public Text endScoreGoalText;
     public Text gameScoreGoalText;
@@ -67,6 +70,8 @@ public class Scoring : MonoBehaviour
     public Text divisionSolvingTime;
     public Text divisionEvaluation;
 
+    public GameObject continueButton;
+    public GameObject quitButton;
 
 
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -198,6 +203,8 @@ public class Scoring : MonoBehaviour
             Destroy(spawnedFallingStarParticleFX, 3f);
         }
 
+        continueButton.SetActive(true);
+        quitButton.SetActive(true);
 
     }
 
@@ -266,7 +273,20 @@ public class Scoring : MonoBehaviour
     {
         return score;
     }
+    
+    public void ResetMultiplier()
+    {
+        multiplier = 1f;
+        gameMultiplierText.text = multiplier.ToString() + "x";
+    }
 
+    public void ModifyMultiplier(float p_modifyingValue)
+    {
+
+        multiplier = Mathf.Clamp(multiplier + p_modifyingValue, 1, maxMultiplier);
+        gameMultiplierText.text = multiplier.ToString() + "x";
+        
+    }
     public void addScore(int gainScore)
     {
         TextAnimaation();
@@ -302,33 +322,12 @@ public class Scoring : MonoBehaviour
 
     public void Results()
     {
+        continueButton.SetActive(false);
+        quitButton.SetActive(false);
         TransitionManager.instances.changeTransform.gameObject.SetActive(false);
         TransitionManager.instances.noteBookTransform.gameObject.SetActive(false);
         ShowResults(score);
-        
-
-       //UpdateText(savedScore);
-        //OLD
-        //if (starIndex > 0)
-        //{
-        //    //old
-        //    //endScoreText.text = score.ToString();
-
-        //    //for (int i = 0; i < starIndex; i++)
-        //    //{
-        //    //    starSlots[i].transform.GetComponent<Image>().sprite = starShine;
-        //    //}
-            
-        //}
-        //else
-        //{
-        //    endScoreText.text = score.ToString();
-        //    levelPasserImage.sprite = failImage;
-        //    failPrompt.SetActive(true);
-        //    successPrompt.SetActive(false);
-            
-        //}
-        //PerformanceManager.instance.ChoosePerformanceFact();
+       
         customersEntertained.text = "Customer Entertained: " + PerformanceManager.instance.customersEntertained.ToString();
         totalSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.none) + " seconds";
         additionSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.addition) + " seconds";
