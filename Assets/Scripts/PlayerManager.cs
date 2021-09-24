@@ -32,14 +32,15 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!TutorialManager.instance.tutorialQuestActive)
-        {
-            if (Input.GetMouseButtonDown(0) || Input.anyKeyDown)
-            {
-                TutorialManager.instance.StartTimeline();
+        //TUTORIAL
+        //if (!TutorialManager.instance.tutorialQuestActive)
+        //{
+        //    if (Input.GetMouseButtonDown(0) || Input.anyKeyDown)
+        //    {
+        //        TutorialManager.instance.StartTimeline();
                 
-            }
-        }
+        //    }
+        //}
 
     }
 
