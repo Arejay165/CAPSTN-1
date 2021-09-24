@@ -10,8 +10,11 @@ public class UIManager : MonoBehaviour
     public GameObject inGameUI;
     public GameObject endGameUI;
     public GameObject pauseGameUI;
+    public RectTransform endGamePanel;
+    public GameObject upgradeUI;
+
    
-    public List<GameObject> tutorialUIs = new List<GameObject>();
+    //public List<GameObject> tutorialUIs = new List<GameObject>();
   
     private void Awake()
     {
@@ -24,86 +27,74 @@ public class UIManager : MonoBehaviour
             Destroy(this);
         }
     }
-    public void AddTutorialPanel(GameObject p_additionalPanel)
-    {
-        tutorialUIs.Add(p_additionalPanel);
-        if (TutorialManager.instance)
-        {
+    //public void AddTutorialPanel(GameObject p_additionalPanel)
+    //{
+    //    tutorialUIs.Add(p_additionalPanel);
+    //    if (TutorialManager.instance)
+    //    {
             
-            if (tutorialUIs.Count > 1)
-            {
-                //Sort 
-                for (int x = 0; x < tutorialUIs.Count; x++)
-                {
-                    int formerIndex = x;
-                    int targetIndex = -1;
-                    //Look for the UI panel matching the section
-                    for (int i = 0; i < System.Enum.GetValues(typeof(TutorialSection)).Length - 2;)
-                    {
+    //        if (tutorialUIs.Count > 1)
+    //        {
+    //            //Sort 
+    //            for (int x = 0; x < tutorialUIs.Count; x++)
+    //            {
+    //                int formerIndex = x;
+    //                int targetIndex = -1;
+    //                //Look for the UI panel matching the section
+    //                for (int i = 0; i < System.Enum.GetValues(typeof(TutorialSection)).Length - 2;)
+    //                {
       
-                        if (tutorialUIs[x].GetComponent<TutorialPanel>().tutorialSection == (TutorialSection)i)
-                        {
+    //                    if (tutorialUIs[x].GetComponent<TutorialPanel>().tutorialSection == (TutorialSection)i)
+    //                    {
 
-                            Debug.Log("FOUND " + tutorialUIs[x].GetComponent<TutorialPanel>().tutorialSection + " - " + (TutorialSection)i + " - " + x);
+    //                        Debug.Log("FOUND " + tutorialUIs[x].GetComponent<TutorialPanel>().tutorialSection + " - " + (TutorialSection)i + " - " + x);
 
-                            targetIndex = i;
-                            if (targetIndex >= tutorialUIs.Count)
-                            {
-                                targetIndex = tutorialUIs.Count;
-                            }
-                            break;
-                        }
-                        i++;
-                        if (i >= System.Enum.GetValues(typeof(TutorialSection)).Length - 2)
-                        {
-                            Debug.Log("There is no tutorial UI for " + (TutorialSection)i-- + " found");
-                        }
+    //                        targetIndex = i;
+    //                        if (targetIndex >= tutorialUIs.Count)
+    //                        {
+    //                            targetIndex = tutorialUIs.Count;
+    //                        }
+    //                        break;
+    //                    }
+    //                    i++;
+    //                    if (i >= System.Enum.GetValues(typeof(TutorialSection)).Length - 2)
+    //                    {
+    //                        Debug.Log("There is no tutorial UI for " + (TutorialSection)i-- + " found");
+    //                    }
                           
-                    }
-                    //Keep switching places until it is at its desired place
+    //                }
+    //                //Keep switching places until it is at its desired place
                  
 
                         
-                    GameObject savedTarget = tutorialUIs[targetIndex];
+    //                GameObject savedTarget = tutorialUIs[targetIndex];
 
-                    tutorialUIs[targetIndex] = tutorialUIs[x];
-                    tutorialUIs[x] = savedTarget;
+    //                tutorialUIs[targetIndex] = tutorialUIs[x];
+    //                tutorialUIs[x] = savedTarget;
                      
                         
                     
-                }
-            }
+    //            }
+    //        }
             
 
-        }
-        TutorialManager.instance.TutorialSectionStart();
-    }
+    //    }
+    //    TutorialManager.instance.TutorialSectionStart();
+    //}
 
     private void OnEnable()
     {
         ActivateGameObjects(inGameUI.name);
-        if (TutorialManager.instance)
-        {
-            
-            //Registers current tutorial action 
-            TutorialManager.OnTutorialSectionStarted += ActivateTutorialPanel;
-            
-            
+        //ActivateGameObjects(upgradeUI.name);
 
-        }
+
+  
 
     }
 
     private void OnDisable()
     {
-        if (TutorialManager.instance)
-        {
-
-            //Registers current tutorial action 
-            TutorialManager.OnTutorialSectionStarted -= ActivateTutorialPanel;
-
-
-        }
+ 
     }
 
     // Update is called once per frame
@@ -127,36 +118,7 @@ public class UIManager : MonoBehaviour
         inGameUI.SetActive(inGameUI.name.Equals(nameOfGameObject));
         endGameUI.SetActive(endGameUI.name.Equals(nameOfGameObject));
         pauseGameUI.SetActive(pauseGameUI.name.Equals(nameOfGameObject));
-        
-    }
-
-    public void ActivateTutorialPanel()
-    {
-        if (TutorialManager.instance)
-        {
-            foreach (GameObject selectedTutorialUI in tutorialUIs)
-            {
-                selectedTutorialUI.SetActive(false);
-            }
-            
-            if (tutorialUIs.Count > 0)
-            {
-                int currentIndex = (int)TutorialManager.instance.currentTutorialSection;
-                if (currentIndex < tutorialUIs.Count)
-                {
-                    Debug.Log("ACTIVATING: " + (int)TutorialManager.instance.currentTutorialSection + " - " + tutorialUIs[(int)TutorialManager.instance.currentTutorialSection].name);
-                    tutorialUIs[currentIndex].SetActive(true);
-                }
-                
-
-                
-
-            }
-
-
-        }
-
-
+        upgradeUI.SetActive(upgradeUI.name.Equals(nameOfGameObject)); 
     }
 
     public void Pause()
@@ -181,9 +143,10 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    #region Tutorial Functions
-    
+    public void Continue() // Open Upgrade
+    {
+        ActivateGameObjects(upgradeUI.name);
+        Debug.Log("Continue");
+    }
 
-    
-    #endregion
 }

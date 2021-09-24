@@ -5,7 +5,7 @@ using System;
 public class TutorialPanel : MonoBehaviour
 {
    
-    public TutorialSection tutorialSection;
+   // public TutorialSection tutorialSection;
     public List<GameObject> tutorialTexts = new List<GameObject>();
     public int currentIndex = 0;
    
@@ -14,14 +14,7 @@ public class TutorialPanel : MonoBehaviour
     {
         gameObject.SetActive(false);
         //For Composition Structure (UIManager doesnt need to know if he has this specific instance, this instance will just add itself)
-        if (UIManager.instance)
-        {
-            UIManager.instance.AddTutorialPanel(gameObject);
-        }
-        else
-        {
-            Debug.Log("No UIManager was found in the Canvas");
-        }
+ 
         
     }
 
@@ -30,7 +23,7 @@ public class TutorialPanel : MonoBehaviour
         if (TutorialManager.instance)
         {
           
-            PlayerManager.OnMouseClick += SelectTutorialPanel;
+            //PlayerManager.OnMouseClick += SelectTutorialPanel;
         }
         ShowText();
     
@@ -41,7 +34,7 @@ public class TutorialPanel : MonoBehaviour
         if (TutorialManager.instance)
         {
           
-            PlayerManager.OnMouseClick -= SelectTutorialPanel;
+            //PlayerManager.OnMouseClick -= SelectTutorialPanel;
         }
         currentIndex = 0;
 
@@ -68,7 +61,7 @@ public class TutorialPanel : MonoBehaviour
         else // If there are no tutorialTexts left to show
         {
 
-            TutorialManager.instance.TutorialDialogueEnd();
+            //TutorialManager.instance.TutorialDialogueEnd();
 
         }
 

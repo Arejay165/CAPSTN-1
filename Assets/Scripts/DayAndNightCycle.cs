@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class DayAndNightCycle : MonoBehaviour
 {
+    public static DayAndNightCycle instance;
     [SerializeField]
     int         days;
     // Internal game clock in seconds
@@ -25,6 +26,18 @@ public class DayAndNightCycle : MonoBehaviour
 
     public UIManager uIManager;
 
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != null)
+        {
+            Destroy(this);
+        }
+    }
+
     public int GetDays()
     {
         return days;
@@ -38,6 +51,15 @@ public class DayAndNightCycle : MonoBehaviour
         return gameTime;
     }
 
+    public void SetGameTime(float p_newGameTime)
+    {
+        gameTime = p_newGameTime;
+    }
+
+    public void SetStoreClosed(bool p_newIsStoreClosed)
+    {
+        isStoreClosed = p_newIsStoreClosed;
+    }
     public bool GetIsStoreClosed()
     {
         return isStoreClosed;
@@ -48,27 +70,35 @@ public class DayAndNightCycle : MonoBehaviour
     }
     private void Update()
     { 
-        // Game time is used for how long the game will last. It will continuously count until the end time is reached  
-        if (gameTime < endTime && !isStoreClosed)
+        if (GameManager.instance)
         {
-            gameTime += Time.deltaTime;
-            
-            if (gameTime >= endTime * 2 / 3)
+            if (GameManager.instance.isPlaying) //If game isn't paused
             {
-                if (isMorning)
+
+                // Game time is used for how long the game will last. It will continuously count until the end time is reached  
+                if (gameTime < endTime && !isStoreClosed)
                 {
-                    isMorning = false;
+                    gameTime += Time.deltaTime;
+
+                    if (gameTime >= endTime * 2 / 3)
+                    {
+                        if (isMorning)
+                        {
+                            isMorning = false;
+                        }
+                    }
+                }
+                else if (!isStoreClosed)
+                {
+                    isStoreClosed = true;
+                    uIManager.ActivateGameObjects(uIManager.endGameUI.name);
+                    TransitionManager.instances.MoveTransition(new Vector2(0, 0), 1f, uIManager.endGameUI.GetComponent<RectTransform>(), uIManager.endGameUI.gameObject, true);
+                    Scoring.instance.Results();
+                    Debug.Log("Level Over");
                 }
             }
         }
-        else if (!isStoreClosed)
-        {
-            isStoreClosed = true;
-            uIManager.ActivateGameObjects(uIManager.endGameUI.name);
-            TransitionManager.instances.MoveTransition(new Vector2(0, 0), 1f, uIManager.endGameUI.GetComponent<RectTransform>(), uIManager.endGameUI.gameObject, true);
-            Scoring.instance.Results();
-            Debug.Log("Level Over");
-        }
+        
         
         
     }

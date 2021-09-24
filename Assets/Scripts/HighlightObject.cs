@@ -15,11 +15,25 @@ public class HighlightObject : MonoBehaviour
 
     private void OnMouseOver()
     {
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = highlightObj;
+        if (highlightObj)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = highlightObj;
+        }
+        
+        // Destroy when not accepted by customer 
+        if (Input.GetMouseButtonDown(0))
+        {
+            Destroy(gameObject, 0.2f);
+            Debug.Log("DESTROYING THRU CLICK");
+        }
     }
 
     void OnMouseExit()
     {
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = unhighlightObj;
+        if (unhighlightObj)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = unhighlightObj;
+        }
+       
     }
 }

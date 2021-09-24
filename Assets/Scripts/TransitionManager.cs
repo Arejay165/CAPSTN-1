@@ -8,6 +8,7 @@ public class TransitionManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public RectTransform noteBookTransform;
+    public RectTransform changeTransform;
     public static TransitionManager instances;
     void Start()
     {
