@@ -7,9 +7,9 @@ using DG.Tweening;
 public class Scoring : MonoBehaviour
 {
     public static Scoring   instance;
-    public GameObject[]     stars;
-    [SerializeField] 
-    private int             score;
+   // public GameObject[]     stars;
+
+   // private int             score;
     [SerializeField]
     Text                    scoreText;
     
@@ -302,9 +302,11 @@ public class Scoring : MonoBehaviour
 
     public void Results()
     {
+        TransitionManager.instances.changeTransform.gameObject.SetActive(false);
+        TransitionManager.instances.noteBookTransform.gameObject.SetActive(false);
         ShowResults(score);
         
-        
+
        //UpdateText(savedScore);
         //OLD
         //if (starIndex > 0)
@@ -343,7 +345,7 @@ public class Scoring : MonoBehaviour
 
     public void StarAnimation()
     {
-        for(int i = 0; i < stars.Length; i++)
+        for(int i = 0; i < stars.Count; i++)
         {
             stars[i].gameObject.transform.DOShakeScale(1,1,10,90,true);
         }

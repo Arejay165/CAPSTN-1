@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
             Destroy(customer.gameObject);
         }
         StartCoroutine(customerSpawner.SpawnRate());
+        //? means null checker
         Scoring.instance?.SetScore(0);
         PerformanceManager.instance.customersEntertained = 0;
         DayAndNightCycle.instance?.SetGameTime(0);
