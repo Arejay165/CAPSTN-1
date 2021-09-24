@@ -37,7 +37,7 @@ public class DetectItemInWindow : MonoBehaviour
                     {
                         
                         Scoring.instance.addScore(100);
-                        Scoring.instance.starCheck();
+                        //Scoring.instance.starCheck(); //Old Star rating in-game
                         GameManager.instance.customer.itemInCart.Add(GameManager.instance.customer.itemsWanted[i]);
                         GameManager.instance.customer.itemsWanted.RemoveAt(i);
                         GameManager.instance.customer.itemSprites[i].color = global::GameManager.instance.window.darkenImage;

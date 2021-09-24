@@ -392,7 +392,7 @@ public class TestCalculator : MonoBehaviour
     }
     public void OrderSheetFinish()
     {
-        GameManager.instance.score+= 100;
+        Scoring.instance.addScore(100);
         //  UIManager.instance.inGameUI.GetComponent<InGameUI>().scoring.gameObject.GetComponent<Text>().text = "Score: " + GameManager.instance.score.ToString(); //Very temporary until restructured codes
         
         TransitionManager.instances.MoveTransition(new Vector2(-743f, 1387.0f), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);

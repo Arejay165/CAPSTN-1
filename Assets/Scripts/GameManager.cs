@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public Customer             customer;
     public TestCalculator testCalculator;
     public CustomerSpawner customerSpawner;
-    public int score = 0;
     public DetectItemInWindow window;
     public bool orderSheetShowing = false;
     public bool isPlaying = false;
@@ -27,7 +26,7 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
-
+        
     }
 
     public void TogglePlaying()
@@ -39,20 +38,43 @@ public class GameManager : MonoBehaviour
     {                       
         isPlaying = true;
         UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
-        Destroy(customer.gameObject);
+
+        if (customer)
+        {
+            Destroy(customer.gameObject);
+        }
         StartCoroutine(customerSpawner.SpawnRate());
-        Scoring.instance.SetScore(0);
+        Scoring.instance?.SetScore(0);
         PerformanceManager.instance.customersEntertained = 0;
-        DayAndNightCycle.instance.SetGameTime(0);
-        DayAndNightCycle.instance.SetStoreClosed(false);
-        TransitionManager.instances.changeTransform.gameObject.SetActive(false);
-        TransitionManager.instances.noteBookTransform.gameObject.SetActive(false);
+        DayAndNightCycle.instance?.SetGameTime(0);
+        DayAndNightCycle.instance?.SetStoreClosed(false);
+        TransitionManager.instances?.changeTransform.gameObject.SetActive(false);
+        TransitionManager.instances?.noteBookTransform.gameObject.SetActive(false);
+        Scoring.instance?.UpdateGameScoreGoal();
 
     }
 
     virtual protected void Start()
     {
-
+        //There is no tutorial
+        if (TutorialManager.instance == null)
+        {
+          
+            SetUpGame();
+        }
+        else if (TutorialManager.instance)
+        {
+            //There is tutorial but it's not active
+            if (!TutorialManager.instance.canTutorial)
+            {
+                SetUpGame();
+            }
+            else
+            {
+                //Do tutorial
+            }
+        }
+        
     }
 
     private void OnDisable()
