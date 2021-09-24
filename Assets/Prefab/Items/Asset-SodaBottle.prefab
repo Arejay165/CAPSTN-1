@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2936979158446194312}
   - component: {fileID: 2936979158446194325}
   - component: {fileID: 4892750244522790991}
-  - component: {fileID: -2375130796355535421}
+  - component: {fileID: -5126460072217094}
   m_Layer: 0
   m_Name: Asset-SodaBottle
   m_TagString: Item
@@ -147,7 +147,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-2375130796355535421
+--- !u!114 &-5126460072217094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,5 +159,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d98838e5e2a59e498cfb58bda9c29a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unhighlightObj: {fileID: 0}
-  highlightObj: {fileID: 0}
+  unhighlightObj: {fileID: 21300000, guid: fffd68ca8852e984795b7a6951edd4fe, type: 3}
+  highlightObj: {fileID: 21300000, guid: fffd68ca8852e984795b7a6951edd4fe, type: 3}

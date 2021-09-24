@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3548551659071338097}
   - component: {fileID: 2019872585218384307}
   - component: {fileID: -8387446243969283866}
+  - component: {fileID: -2255254291797306372}
   m_Layer: 0
   m_Name: Half_Rice
   m_TagString: Item
@@ -146,3 +147,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: cab1686393119d548a64534ee32f9096, type: 2}
+--- !u!114 &-2255254291797306372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320266045437639076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d98838e5e2a59e498cfb58bda9c29a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unhighlightObj: {fileID: 21300000, guid: 3ca60f6d87b1a2c43add9ca8898db5cf, type: 3}
+  highlightObj: {fileID: 21300000, guid: 3ca60f6d87b1a2c43add9ca8898db5cf, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1400139485487023624}
   - component: {fileID: -6797807168423587866}
   - component: {fileID: -1959524681414580616}
+  - component: {fileID: 3142363496527525554}
   m_Layer: 0
   m_Name: Chip_Placeholder
   m_TagString: Untagged
@@ -146,3 +147,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3142363496527525554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2672793170118218431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d98838e5e2a59e498cfb58bda9c29a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unhighlightObj: {fileID: 21300000, guid: e6585eb644f31d248a9a05e6a02e5279, type: 3}
+  highlightObj: {fileID: 21300000, guid: e6585eb644f31d248a9a05e6a02e5279, type: 3}
