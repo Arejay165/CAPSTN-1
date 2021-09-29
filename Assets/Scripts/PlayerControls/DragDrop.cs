@@ -50,7 +50,7 @@ public class DragDrop : MonoBehaviour
                     {
 
                         Scoring.instance.addScore(100);
-                        Scoring.instance.starCheck();
+                        //Scoring.instance.starCheck(); //Old Star rating in-game
                         customer.itemInCart.Add(customer.itemsWanted[i]);
                         customer.itemsWanted.RemoveAt(i);
                         customer.itemSprites[i].color = GameManager.instance.window.darkenImage;

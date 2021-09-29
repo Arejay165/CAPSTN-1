@@ -91,6 +91,7 @@ public class DayAndNightCycle : MonoBehaviour
                 else if (!isStoreClosed)
                 {
                     isStoreClosed = true;
+                    GameManager.instance.orderSheetShowing = true;
                     uIManager.ActivateGameObjects(uIManager.endGameUI.name);
                     TransitionManager.instances.MoveTransition(new Vector2(0, 0), 1f, uIManager.endGameUI.GetComponent<RectTransform>(), uIManager.endGameUI.gameObject, true);
                     Scoring.instance.Results();

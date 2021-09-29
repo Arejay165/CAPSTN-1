@@ -12,7 +12,7 @@ public class CustomerSpawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnRate());
+      //  StartCoroutine(SpawnRate());
     }
     public void ToggleSpawn()
     {
@@ -34,6 +34,7 @@ public class CustomerSpawner : MonoBehaviour
         obj.GetComponent<Customer>().displayOrder = this.displayOrder;
         PerformanceManager.instance.customersEntertained++;
 
+        Debug.Log("Stiff");
         //for tutorial
         if (TutorialManager.instance)
         {

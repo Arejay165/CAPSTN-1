@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 798af1ad5f53b744f886da8e272ddd7c
   - enabled: 1
-    path: Assets/Scenes/Prototype_JACE.unity
-    guid: 0c5ff4136934bf44faf9992a4a988a97
-  - enabled: 0
     path: Assets/Scenes/JerryScene.unity
     guid: c2a4c2cb6173dd74298512c53b0426f5
   m_configObjects: {}
