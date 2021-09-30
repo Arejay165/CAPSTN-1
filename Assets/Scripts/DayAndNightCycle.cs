@@ -37,7 +37,20 @@ public class DayAndNightCycle : MonoBehaviour
             Destroy(this);
         }
     }
+    public void OnEnable()
+    {
+        GameManager.OnGameStart += OnGameStarted;
+    }
+    public void OnDisable()
+    {
+        GameManager.OnGameStart -= OnGameStarted;
+    }
 
+    void OnGameStarted()
+    {
+        SetGameTime(0);
+        SetStoreClosed(false);
+    }
     public int GetDays()
     {
         return days;

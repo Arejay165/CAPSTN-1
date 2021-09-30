@@ -33,7 +33,8 @@ public class ChangeCalculator : MonoBehaviour
         billCounter.isChangeUIActive = false;
         changeInputField.text = "";
         changeInputField.Select();
-      
+        changeInputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+
     }
     private void Update()
     {

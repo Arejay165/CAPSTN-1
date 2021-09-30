@@ -27,75 +27,23 @@ public class UIManager : MonoBehaviour
             Destroy(this);
         }
     }
-    //public void AddTutorialPanel(GameObject p_additionalPanel)
-    //{
-    //    tutorialUIs.Add(p_additionalPanel);
-    //    if (TutorialManager.instance)
-    //    {
-            
-    //        if (tutorialUIs.Count > 1)
-    //        {
-    //            //Sort 
-    //            for (int x = 0; x < tutorialUIs.Count; x++)
-    //            {
-    //                int formerIndex = x;
-    //                int targetIndex = -1;
-    //                //Look for the UI panel matching the section
-    //                for (int i = 0; i < System.Enum.GetValues(typeof(TutorialSection)).Length - 2;)
-    //                {
-      
-    //                    if (tutorialUIs[x].GetComponent<TutorialPanel>().tutorialSection == (TutorialSection)i)
-    //                    {
 
-    //                        Debug.Log("FOUND " + tutorialUIs[x].GetComponent<TutorialPanel>().tutorialSection + " - " + (TutorialSection)i + " - " + x);
-
-    //                        targetIndex = i;
-    //                        if (targetIndex >= tutorialUIs.Count)
-    //                        {
-    //                            targetIndex = tutorialUIs.Count;
-    //                        }
-    //                        break;
-    //                    }
-    //                    i++;
-    //                    if (i >= System.Enum.GetValues(typeof(TutorialSection)).Length - 2)
-    //                    {
-    //                        Debug.Log("There is no tutorial UI for " + (TutorialSection)i-- + " found");
-    //                    }
-                          
-    //                }
-    //                //Keep switching places until it is at its desired place
-                 
-
-                        
-    //                GameObject savedTarget = tutorialUIs[targetIndex];
-
-    //                tutorialUIs[targetIndex] = tutorialUIs[x];
-    //                tutorialUIs[x] = savedTarget;
-                     
-                        
-                    
-    //            }
-    //        }
-            
-
-    //    }
-    //    TutorialManager.instance.TutorialSectionStart();
-    //}
-
-    private void OnEnable()
+    public void OnEnable()
     {
+        GameManager.OnGameStart += OnGameStarted;
+    }
+    public void OnDisable()
+    {
+        GameManager.OnGameStart -= OnGameStarted;
+    }
+
+    void OnGameStarted()
+    {
+        //? means null checker
         ActivateGameObjects(inGameUI.name);
-        //ActivateGameObjects(upgradeUI.name);
-
-
-  
-
     }
+   
 
-    private void OnDisable()
-    {
- 
-    }
 
     // Update is called once per frame
     void Update()

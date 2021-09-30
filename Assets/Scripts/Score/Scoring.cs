@@ -333,7 +333,22 @@ public class Scoring : MonoBehaviour
         }
         Scoring.instance.UpdateGameScoreGoal();
     }
+    public void OnEnable()
+    {
+        GameManager.OnGameStart += OnGameStarted;
+    }
+    public void OnDisable()
+    {
+        GameManager.OnGameStart -= OnGameStarted;
+    }
 
+    void OnGameStarted()
+    {
+        //? means null checker
+        SetScore(0);
+        UpdateGameScoreGoal();
+        ResetMultiplier();
+    }
     public void starCheck()
     {
         if(score % 300 == 0 && stars[starIndex] != null)

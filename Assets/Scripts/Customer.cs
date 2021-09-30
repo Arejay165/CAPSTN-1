@@ -89,6 +89,8 @@ public class Customer : MonoBehaviour
 
     }
 
+   
+
     void RNG_item()
     {
 

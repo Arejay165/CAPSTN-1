@@ -17,6 +17,6 @@ public class DisplayGoalScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        goalText.text = GameManager.instance.scoreGoal.ToString();
+       // goalText.text = GameManager.instance.scoreGoal.ToString();
     }
 }

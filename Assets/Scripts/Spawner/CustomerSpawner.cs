@@ -14,6 +14,21 @@ public class CustomerSpawner : MonoBehaviour
     {
       //  StartCoroutine(SpawnRate());
     }
+
+    public void OnEnable()
+    {
+        GameManager.OnGameStart += OnGameStarted;
+    }
+    public void OnDisable()
+    {
+        GameManager.OnGameStart -= OnGameStarted;
+    }
+
+    void OnGameStarted()
+    {
+        //? means null checker
+        StartCoroutine(SpawnRate());
+    }
     public void ToggleSpawn()
     {
         canSpawn = canSpawn ? false : true;
