@@ -64,9 +64,18 @@ public class Customer : MonoBehaviour
         else
         {
             //Not buying 
-            cash.numValue = Random.Range(60, 500);
-            cash.denValue = cash.numValue / Random.Range(2, 50);
-            cash.price = cash.numValue / cash.denValue;
+
+            //Test for whole number answer for Division 
+            //dividend / divisor = quotient (answer of player)
+            // Reverse the division to multiplication
+            // divisor * quotient = dividend
+            int divisor = Random.Range(2, 51); // use to multiply to the quotient to always be whole number 
+            int quotient = Random.Range(1, 50); // possible answers 
+            int dividend = divisor * quotient; // determine the dividend
+
+            cash.numValue = dividend;//Random.Range(60, 500);
+            cash.denValue = divisor;//cash.numValue / Random.Range(2, 50);
+            cash.price = quotient;//cash.numValue / cash.denValue;
             GameObject obj = Instantiate(itemPrefab);
             itemSprites.Add(obj.GetComponent<Image>());
             obj.transform.SetParent(panel);
