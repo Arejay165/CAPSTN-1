@@ -75,6 +75,7 @@ public class TestCalculator : MonoBehaviour
         if(answerFields.Count > 0)
         {
             answerFields[0].Select();
+            answerFields[0].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
         }
         isCountingTime = true;
     }
@@ -195,7 +196,7 @@ public class TestCalculator : MonoBehaviour
                 {
                     Debug.Log("List still has inputfield");
                     answerFields[index].Select();
-
+                    answerFields[index].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
                 }
                 else
                 {
@@ -211,7 +212,7 @@ public class TestCalculator : MonoBehaviour
                 Debug.Log("Wrong");
                 StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
                 RecordAnswerResult(itemOrderIndex, false);
-                answerFields[itemOrderIndex].Select();
+               
                 Scoring.instance.ModifyMultiplier(-1f);
             }
         }
@@ -219,7 +220,7 @@ public class TestCalculator : MonoBehaviour
         {
             Debug.Log("Invalid Input, retry again");
             StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
-            answerFields[itemOrderIndex].Select();
+           
 
             
         }
@@ -232,7 +233,8 @@ public class TestCalculator : MonoBehaviour
            totalPriceAnswerField.enabled = true;
             
            totalPriceAnswerField.Select();
-            
+            totalPriceAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+
         }
     }
 
@@ -267,7 +269,8 @@ public class TestCalculator : MonoBehaviour
         //yield return new WaitForSeconds(1f);
        
         p_inputField.text = "";
-        p_inputField.Select();
+        p_inputField.ActivateInputField();
+        p_inputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
     }
     public void RecordAnswerResult(int p_index, bool p_isCorrect)
@@ -307,6 +310,7 @@ public class TestCalculator : MonoBehaviour
         changeText.gameObject.SetActive(true);
         changeAnswerField.gameObject.SetActive(true);
         changeAnswerField.Select();
+        changeAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
     }
 
     public void OnTotalPriceInputted()

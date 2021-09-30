@@ -17,7 +17,7 @@ public class ChangeCalculator : MonoBehaviour
     public int perfectAttempts;
     private void OnEnable()
     {
-        changeInputField.Select();
+       
         GameManager.instance.orderSheetShowing = true;
         
         cash = GameManager.instance.customer.itemsWanted[0];
@@ -25,6 +25,9 @@ public class ChangeCalculator : MonoBehaviour
         denominatorText.text = cash.price.ToString();
         isCountingTime = true;
         perfectAttempts = 1;
+
+        StartCoroutine(InputFieldSelect());
+        changeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
         Debug.Log("Enable Change Calculator");
     }
 
@@ -32,8 +35,9 @@ public class ChangeCalculator : MonoBehaviour
     {
         billCounter.isChangeUIActive = false;
         changeInputField.text = "";
-        changeInputField.Select();
-      
+       
+        // changeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+        Debug.Log("Disable Change Calculator");
     }
     private void Update()
     {
@@ -45,8 +49,46 @@ public class ChangeCalculator : MonoBehaviour
 
     }
     
+    IEnumerator InputFieldSelect()
+    {
+        yield return 0;
+        changeInputField.Select();
+        changeInputField.ActivateInputField();
+
+
+    }
+
+    IEnumerator WrongInputted(InputField p_inputField)
+    {
+        p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
+        yield return new WaitForSeconds(0.1f);
+        p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+
+        yield return new WaitForSeconds(0.05f);
+
+        p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
+        yield return new WaitForSeconds(0.1f);
+        p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+
+        yield return new WaitForSeconds(0.05f);
+
+        p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
+        yield return new WaitForSeconds(0.1f);
+        p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+
+        yield return new WaitForSeconds(0.05f);
+        //yield return new WaitForSeconds(1f);
+
+        p_inputField.text = "";
+        p_inputField.Select();
+        p_inputField.ActivateInputField();
+        p_inputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+
+    }
+
     public void OnPriceInputted()
     {
+        changeInputField.Select();
 
         string playerInputString = changeInputField.text;
 
@@ -80,7 +122,7 @@ public class ChangeCalculator : MonoBehaviour
                 Debug.Log("Isincorrect");
                 RecordAnswerResult(MathProblemOperator.division, false);
                 changeInputField.text = "";
-                changeInputField.Select();
+                StartCoroutine(WrongInputted(changeInputField));
                 Scoring.instance.ModifyMultiplier(-1f);
             }
         }
