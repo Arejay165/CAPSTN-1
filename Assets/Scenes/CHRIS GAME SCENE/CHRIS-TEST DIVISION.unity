@@ -1243,6 +1243,7 @@ MonoBehaviour:
   highlightedSprite: {fileID: 21300000, guid: 3d534bc0dea80764db25bf1d14caec17, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: 99cb122b05a7fc249be6901aabf57c27, type: 3}
   targetPosition: {fileID: 1683693530}
+  animationTravelTime: 0
 --- !u!61 &155947204
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2379,6 +2380,7 @@ MonoBehaviour:
   highlightedSprite: {fileID: 21300000, guid: a9a38669cbf7c944698b96d9fe39180c, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: e29e5f8482572904caa57618d4d6eb81, type: 3}
   targetPosition: {fileID: 1683693530}
+  animationTravelTime: 0
 --- !u!61 &343929965
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3606,10 +3608,10 @@ MonoBehaviour:
   customer: {fileID: 0}
   testCalculator: {fileID: 1895306469}
   customerSpawner: {fileID: 803262379}
-  score: 0
   window: {fileID: 0}
   orderSheetShowing: 0
   isPlaying: 1
+  scoreGoal: 0
 --- !u!114 &573976041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5064,6 +5066,8 @@ MonoBehaviour:
   cash: {fileID: 0}
   isCountingTime: 0
   timeSpent: 0
+  answerAttempts: 0
+  perfectAttempts: 0
 --- !u!114 &705746954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6073,7 +6077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d352af88b28a574c8e25eba6d905d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerPrefab: {fileID: 7605085325810736498, guid: ad6796c86a2013649b0986b66fe78334, type: 3}
+  customerPrefab: {fileID: 7605085325810736498, guid: 298be97e85ae84f45a078ab3cad14559, type: 3}
   spawnPoint: {fileID: 893020916}
   displayOrder: {fileID: 1895306469}
   canSpawn: 1
@@ -7101,6 +7105,7 @@ MonoBehaviour:
   highlightedSprite: {fileID: 0}
   defaultItemSprite: {fileID: 0}
   targetPosition: {fileID: 1683693530}
+  animationTravelTime: 0
 --- !u!61 &919596370
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10930,6 +10935,7 @@ MonoBehaviour:
   highlightedSprite: {fileID: 21300000, guid: e6585eb644f31d248a9a05e6a02e5279, type: 3}
   defaultItemSprite: {fileID: 0}
   targetPosition: {fileID: 1683693530}
+  animationTravelTime: 0
 --- !u!1 &1211568493
 GameObject:
   m_ObjectHideFlags: 0
@@ -12550,29 +12556,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80470b1bf0698a44faff0e8e290c5432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 1911915065}
+  multiplier: 0
+  maxMultiplier: 0
+  gameMultiplierText: {fileID: 0}
+  endScoreText: {fileID: 1741095005}
+  endScoreGoalText: {fileID: 0}
+  gameScoreGoalText: {fileID: 0}
+  gameTipJarFill: {fileID: 0}
+  starShine: {fileID: 21300000, guid: 8cf07c9a3d080d747be1d79b4e3770d3, type: 3}
+  starFillPrefab: {fileID: 0}
+  shimmerFXPrefab: {fileID: 0}
+  fallingStarFXPrefab: {fileID: 0}
+  starRatingContainer: {fileID: 0}
+  starIndex: 0
   stars:
   - {fileID: 1279684816}
   - {fileID: 1047734121}
   - {fileID: 762692984}
   - {fileID: 24686177}
   - {fileID: 1542874559}
-  score: 0
-  scoreText: {fileID: 1911915065}
-  starShine: {fileID: 21300000, guid: 8cf07c9a3d080d747be1d79b4e3770d3, type: 3}
-  starIndex: 0
-  endStars:
-  - {fileID: 933123972}
-  - {fileID: 216829738}
-  - {fileID: 64533155}
-  - {fileID: 1381564782}
-  - {fileID: 1419809210}
-  endScoreText: {fileID: 1741095005}
+  starSlots: []
   failImage: {fileID: 21300000, guid: a5981b65810049548b6805c2b7446439, type: 3}
   levelPasserImage: {fileID: 1232038598}
   failPrompt: {fileID: 858483906}
   successPrompt: {fileID: 1425398285}
   coinPrefab: {fileID: 2911321677406604220, guid: 1d07c04d31cc1b344abf260a21bf94dd, type: 3}
   targetLocation: {fileID: 1112193954}
+  score: 0
+  scoreGoal: 0
+  scoreFormat: N0
+  fpsCount: 30
+  duration: 1
+  starToSlotSpeed: 15
+  fitStarToSlotDuration: 1
+  percentageIncrementPerStar: 20
+  starRatingAnticipationDelay: 1
   customersEntertained: {fileID: 573760290}
   totalSolvingTime: {fileID: 788045965}
   additionSolvingTime: {fileID: 1696509808}
@@ -12583,6 +12602,8 @@ MonoBehaviour:
   multiplicationEvaluation: {fileID: 1238677751}
   divisionSolvingTime: {fileID: 1962949849}
   divisionEvaluation: {fileID: 36421807}
+  continueButton: {fileID: 0}
+  quitButton: {fileID: 0}
 --- !u!114 &1440437435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15293,12 +15314,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98f38e33cd1dcb478116a249e5d8763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  answerAttempts: 0
+  perfectAttempts: 0
   itemUIClassList: []
   itemsAnswer: []
   changeAnswers: []
   answerFields: []
   totalPriceAnswerField: {fileID: 865360429}
   changeAnswerField: {fileID: 2037123814}
+  customerPaidTitle: {fileID: 0}
   customerPaidText: {fileID: 1641529629}
   changeText: {fileID: 83421252}
   totalPriceCorrectAnswer: 0
@@ -17352,6 +17376,7 @@ MonoBehaviour:
   highlightedSprite: {fileID: 21300000, guid: 2a040e2da4668084e866b90b068760e0, type: 3}
   defaultItemSprite: {fileID: 0}
   targetPosition: {fileID: 1683693530}
+  animationTravelTime: 0
 --- !u!1 &2060087344
 GameObject:
   m_ObjectHideFlags: 0
