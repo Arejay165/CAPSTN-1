@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 58170591}
   - component: {fileID: 58170590}
   m_Layer: 0
-  m_Name: Asset 24 (1)
+  m_Name: Asset 24 _ Coins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -806,7 +806,7 @@ Transform:
   m_LocalScale: {x: 1.3, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &62203751
 GameObject:
@@ -11675,7 +11675,7 @@ Transform:
   - {fileID: 1932424813}
   - {fileID: 1744805270}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1233030673
 GameObject:
@@ -12228,7 +12228,7 @@ Transform:
   m_LocalScale: {x: 0.17702, y: 0.17702, z: 0.17702}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1297229749
 GameObject:
@@ -17298,7 +17298,7 @@ Transform:
   - {fileID: 254259829}
   - {fileID: 791901856}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1831685253
 GameObject:

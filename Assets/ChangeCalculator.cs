@@ -25,6 +25,9 @@ public class ChangeCalculator : MonoBehaviour
         denominatorText.text = cash.price.ToString();
         isCountingTime = true;
         perfectAttempts = 1;
+        StartCoroutine(InputFieldSelect());
+        changeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+
         Debug.Log("Enable Change Calculator");
     }
 
@@ -33,7 +36,7 @@ public class ChangeCalculator : MonoBehaviour
         billCounter.isChangeUIActive = false;
         changeInputField.text = "";
         changeInputField.Select();
-        changeInputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+   
 
     }
     private void Update()
@@ -45,10 +48,19 @@ public class ChangeCalculator : MonoBehaviour
         }
 
     }
-    
+
+    IEnumerator InputFieldSelect()
+    {
+        yield return 0;
+        changeInputField.Select();
+        changeInputField.ActivateInputField();
+
+
+    }
     public void OnPriceInputted()
     {
-
+      
+        changeInputField.Select();
         string playerInputString = changeInputField.text;
 
         float playerInputValue = -1;
