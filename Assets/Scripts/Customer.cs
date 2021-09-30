@@ -37,7 +37,7 @@ public class Customer : MonoBehaviour
         float identifier = Random.Range(0, 100);
 
         Debug.Log(identifier);
-        if (identifier > 50)
+        if (identifier > 1)
         {
             willBuy = true;
         }

@@ -65,8 +65,13 @@ public class TestCalculator : MonoBehaviour
     //}
     private void OnEnable()
     {
+
+        //Register OnGameStart Event in GameManager
+        GameManager.OnGameStart += OnGameStarted;
+        
         StackDuplicateItems();
         GameManager.instance.orderSheetShowing = true;
+        PerformanceManager.instance.totalMathProblems++;
         totalPriceAnswerField.enabled = false;
         changeAnswerField.gameObject.SetActive(false);
         changeText.gameObject.SetActive(false);
@@ -90,11 +95,36 @@ public class TestCalculator : MonoBehaviour
         timeSpent = 0;
         totalPriceAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
         changeAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
-       
-        
- 
+
+        //clears change UI
+        changeAnswerField.text = "";
+        changeAnswerField.gameObject.SetActive(false);
+        changeText.gameObject.SetActive(false);
+
+        //clear total price UI
+        totalPriceAnswerField.text = "";
+
+        //clears answerfields
+        answerFields.Clear();
+
+        //clears ui list
+        foreach (Transform child in displayPanel.transform)
+        {
+            
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
+          
+        }
+
+
+
         GameManager.instance.orderSheetShowing = false;
  
+    }
+
+    public void OnGameStarted()
+    {
+        PerformanceManager.instance.totalMathProblems = 0;
     }
     //private void OnDisable()
     //{
@@ -247,25 +277,20 @@ public class TestCalculator : MonoBehaviour
 
     IEnumerator WrongInputted(InputField p_inputField)
     {
-        p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
-        yield return new WaitForSeconds(0.1f);
-        p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+        
+        //PlayerManager.instance.Shake(Camera.main.gameObject, 0.15f, 0.05f, 0.25f);
+        PlayerManager.instance.Shake(gameObject,0.25f, 3.5f, 1.5f);
+        int blinkCount = 0;
+        while (blinkCount < 3)
+        {
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
+            yield return new WaitForSeconds(0.1f);
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
 
-        yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.05f);
+            blinkCount++;
+        }
 
-        p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
-        yield return new WaitForSeconds(0.1f);
-        p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
-
-        yield return new WaitForSeconds(0.05f);
-
-        p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
-        yield return new WaitForSeconds(0.1f);
-        p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
-
-        yield return new WaitForSeconds(0.05f);
-        //yield return new WaitForSeconds(1f);
-       
         p_inputField.text = "";
         p_inputField.Select();
 
@@ -376,20 +401,7 @@ public class TestCalculator : MonoBehaviour
                 StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
                 RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, true);
 
-                //awards score
-                for (int i = 0; i < answerFields.Count;)
-                {
-                    InputField currentlySelectedItemUI = answerFields[0];
-                    currentlySelectedItemUI.Select();
-
-                    answerFields.RemoveAt(0);
-                    changeAnswerField.text = "";
-                    changeAnswerField.gameObject.SetActive(false);
-                    changeText.gameObject.SetActive(false);
-                    totalPriceAnswerField.text = "";
-                   
-                    Destroy(currentlySelectedItemUI.gameObject.transform.parent.gameObject);
-                }
+                
                 
                 OrderSheetFinish();
                 index = 0;
@@ -415,26 +427,48 @@ public class TestCalculator : MonoBehaviour
     }
     public void OrderSheetFinish()
     {
-        Debug.Log("PPPPPPPPPPPPPPPPPPPPPPPP: " + answerAttempts + " [] " + perfectAttempts);
+        
         if (answerAttempts == perfectAttempts)
         {
             Scoring.instance.ModifyMultiplier(1f);
         }
         
+      
         Scoring.instance.addScore((int) (100*Scoring.instance.multiplier));
 
         //  UIManager.instance.inGameUI.GetComponent<InGameUI>().scoring.gameObject.GetComponent<Text>().text = "Score: " + GameManager.instance.score.ToString(); //Very temporary until restructured codes
+
+        StartCoroutine(SheetCompleted(changeAnswerField));
+    
+
+    }
+    IEnumerator SheetCompleted(InputField p_inputField)
+    {
+        int blinkCount = 0;
+        while (blinkCount < 3)
+        {
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
+            yield return new WaitForSeconds(0.15f);
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+            yield return new WaitForSeconds(0.075f);
+            blinkCount++;
+        }
+        p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
+        yield return new WaitForSeconds(1f);
+
+
+        //awards score
+
         
+
+
         TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
         if (GameManager.instance.customer)
         {
             Destroy(GameManager.instance.customer.gameObject);
         }
         GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
-        //      gameObject.transform.root.gameObject.SetActive(false);
-
     }
-
     public void DisplayItemOrders()
     {
 

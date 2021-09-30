@@ -7,6 +7,8 @@ public class ClickToSelectItem : MonoBehaviour
 {
     [SerializeField]
     GameObject      itemSpawnedPrefab;
+    [SerializeField]
+    SpriteRenderer itemSR;
     public bool            canSpawn;
     [SerializeField]
     Sprite          highlightedSprite;
@@ -19,6 +21,8 @@ public class ClickToSelectItem : MonoBehaviour
     Transform       targetPosition;
     [SerializeField]
     float animationTravelTime;
+    [SerializeField] ParticleSystem hintingSparklePFX;
+    [SerializeField] ParticleSystem radiatePFX;
 
     private void Start()
     {
@@ -33,11 +37,19 @@ public class ClickToSelectItem : MonoBehaviour
         //Spawn one at a time
         if (GameManager.instance.isPlaying)
         {
+            if (!CursorManager.instance.isLooping)
+            {
+               
+                CursorManager.instance.SetActiveCursorAnimation(CursorType.HoverItem);
+            }
+       
             if (Input.GetMouseButtonDown(0) && canSpawn)
             {
+                CursorManager.instance.PlayCursorAnimation(CursorType.ClickItem, CursorType.Arrow);
                 if (GameManager.instance.orderSheetShowing)
                 {
                     Debug.Log("Order Sheet is Active");
+                    
                     return;
                 }
                 SpawnItem();
@@ -71,45 +83,29 @@ public class ClickToSelectItem : MonoBehaviour
     }
     private void OnMouseExit()
     {
+    
+        CursorManager.instance.SetActiveCursorAnimation(CursorType.Arrow);
         RemoveHighlightItem();
     }
 
     void HighlightItem()
     {
         //Sprite change to highlighted 
-        //Since the Assets are a child of a gameObject, get the the child of the parent to access the assets (Children)
-        if (this.transform.childCount > 0)
-        {
-            //Get all the child assets 
-            for (int i = 0; i < this.transform.childCount; i++)
-            {
-                //Access the item 
-                SpriteRenderer itemChild = this.transform.GetChild(i).GetComponent<SpriteRenderer>();
-                //Change the current sprite to the highlighted sprite 
-                itemChild.sprite = highlightedSprite;
-            }
-        }
-        // in the case that there is no child, access the parent 
-        else
-        {
-            this.transform.gameObject.GetComponent<SpriteRenderer>().sprite = highlightedSprite;
-        }
+       
+        //Change the current sprite to the highlighted sprite 
+        if (highlightedSprite != null && itemSR != null) itemSR.sprite = highlightedSprite;
+        if (hintingSparklePFX && !hintingSparklePFX.isPlaying) hintingSparklePFX.Play();
+        if (radiatePFX && !radiatePFX.isPlaying) radiatePFX.Play();
+        
     }
 
     void RemoveHighlightItem()
     {
-        if(this.transform.childCount > 0)
-        {
-            for (int i = 0; i < this.transform.childCount; i++)
-            {
-                GameObject itemChild = this.transform.GetChild(i).gameObject;
-                itemChild.GetComponent<SpriteRenderer>().sprite = defaultItemSprite;
-            }
-        }
-        else
-        {
-            this.transform.gameObject.GetComponent<SpriteRenderer>().sprite = defaultItemSprite;
-        }
+        
+        if (defaultItemSprite != null && itemSR != null) itemSR.sprite = defaultItemSprite;
+        if (hintingSparklePFX) hintingSparklePFX.Stop();
+        if (radiatePFX) radiatePFX.Stop();
+        
        
     }
 

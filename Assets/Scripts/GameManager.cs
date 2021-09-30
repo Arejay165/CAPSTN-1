@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public bool isPlaying = false;
     public int scoreGoal;
 
- 
+    public static Action OnGameStart;
     private void Awake()
     {
         if (instance == null)
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(customerSpawner.SpawnRate());
         //? means null checker
         Scoring.instance?.SetScore(0);
-        PerformanceManager.instance.customersEntertained = 0;
+        
         DayAndNightCycle.instance?.SetGameTime(0);
         DayAndNightCycle.instance?.SetStoreClosed(false);
         TransitionManager.instances?.changeTransform.gameObject.SetActive(false);

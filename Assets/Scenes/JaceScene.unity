@@ -1211,7 +1211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2362d12b0a060934e9a3f8250e39b53f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customersEntertained: 0
+  totalMathProblems: 0
   answeredProblemDatas: []
   rerollAttempts: 0
   maxRerollAttempts: 16
@@ -4462,7 +4462,7 @@ MonoBehaviour:
   fitStarToSlotDuration: 1
   percentageIncrementPerStar: 20
   starRatingAnticipationDelay: 1
-  customersEntertained: {fileID: 1711719117}
+  totalMathProblems: {fileID: 0}
   totalSolvingTime: {fileID: 510096542}
   additionSolvingTime: {fileID: 906295430}
   additionEvaluation: {fileID: 260265253}
@@ -4472,6 +4472,8 @@ MonoBehaviour:
   multiplicationEvaluation: {fileID: 558621089}
   divisionSolvingTime: {fileID: 1318630457}
   divisionEvaluation: {fileID: 753705593}
+  continueButton: {fileID: 0}
+  quitButton: {fileID: 0}
 --- !u!114 &547003738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12537,6 +12539,7 @@ MonoBehaviour:
   answerFields: []
   totalPriceAnswerField: {fileID: 961274444}
   changeAnswerField: {fileID: 2021156539}
+  customerPaidTitle: {fileID: 0}
   customerPaidText: {fileID: 1340309101}
   changeText: {fileID: 1080324442}
   totalPriceCorrectAnswer: 0
@@ -12647,6 +12650,8 @@ MonoBehaviour:
   cash: {fileID: 0}
   isCountingTime: 0
   timeSpent: 0
+  answerAttempts: 0
+  perfectAttempts: 0
 --- !u!114 &1833329416
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
+using TMPro;
 public class Scoring : MonoBehaviour
 {
     public static Scoring   instance;
@@ -20,7 +20,7 @@ public class Scoring : MonoBehaviour
     public Text gameMultiplierText;
 
     public Text endScoreText;
-    public Text endScoreGoalText;
+    public Text highscoreText;
     public Text gameScoreGoalText;
     public Image gameTipJarFill;
     public Sprite starShine;
@@ -29,6 +29,9 @@ public class Scoring : MonoBehaviour
     public GameObject starFillPrefab;
     public GameObject shimmerFXPrefab;
     public GameObject fallingStarFXPrefab;
+    public GameObject implosionFXPrefab;
+    public GameObject lightbeamFXPrefab;
+    public GameObject blindingTwinkleFXPrefab;
 
     public GameObject starRatingContainer;
     public int starIndex;
@@ -59,7 +62,7 @@ public class Scoring : MonoBehaviour
     #endregion
     private Coroutine countingCoroutine;
 
-    public Text customersEntertained;
+    public Text totalMathProblems;
     public Text totalSolvingTime;
     public Text additionSolvingTime;
     public Text additionEvaluation;
@@ -80,8 +83,21 @@ public class Scoring : MonoBehaviour
         {
             StopCoroutine(countingCoroutine);
         }
+        if (score > PlayerPrefs.GetInt("Highscore"))
+        {
+            PlayerPrefs.SetInt("Highscore", score);
+            highscoreText.text = score.ToString();
+        }
         //temporary
-        endScoreGoalText.text = scoreGoal.ToString();
+        if (PlayerPrefs.GetInt("Highscore") > 0)
+        {
+            highscoreText.text = PlayerPrefs.GetInt("Highscore").ToString();
+        }
+        else
+        {
+            highscoreText.text = "0";
+        }
+        
         //Day Failed if score is less than half of score goal
         if (score < scoreGoal/2) 
         {
@@ -215,6 +231,19 @@ public class Scoring : MonoBehaviour
         WaitForSeconds timeRate = new WaitForSeconds(1f / fpsCount);
        
         float stepAmount =starToSlotSpeed/ (fpsCount * fitStarToSlotDuration);
+              
+        //Create new Shimmer Particle FX
+        GameObject spawnedImplosionParticleFX = Instantiate(implosionFXPrefab, starRatingContainer.transform);
+        spawnedImplosionParticleFX.transform.position = p_spawnedStarFill.transform.position;
+        Destroy(spawnedImplosionParticleFX, 3f);
+
+        GameObject spawnedLightBeamParticleFX = Instantiate(lightbeamFXPrefab, starRatingContainer.transform);
+        spawnedLightBeamParticleFX.transform.position = p_spawnedStarFill.transform.position;
+        Destroy(spawnedLightBeamParticleFX, 3f);
+
+        GameObject spawnedBlindingTwinkleParticleFX = Instantiate(blindingTwinkleFXPrefab, starRatingContainer.transform);
+        spawnedBlindingTwinkleParticleFX.transform.position = p_spawnedStarFill.transform.position;
+        Destroy(spawnedBlindingTwinkleParticleFX, 3f);
 
         //If spawned star's size is larger than the selected star slot's size, then shrink it and lessen transparency
         while (p_spawnedStarFill.GetComponent<RectTransform>().sizeDelta.x > p_starSlotSize.x + stepAmount)
@@ -328,7 +357,7 @@ public class Scoring : MonoBehaviour
         TransitionManager.instances.noteBookTransform.gameObject.SetActive(false);
         ShowResults(score);
        
-        customersEntertained.text = "Customer Entertained: " + PerformanceManager.instance.customersEntertained.ToString();
+        totalMathProblems.text = "Total Math Problems: " + PerformanceManager.instance.totalMathProblems.ToString();
         totalSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.none) + " seconds";
         additionSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.addition) + " seconds";
         additionEvaluation.text = "Addition: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition);
@@ -339,7 +368,7 @@ public class Scoring : MonoBehaviour
         divisionSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.division) + " seconds";
         divisionEvaluation.text = "Division: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division);
         PerformanceManager.instance.answeredProblemDatas.Clear();
-        PerformanceManager.instance.customersEntertained = 0;
+        PerformanceManager.instance.totalMathProblems = 0;
     }
 
     public void StarAnimation()

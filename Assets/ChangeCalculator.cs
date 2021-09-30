@@ -19,7 +19,7 @@ public class ChangeCalculator : MonoBehaviour
     {
         changeInputField.Select();
         GameManager.instance.orderSheetShowing = true;
-        
+        PerformanceManager.instance.totalMathProblems++;
         cash = GameManager.instance.customer.itemsWanted[0];
         numeratorText.text = cash.numValue.ToString();
         denominatorText.text = cash.price.ToString();
@@ -63,7 +63,8 @@ public class ChangeCalculator : MonoBehaviour
             if (playerInputValue == cash.denValue)
             {
                 //Answer is correct
-                ChangeOrderFinish();
+                StartCoroutine(SheetCompleted(changeInputField));
+                
                 answerAttempts++;
                 if (answerAttempts == perfectAttempts)
                 {
@@ -72,20 +73,53 @@ public class ChangeCalculator : MonoBehaviour
                 
                 Scoring.instance.addScore((int) (100 * Scoring.instance.multiplier));
                 RecordAnswerResult(MathProblemOperator.division, true);
-                Debug.Log("Is Correct");
+                //Debug.Log("Is Correct");
                 
             }
             else
             {
-                Debug.Log("Isincorrect");
+                //Debug.Log("Isincorrect");
+                StartCoroutine(WrongInputted(changeInputField));
                 RecordAnswerResult(MathProblemOperator.division, false);
-                changeInputField.text = "";
-                changeInputField.Select();
                 Scoring.instance.ModifyMultiplier(-1f);
             }
         }
      }
 
+    IEnumerator SheetCompleted(InputField p_inputField)
+    {
+        int blinkCount = 0;
+        while (blinkCount < 3)
+        {
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
+            yield return new WaitForSeconds(0.15f);
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+            yield return new WaitForSeconds(0.075f);
+            blinkCount++;
+        }
+        p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
+        yield return new WaitForSeconds(0.5f);
+        ChangeOrderFinish();
+    }
+
+    IEnumerator WrongInputted(InputField p_inputField)
+    {
+        //PlayerManager.instance.Shake(Camera.main.gameObject,0.15f, 0.05f, 0.25f);
+        PlayerManager.instance.Shake(gameObject, 0.2f, 3.5f, 1.5f);
+        int blinkCount = 0;
+        while (blinkCount < 3)
+        {
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
+            yield return new WaitForSeconds(0.1f);
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+
+            yield return new WaitForSeconds(0.05f);
+            blinkCount++;
+        }
+        p_inputField.text = "";
+        p_inputField.Select();
+
+    }
     public void RecordAnswerResult(MathProblemOperator p_mathOperator, bool p_isCorrect)
     {
         AnsweredProblemData newAnswer = new AnsweredProblemData();

@@ -32,9 +32,9 @@ public class CustomerSpawner : MonoBehaviour
         GameManager.instance.customer = obj.GetComponent<Customer>();
         
         obj.GetComponent<Customer>().displayOrder = this.displayOrder;
-        PerformanceManager.instance.customersEntertained++;
+       
 
-        Debug.Log("Stiff");
+
         //for tutorial
         if (TutorialManager.instance)
         {
