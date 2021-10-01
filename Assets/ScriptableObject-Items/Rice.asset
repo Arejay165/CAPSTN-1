@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Rice
   m_EditorClassIdentifier: 
   itemName: Rice
-  price: 125
+  price: 109
   numValue: 0
   denValue: 0
   itemSprite: {fileID: 21300000, guid: 3ca60f6d87b1a2c43add9ca8898db5cf, type: 3}
   quantity: 1
+  minRangePrice: 100
+  maxRangePrice: 250

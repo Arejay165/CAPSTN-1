@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Candy_Orane
   m_EditorClassIdentifier: 
   itemName: OrangeCandy
-  price: 1
+  price: 3
+  numValue: 0
+  denValue: 0
   itemSprite: {fileID: 21300000, guid: b2cf6ade61bfb0d43b4316a4a913295d, type: 3}
   quantity: 1
+  minRangePrice: 1
+  maxRangePrice: 9

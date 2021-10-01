@@ -27,37 +27,35 @@ public class DetectItemInWindow : MonoBehaviour
         {
             collision.gameObject.transform.SetParent(this.gameObject.transform);
             ItemDescription itemInCounter = collision.GetComponent<ItemDescription>();
-            PlayerManager.instance.isStaying = true;
-            
+   
             if (GameManager.instance.customer)
             {
-                for(int i = 0; i < GameManager.instance.customer.itemsWanted.Count; i++)
+                for(int i = 0; i < MathProblemManager.instance.GetCurrentItemsWanted().Count; i++)
                 {
-                    if(itemInCounter.item.itemName == GameManager.instance.customer.itemsWanted[i].itemName)
+                    if(itemInCounter.item.itemName == MathProblemManager.instance.GetItemInCurrentItemsWanted(i).itemName)
                     {
                         
-                        Scoring.instance.addScore(100);
-                        //Scoring.instance.starCheck(); //Old Star rating in-game
-                        GameManager.instance.customer.itemInCart.Add(GameManager.instance.customer.itemsWanted[i]);
-                        GameManager.instance.customer.itemsWanted.RemoveAt(i);
-                        GameManager.instance.customer.itemSprites[i].color = global::GameManager.instance.window.darkenImage;
-                        GameManager.instance.customer.itemSprites.RemoveAt(i);
-                        if (GameManager.instance.customer.itemSprites.Count <= 0)
-                        {
+                            GameManager.instance.customer.itemsImage[i].color = global::GameManager.instance.window.darkenImage;
+                            GameManager.instance.customer.itemsImage.RemoveAt(i);
+                            MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(i);
+                  
+                            if (MathProblemManager.instance.GetCurrentItemsWanted(false).Count <= 0)
+                            {
 
-                            TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
-                        }
-                        PlayerManager.instance.isStaying = false;
-                        Destroy(itemInCounter.gameObject, 0.2f);
-                        Debug.Log("DESTROYING THRU DETECT CORRECT");
-                        PlayerManager.instance.lastItemSpawner = null;
-                        break;
+                                TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
+                            }
+                            
+                            Destroy(itemInCounter.gameObject, 0.2f);
+                            Debug.Log("DESTROYING THRU DETECT CORRECT");
+                            PlayerManager.instance.lastItemSpawner = null;
+                            break;
+                        
+                       
                     }
                     else
                     {
                         Debug.Log("Wrong Item");
-                        PlayerManager.instance.isStaying = false;
-
+                        
                     
 
                     }

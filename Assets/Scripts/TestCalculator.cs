@@ -33,7 +33,7 @@ public class TestCalculator : MonoBehaviour
     [SerializeField] GameObject itemDisplay;
     [SerializeField] Transform displayPanel;
 
- 
+    public float randomExtraMoney;
     public bool isCountingTime;
     public float timeSpent;
     public int index;
@@ -87,6 +87,19 @@ public class TestCalculator : MonoBehaviour
 
     private void OnDisable()
     {
+        //Deregister OnGameStart Event in GameManager
+        GameManager.OnGameStart -= OnGameStarted;
+      
+
+
+        GameManager.instance.orderSheetShowing = false;
+ 
+    }
+
+    public void OnGameStarted()
+    {
+        PerformanceManager.instance.totalMathProblems = 0;
+        StopAllCoroutines();
         itemUIClassList.Clear();
         itemsAnswer.Clear();
         changeAnswers.Clear();
@@ -111,21 +124,12 @@ public class TestCalculator : MonoBehaviour
         //clears ui list
         foreach (Transform child in displayPanel.transform)
         {
-            
+
             child.gameObject.SetActive(false);
             Destroy(child.gameObject);
-          
+
         }
 
-
-
-        GameManager.instance.orderSheetShowing = false;
- 
-    }
-
-    public void OnGameStarted()
-    {
-        PerformanceManager.instance.totalMathProblems = 0;
     }
     //private void OnDisable()
     //{
@@ -140,18 +144,19 @@ public class TestCalculator : MonoBehaviour
         Customer customer = GameManager.instance.customer;
         answerAttempts = 0;
         perfectAttempts = 0;
-        for (int x = 0; x < customer.itemInCart.Count; x++)
+       
+        for (int x = 0; x < MathProblemManager.instance.GetGeneratedItemsWanted().Count; x++)
         {
             bool uniqueItem = true;
            
             for (int i = 0; i < itemUIClassList.Count; i++)
             {
                // Debug.Log("Customer item check count: " + customer.itemCheck.Count + " Item UI Count : " + itemUIClassList.Count + "Customer Item Check x " + customer.itemCheck[x].itemName);
-                if (itemUIClassList[i].name == customer.itemInCart[x].itemName)//It's not a unique item (There is a duplicate copy already in the list)
+                if (itemUIClassList[i].name == MathProblemManager.instance.GetItemInGeneratedItemsWanted(x).itemName)//It's not a unique item (There is a duplicate copy already in the list)
                 {
                    // Debug.Log(" Item UI Count : " + itemUIClassList.Count + "Customer Item Check x " + customer.itemCheck[x].itemName);
                     uniqueItem = false;
-                    itemUIClassList[i].quantity += customer.itemInCart[x].quantity;
+                    itemUIClassList[i].quantity += MathProblemManager.instance.GetItemInGeneratedItemsWanted(x).quantity;
                     itemUIClassList[i].totalPriceAnswer = itemUIClassList[i].quantity * itemUIClassList[i].price;
                     //  return;
                     break;
@@ -159,7 +164,7 @@ public class TestCalculator : MonoBehaviour
             }
             if (uniqueItem == true)//If it's a unique item (No duplicates yet in the list)
             {
-                itemUIClassList.Add(CreateItemUI(customer.itemInCart[x]));
+                itemUIClassList.Add(CreateItemUI(MathProblemManager.instance.GetItemInGeneratedItemsWanted(x)));
                 perfectAttempts++;
             }
             uniqueItem = true;
@@ -173,11 +178,11 @@ public class TestCalculator : MonoBehaviour
 
         perfectAttempts += 2;
 
-        GameManager.instance.customer.randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 20);
-        changeCorrectAnswer = GameManager.instance.customer.randomExtraMoney - totalPriceCorrectAnswer;
+         randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 20);
+        changeCorrectAnswer = randomExtraMoney - totalPriceCorrectAnswer;
         
         DisplayItemOrders();
-        customerPaidText.text = GameManager.instance.customer.randomExtraMoney.ToString();
+        customerPaidText.text = randomExtraMoney.ToString();
         
 
     }
@@ -200,6 +205,7 @@ public class TestCalculator : MonoBehaviour
     }
     public void OnPriceInputted(string p_playerInputString)
     {
+        
         int itemOrderIndex = IdentifyAnswerfieldIndex(p_playerInputString); //Finding which inputfield is being used to write
         float playerInputValue = -1;
         
@@ -362,7 +368,7 @@ public class TestCalculator : MonoBehaviour
                 RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, true);
 
                
-                changeAnswers.Add(GameManager.instance.customer.randomExtraMoney);
+                changeAnswers.Add(randomExtraMoney);
                 changeAnswers.Add(totalPriceCorrectAnswer);
             }
             else // Answer is wrong
@@ -431,7 +437,7 @@ public class TestCalculator : MonoBehaviour
     }
     public void OrderSheetFinish()
     {
-        
+
         if (answerAttempts == perfectAttempts)
         {
             Scoring.instance.ModifyMultiplier(1f);
@@ -463,7 +469,6 @@ public class TestCalculator : MonoBehaviour
 
         //awards score
 
-        
 
 
         TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);

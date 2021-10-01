@@ -12,5 +12,8 @@ public class Item : ScriptableObject
     public int denValue;
     public Sprite itemSprite;
     public float quantity;
+    public float minRangePrice;
+    public float maxRangePrice;
+
 
 }

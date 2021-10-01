@@ -103,10 +103,42 @@ public class ClickToSelectItem : MonoBehaviour
     {
         
         if (defaultItemSprite != null && itemSR != null) itemSR.sprite = defaultItemSprite;
-        if (hintingSparklePFX) hintingSparklePFX.Stop();
-        if (radiatePFX) radiatePFX.Stop();
-        
+     
+        if (hintingSparklePFX ) hintingSparklePFX.Stop();
+        StartCoroutine(SmoothStopRadiate());
+
+
+
+    }
+
+    IEnumerator SmoothStopRadiate()
+    {
+        if (radiatePFX.isPlaying)
+        {
+            var particles = new ParticleSystem.Particle[radiatePFX.main.maxParticles];
+            var currentAmount = radiatePFX.GetParticles(particles);
+
+            if (currentAmount <= 0)
+            {
+                radiatePFX.Stop();
+            }
+            else
+            {
+                for (int i = 0; i < currentAmount; i++)
+                {
+                    if (particles[i].remainingLifetime < 0.35f)
+                    {
+                        radiatePFX.Stop();
+                    }
+                }
+            }
+            
+            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(SmoothStopRadiate());
+        }
        
+        
+
     }
 
     void SpawnItem()

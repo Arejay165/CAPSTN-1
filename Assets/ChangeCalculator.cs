@@ -9,7 +9,7 @@ public class ChangeCalculator : MonoBehaviour
     public Text denominatorText;
     public BillCounter billCounter;
     public InputField changeInputField;
-    public Item cash;
+   
     public bool isCountingTime;
     public float timeSpent;
 
@@ -17,12 +17,25 @@ public class ChangeCalculator : MonoBehaviour
     public int perfectAttempts;
     private void OnEnable()
     {
+        //Test for whole number answer for Division 
+        //dividend / divisor = quotient (answer of player)
+        // Reverse the division to multiplication
+        // divisor * quotient = dividend
+        int divisor = Random.Range(2, 51); // use to multiply to the quotient to always be whole number 
+        int quotient = Random.Range(1, 50); // possible answers 
+        int dividend = divisor * quotient; // determine the dividend
+                                           
+
+        MathProblemManager.instance.cash.numValue = dividend;//Random.Range(60, 500);
+        MathProblemManager.instance.cash.denValue = divisor;//cash.numValue / Random.Range(2, 50);
+        MathProblemManager.instance.cash.price = quotient;//cash.numValue / cash.denValue;
+
         changeInputField.Select();
         GameManager.instance.orderSheetShowing = true;
         PerformanceManager.instance.totalMathProblems++;
-        cash = GameManager.instance.customer.itemsWanted[0];
-        numeratorText.text = cash.numValue.ToString();
-        denominatorText.text = cash.price.ToString();
+ 
+        numeratorText.text = MathProblemManager.instance.cash.numValue.ToString();
+        denominatorText.text = MathProblemManager.instance.cash.price.ToString();
         isCountingTime = true;
         perfectAttempts = 1;
         StartCoroutine(InputFieldSelect());
@@ -73,7 +86,7 @@ public class ChangeCalculator : MonoBehaviour
         if (playerInputValue != -1)
         {
 
-            if (playerInputValue == cash.denValue)
+            if (playerInputValue == MathProblemManager.instance.cash.denValue)
             {
                 //Answer is correct
                 StartCoroutine(SheetCompleted(changeInputField));
@@ -149,11 +162,13 @@ public class ChangeCalculator : MonoBehaviour
 
     public void ChangeOrderFinish()
     {
+
         TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 1f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
         if (GameManager.instance.customer)
         {
             Destroy(GameManager.instance.customer.gameObject);
         }
+        
         GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
         GameManager.instance.orderSheetShowing = false;
     }

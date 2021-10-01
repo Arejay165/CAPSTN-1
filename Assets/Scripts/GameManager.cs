@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
 
     public static Action OnGameStart;
+    public static Action OnGameEnd;
     private void Awake()
     {
         if (instance == null)

@@ -40,7 +40,7 @@ public class Upgrades : MonoBehaviour
 
     public void selectItems(int itemIndex)
    {
-        GameManager.instance.customer.items.Add(newItems[itemIndex]);
+        MathProblemManager.instance.storeItemList.Add(newItems[itemIndex]);
         newItems.RemoveAt(itemIndex);
 
         UIManager.instance.upgradeUI.SetActive(false);

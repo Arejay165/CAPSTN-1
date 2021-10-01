@@ -117,18 +117,18 @@ public class Calculator : MonoBehaviour
     public void GetChange()
     {
 
-        if (changeInput == GameManager.instance.customer.randomExtraMoney)
-        {
-            Debug.Log("Approriate Change");
-            changeInputField.gameObject.SetActive(false);
-            getAnswerInputField.gameObject.SetActive(true);
+        //if (changeInput == GameManager.instance.customer.randomExtraMoney)
+        //{
+        //    Debug.Log("Approriate Change");
+        //    changeInputField.gameObject.SetActive(false);
+        //    getAnswerInputField.gameObject.SetActive(true);
 
-            ResetText();
-        }
-        else
-        {
-            Debug.Log("Repeat this process");
-        }
+        //    ResetText();
+        //}
+        //else
+        //{
+        //    Debug.Log("Repeat this process");
+        //}
 
     }
 
@@ -147,7 +147,7 @@ public class Calculator : MonoBehaviour
     void ResetText()
     {
     //    textIndex = 0;
-        for (int i = 0; i < GameManager.instance.customer.itemInCart.Count; i++)
+        for (int i = 0; i < MathProblemManager.instance.GetGeneratedItemsWanted().Count; i++)
         {
             answerText[i].text = "";
         }

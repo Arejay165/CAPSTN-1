@@ -16,8 +16,12 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
        
-        if (!isChangeUIActive && !GameManager.instance.customer.willBuy)
+        if (!isChangeUIActive && MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue !=0)//GameManager.instance.customer.willBuy)
         {
+
+            GameManager.instance.customer.itemsImage[0].color = global::GameManager.instance.window.darkenImage;
+            GameManager.instance.customer.itemsImage.RemoveAt(0);
+            MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(0);
             isChangeUIActive = true;
             ChangeUI();
             // TUTORIAL

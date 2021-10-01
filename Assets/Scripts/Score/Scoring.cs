@@ -14,7 +14,7 @@ public class Scoring : MonoBehaviour
     Text                    scoreText;
 
 
-
+    public int round = 1;
     public float multiplier;
     public float maxMultiplier;
     public Text gameMultiplierText;
@@ -32,7 +32,7 @@ public class Scoring : MonoBehaviour
     public GameObject implosionFXPrefab;
     public GameObject lightbeamFXPrefab;
     public GameObject blindingTwinkleFXPrefab;
-
+    public List<ParticleSystem> confettis = new List<ParticleSystem>();
     public GameObject starRatingContainer;
     public int starIndex;
     public List<GameObject> stars = new List<GameObject>();
@@ -77,21 +77,22 @@ public class Scoring : MonoBehaviour
     public GameObject quitButton;
 
 
+
     private void ShowResults(int p_newValue, int p_Value = 0)
     {
         if (countingCoroutine != null)
         {
             StopCoroutine(countingCoroutine);
         }
-        if (score > PlayerPrefs.GetInt("Highscore"))
+        if (score > PlayerPrefs.GetInt("Highscore",0))
         {
             PlayerPrefs.SetInt("Highscore", score);
             highscoreText.text = score.ToString();
         }
         //temporary
-        if (PlayerPrefs.GetInt("Highscore") > 0)
+        if (PlayerPrefs.GetInt("Highscore",0) > 0)
         {
-            highscoreText.text = PlayerPrefs.GetInt("Highscore").ToString();
+            highscoreText.text = PlayerPrefs.GetInt("Highscore",0).ToString();
         }
         else
         {
@@ -217,7 +218,19 @@ public class Scoring : MonoBehaviour
             GameObject spawnedFallingStarParticleFX = Instantiate(fallingStarFXPrefab, selectedStar.transform);
             spawnedFallingStarParticleFX.transform.position = selectedStar.transform.position;
             Destroy(spawnedFallingStarParticleFX, 3f);
+            //If perfect, do confetti
+            if (backUpStarRatingsCounted >= starSlots.Length)
+            {
+                foreach (ParticleSystem selectedConfetti in confettis)
+                {
+                    selectedConfetti.Play();
+                }
+            }
+  
+
         }
+
+
 
         continueButton.SetActive(true);
         quitButton.SetActive(true);
@@ -231,19 +244,10 @@ public class Scoring : MonoBehaviour
         WaitForSeconds timeRate = new WaitForSeconds(1f / fpsCount);
        
         float stepAmount =starToSlotSpeed/ (fpsCount * fitStarToSlotDuration);
-              
-        //Create new Shimmer Particle FX
-        GameObject spawnedImplosionParticleFX = Instantiate(implosionFXPrefab, starRatingContainer.transform);
-        spawnedImplosionParticleFX.transform.position = p_spawnedStarFill.transform.position;
-        Destroy(spawnedImplosionParticleFX, 3f);
 
-        GameObject spawnedLightBeamParticleFX = Instantiate(lightbeamFXPrefab, starRatingContainer.transform);
-        spawnedLightBeamParticleFX.transform.position = p_spawnedStarFill.transform.position;
-        Destroy(spawnedLightBeamParticleFX, 3f);
+ 
 
-        GameObject spawnedBlindingTwinkleParticleFX = Instantiate(blindingTwinkleFXPrefab, starRatingContainer.transform);
-        spawnedBlindingTwinkleParticleFX.transform.position = p_spawnedStarFill.transform.position;
-        Destroy(spawnedBlindingTwinkleParticleFX, 3f);
+  
 
         //If spawned star's size is larger than the selected star slot's size, then shrink it and lessen transparency
         while (p_spawnedStarFill.GetComponent<RectTransform>().sizeDelta.x > p_starSlotSize.x + stepAmount)
@@ -281,10 +285,26 @@ public class Scoring : MonoBehaviour
         desiredColor.a = 0f;
         spawnedStarFill.GetComponent<Image>().color = desiredColor;
 
+
+        //Create new Implosion Particle FX
+        GameObject spawnedImplosionParticleFX = Instantiate(implosionFXPrefab, starRatingContainer.transform);
+        spawnedImplosionParticleFX.transform.position = p_selectedStarSlot.transform.position;
+        Destroy(spawnedImplosionParticleFX, 3f);
+       
+
+
         //Create new Shimmer Particle FX
         GameObject spawnedShimmerParticleFX = Instantiate(shimmerFXPrefab, starRatingContainer.transform);
         spawnedShimmerParticleFX.transform.position = p_selectedStarSlot.transform.position;
         Destroy(spawnedShimmerParticleFX, 3f);
+
+        GameObject spawnedLightBeamParticleFX = Instantiate(lightbeamFXPrefab, starRatingContainer.transform);
+        spawnedLightBeamParticleFX.transform.position = p_selectedStarSlot.transform.position;
+        Destroy(spawnedLightBeamParticleFX, 3f);
+
+        GameObject spawnedBlindingTwinkleParticleFX = Instantiate(blindingTwinkleFXPrefab, starRatingContainer.transform);
+        spawnedBlindingTwinkleParticleFX.transform.position = p_selectedStarSlot.transform.position;
+        Destroy(spawnedBlindingTwinkleParticleFX, 3f);
         return spawnedStarFill;
     }
  
@@ -336,18 +356,25 @@ public class Scoring : MonoBehaviour
     public void OnEnable()
     {
         GameManager.OnGameStart += OnGameStarted;
+        GameManager.OnGameEnd += OnGameEnded;
     }
     public void OnDisable()
     {
         GameManager.OnGameStart -= OnGameStarted;
+        GameManager.OnGameEnd -= OnGameEnded;
     }
 
     void OnGameStarted()
     {
         //? means null checker
-        SetScore(0);
+        SetScore(1500); //TEMP
         UpdateGameScoreGoal();
         ResetMultiplier();
+    }
+
+    void OnGameEnded()
+    {
+        
     }
     public void starCheck()
     {
