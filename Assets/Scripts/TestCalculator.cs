@@ -242,7 +242,8 @@ public class TestCalculator : MonoBehaviour
     {
 
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
-      
+        AudioManager.instance.playSound(0);
+
         yield return new WaitForSeconds(0.25f);
         p_correct = true;
     }
@@ -267,7 +268,8 @@ public class TestCalculator : MonoBehaviour
 
         yield return new WaitForSeconds(0.05f);
         //yield return new WaitForSeconds(1f);
-       
+
+        AudioManager.instance.playSound(1);
         p_inputField.text = "";
         p_inputField.ActivateInputField();
         p_inputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);

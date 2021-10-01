@@ -79,6 +79,7 @@ public class ChangeCalculator : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         //yield return new WaitForSeconds(1f);
 
+        AudioManager.instance.playSound(1);
         p_inputField.text = "";
         p_inputField.Select();
         p_inputField.ActivateInputField();
@@ -114,6 +115,7 @@ public class ChangeCalculator : MonoBehaviour
                 
                 Scoring.instance.addScore((int) (100 * Scoring.instance.multiplier));
                 RecordAnswerResult(MathProblemOperator.division, true);
+                AudioManager.instance.playSound(0);
                 Debug.Log("Is Correct");
                 
             }
