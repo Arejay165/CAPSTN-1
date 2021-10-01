@@ -278,7 +278,7 @@ public class TestCalculator : MonoBehaviour
     {
 
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
-      
+        AudioManager.instance.playSound(0);
         yield return new WaitForSeconds(0.25f);
         p_correct = true;
     }

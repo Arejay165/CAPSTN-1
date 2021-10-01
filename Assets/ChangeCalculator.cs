@@ -70,6 +70,10 @@ public class ChangeCalculator : MonoBehaviour
 
 
     }
+
+
+
+
     public void OnPriceInputted()
     {
       
@@ -99,7 +103,10 @@ public class ChangeCalculator : MonoBehaviour
                 
                 Scoring.instance.addScore((int) (100 * Scoring.instance.multiplier));
                 RecordAnswerResult(MathProblemOperator.division, true);
-                //Debug.Log("Is Correct");
+
+                AudioManager.instance.playSound(0);
+                Debug.Log("Is Correct");
+
                 
             }
             else
@@ -131,6 +138,7 @@ public class ChangeCalculator : MonoBehaviour
     IEnumerator WrongInputted(InputField p_inputField)
     {
         //PlayerManager.instance.Shake(Camera.main.gameObject,0.15f, 0.05f, 0.25f);
+        AudioManager.instance.playSound(1);
         PlayerManager.instance.Shake(gameObject, 0.2f, 3.5f, 1.5f);
         int blinkCount = 0;
         while (blinkCount < 3)
