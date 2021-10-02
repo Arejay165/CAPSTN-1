@@ -93,8 +93,7 @@ public class UIManager : MonoBehaviour
 
     public void Continue() // Open Upgrade
     {
-        Scoring.instance.round++;
-        Scoring.instance.scoreGoal = 1000 + ((Scoring.instance.round - 1) * (250));
+
         ActivateGameObjects(upgradeUI.name);
 
         Debug.Log("Continue");

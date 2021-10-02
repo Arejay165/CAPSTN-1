@@ -86,7 +86,8 @@ public class Customer : MonoBehaviour
         //}
 
         // For display 
-        foreach (Item selectedItem in MathProblemManager.instance.GetCurrentItemsWanted())
+        
+        foreach (Item selectedItem in MathProblemManager.instance.GetCurrentItemsWanted(true))
         {
            
             GameObject itemUI = Instantiate(MathProblemManager.instance.itemIconTemplate);

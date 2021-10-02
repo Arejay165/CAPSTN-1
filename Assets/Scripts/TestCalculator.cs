@@ -66,40 +66,22 @@ public class TestCalculator : MonoBehaviour
     private void OnEnable()
     {
 
-        //Register OnGameStart Event in GameManager
-        GameManager.OnGameStart += OnGameStarted;
-        
-        StackDuplicateItems();
-        GameManager.instance.orderSheetShowing = true;
-        PerformanceManager.instance.totalMathProblems++;
-        totalPriceAnswerField.enabled = false;
-        changeAnswerField.gameObject.SetActive(false);
-        changeText.gameObject.SetActive(false);
-        customerPaidText.gameObject.SetActive(false);
-        customerPaidTitle.gameObject.SetActive(false);
-        if(answerFields.Count > 0)
+        ////Register OnGameStart Event in GameManager
+        //GameManager.OnGameStart += OnGameStarted;
+        //foreach (InputField selectedAnswerField in answerFields)
+        //{
+        //    Destroy(selectedAnswerField.gameObject);
+        //}
+        //clears ui list
+        foreach (Transform child in displayPanel.transform)
         {
-            answerFields[0].Select();
-            answerFields[0].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
+
         }
-        isCountingTime = true;
-    }
-
-    private void OnDisable()
-    {
-        //Deregister OnGameStart Event in GameManager
-        GameManager.OnGameStart -= OnGameStarted;
-      
-
-
-        GameManager.instance.orderSheetShowing = false;
- 
-    }
-
-    public void OnGameStarted()
-    {
-        PerformanceManager.instance.totalMathProblems = 0;
-        StopAllCoroutines();
+        //clears answerfields
+        answerFields.Clear();
         itemUIClassList.Clear();
         itemsAnswer.Clear();
         changeAnswers.Clear();
@@ -118,17 +100,40 @@ public class TestCalculator : MonoBehaviour
         //clear total price UI
         totalPriceAnswerField.text = "";
 
-        //clears answerfields
-        answerFields.Clear();
 
-        //clears ui list
-        foreach (Transform child in displayPanel.transform)
+
+        totalPriceAnswerField.enabled = false;
+        changeAnswerField.gameObject.SetActive(false);
+        changeText.gameObject.SetActive(false);
+        customerPaidText.gameObject.SetActive(false);
+        customerPaidTitle.gameObject.SetActive(false);
+        StackDuplicateItems();
+
+        
+
+        if(answerFields.Count > 0)
         {
-
-            child.gameObject.SetActive(false);
-            Destroy(child.gameObject);
-
+            answerFields[0].Select();
+            answerFields[0].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
         }
+        isCountingTime = true;
+    }
+
+    private void OnDisable()
+    {
+        //Deregister OnGameStart Event in GameManager
+        GameManager.OnGameStart -= OnGameStarted;
+      
+
+
+ 
+    }
+
+    public void OnGameStarted()
+    {
+        
+        StopAllCoroutines();
+     
 
     }
     //private void OnDisable()
@@ -205,60 +210,62 @@ public class TestCalculator : MonoBehaviour
     }
     public void OnPriceInputted(string p_playerInputString)
     {
-        
-        int itemOrderIndex = IdentifyAnswerfieldIndex(p_playerInputString); //Finding which inputfield is being used to write
-        float playerInputValue = -1;
-        
-        if (float.TryParse(p_playerInputString, out float inputVal)) // convert string to float
+        if (gameObject.activeSelf)
         {
-            playerInputValue = inputVal;
-        }
-        
+            int itemOrderIndex = IdentifyAnswerfieldIndex(p_playerInputString); //Finding which inputfield is being used to write
+            float playerInputValue = -1;
 
-
-        if (playerInputValue != -1 ) // If input is valid (any number)
-        {
-            //If it matches, it is correct
-            if (playerInputValue == itemUIClassList[itemOrderIndex].totalPriceAnswer)
+            if (float.TryParse(p_playerInputString, out float inputVal)) // convert string to float
             {
-                Debug.Log("Correct");
+                playerInputValue = inputVal;
+            }
 
-                StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
 
-                //Change select to next input field if correct
-                RecordAnswerResult(itemOrderIndex, true);
-                index++;
-                if (index < answerFields.Count) 
+
+            if (playerInputValue != -1) // If input is valid (any number)
+            {
+                //If it matches, it is correct
+                if (playerInputValue == itemUIClassList[itemOrderIndex].totalPriceAnswer)
                 {
-                    Debug.Log("List still has inputfield");
-                    answerFields[index].Select();
-                    answerFields[index].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+                    Debug.Log("Correct");
+
+                    StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
+
+                    //Change select to next input field if correct
+                    RecordAnswerResult(itemOrderIndex, true);
+                    index++;
+                    if (index < answerFields.Count)
+                    {
+                        Debug.Log("List still has inputfield");
+                        answerFields[index].Select();
+                        answerFields[index].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+                    }
+                    else
+                    {
+                        Debug.Log("All correct answer");
+                        SpawnAnswerField();
+                    }
+                    answerAttempts++;
+
                 }
+                //If it doesnt match its wrong
                 else
                 {
-                    Debug.Log("All correct answer");
-                    SpawnAnswerField();
-                }
-                answerAttempts++;
-               
-            }
-            //If it doesnt match its wrong
-            else
-            {
-                Debug.Log("Wrong");
-                StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
-                RecordAnswerResult(itemOrderIndex, false);
-               
-                Scoring.instance.ModifyMultiplier(-1f);
-            }
-        }
-        else //If input is invalid (not a number)
-        {
-            Debug.Log("Invalid Input, retry again");
-            StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
-           
+                    Debug.Log("Wrong");
+                    StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
+                    RecordAnswerResult(itemOrderIndex, false);
 
-            
+                    Scoring.instance.ModifyMultiplier(-1f);
+                }
+            }
+            else //If input is invalid (not a number)
+            {
+                Debug.Log("Invalid Input, retry again");
+                StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
+
+
+
+            }
         }
     }
 
@@ -346,108 +353,110 @@ public class TestCalculator : MonoBehaviour
 
     public void OnTotalPriceInputted()
     {
-       
-        string playerInputString = totalPriceAnswerField.text;
-     
-        float playerInputValue = -1;
-
-       
-        if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
+        if (gameObject.activeSelf)
         {
-            
-            playerInputValue = inputVal;
-        
+            string playerInputString = totalPriceAnswerField.text;
 
-        }
-        if (playerInputValue != -1)
-        {
-            if ( playerInputValue == totalPriceCorrectAnswer) // Answer is correct
+            float playerInputValue = -1;
+
+
+            if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
             {
-                ShowChangeText();
-                StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect));
-                RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, true);
 
-               
-                changeAnswers.Add(randomExtraMoney);
-                changeAnswers.Add(totalPriceCorrectAnswer);
+                playerInputValue = inputVal;
+
+
             }
-            else // Answer is wrong
+            if (playerInputValue != -1)
             {
-                Debug.Log("RIGHT ANSWER IS : " + totalPriceCorrectAnswer);
+                if (playerInputValue == totalPriceCorrectAnswer) // Answer is correct
+                {
+                    ShowChangeText();
+                    StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect));
+                    RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, true);
+
+
+                    changeAnswers.Add(randomExtraMoney);
+                    changeAnswers.Add(totalPriceCorrectAnswer);
+                }
+                else // Answer is wrong
+                {
+                    Debug.Log("RIGHT ANSWER IS : " + totalPriceCorrectAnswer);
+                    StartCoroutine(WrongInputted(totalPriceAnswerField));
+                    RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, false);
+                    Scoring.instance.ResetMultiplier();
+                }
+                answerAttempts++;
+            }
+            else
+            {
+                Debug.Log("Invalid Input, retry again");
                 StartCoroutine(WrongInputted(totalPriceAnswerField));
-                RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, false);
-                Scoring.instance.ModifyMultiplier(-1f);
+
+
             }
-            answerAttempts++;
         }
-        else
-        {
-            Debug.Log("Invalid Input, retry again");
-            StartCoroutine(WrongInputted(totalPriceAnswerField));
-            
-
-        }
-
     }
 
     public void OnChangeInputted()
     {
-        
-        string playerInputString = changeAnswerField.text;
-        float playerInputValue = -1;
-
-       
-
-        if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
+        if (gameObject.activeSelf)
         {
-            playerInputValue = inputVal;
-            
-        }
-        if (playerInputValue != -1)
-        {
-            answerAttempts++;
-            if (playerInputValue == changeCorrectAnswer)
+            string playerInputString = changeAnswerField.text;
+            float playerInputValue = -1;
+
+
+
+            if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
             {
-                StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
-                RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, true);
+                playerInputValue = inputVal;
 
-                
-                
-                OrderSheetFinish();
-                index = 0;
             }
-            else// Answer is wrong
+            if (playerInputValue != -1)
             {
+                answerAttempts++;
+                if (playerInputValue == changeCorrectAnswer)
+                {
+                    StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
+                    RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, true);
 
+
+
+                    OrderSheetFinish();
+                    index = 0;
+                }
+                else// Answer is wrong
+                {
+
+
+                    StartCoroutine(WrongInputted(changeAnswerField));
+                    RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, false);
+                    Scoring.instance.ResetMultiplier();
+                }
+
+            }
+            else
+            {
+                Debug.Log("Invalid Input, retry again");
 
                 StartCoroutine(WrongInputted(changeAnswerField));
-                RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, false);
-                Scoring.instance.ModifyMultiplier(-1f);
-            }
-            
-        }
-        else
-        {
-            Debug.Log("Invalid Input, retry again");
-            
-            StartCoroutine(WrongInputted(changeAnswerField));
-            
 
+
+            }
         }
     }
     public void OrderSheetFinish()
     {
 
+        
+        
+      
+        Scoring.instance.addScore((int) (100*Scoring.instance.multiplier));
         if (answerAttempts == perfectAttempts)
         {
             Scoring.instance.ModifyMultiplier(1f);
         }
-        
-      
-        Scoring.instance.addScore((int) (100*Scoring.instance.multiplier));
-
-        //  UIManager.instance.inGameUI.GetComponent<InGameUI>().scoring.gameObject.GetComponent<Text>().text = "Score: " + GameManager.instance.score.ToString(); //Very temporary until restructured codes
-
+       
         StartCoroutine(SheetCompleted(changeAnswerField));
     
 

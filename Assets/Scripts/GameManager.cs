@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public TestCalculator testCalculator;
     public CustomerSpawner customerSpawner;
     public DetectItemInWindow window;
-    public bool orderSheetShowing = false;
+    
     public bool isPlaying = false;
 
 

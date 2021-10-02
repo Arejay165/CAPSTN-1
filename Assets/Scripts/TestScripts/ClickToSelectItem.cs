@@ -24,11 +24,37 @@ public class ClickToSelectItem : MonoBehaviour
     [SerializeField] ParticleSystem hintingSparklePFX;
     [SerializeField] ParticleSystem radiatePFX;
 
-    private void Start()
+  
+    private void OnEnable()
     {
-        canSpawn = true;
+
+        //Register OnGameStart Event in GameManager
+        GameManager.OnGameStart += OnGameStarted;
+        GameManager.OnGameEnd += OnGameEnded;
     }
 
+    private void OnDisable()
+    {
+        //Deregister OnGameStart Event in GameManager
+        GameManager.OnGameStart -= OnGameStarted;
+        GameManager.OnGameEnd -= OnGameEnded;
+
+
+
+
+
+    }
+
+    void OnGameStarted()
+    {
+        CursorManager.instance.SetActiveCursorAnimation(CursorType.Arrow);
+        RemoveHighlightItem();
+        canSpawn = true;
+    }
+    void OnGameEnded()
+    {
+
+    }
     private void OnMouseOver()
     {
         HighlightItem();
@@ -45,38 +71,37 @@ public class ClickToSelectItem : MonoBehaviour
        
             if (Input.GetMouseButtonDown(0) && canSpawn)
             {
+                Debug.Log("Item clicked");
                 CursorManager.instance.PlayCursorAnimation(CursorType.ClickItem, CursorType.Arrow);
-                if (GameManager.instance.orderSheetShowing)
+                if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf)
                 {
-                    Debug.Log("Order Sheet is Active");
-                    
-                    return;
+                    SpawnItem();
                 }
-                SpawnItem();
-                canSpawn = false;
+                
+                //canSpawn = false;
 
-                if (TutorialManager.instance)
-                {
-                    if (TutorialManager.instance.tutorialQuestActive && TutorialManager.instance.canTutorial)
-                    {
-                        if (TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 4)
-                        {
-                            TutorialManager.instance.ToggleTutorialQuest();
-                            TutorialManager.instance.StartTimeline();
-                        }
+                //if (TutorialManager.instance)
+                //{
+                //    if (TutorialManager.instance.tutorialQuestActive && TutorialManager.instance.canTutorial)
+                //    {
+                //        if (TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 4)
+                //        {
+                //            TutorialManager.instance.ToggleTutorialQuest();
+                //            TutorialManager.instance.StartTimeline();
+                //        }
 
-                    }
-                }
+                //    }
+                //}
                 
                 
                
                 
              
             }
-            if (Input.GetMouseButtonUp(0) && !canSpawn)
-            {
-                canSpawn = true;
-            }
+            //if (Input.GetMouseButtonUp(0) && !canSpawn)
+            //{
+            //    canSpawn = true;
+            //}
         }
        
 

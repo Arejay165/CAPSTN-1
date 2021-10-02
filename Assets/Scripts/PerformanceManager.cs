@@ -61,7 +61,7 @@ public class AnsweredProblemData
 public class PerformanceManager : MonoBehaviour
 {
     public static PerformanceManager instance;
-    public int totalMathProblems = 0;
+   
     public List<AnsweredProblemData> answeredProblemDatas = new List<AnsweredProblemData>();
     public int rerollAttempts = 0;
     public int maxRerollAttempts = System.Enum.GetValues(typeof(PerformanceFact)).Length;

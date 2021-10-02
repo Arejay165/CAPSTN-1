@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 public class BillCounter : MonoBehaviour, IPointerDownHandler
 {
   
-  public  bool isChangeUIActive;
-    
+  
 
     private void Start()
     {
@@ -16,13 +15,13 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
        
-        if (!isChangeUIActive && MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue !=0)//GameManager.instance.customer.willBuy)
+        if (!TransitionManager.instances.changeTransform.gameObject.activeSelf && MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue !=0)//GameManager.instance.customer.willBuy)
         {
 
             GameManager.instance.customer.itemsImage[0].color = global::GameManager.instance.window.darkenImage;
             GameManager.instance.customer.itemsImage.RemoveAt(0);
             MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(0);
-            isChangeUIActive = true;
+            
             ChangeUI();
             // TUTORIAL
             //if (TutorialManager.instance)
@@ -43,6 +42,6 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     {
         
         TransitionManager.instances.MoveTransition(new Vector2(-523f, 0), 1f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, true);
-        isChangeUIActive = false;
+   
     }
 }

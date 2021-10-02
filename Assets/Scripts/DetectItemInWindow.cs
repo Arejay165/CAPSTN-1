@@ -39,7 +39,7 @@ public class DetectItemInWindow : MonoBehaviour
                             GameManager.instance.customer.itemsImage.RemoveAt(i);
                             MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(i);
                   
-                            if (MathProblemManager.instance.GetCurrentItemsWanted(false).Count <= 0)
+                            if (MathProblemManager.instance.GetCurrentItemsWanted().Count <= 0)
                             {
 
                                 TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);

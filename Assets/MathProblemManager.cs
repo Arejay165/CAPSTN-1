@@ -13,7 +13,7 @@ public class MathProblemManager : MonoBehaviour
     public bool randomizeItemsWanted = false;
     public int currentIndex = 0;
 
-    public int maxGeneratedProblems = 2;
+    public int maxGeneratedProblems = 10;
     public float buyItemPercentage = 0.7f;
     [SerializeField] public List<Item> currentItemsWanted = new List<Item>();
     [SerializeField] public List<List<Item>> generatedItemsWanted = new List<List<Item>>();
@@ -100,7 +100,7 @@ public class MathProblemManager : MonoBehaviour
 
         }
     }
-    public List<Item> GetCurrentItemsWanted(bool p_moveNextIndex = true)
+    public List<Item> GetCurrentItemsWanted(bool p_moveNextIndex = false)
     {
 
         if (p_moveNextIndex)
@@ -118,6 +118,8 @@ public class MathProblemManager : MonoBehaviour
     }
     void GenerateStorePrices()
     {
+        currentIndex = 0;
+        currentItemsWanted.Clear();
         generatedItemsWanted.Clear();
         orderedItemsWanted.Clear();
         randomizeItemsWanted = false;
@@ -157,7 +159,7 @@ public class MathProblemManager : MonoBehaviour
             else if (mathProblemCount >= maxGeneratedProblems * buyItemPercentage) //if it's greater than or equal to 7, it's change sheet
             {
                 //Not buying 
-
+                Debug.Log("NOT BUYING");
                 List<Item> itemWanted = new List<Item>();
                 
 
@@ -179,16 +181,7 @@ public class MathProblemManager : MonoBehaviour
 
         foreach (Item selectedItem in orderedItemsWanted[currentIndex])
         {
-            //Item item = new Item();
-            //item.itemName = selectedItem.itemName;
-            //item.price = selectedItem.price;
-            //item.numValue = selectedItem.numValue;
-            //item.denValue = selectedItem.denValue;
-            //item.itemSprite = selectedItem.itemSprite;
-            //item.quantity = selectedItem.quantity;
-            //item.minRangePrice = selectedItem.minRangePrice;
-            //item.maxRangePrice = selectedItem.maxRangePrice;
-            //itemsWanted.Add(item);
+
             currentItemsWanted.Add(selectedItem);
         }
     }

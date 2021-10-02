@@ -8,7 +8,7 @@ public class AnalogueClock : MonoBehaviour
     [SerializeField] private float realSecondsInGameDay = 0;
     [SerializeField] private Transform clockHandTransform;
     [SerializeField] private Image timeFill;
-    float gameDay = 0f;
+ 
     [SerializeField] float currentGameTime = 0;
     float timeScale = 0f;
     public Image timeImage;

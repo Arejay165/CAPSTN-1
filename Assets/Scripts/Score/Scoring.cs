@@ -14,11 +14,13 @@ public class Scoring : MonoBehaviour
     Text                    scoreText;
 
 
-    public int round = 1;
+    public int round = 0;
     public float multiplier;
     public float maxMultiplier;
     public Text gameMultiplierText;
 
+    public Text gameDayText;
+    public TextMeshProUGUI resultDayText;
     public Text endScoreText;
     public Text highscoreText;
     public Text gameScoreGoalText;
@@ -33,11 +35,16 @@ public class Scoring : MonoBehaviour
     public GameObject lightbeamFXPrefab;
     public GameObject blindingTwinkleFXPrefab;
     public List<ParticleSystem> confettis = new List<ParticleSystem>();
+    public GameObject gameStarRatingContainer;
     public GameObject starRatingContainer;
     public int starIndex;
-    public List<GameObject> stars = new List<GameObject>();
-    public GameObject[] starSlots;
- 
+    public List<GameObject> gameStars = new List<GameObject>();
+    public List<GameObject> resultStars = new List<GameObject>();
+
+    int gameStarSlotIndex = 0;
+    public GameObject[] gameStarSlots;
+    public GameObject[] resultStarSlots;
+
 
     public Sprite failImage;
     public Image levelPasserImage;
@@ -62,8 +69,10 @@ public class Scoring : MonoBehaviour
     #endregion
     private Coroutine countingCoroutine;
 
-    public Text totalMathProblems;
-    public Text totalSolvingTime;
+    public Text totalMathProblemsTitle;
+    public Text totalMathProblemsValue;
+    public Text totalSolvingTimeTitle;
+    public Text totalSolvingTimeValue;
     public Text additionSolvingTime;
     public Text additionEvaluation;
     public Text subtractionSolvingTime;
@@ -150,14 +159,14 @@ public class Scoring : MonoBehaviour
                 if (starRatingForScoreCounted % percentageIncrementPerStar == 0 && starRatingForScoreCounted != 0)
                 {
                     //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(5) stars, it'll become 5 stars)
-                    starRatingForScoreCounted = Mathf.Clamp((starRatingForScoreCounted / percentageIncrementPerStar), 0, starSlots.Length);
+                    starRatingForScoreCounted = Mathf.Clamp((starRatingForScoreCounted / percentageIncrementPerStar), 0, resultStarSlots.Length);
 
                     //Makes sure there is only 1 copy
                     if (backUpStarRatingsCounted == starRatingForScoreCounted - 1)
                     {
                         //Do UI UX Animation for that star
-                        GameObject newStarFill = CreateStarFill(starSlots[backUpStarRatingsCounted]);
-                        StartCoroutine(FitStarToSlot(newStarFill, starSlots[backUpStarRatingsCounted].GetComponent<RectTransform>().sizeDelta));
+                        GameObject newStarFill = CreateStarFill(resultStarSlots[backUpStarRatingsCounted]);
+                        StartCoroutine(FitStarToSlot(newStarFill, resultStarSlots[backUpStarRatingsCounted].GetComponent<RectTransform>().sizeDelta));
                         backUpStarRatingsCounted++;
                     }
                 }
@@ -185,14 +194,14 @@ public class Scoring : MonoBehaviour
                 if (starRatingForScoreCounted % percentageIncrementPerStar == 0 && starRatingForScoreCounted != 0)
                 {
                     //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(5) stars, it'll become 5 stars)
-                    starRatingForScoreCounted = Mathf.Clamp((starRatingForScoreCounted / percentageIncrementPerStar), 0, starSlots.Length);
+                    starRatingForScoreCounted = Mathf.Clamp((starRatingForScoreCounted / percentageIncrementPerStar), 0, resultStarSlots.Length);
 
                     //Makes sure there is only 1 copy
                     if (backUpStarRatingsCounted == starRatingForScoreCounted - 1)
                     {
                         //Do UI UX Animation for that star
-                        GameObject newStarFill = CreateStarFill(starSlots[backUpStarRatingsCounted]);
-                        StartCoroutine(FitStarToSlot(newStarFill, starSlots[backUpStarRatingsCounted].GetComponent<RectTransform>().sizeDelta));
+                        GameObject newStarFill = CreateStarFill(resultStarSlots[backUpStarRatingsCounted]);
+                        StartCoroutine(FitStarToSlot(newStarFill, resultStarSlots[backUpStarRatingsCounted].GetComponent<RectTransform>().sizeDelta));
                         backUpStarRatingsCounted++;
                     }
 
@@ -211,33 +220,105 @@ public class Scoring : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
         //Go through each star ratings again for Falling Star FX Particles
-        foreach (GameObject selectedStar in stars)
+        foreach (GameObject selectedStar in resultStars)
         {
             //Create new Falling Star Particle FX
 
             GameObject spawnedFallingStarParticleFX = Instantiate(fallingStarFXPrefab, selectedStar.transform);
             spawnedFallingStarParticleFX.transform.position = selectedStar.transform.position;
             Destroy(spawnedFallingStarParticleFX, 3f);
+
             //If perfect, do confetti
-            if (backUpStarRatingsCounted >= starSlots.Length)
+            if (resultStars.IndexOf(selectedStar) >= 4)
             {
                 foreach (ParticleSystem selectedConfetti in confettis)
                 {
                     selectedConfetti.Play();
                 }
             }
-  
-
         }
 
 
+
+
+        StartCoroutine(ShowPerformanceStats());
+
+
+    }
+
+    public void ShowPerformance(Text p_perfromanceTitle, string p_performanceValue)
+    {
+        p_perfromanceTitle.gameObject.SetActive(true);
+        p_perfromanceTitle.text = p_performanceValue.ToString();
+    }
+    public IEnumerator ShowPerformanceStats()
+    {
+
+        
+        
+        int totalCorrectAnswers = 0;
+        int totalMathProblems = 0;
+        //Correctly Answered Math Problems
+        for (int i = 0; i < 5; i++)
+        {
+            string currentCorrectAnswersForOperatorString = PerformanceManager.instance.GetOperatorCount((MathProblemOperator)i, true);
+            int addCorrectAnswerAmount = 0;
+            if (int.TryParse(currentCorrectAnswersForOperatorString, out int currentCorrectAnswersForOperatorInt)) // convert string to float
+            {
+                addCorrectAnswerAmount = currentCorrectAnswersForOperatorInt;
+            }
+
+            totalCorrectAnswers += addCorrectAnswerAmount;
+            totalMathProblems += addCorrectAnswerAmount;
+        }
+
+        //Wrongly Answered Math Problems
+        for (int i = 0; i < 5; i++)
+        {
+            string currentWrongAnswersForOperatorString = PerformanceManager.instance.GetOperatorCount((MathProblemOperator)i, false);
+            int addWrongAnswerAmount= 0;
+            if (int.TryParse(currentWrongAnswersForOperatorString, out int currentWrongAnswersForOperatorInt)) // convert string to float
+            {
+                addWrongAnswerAmount = currentWrongAnswersForOperatorInt;
+            }
+
+            totalMathProblems += addWrongAnswerAmount;
+        }
+        //Titles
+        totalMathProblemsTitle.gameObject.SetActive(true);
+        totalSolvingTimeTitle.gameObject.SetActive(true);
+        
+        yield return new WaitForSeconds(1.5f);
+
+        //Addition
+        ShowPerformance(additionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.addition) + " seconds");
+        ShowPerformance(additionEvaluation, "Addition: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition));
+        yield return new WaitForSeconds(1.5f);
+
+        //Subtraction
+        ShowPerformance(subtractionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.subtraction) + " seconds");
+        ShowPerformance(subtractionEvaluation, "Subtraction: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction));
+        yield return new WaitForSeconds(1.5f);
+
+        //Multiplication
+        ShowPerformance(multiplicationSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.multiplication) + " seconds");
+        ShowPerformance(multiplicationEvaluation, "Multiplication: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication));
+        yield return new WaitForSeconds(1.5f);
+
+        //Division
+        ShowPerformance(divisionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.division) + " seconds");
+        ShowPerformance(divisionEvaluation, "Division: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division));
+        yield return new WaitForSeconds(1.5f);
+
+        //Overall
+        ShowPerformance(totalMathProblemsValue, "Total: " + totalCorrectAnswers.ToString() + " / " + totalMathProblems.ToString());
+        ShowPerformance(totalSolvingTimeValue, PerformanceManager.instance.GetAverageTime(MathProblemOperator.none) + " seconds");
+        yield return new WaitForSeconds(1.5f);
 
         continueButton.SetActive(true);
         quitButton.SetActive(true);
 
     }
-
-
     public IEnumerator FitStarToSlot(GameObject p_spawnedStarFill, Vector2 p_starSlotSize)
     {
     
@@ -268,12 +349,23 @@ public class Scoring : MonoBehaviour
         //Not available
         
     }
+    public GameObject CreateGameStarFill(GameObject p_selectedStarSlot)
+    {
+        //Spawn new star
+        GameObject spawnedStarFill = Instantiate(starFillPrefab, gameStarRatingContainer.transform);
+        spawnedStarFill.transform.position = p_selectedStarSlot.transform.position;
+        //Set size of new star (smaller)
+        
+        gameStars.Add(spawnedStarFill);
+        return spawnedStarFill;
+    }
+
     public GameObject CreateStarFill(GameObject p_selectedStarSlot)
     {
         //Spawn new star
         GameObject spawnedStarFill = Instantiate(starFillPrefab, starRatingContainer.transform);
         spawnedStarFill.transform.position = p_selectedStarSlot.transform.position;
-        stars.Add(spawnedStarFill);
+        resultStars.Add(spawnedStarFill);
         //Reference the selected star slot's size
         Vector2 selectedStarSlotSize = p_selectedStarSlot.GetComponent<RectTransform>().sizeDelta;
 
@@ -310,19 +402,41 @@ public class Scoring : MonoBehaviour
  
     public void UpdateGameScoreGoal()
     {
-        gameScoreGoalText.text = scoreGoal.ToString();
+
+       int scoreToNextGoal = (scoreGoal / 5) - (score);
+        while (scoreToNextGoal < 1)
+        {
+            scoreToNextGoal += (scoreGoal / 5);
+            if (gameStarSlotIndex < 5)
+            {
+
+                GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
+                newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
+
+
+                gameStarSlotIndex++;
+            }
+        }
+
+        gameScoreGoalText.text = scoreToNextGoal.ToString();
+        
+    
+        
     }
 
     public void SetScore(int p_newScore)
     {
         score = p_newScore;
         gameTipJarFill.fillAmount = (float)score/(float)scoreGoal;
+        
+        scoreText.text = score.ToString();
+        UpdateGameScoreGoal();
     }
     public int GetScore()
     {
         return score;
     }
-    
+
     public void ResetMultiplier()
     {
         multiplier = 1f;
@@ -343,6 +457,7 @@ public class Scoring : MonoBehaviour
         score += gainScore;
         scoreText.text = score.ToString();
         gameTipJarFill.fillAmount = (float)score/(float)scoreGoal;
+        UpdateGameScoreGoal();
     }
 
     private void Start()
@@ -351,37 +466,65 @@ public class Scoring : MonoBehaviour
         {
             instance = this;
         }
-        Scoring.instance.UpdateGameScoreGoal();
+        
     }
     public void OnEnable()
     {
+       
         GameManager.OnGameStart += OnGameStarted;
         GameManager.OnGameEnd += OnGameEnded;
     }
     public void OnDisable()
     {
+        
         GameManager.OnGameStart -= OnGameStarted;
         GameManager.OnGameEnd -= OnGameEnded;
     }
 
     void OnGameStarted()
     {
-        //? means null checker
-        SetScore(1500); //TEMP
-        UpdateGameScoreGoal();
+        //Delete all stars made
+        if (resultStars.Count > 0)
+        {
+            foreach (GameObject selectedStar in resultStars)
+            {
+                
+                Destroy(selectedStar);
+            }
+            resultStars.Clear();
+        }
+
+        if (gameStars.Count > 0)
+        {
+            foreach (GameObject selectedStar in gameStars)
+            {
+
+                Destroy(selectedStar);
+            }
+            gameStars.Clear();
+        }
+        SetScore(0); //TEMP
+        round++;
+
+        gameDayText.text = "Day: " + round.ToString();
+        scoreGoal = 1000 + ((round - 1) * (250));
+        
         ResetMultiplier();
+       
     }
 
     void OnGameEnded()
     {
+        PerformanceManager.instance.answeredProblemDatas.Clear();
         
+
     }
     public void starCheck()
     {
-        if(score % 300 == 0 && stars[starIndex] != null)
+        if(score % 300 == 0 && resultStars[starIndex] != null)
         {
             StarAnimation();
-            stars[starIndex].transform.GetComponent<Image>().sprite = starShine;
+            resultStars[starIndex].transform.GetComponent<Image>().sprite = starShine;
             starIndex++;
         }
         else
@@ -393,31 +536,35 @@ public class Scoring : MonoBehaviour
 
     public void Results()
     {
+        totalMathProblemsTitle.gameObject.SetActive(false);
+        totalMathProblemsValue.gameObject.SetActive(false);
+        totalSolvingTimeTitle.gameObject.SetActive(false);
+        totalSolvingTimeValue.gameObject.SetActive(false);
+        additionSolvingTime.gameObject.SetActive(false);
+        additionEvaluation.gameObject.SetActive(false);
+        subtractionSolvingTime.gameObject.SetActive(false);
+        subtractionEvaluation.gameObject.SetActive(false);
+        multiplicationSolvingTime.gameObject.SetActive(false);
+        multiplicationEvaluation.gameObject.SetActive(false);
+        divisionSolvingTime.gameObject.SetActive(false);
+        divisionEvaluation.gameObject.SetActive(false);
+        resultDayText.text = round.ToString();
         continueButton.SetActive(false);
         quitButton.SetActive(false);
+        ShowResults(score);
         TransitionManager.instances.changeTransform.gameObject.SetActive(false);
         TransitionManager.instances.noteBookTransform.gameObject.SetActive(false);
-        ShowResults(score);
        
-        totalMathProblems.text = "Total Math Problems: " + PerformanceManager.instance.totalMathProblems.ToString();
-        totalSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.none) + " seconds";
-        additionSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.addition) + " seconds";
-        additionEvaluation.text = "Addition: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition);
-        subtractionSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.subtraction) + " seconds";
-        subtractionEvaluation.text = "Subtraction: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction);
-        multiplicationSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.multiplication) + " seconds";
-        multiplicationEvaluation.text = "Multiplication: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication);
-        divisionSolvingTime.text = PerformanceManager.instance.GetAverageTime(MathProblemOperator.division) + " seconds";
-        divisionEvaluation.text = "Division: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division);
-        PerformanceManager.instance.answeredProblemDatas.Clear();
-        PerformanceManager.instance.totalMathProblems = 0;
+       
+      
+
     }
 
     public void StarAnimation()
     {
-        for(int i = 0; i < stars.Count; i++)
+        for(int i = 0; i < resultStars.Count; i++)
         {
-            stars[i].gameObject.transform.DOShakeScale(1,1,10,90,true);
+            resultStars[i].gameObject.transform.DOShakeScale(1,1,10,90,true);
         }
     }
 

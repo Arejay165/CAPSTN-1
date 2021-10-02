@@ -31,9 +31,7 @@ public class ChangeCalculator : MonoBehaviour
         MathProblemManager.instance.cash.price = quotient;//cash.numValue / cash.denValue;
 
         changeInputField.Select();
-        GameManager.instance.orderSheetShowing = true;
-        PerformanceManager.instance.totalMathProblems++;
- 
+    
         numeratorText.text = MathProblemManager.instance.cash.numValue.ToString();
         denominatorText.text = MathProblemManager.instance.cash.price.ToString();
         isCountingTime = true;
@@ -46,7 +44,7 @@ public class ChangeCalculator : MonoBehaviour
 
     private void OnDisable()
     {
-        billCounter.isChangeUIActive = false;
+
         changeInputField.text = "";
         changeInputField.Select();
    
@@ -76,45 +74,50 @@ public class ChangeCalculator : MonoBehaviour
 
     public void OnPriceInputted()
     {
-      
-        changeInputField.Select();
-        string playerInputString = changeInputField.text;
-
-        float playerInputValue = -1;
-
-        if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
+        if (gameObject.activeSelf)
         {
+            changeInputField.Select();
+            string playerInputString = changeInputField.text;
 
-            playerInputValue = inputVal;
-        }
-        if (playerInputValue != -1)
-        {
+            float playerInputValue = -1;
 
-            if (playerInputValue == MathProblemManager.instance.cash.denValue)
+            if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
             {
-                //Answer is correct
-                StartCoroutine(SheetCompleted(changeInputField));
-                
-                answerAttempts++;
-                if (answerAttempts == perfectAttempts)
-                {
-                    Scoring.instance.ModifyMultiplier(1f);
-                }
-                
-                Scoring.instance.addScore((int) (100 * Scoring.instance.multiplier));
-                RecordAnswerResult(MathProblemOperator.division, true);
 
-                AudioManager.instance.playSound(0);
-                Debug.Log("Is Correct");
-
-                
+                playerInputValue = inputVal;
             }
-            else
+            if (playerInputValue != -1)
             {
-                //Debug.Log("Isincorrect");
-                StartCoroutine(WrongInputted(changeInputField));
-                RecordAnswerResult(MathProblemOperator.division, false);
-                Scoring.instance.ModifyMultiplier(-1f);
+
+                if (playerInputValue == MathProblemManager.instance.cash.denValue)
+                {
+                    //Answer is correct
+                    StartCoroutine(SheetCompleted(changeInputField));
+
+                    answerAttempts++;
+                 
+
+                    Scoring.instance.addScore((int)(100 * Scoring.instance.multiplier));
+                    if (answerAttempts == perfectAttempts)
+                    {
+                        Scoring.instance.ModifyMultiplier(1f);
+                    }
+                    RecordAnswerResult(MathProblemOperator.division, true);
+
+                    AudioManager.instance.playSound(0);
+                    Debug.Log("Is Correct");
+
+
+                }
+                else
+                {
+                    //Debug.Log("Isincorrect");
+                    StartCoroutine(WrongInputted(changeInputField));
+                    RecordAnswerResult(MathProblemOperator.division, false);
+                    Scoring.instance.ModifyMultiplier(-1f);
+                }
+
+
             }
         }
      }
@@ -178,6 +181,6 @@ public class ChangeCalculator : MonoBehaviour
         }
         
         GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
-        GameManager.instance.orderSheetShowing = false;
+
     }
 }
