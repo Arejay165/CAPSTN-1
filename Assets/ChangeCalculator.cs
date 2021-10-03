@@ -155,7 +155,7 @@ public class ChangeCalculator : MonoBehaviour
         }
         p_inputField.text = "";
         p_inputField.Select();
-
+        changeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
     }
     public void RecordAnswerResult(MathProblemOperator p_mathOperator, bool p_isCorrect)
     {

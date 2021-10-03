@@ -306,6 +306,7 @@ public class TestCalculator : MonoBehaviour
             blinkCount++;
         }
 
+        AudioManager.instance.playSound(1);
         p_inputField.text = "";
         p_inputField.ActivateInputField();
         p_inputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
