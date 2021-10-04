@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject pauseGameUI;
     public RectTransform endGamePanel;
     public GameObject upgradeUI;
+    private bool isPause; //for demo purposes
 
    
     //public List<GameObject> tutorialUIs = new List<GameObject>();
@@ -50,7 +51,16 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!pauseGameUI.activeInHierarchy)
+            //if (!pauseGameUI.activeInHierarchy)
+            //{
+            //    Pause();
+            //}
+            //else
+            //{
+            //    Resume();
+            //}
+
+            if (!isPause)
             {
                 Pause();
             }
@@ -71,13 +81,17 @@ public class UIManager : MonoBehaviour
 
     public void Pause()
     {
-        ActivateGameObjects(pauseGameUI.name);
+        ///    ActivateGameObjects(pauseGameUI.name);
+        Debug.Log("Ispause");
+        isPause = true;
         Time.timeScale = 0;
     }
 
     public void Resume()
     {
-        ActivateGameObjects(inGameUI.name);
+        //   ActivateGameObjects(inGameUI.name);
+        Debug.Log("Resume");
+        isPause = false;
         Time.timeScale = 1f;
     }
 
