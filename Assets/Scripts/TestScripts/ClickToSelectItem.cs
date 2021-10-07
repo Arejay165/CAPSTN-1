@@ -76,6 +76,7 @@ public class ClickToSelectItem : MonoBehaviour
                 if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf)
                 {
                     SpawnItem();
+                    canSpawn = false;
                 }
                 
                 //canSpawn = false;
@@ -98,18 +99,18 @@ public class ClickToSelectItem : MonoBehaviour
                 
              
             }
-            //if (Input.GetMouseButtonUp(0) && !canSpawn)
-            //{
-            //    canSpawn = true;
-            //}
+            if (Input.GetMouseButtonUp(0) && !canSpawn)
+            {
+                canSpawn = true;
+            }
         }
-       
+
 
     }
     private void OnMouseExit()
     {
     
-        CursorManager.instance.SetActiveCursorAnimation(CursorType.Arrow);
+        //CursorManager.instance.SetActiveCursorAnimation(CursorType.Arrow);
         RemoveHighlightItem();
     }
 
@@ -170,8 +171,6 @@ public class ClickToSelectItem : MonoBehaviour
     {
         GameObject spawnedItem = Instantiate(itemSpawnedPrefab, this.transform.position, Quaternion.identity);
         //Animate to go to the counter 
-        spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, 1.0f);
-
         spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, animationTravelTime);
     }
 }

@@ -55,9 +55,6 @@ public class DetectItemInWindow : MonoBehaviour
                     else
                     {
                         Debug.Log("Wrong Item");
-                        
-                    
-
                     }
                 }
             }
