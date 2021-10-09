@@ -27,18 +27,14 @@ public class CustomerSpawner : MonoBehaviour
     void OnGameStarted()
     {
         //? means null checker
-        StartCoroutine(SpawnRate());
+        ToggleSpawn();
+      
+
     }
     public void ToggleSpawn()
     {
         canSpawn = canSpawn ? false : true;
-        if (canSpawn)
-        {
-            if (GameManager.instance.isPlaying)
-            {
-                StartCoroutine(SpawnRate());
-            }
-        }
+        StartCoroutine(SpawnRate());
     }
 
     public void SpawnCustomer()
@@ -64,9 +60,19 @@ public class CustomerSpawner : MonoBehaviour
 
     public IEnumerator SpawnRate()
     {
-       
-        float spawnTime = Random.Range(3, 3);
-        yield return new WaitForSeconds(spawnTime);
-        SpawnCustomer();
+        if (canSpawn)
+        {
+            if (GameManager.instance.isPlaying)
+            {
+                float spawnTime = 0;
+                if (!DayAndNightCycle.instance.isRushHour)
+                {
+                    spawnTime = Random.Range(3, 3);
+                }
+                yield return new WaitForSeconds(spawnTime);
+                SpawnCustomer();
+            }
+        }
+
     }
 }

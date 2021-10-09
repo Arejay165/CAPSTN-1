@@ -47,7 +47,7 @@ public class Upgrades : MonoBehaviour
         newInteractables[itemIndex].SetActive(true);
         Destroy(itemSprite[itemIndex]);
         Destroy(itemName[itemIndex]);
-        GameManager.instance.SetUpGame();
+        GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
        // UIManager.instance.Restart(); // restart the level with a new item
    }
    

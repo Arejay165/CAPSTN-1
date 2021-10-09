@@ -12,11 +12,14 @@ public class UIManager : MonoBehaviour
     public GameObject pauseGameUI;
     public RectTransform endGamePanel;
     public GameObject upgradeUI;
+    public GameObject titleScreenUI;
+    public GameObject settingsUI;
+    public GameObject roundBriefingUI;
+    public GameObject roundDebriefingUI;
     private bool isPause; //for demo purposes
 
-   
     //public List<GameObject> tutorialUIs = new List<GameObject>();
-  
+
     private void Awake()
     {
         if (instance == null)
@@ -71,12 +74,26 @@ public class UIManager : MonoBehaviour
         }   
     }
 
+    public void BackToMenu()
+    {
+        ActivateGameObjects(titleScreenUI.name);
+    }
+
+    public void Settings()
+    {
+        ActivateGameObjects(settingsUI.name);
+    }
     public void ActivateGameObjects(string nameOfGameObject)
     {
         inGameUI.SetActive(inGameUI.name.Equals(nameOfGameObject));
         endGameUI.SetActive(endGameUI.name.Equals(nameOfGameObject));
         pauseGameUI.SetActive(pauseGameUI.name.Equals(nameOfGameObject));
-        upgradeUI.SetActive(upgradeUI.name.Equals(nameOfGameObject)); 
+        upgradeUI.SetActive(upgradeUI.name.Equals(nameOfGameObject));
+        titleScreenUI.SetActive(titleScreenUI.name.Equals(nameOfGameObject));
+        settingsUI.SetActive(settingsUI.name.Equals(nameOfGameObject));
+        roundBriefingUI.SetActive(roundBriefingUI.name.Equals(nameOfGameObject));
+        roundDebriefingUI.SetActive(roundDebriefingUI.name.Equals(nameOfGameObject));
+
     }
 
     public void Pause()

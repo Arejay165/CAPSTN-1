@@ -38,7 +38,10 @@ public class DetectItemInWindow : MonoBehaviour
                             GameManager.instance.customer.itemsImage[i].color = global::GameManager.instance.window.darkenImage;
                             GameManager.instance.customer.itemsImage.RemoveAt(i);
                             MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(i);
-                  
+                        if (PlayerManager.instance.lastItemSpawner)
+                        {
+                            PlayerManager.instance.lastItemSpawner.canSpawn = true;
+                        }
                             if (MathProblemManager.instance.GetCurrentItemsWanted().Count <= 0)
                             {
 
