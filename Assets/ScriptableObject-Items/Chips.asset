@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Chips
   m_EditorClassIdentifier: 
   itemName: Chips
-  price: 5
+  price: 0
+  numValue: 0
+  denValue: 0
   itemSprite: {fileID: 21300000, guid: e6585eb644f31d248a9a05e6a02e5279, type: 3}
   quantity: 1
+  minRangePrice: 10
+  maxRangePrice: 20

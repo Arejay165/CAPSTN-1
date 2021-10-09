@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: New Bills
   m_EditorClassIdentifier: 
   itemName: Cash
-  price: 16
-  numValue: 800
-  denValue: 50
-  itemSprite: {fileID: 21300000, guid: 43616e9b6fe665b40b660e2e26b783f7, type: 3}
+  price: 17
+  numValue: 204
+  denValue: 12
+  itemSprite: {fileID: 21300000, guid: 233b05a9e7afdcb4b85028e1edf251e6, type: 3}
   quantity: 1
   minRangePrice: 0
   maxRangePrice: 0
