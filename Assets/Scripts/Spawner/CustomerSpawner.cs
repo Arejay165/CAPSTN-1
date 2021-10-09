@@ -27,7 +27,9 @@ public class CustomerSpawner : MonoBehaviour
     void OnGameStarted()
     {
         //? means null checker
-        ToggleSpawn();
+        //ToggleSpawn();
+        canSpawn = true;
+        StartCoroutine(SpawnRate());
       
 
     }
