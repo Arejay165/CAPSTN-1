@@ -1274,7 +1274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   days: 0
   gameTime: 0
-  endTime: 100
+  endTime: 10
   isStoreClosed: 0
   isMorning: 1
   uIManager: {fileID: 547003739}
@@ -29104,7 +29104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1915594523078478787, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.02673769
+      value: -0.19
       objectReference: {fileID: 0}
     - target: {fileID: 8714120172023677485, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
       propertyPath: m_SortingOrder
@@ -44260,7 +44260,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 596f35f42e314e94f9344f91f93eb573, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -41,7 +41,7 @@ public class Upgrades : MonoBehaviour
     public void selectItems(int itemIndex)
    {
         MathProblemManager.instance.storeItemList.Add(newItems[itemIndex]);
-        newItems.RemoveAt(itemIndex);
+        //newItems.RemoveAt(itemIndex);
 
         UIManager.instance.upgradeUI.SetActive(false);
         newInteractables[itemIndex].SetActive(true);
