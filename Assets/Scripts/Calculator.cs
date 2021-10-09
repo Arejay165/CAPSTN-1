@@ -64,12 +64,12 @@ public class Calculator : MonoBehaviour
         InitializeText(textIndex);
         textIndex++;
         
-        if (GameManager.instance.testCalculator.itemUIClassList.Count == listOfAnswers.Count)
-        {
-            //  GetAnswer();
-            finalAnswerInputField.gameObject.SetActive(true);
-            getAnswerInputField.gameObject.SetActive(false);
-        }
+        //if (GameManager.instance.testCalculator.itemUIClassList.Count == listOfAnswers.Count)
+        //{
+        //    //  GetAnswer();
+        //    finalAnswerInputField.gameObject.SetActive(true);
+        //    getAnswerInputField.gameObject.SetActive(false);
+        //}
     }
 
     public void InitializeText(int index)

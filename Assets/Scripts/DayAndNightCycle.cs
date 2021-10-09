@@ -26,6 +26,7 @@ public class DayAndNightCycle : MonoBehaviour
 
     public UIManager uIManager;
 
+    public bool isRushHour = false;
     public void Awake()
     {
         if (instance == null)
@@ -49,6 +50,7 @@ public class DayAndNightCycle : MonoBehaviour
     void OnGameStarted()
     {
         SetGameTime(0);
+        isRushHour = false;
         SetStoreClosed(false);
     }
     public int GetDays()
@@ -104,11 +106,8 @@ public class DayAndNightCycle : MonoBehaviour
                 else if (!isStoreClosed)
                 {
                     isStoreClosed = true;
-                 
-                    uIManager.ActivateGameObjects(uIManager.endGameUI.name);
-                    TransitionManager.instances.MoveTransition(new Vector2(0, 0), 1f, uIManager.endGameUI.GetComponent<RectTransform>(), uIManager.endGameUI.gameObject, true);
-                    Scoring.instance.Results();
-                    Debug.Log("Level Over");
+
+                    GameManager.instance.StartCoroutine(GameManager.instance.DayEnd());
                 }
             }
         }

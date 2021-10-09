@@ -22,7 +22,9 @@ public class Scoring : MonoBehaviour
     public Text gameDayText;
     public TextMeshProUGUI resultDayText;
     public Text endScoreText;
-    public Text highscoreText;
+   // public Text highscoreText;
+    public Text briefingDayText;
+    public Text briefingScoreGoalText;
     public Text gameScoreGoalText;
     public Image gameTipJarFill;
     public Sprite starShine;
@@ -69,9 +71,9 @@ public class Scoring : MonoBehaviour
     #endregion
     private Coroutine countingCoroutine;
 
-    public Text totalMathProblemsTitle;
+   
     public Text totalMathProblemsValue;
-    public Text totalSolvingTimeTitle;
+   
     public Text totalSolvingTimeValue;
     public Text additionSolvingTime;
     public Text additionEvaluation;
@@ -85,43 +87,43 @@ public class Scoring : MonoBehaviour
     public GameObject continueButton;
     public GameObject quitButton;
 
+    public GameObject enterHighscoreUI;
+    public GameObject newHighscoreUI;
 
+    public HighscoreTable hsTable;
 
+    public int resultsNextStar;
+    public void ShowBriefing()
+    {
+        briefingDayText.text = "Day: " + (round+1);
+        scoreGoal = 1000 + ((round) * (250));
+        briefingScoreGoalText.text = scoreGoal.ToString();
+        UpdateGameScoreGoal();
+    }
     private void ShowResults(int p_newValue, int p_Value = 0)
     {
         if (countingCoroutine != null)
         {
             StopCoroutine(countingCoroutine);
         }
-        if (score > PlayerPrefs.GetInt("Highscore",0))
-        {
-            PlayerPrefs.SetInt("Highscore", score);
-            highscoreText.text = score.ToString();
-        }
-        //temporary
-        if (PlayerPrefs.GetInt("Highscore",0) > 0)
-        {
-            highscoreText.text = PlayerPrefs.GetInt("Highscore",0).ToString();
-        }
-        else
-        {
-            highscoreText.text = "0";
-        }
+
+
         
         //Day Failed if score is less than half of score goal
-        if (score < scoreGoal/2) 
-        {
-            endScoreText.text = score.ToString();
-            levelPasserImage.sprite = failImage;
-            failPrompt.SetActive(true);
-            successPrompt.SetActive(false);
-        }
+        //if (score < scoreGoal/2) 
+        //{
+        //    endScoreText.text = score.ToString();
+        //    levelPasserImage.sprite = failImage;
+        //    failPrompt.SetActive(true);
+        //    successPrompt.SetActive(false);
+        //}
 
         countingCoroutine = StartCoroutine(CountText(p_newValue, p_Value));
     }
 
     private IEnumerator CountText(int p_newValue, int p_Value = 0)
     {
+        resultsNextStar = scoreGoal / 5;
 
         WaitForSeconds wait = new WaitForSeconds(1f / fpsCount);
         int previousValue = p_Value;
@@ -155,20 +157,22 @@ public class Scoring : MonoBehaviour
                 endScoreText.text = previousValue.ToString(scoreFormat);
 
                 //Calcualtes how many stars did the player get
-                int starRatingForScoreCounted = (int)((((float)previousValue / (float)scoreGoal) * 100));
-                if (starRatingForScoreCounted % percentageIncrementPerStar == 0 && starRatingForScoreCounted != 0)
+              
+               
+                if (previousValue >= resultsNextStar)
                 {
                     //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(5) stars, it'll become 5 stars)
-                    starRatingForScoreCounted = Mathf.Clamp((starRatingForScoreCounted / percentageIncrementPerStar), 0, resultStarSlots.Length);
-
-                    //Makes sure there is only 1 copy
-                    if (backUpStarRatingsCounted == starRatingForScoreCounted - 1)
+                    if (backUpStarRatingsCounted < 5)
                     {
+                        
                         //Do UI UX Animation for that star
                         GameObject newStarFill = CreateStarFill(resultStarSlots[backUpStarRatingsCounted]);
                         StartCoroutine(FitStarToSlot(newStarFill, resultStarSlots[backUpStarRatingsCounted].GetComponent<RectTransform>().sizeDelta));
                         backUpStarRatingsCounted++;
+                        resultsNextStar += scoreGoal / 5;
+                        
                     }
+                    
                 }
 
                 yield return wait;
@@ -238,12 +242,78 @@ public class Scoring : MonoBehaviour
             }
         }
 
+        if (hsTable.highscoresList.Count < 10)
+        {
+            StartCoroutine(NewHighscore());
+            starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = -10;
+        }
+        else
+        {
+            if (score > hsTable.highscoresList[hsTable.highscoresList.Count - 1])
+            {
+                starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = -10;
+                StartCoroutine(NewHighscore());
 
 
+            }
+            else
+            {
+                StartCoroutine(ShowPerformanceStats());
+            }
+        }
+            
+        
 
+
+        
+
+
+    }
+    IEnumerator NewHighscore()
+    {
+        newHighscoreUI.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        newHighscoreUI.SetActive(false);
+        enterHighscoreUI.SetActive(true);
+    }
+
+    public void HighscoreNameEntered(string p_entered)
+    {
+   
+        
+        hsTable.AddHighscoreEntry(score,p_entered);
+        string jsonString = PlayerPrefs.GetString("highscoreTable");
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+   
+        if (highscores != null)
+        {
+           
+            //Sort
+            for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
+            {
+                for (int ii = i + 1; ii < highscores.highscoreEntryList.Count; ii++)
+                {
+                    if (highscores.highscoreEntryList[ii].score > highscores.highscoreEntryList[i].score)
+                    {
+                        //Swap
+                        HighscoreEntry temporaryHighscoreEntry = highscores.highscoreEntryList[i];
+                        highscores.highscoreEntryList[i] = highscores.highscoreEntryList[ii];
+                        highscores.highscoreEntryList[ii] = temporaryHighscoreEntry;
+                        hsTable.highscoresList[ii] = highscores.highscoreEntryList[ii].score;
+                        hsTable.highscoresList[i] = highscores.highscoreEntryList[i].score;
+                    }
+                }
+            }
+
+            hsTable.highscoreEntryTransformList = new List<Transform>();
+            foreach (HighscoreEntry selectedHighscoreEntry in highscores.highscoreEntryList)
+            {
+                hsTable.CreateHighscoreEntryTransform(selectedHighscoreEntry, hsTable.entryContainer, hsTable.highscoreEntryTransformList);
+
+            }
+        }
+        enterHighscoreUI.SetActive(false);
         StartCoroutine(ShowPerformanceStats());
-
-
     }
 
     public void ShowPerformance(Text p_perfromanceTitle, string p_performanceValue)
@@ -254,8 +324,8 @@ public class Scoring : MonoBehaviour
     public IEnumerator ShowPerformanceStats()
     {
 
-        
-        
+        starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 110;
+
         int totalCorrectAnswers = 0;
         int totalMathProblems = 0;
         //Correctly Answered Math Problems
@@ -284,34 +354,32 @@ public class Scoring : MonoBehaviour
 
             totalMathProblems += addWrongAnswerAmount;
         }
-        //Titles
-        totalMathProblemsTitle.gameObject.SetActive(true);
-        totalSolvingTimeTitle.gameObject.SetActive(true);
+   
         
         yield return new WaitForSeconds(1.5f);
 
         //Addition
         ShowPerformance(additionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.addition) + " seconds");
-        ShowPerformance(additionEvaluation, "Addition: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition));
+        ShowPerformance(additionEvaluation, PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition));
         yield return new WaitForSeconds(1.5f);
 
         //Subtraction
         ShowPerformance(subtractionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.subtraction) + " seconds");
-        ShowPerformance(subtractionEvaluation, "Subtraction: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction));
+        ShowPerformance(subtractionEvaluation, PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction));
         yield return new WaitForSeconds(1.5f);
 
         //Multiplication
         ShowPerformance(multiplicationSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.multiplication) + " seconds");
-        ShowPerformance(multiplicationEvaluation, "Multiplication: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication));
+        ShowPerformance(multiplicationEvaluation, PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication));
         yield return new WaitForSeconds(1.5f);
 
         //Division
         ShowPerformance(divisionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.division) + " seconds");
-        ShowPerformance(divisionEvaluation, "Division: " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division));
+        ShowPerformance(divisionEvaluation, PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division));
         yield return new WaitForSeconds(1.5f);
 
         //Overall
-        ShowPerformance(totalMathProblemsValue, "Total: " + totalCorrectAnswers.ToString() + " / " + totalMathProblems.ToString());
+        ShowPerformance(totalMathProblemsValue, totalCorrectAnswers.ToString() + " / " + totalMathProblems.ToString());
         ShowPerformance(totalSolvingTimeValue, PerformanceManager.instance.GetAverageTime(MathProblemOperator.none) + " seconds");
         yield return new WaitForSeconds(1.5f);
 
@@ -402,19 +470,26 @@ public class Scoring : MonoBehaviour
  
     public void UpdateGameScoreGoal()
     {
-
-       int scoreToNextGoal = (scoreGoal / 5) - (score);
+        int currentScaledScore = score;
+        
+           
+        currentScaledScore = score - (scoreGoal / 5* gameStarSlotIndex);
+      
+        
+   
+       int scoreToNextGoal = (scoreGoal / 5) - (currentScaledScore);
         while (scoreToNextGoal < 1)
         {
             scoreToNextGoal += (scoreGoal / 5);
+            
             if (gameStarSlotIndex < 5)
             {
-
+                Debug.Log("ssssssssssssssssssssTAAAAAAAAAR: " + gameStarSlotIndex);
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
-
-
                 gameStarSlotIndex++;
+
+
             }
         }
 
@@ -430,7 +505,7 @@ public class Scoring : MonoBehaviour
         gameTipJarFill.fillAmount = (float)score/(float)scoreGoal;
         
         scoreText.text = score.ToString();
-        UpdateGameScoreGoal();
+        
     }
     public int GetScore()
     {
@@ -503,7 +578,9 @@ public class Scoring : MonoBehaviour
             }
             gameStars.Clear();
         }
+        gameStarSlotIndex = 0;
         SetScore(0); //TEMP
+        starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 110;
         round++;
 
         gameDayText.text = "Day: " + round.ToString();
@@ -536,9 +613,9 @@ public class Scoring : MonoBehaviour
 
     public void Results()
     {
-        totalMathProblemsTitle.gameObject.SetActive(false);
+     
         totalMathProblemsValue.gameObject.SetActive(false);
-        totalSolvingTimeTitle.gameObject.SetActive(false);
+  
         totalSolvingTimeValue.gameObject.SetActive(false);
         additionSolvingTime.gameObject.SetActive(false);
         additionEvaluation.gameObject.SetActive(false);

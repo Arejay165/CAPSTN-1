@@ -71,9 +71,11 @@ public class ClickToSelectItem : MonoBehaviour
        
             if (Input.GetMouseButtonDown(0) && canSpawn)
             {
+               
                 Debug.Log("Item clicked");
+
                 CursorManager.instance.PlayCursorAnimation(CursorType.ClickItem, CursorType.Arrow);
-                if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf)
+                if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf && !TransitionManager.instances.changeTransform.gameObject.activeSelf)
                 {
                     SpawnItem();
                 }

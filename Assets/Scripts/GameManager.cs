@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager   instance;
     public Customer             customer;
-    public TestCalculator testCalculator;
+
     public CustomerSpawner customerSpawner;
     public DetectItemInWindow window;
     
@@ -26,19 +26,18 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
-
+        PlayerPrefs.DeleteAll();
         
     }
-
+    
     public void TogglePlaying()
     {
         isPlaying = isPlaying ? false : true;
     }
 
-    public void SetUpGame() //TEMPORARY FIX FOR RESTARTING GAME AFTER UPGRADING, I THINK ITS BEST TO USE OBSERVER PATTERN UNITY EVENTS 
+    public void SetUpRound() //TEMPORARY FIX FOR RESTARTING GAME AFTER UPGRADING, I THINK ITS BEST TO USE OBSERVER PATTERN UNITY EVENTS 
     {                       
-        isPlaying = true;
-        OnGameStart.Invoke();
+        
 
         if (customer)
         {
@@ -54,32 +53,73 @@ public class GameManager : MonoBehaviour
 
     }
 
-    virtual protected void Start()
+    public void StartRound()
     {
+        isPlaying = true;
+        OnGameStart.Invoke();
+    }
+    public void PlayGame()
+    {
+
         //There is no tutorial
         if (TutorialManager.instance == null)
         {
-          
-            SetUpGame();
+
+            StartCoroutine(DayStart());
         }
         else if (TutorialManager.instance)
         {
             //There is tutorial but it's not active
             if (!TutorialManager.instance.canTutorial)
             {
-                SetUpGame();
+                StartCoroutine(DayStart());
+              
             }
             else
             {
                 //Do tutorial
             }
         }
+    }
+
+    public IEnumerator DayStart()
+    {
+        UIManager.instance.ActivateGameObjects(UIManager.instance.roundBriefingUI.name);
+        Scoring.instance.ShowBriefing();
+        SetUpRound();
+        yield return new WaitForSeconds(2f);
+        UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
+        StartRound();
         
+    }
+
+    public IEnumerator DayEnd()
+    {
+        UIManager.instance.ActivateGameObjects(UIManager.instance.roundDebriefingUI.name);
+      
+        
+        
+        Debug.Log("Level Over");
+        yield return new WaitForSeconds(2f);
+        UIManager.instance.ActivateGameObjects(UIManager.instance.endGameUI.name);
+        TransitionManager.instances.MoveTransition(new Vector2(0, 0), 1f, UIManager.instance.endGameUI.GetComponent<RectTransform>(), UIManager.instance.endGameUI.gameObject, true);
+        Scoring.instance.Results();
+
+    }
+    virtual protected void Start()
+    {
+
+        UIManager.instance.ActivateGameObjects(UIManager.instance.titleScreenUI.name);
+
+    
     }
 
     private void OnDisable()
     {
         
     }
+
+
+  
 
 }
