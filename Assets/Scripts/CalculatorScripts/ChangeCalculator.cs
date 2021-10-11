@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class ChangeCalculator : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -9,6 +10,7 @@ public class ChangeCalculator : MonoBehaviour
     public Text denominatorText;
     public BillCounter billCounter;
     public InputField changeInputField;
+    public TMP_InputField tmpChangeInputField;
    
     public bool isCountingTime;
     public float timeSpent;
@@ -30,14 +32,14 @@ public class ChangeCalculator : MonoBehaviour
         MathProblemManager.instance.cash.denValue = divisor;//cash.numValue / Random.Range(2, 50);
         MathProblemManager.instance.cash.price = quotient;//cash.numValue / cash.denValue;
 
-        changeInputField.Select();
+        tmpChangeInputField.Select();
     
         numeratorText.text = MathProblemManager.instance.cash.numValue.ToString();
         denominatorText.text = MathProblemManager.instance.cash.price.ToString();
         isCountingTime = true;
         perfectAttempts = 1;
         StartCoroutine(InputFieldSelect());
-        changeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+        tmpChangeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
         Debug.Log("Enable Change Calculator");
     }
@@ -45,8 +47,8 @@ public class ChangeCalculator : MonoBehaviour
     private void OnDisable()
     {
 
-        changeInputField.text = "";
-        changeInputField.Select();
+        tmpChangeInputField.text = "";
+        tmpChangeInputField.Select();
    
 
     }
@@ -63,8 +65,8 @@ public class ChangeCalculator : MonoBehaviour
     IEnumerator InputFieldSelect()
     {
         yield return 0;
-        changeInputField.Select();
-        changeInputField.ActivateInputField();
+        tmpChangeInputField.Select();
+        tmpChangeInputField.ActivateInputField();
 
 
     }
@@ -76,8 +78,8 @@ public class ChangeCalculator : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-            changeInputField.Select();
-            string playerInputString = changeInputField.text;
+            tmpChangeInputField.Select();
+            string playerInputString = tmpChangeInputField.text;
 
             float playerInputValue = -1;
 
@@ -92,7 +94,7 @@ public class ChangeCalculator : MonoBehaviour
                 if (playerInputValue == MathProblemManager.instance.cash.denValue)
                 {
                     //Answer is correct
-                    StartCoroutine(SheetCompleted(changeInputField));
+                    StartCoroutine(SheetCompleted(tmpChangeInputField));
 
                     answerAttempts++;
                  
@@ -112,7 +114,7 @@ public class ChangeCalculator : MonoBehaviour
                 else
                 {
                     //Debug.Log("Isincorrect");
-                    StartCoroutine(WrongInputted(changeInputField));
+                    StartCoroutine(WrongInputted(tmpChangeInputField));
                     RecordAnswerResult(MathProblemOperator.division, false);
                     Scoring.instance.ModifyMultiplier(-1f);
                 }
@@ -122,7 +124,7 @@ public class ChangeCalculator : MonoBehaviour
         }
      }
 
-    IEnumerator SheetCompleted(InputField p_inputField)
+    IEnumerator SheetCompleted(TMP_InputField p_inputField)
     {
         int blinkCount = 0;
         while (blinkCount < 3)
@@ -138,7 +140,7 @@ public class ChangeCalculator : MonoBehaviour
         ChangeOrderFinish();
     }
 
-    IEnumerator WrongInputted(InputField p_inputField)
+    IEnumerator WrongInputted(TMP_InputField p_inputField)
     {
         //PlayerManager.instance.Shake(Camera.main.gameObject,0.15f, 0.05f, 0.25f);
         AudioManager.instance.playSound(1);
@@ -155,7 +157,7 @@ public class ChangeCalculator : MonoBehaviour
         }
         p_inputField.text = "";
         p_inputField.Select();
-        changeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+        tmpChangeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
     }
     public void RecordAnswerResult(MathProblemOperator p_mathOperator, bool p_isCorrect)
     {
