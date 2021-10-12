@@ -10,8 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
-  m_Name: Candy
+  m_Name: Oil
   m_EditorClassIdentifier: 
-  itemName: Candy
-  price: 1
-  itemSprite: {fileID: 21300000, guid: e139fd1b43145294388b8516b83b124f, type: 3}
+  itemName: 
+  price: 20
+  numValue: 0
+  denValue: 0
+  itemSprite: {fileID: 21300000, guid: bd0cb33d78c16574fad1ae9aa9e9ca0e, type: 3}
+  quantity: 0
+  minRangePrice: 20
+  maxRangePrice: 150
