@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
   m_Name: Oil
   m_EditorClassIdentifier: 
-  itemName: 
-  price: 20
+  itemName: Oil
+  price: 60
   numValue: 0
   denValue: 0
   itemSprite: {fileID: 21300000, guid: bd0cb33d78c16574fad1ae9aa9e9ca0e, type: 3}
   quantity: 0
   minRangePrice: 20
   maxRangePrice: 150
+  isUnlock: 0

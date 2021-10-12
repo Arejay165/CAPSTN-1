@@ -30,36 +30,65 @@ public class Upgrades : MonoBehaviour
 
     public void Start() //Temp Fix
     {
-        initializeItem();
+        //initializeItem();
+
+
 
         for(int i = 0; i < newInteractables.Count;i++)
         {
             newInteractables[i].SetActive(false);
         }
+
+        for (int i = 0; i< newItems.Count;i++)
+        {
+            newItems[i].isUnlock = false;
+        }
+
+        
     }
 
     public void selectItems(int itemIndex)
    {
         MathProblemManager.instance.storeItemList.Add(newItems[itemIndex]);
-        //newItems.RemoveAt(itemIndex);
+        newItems.RemoveAt(itemIndex);
 
         UIManager.instance.upgradeUI.SetActive(false);
         newInteractables[itemIndex].SetActive(true);
-        Destroy(itemSprite[itemIndex]);
-        Destroy(itemName[itemIndex]);
+        newInteractables.RemoveAt(itemIndex);
+
+        //Destroy(itemSprite[itemIndex]);
+        //Destroy(itemName[itemIndex]);
         GameManager.instance.SetUpGame();
-       // UIManager.instance.Restart(); // restart the level with a new item
-   }
+        newItems[itemIndex].isUnlock = true;
+        // UIManager.instance.Restart(); // restart the level with a new item
+    }
    
-   public void initializeItem()
+   public void initializeItem(int index)
+   {
+       itemName[index].text = newItems[index].name;
+       itemSprite[index].sprite = newItems[index].itemSprite;
+   }
+
+    public void getUpgradeItem()
     {
+        int counter = 0;
+
         for(int i = 0; i < newItems.Count; i++)
         {
-            itemName[i].text = newItems[i].name;
-            itemSprite[i].sprite = newItems[i].itemSprite;
+            if (newItems[i].isUnlock == false)
+            {
+                
+                initializeItem(counter);
 
+                Debug.Log(newItems[counter].name);
+
+                counter++;
+                if (counter == 3)
+                {
+                    break;
+                }
+            }
 
         }
-
     }
 }

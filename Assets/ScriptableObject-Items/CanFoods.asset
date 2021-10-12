@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: CanFoods
   m_EditorClassIdentifier: 
   itemName: Canfood
-  price: 0
+  price: 188
   numValue: 0
   denValue: 0
   itemSprite: {fileID: 21300000, guid: b49f02ad48df7854cbf14d341b8527bd, type: 3}
   quantity: 1
   minRangePrice: 50
   maxRangePrice: 200
+  isUnlock: 0
