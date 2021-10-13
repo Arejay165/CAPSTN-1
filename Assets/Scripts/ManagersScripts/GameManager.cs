@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
         OnGameStart.Invoke();
+        PlayerManager.instance.lastItemSpawner.canSpawn = true;
     }
     public void PlayGame()
     {
@@ -90,26 +91,39 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
         StartRound();
-        
+      
     }
 
     public IEnumerator DayEnd()
     {
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundDebriefingUI.name);
-      
-        
-        
+
+        if (customer != null)
+        {
+            Destroy(customer.gameObject);
+        }
+
+        PlayerManager.instance.lastItemSpawner.canSpawn = false;
+
         Debug.Log("Level Over");
         yield return new WaitForSeconds(2f);
         UIManager.instance.ActivateGameObjects(UIManager.instance.endGameUI.name);
-        TransitionManager.instances.MoveTransition(new Vector2(0, 0), 1f, UIManager.instance.endGameUI.GetComponent<RectTransform>(), UIManager.instance.endGameUI.gameObject, true);
+        TransitionManager.instances.MoveTransition(new Vector2(0, 0), 0.5f, UIManager.instance.endGameUI.GetComponent<RectTransform>(), UIManager.instance.endGameUI.gameObject, true);
         Scoring.instance.Results();
 
     }
     virtual protected void Start()
     {
 
-        UIManager.instance.ActivateGameObjects(UIManager.instance.titleScreenUI.name);
+        if (TutorialManager.instance.canTutorial)
+        {
+            UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
+        }
+        else
+        {
+            UIManager.instance.ActivateGameObjects(UIManager.instance.titleScreenUI.name);
+        }
+     
 
     
     }

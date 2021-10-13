@@ -272,7 +272,7 @@ public class Scoring : MonoBehaviour
     IEnumerator NewHighscore()
     {
         newHighscoreUI.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4.5f);
         newHighscoreUI.SetActive(false);
         enterHighscoreUI.SetActive(true);
     }
@@ -668,11 +668,13 @@ public class Scoring : MonoBehaviour
     IEnumerator CoinAnimation(int index)
     {
 
-        Tween tween = ObjectPool.instances.pooledGameobjects[index].GetComponent<Transform>().DOMove(new Vector3(targetLocation.transform.position.x, targetLocation.transform.position.y, targetLocation.transform.position.z), 0.5f);
+        Tween tween = ObjectPool.instances.pooledGameobjects[index].GetComponent<Transform>().DOMove(new Vector3(targetLocation.transform.position.x, targetLocation.transform.position.y, targetLocation.transform.position.z), 0.2f);
         yield return tween.WaitForCompletion();
 
         ObjectPool.instances.pooledGameobjects[index].SetActive(false);
         ObjectPool.instances.ResetPosition();
+
+        // yield return null;
     }
 
 

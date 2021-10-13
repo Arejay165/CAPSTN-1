@@ -54,14 +54,6 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //if (!pauseGameUI.activeInHierarchy)
-            //{
-            //    Pause();
-            //}
-            //else
-            //{
-            //    Resume();
-            //}
 
             if (!isPause)
             {

@@ -136,7 +136,7 @@ public class ChangeCalculator : MonoBehaviour
             blinkCount++;
         }
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
-        yield return new WaitForSeconds(0.5f);
+       // yield return new WaitForSeconds(0.5f);
         ChangeOrderFinish();
     }
 
@@ -156,8 +156,9 @@ public class ChangeCalculator : MonoBehaviour
             blinkCount++;
         }
         p_inputField.text = "";
-        p_inputField.Select();
+     
         tmpChangeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+        p_inputField.Select();
     }
     public void RecordAnswerResult(MathProblemOperator p_mathOperator, bool p_isCorrect)
     {
@@ -176,13 +177,14 @@ public class ChangeCalculator : MonoBehaviour
     public void ChangeOrderFinish()
     {
 
-        TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 1f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
+        TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
         if (GameManager.instance.customer)
         {
             Destroy(GameManager.instance.customer.gameObject);
         }
         
-        GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
+    ///    GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
 
+        GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time 
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 [System.Serializable]
 public class ItemUIClass
 {
@@ -22,9 +23,9 @@ public class TestCalculator : MonoBehaviour
     public List<float> itemsAnswer = new List<float>();
     public List<float> changeAnswers = new List<float>();
 
-    [SerializeField] List<InputField> answerFields = new List<InputField>();
+    [SerializeField] List<TMP_InputField> answerFields = new List<TMP_InputField>();
 
-    [SerializeField] InputField totalPriceAnswerField, changeAnswerField;
+    [SerializeField] TMP_InputField totalPriceAnswerField, changeAnswerField;
     [SerializeField] GameObject customerPaidTitle;
     [SerializeField] Text customerPaidText,changeText;
     [SerializeField] float totalPriceCorrectAnswer, changeCorrectAnswer;
@@ -183,7 +184,7 @@ public class TestCalculator : MonoBehaviour
 
         perfectAttempts += 2;
 
-         randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 20);
+         randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 100);
         changeCorrectAnswer = randomExtraMoney - totalPriceCorrectAnswer;
         
         DisplayItemOrders();
@@ -246,6 +247,7 @@ public class TestCalculator : MonoBehaviour
                         SpawnAnswerField();
                     }
                     answerAttempts++;
+                
 
                 }
                 //If it doesnt match its wrong
@@ -266,6 +268,22 @@ public class TestCalculator : MonoBehaviour
 
 
             }
+            InitializedInputField();
+        }
+    }
+
+    public void InitializedInputField()
+    {
+        for(int i = 0; i < answerFields.Count; i++)
+        {
+            if(i == index)
+            {
+                answerFields[i].enabled = true;
+            }
+            else
+            {
+                answerFields[i].enabled = false;
+            }
         }
     }
 
@@ -281,20 +299,21 @@ public class TestCalculator : MonoBehaviour
         }
     }
 
-    IEnumerator CorrectInputted(InputField p_inputField, bool p_correct)
+    IEnumerator CorrectInputted(TMP_InputField p_inputField, bool p_correct)
     {
 
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
         AudioManager.instance.playSound(0);
         yield return new WaitForSeconds(0.25f);
         p_correct = true;
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(507f, 0);
     }
 
-    IEnumerator WrongInputted(InputField p_inputField)
+    IEnumerator WrongInputted(TMP_InputField p_inputField)
     {
-        
-        //PlayerManager.instance.Shake(Camera.main.gameObject, 0.15f, 0.05f, 0.25f);
+
         PlayerManager.instance.Shake(gameObject,0.25f, 3.5f, 1.5f);
+    
         int blinkCount = 0;
         while (blinkCount < 3)
         {
@@ -310,6 +329,7 @@ public class TestCalculator : MonoBehaviour
         p_inputField.text = "";
         p_inputField.ActivateInputField();
         p_inputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(507f,0);
 
     }
     public void RecordAnswerResult(int p_index, bool p_isCorrect)
@@ -444,13 +464,12 @@ public class TestCalculator : MonoBehaviour
 
 
             }
+
         }
     }
     public void OrderSheetFinish()
     {
 
-        
-        
       
         Scoring.instance.addScore((int) (100*Scoring.instance.multiplier));
         if (answerAttempts == perfectAttempts)
@@ -462,7 +481,7 @@ public class TestCalculator : MonoBehaviour
     
 
     }
-    IEnumerator SheetCompleted(InputField p_inputField)
+    IEnumerator SheetCompleted(TMP_InputField p_inputField)
     {
         int blinkCount = 0;
         while (blinkCount < 3)
@@ -474,19 +493,17 @@ public class TestCalculator : MonoBehaviour
             blinkCount++;
         }
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
-        yield return new WaitForSeconds(1f);
-
+   //     yield return new WaitForSeconds(0.5f);
 
         //awards score
-
-
-
-        TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 1f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+        TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+     //   TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
         if (GameManager.instance.customer)
         {
             Destroy(GameManager.instance.customer.gameObject);
         }
-        GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
+        // GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
+        GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time 
     }
     public void DisplayItemOrders()
     {
@@ -504,8 +521,8 @@ public class TestCalculator : MonoBehaviour
             order.transform.GetChild(2).gameObject.GetComponent<Text>().text = "P" + itemUIClassList[i].price.ToString();
 
             //Adding to answerField List
-            order.transform.GetChild(3).gameObject.GetComponent<InputField>().onEndEdit.AddListener(OnPriceInputted);
-            answerFields.Add(order.transform.GetChild(3).gameObject.GetComponent<InputField>());
+            order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().onEndEdit.AddListener(OnPriceInputted);
+            answerFields.Add(order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>());
             
             order.transform.SetParent(displayPanel);
             order.transform.localScale = new Vector3(1f, 1f, 1f);

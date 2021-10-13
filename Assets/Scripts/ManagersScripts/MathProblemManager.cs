@@ -80,17 +80,7 @@ public class MathProblemManager : MonoBehaviour
             Debug.Log(orderedItemsWanted[currentIndex]);
             foreach (Item selectedItem in orderedItemsWanted[currentIndex])
             {
-                //Item item = new Item();
-                //item.itemName = selectedItem.itemName;
-                //item.price = selectedItem.price;
-                //item.numValue = selectedItem.numValue;
-                //item.denValue = selectedItem.denValue;
-                //item.itemSprite = selectedItem.itemSprite;
-                //item.quantity = selectedItem.quantity;
-                //item.minRangePrice = selectedItem.minRangePrice;
-                //item.maxRangePrice = selectedItem.maxRangePrice;
-                //itemsWanted.Add(item);
-                
+
                 currentItemsWanted.Add(selectedItem);
 
 
@@ -141,8 +131,7 @@ public class MathProblemManager : MonoBehaviour
             mathProblemCount++;
             if (mathProblemCount < maxGeneratedProblems * buyItemPercentage) // if it's less than 7, it's order sheet
             {
-               
-                
+              
                 List<Item> itemsWanted = new List<Item>();
                 int maxInventory = Random.Range(1, 4);
                 for (int i = 0; i < maxInventory; i++)
