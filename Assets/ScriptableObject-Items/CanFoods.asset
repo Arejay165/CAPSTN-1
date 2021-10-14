@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
-  m_Name: Half_Rice
+  m_Name: CanFoods
   m_EditorClassIdentifier: 
-  itemName: HalfRice
-  price: 125
+  itemName: Canfood
+  price: 188
   numValue: 0
   denValue: 0
-  itemSprite: {fileID: 21300000, guid: 3ca60f6d87b1a2c43add9ca8898db5cf, type: 3}
-  quantity: 0.5
-  minRangePrice: 125
-  maxRangePrice: 250
+  itemSprite: {fileID: 21300000, guid: b49f02ad48df7854cbf14d341b8527bd, type: 3}
+  quantity: 1
+  minRangePrice: 50
+  maxRangePrice: 200
+  isUnlock: 0
