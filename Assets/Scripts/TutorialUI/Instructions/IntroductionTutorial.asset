@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f645fe6803259ba4a918d6becd78cdc5, type: 3}
+  m_Name: IntroductionTutorial
+  m_EditorClassIdentifier: 
+  instructions:
+  - You are the owner of a sari sari store!
+  - Give all of your best to sell the items to the customer!
+  - Items that glows are sellable and can be clicked to give it to them
+  - Playing the game many times would make you unlock the other items

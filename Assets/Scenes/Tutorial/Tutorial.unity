@@ -996,7 +996,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorial: {fileID: 1810923674}
   nextPhase: 3
-  arrowReference: 2
 --- !u!1 &65942386
 GameObject:
   m_ObjectHideFlags: 0
@@ -35717,7 +35716,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorial: {fileID: 1810923674}
   nextPhase: 4
-  arrowReference: 3
 --- !u!1 &572927201
 GameObject:
   m_ObjectHideFlags: 0
@@ -37501,7 +37499,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorial: {fileID: 1810923674}
   nextPhase: 0
-  arrowReference: 4
 --- !u!1 &703596481
 GameObject:
   m_ObjectHideFlags: 0
@@ -37555,7 +37552,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorial: {fileID: 1810923674}
   nextPhase: 1
-  arrowReference: 0
 --- !u!1 &708539721
 GameObject:
   m_ObjectHideFlags: 0
@@ -57896,7 +57892,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorial: {fileID: 1810923674}
   nextPhase: 2
-  arrowReference: 1
 --- !u!1 &1067319899
 GameObject:
   m_ObjectHideFlags: 0
@@ -96939,17 +96934,17 @@ MonoBehaviour:
   - {fileID: 0}
   text: {fileID: 1968741984}
   setOfInstructions:
-  - Welcome to Mathligaya Tindahan
-  - KYS
-  - Click the corresponding item
-  - Multiply the quantity to the pieces
-  - Add all item
-  - Calculate the change
-  - Calculate the sw
-  - wa
-  - zawe
-  - thgsd
-  - bgt
+  - dwda
+  - weqw
+  - thtsaa
+  - zxcz
+  - q2eewq
+  - nyhdfs
+  - xzcw
+  - jyuj
+  - qwda
+  - czs
+  - nh
   counter: 0
   interlude: {fileID: 1189693475}
   arrowIndex: 0
