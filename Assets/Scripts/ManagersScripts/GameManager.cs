@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
         OnGameStart.Invoke();
-        PlayerManager.instance.lastItemSpawner.canSpawn = true;
+      
     }
     public void PlayGame()
     {
@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
         {
 
             StartCoroutine(DayStart());
+         //   PlayerManager.instance.lastItemSpawner.canSpawn = true;
         }
         else if (TutorialManager.instance)
         {
@@ -74,10 +75,11 @@ public class GameManager : MonoBehaviour
             if (!TutorialManager.instance.canTutorial)
             {
                 StartCoroutine(DayStart());
-              
+                //PlayerManager.instance.lastItemSpawner.canSpawn = true;
             }
             else
             {
+             //   StartCoroutine(DayStart());
                 //Do tutorial
             }
         }
@@ -117,7 +119,8 @@ public class GameManager : MonoBehaviour
 
         if (TutorialManager.instance.canTutorial)
         {
-            UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
+            //   UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
+            TutorialManager.instance.DisableInGameUI();
         }
         else
         {

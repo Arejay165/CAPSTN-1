@@ -90087,8 +90087,8 @@ MonoBehaviour:
   itemsAnswer: []
   changeAnswers: []
   answerFields: []
-  totalPriceAnswerField: {fileID: 961274444}
-  changeAnswerField: {fileID: 2021156539}
+  totalPriceAnswerField: {fileID: 0}
+  changeAnswerField: {fileID: 0}
   customerPaidTitle: {fileID: 1135762059}
   customerPaidText: {fileID: 1340309101}
   changeText: {fileID: 1080324442}
@@ -90156,7 +90156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1833329414
 RectTransform:
   m_ObjectHideFlags: 0
@@ -90198,6 +90198,7 @@ MonoBehaviour:
   denominatorText: {fileID: 1425147018}
   billCounter: {fileID: 0}
   changeInputField: {fileID: 540488737}
+  tmpChangeInputField: {fileID: 0}
   isCountingTime: 0
   timeSpent: 0
   answerAttempts: 0

@@ -122,8 +122,4 @@ public class UIManager : MonoBehaviour
         Debug.Log("Continue");
     }
 
-    public void Testing()
-    {
-        Debug.Log("Testing");
-    }
 }

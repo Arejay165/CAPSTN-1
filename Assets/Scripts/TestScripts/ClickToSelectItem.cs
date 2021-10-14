@@ -49,7 +49,11 @@ public class ClickToSelectItem : MonoBehaviour
     {
         CursorManager.instance.SetActiveCursorAnimation(CursorType.Arrow);
         RemoveHighlightItem();
-        canSpawn = true;
+
+        if (!TutorialManager.instance.canTutorial)
+            canSpawn = true;
+        else
+            canSpawn = false;
     }
     void OnGameEnded()
     {
@@ -101,7 +105,7 @@ public class ClickToSelectItem : MonoBehaviour
                 
              
             }
-            if (Input.GetMouseButtonUp(0) && !canSpawn)
+            if (Input.GetMouseButtonUp(0) && !canSpawn && TutorialManager.instance.isFinished)
             {
                 canSpawn = true;
             }

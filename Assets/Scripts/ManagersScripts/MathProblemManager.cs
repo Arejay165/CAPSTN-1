@@ -30,6 +30,12 @@ public class MathProblemManager : MonoBehaviour
             Destroy(instance);
         }
     }
+
+    private void Start()
+    {
+        //  OnGameStarted();
+       // GenerateStorePrices();
+    }
     private void OnEnable()
     {
 
@@ -44,6 +50,7 @@ public class MathProblemManager : MonoBehaviour
     public void OnGameStarted()
     {
         GenerateStorePrices();
+
     }
     public List<Item> GetGeneratedItemsWanted()
     {
@@ -106,8 +113,9 @@ public class MathProblemManager : MonoBehaviour
 
         return currentItemsWanted[p_desiredIndex];
     }
-    void GenerateStorePrices()
+    public void GenerateStorePrices()
     {
+        Debug.Log("Start");
         currentIndex = 0;
         currentItemsWanted.Clear();
         generatedItemsWanted.Clear();
@@ -118,7 +126,16 @@ public class MathProblemManager : MonoBehaviour
             selectedItem.price = Random.Range((int)selectedItem.minRangePrice, (int)selectedItem.maxRangePrice);
             
         }
-        GenerateMathProblems();
+        if (!TutorialManager.instance.canTutorial)
+        {
+            GenerateMathProblems();
+        }
+        else
+        {
+         //   GameManager.instance.customerSpawner.SpawnCustomer();
+          //  ItemCustomer();
+        }
+        
     }
     void GenerateMathProblems()
     {
@@ -131,29 +148,12 @@ public class MathProblemManager : MonoBehaviour
             mathProblemCount++;
             if (mathProblemCount < maxGeneratedProblems * buyItemPercentage) // if it's less than 7, it's order sheet
             {
-              
-                List<Item> itemsWanted = new List<Item>();
-                int maxInventory = Random.Range(1, 4);
-                for (int i = 0; i < maxInventory; i++)
-                {
 
-                    int selectedItemIndex = Random.Range(0, storeItemList.Count);
-                    Item selectedItem = storeItemList[selectedItemIndex];
-                    itemsWanted.Add(selectedItem);
-                    
-
-                }
-                generatedItemsWanted.Add(itemsWanted);
+                ItemCustomer();
             }
             else if (mathProblemCount >= maxGeneratedProblems * buyItemPercentage) //if it's greater than or equal to 7, it's change sheet
             {
-                //Not buying 
-                Debug.Log("NOT BUYING");
-                List<Item> itemWanted = new List<Item>();
-                
-
-                itemWanted.Add(cash);
-                generatedItemsWanted.Add(itemWanted);
+                PabaryaCustomer();
             }
            
 
@@ -173,5 +173,67 @@ public class MathProblemManager : MonoBehaviour
 
             currentItemsWanted.Add(selectedItem);
         }
+    }
+
+    public void ItemCustomer()
+    {
+        List<Item> itemsWanted = new List<Item>();
+        int maxInventory = Random.Range(1, 4);
+        for (int i = 0; i < maxInventory; i++)
+        {
+
+            int selectedItemIndex = Random.Range(0, storeItemList.Count);
+            Item selectedItem = storeItemList[selectedItemIndex];
+            itemsWanted.Add(selectedItem);
+
+
+        }
+        generatedItemsWanted.Add(itemsWanted);
+
+        for (int i = 0; i < generatedItemsWanted.Count;)
+        {
+
+            int chosenIndex = Random.Range(0, generatedItemsWanted.Count);
+            orderedItemsWanted.Add(generatedItemsWanted[chosenIndex]);
+            generatedItemsWanted.RemoveAt(chosenIndex);
+        }
+
+        foreach (Item selectedItem in orderedItemsWanted[currentIndex])
+        {
+
+            currentItemsWanted.Add(selectedItem);
+        }
+    }
+
+    public void PabaryaCustomer()
+    {
+        //Not buying 
+       // Debug.Log("NOT BUYING");
+        List<Item> itemWanted = new List<Item>();
+
+
+        itemWanted.Add(cash);
+        generatedItemsWanted.Add(itemWanted);
+
+        for (int i = 0; i < generatedItemsWanted.Count;)
+        {
+
+            int chosenIndex = Random.Range(0, generatedItemsWanted.Count);
+            orderedItemsWanted.Add(generatedItemsWanted[chosenIndex]);
+            generatedItemsWanted.RemoveAt(chosenIndex);
+        }
+
+        foreach (Item selectedItem in orderedItemsWanted[currentIndex])
+        {
+
+            currentItemsWanted.Add(selectedItem);
+        }
+    }
+
+    public void TutorialSpawn()
+    {
+        GenerateStorePrices();
+        //  TutorialManager.instance.SpawnCustomer();
+        ItemCustomer();
     }
 }

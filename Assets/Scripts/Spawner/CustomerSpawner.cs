@@ -53,8 +53,8 @@ public class CustomerSpawner : MonoBehaviour
         {
             if (TutorialManager.instance.tutorialQuestActive && TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 1)
             {
-                TutorialManager.instance.ToggleTutorialQuest();
-                TutorialManager.instance.StartTimeline();
+             //   TutorialManager.instance.ToggleTutorialQuest();
+           //     TutorialManager.instance.StartTimeline();
             }
         }
     

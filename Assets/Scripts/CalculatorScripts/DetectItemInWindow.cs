@@ -28,7 +28,7 @@ public class DetectItemInWindow : MonoBehaviour
             collision.gameObject.transform.SetParent(this.gameObject.transform);
             ItemDescription itemInCounter = collision.GetComponent<ItemDescription>();
    
-            if (GameManager.instance.customer)
+            if (GameManager.instance.customer != null)
             {
                 for(int i = 0; i < MathProblemManager.instance.GetCurrentItemsWanted().Count; i++)
                 {
@@ -60,9 +60,14 @@ public class DetectItemInWindow : MonoBehaviour
                         Debug.Log("Wrong Item");
                         Destroy(itemInCounter.gameObject, 0.2f);
                     }
+
                 }
             }
-            
+            else
+            {
+                Debug.Log("Wrong Item");
+                Destroy(itemInCounter.gameObject, 0.2f);
+            }
         }
     }
 }
