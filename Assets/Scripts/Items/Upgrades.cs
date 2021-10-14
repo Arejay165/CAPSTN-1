@@ -58,7 +58,7 @@ public class Upgrades : MonoBehaviour
 
         //Destroy(itemSprite[itemIndex]);
         //Destroy(itemName[itemIndex]);
-        GameManager.instance.SetUpGame();
+        //GameManager.instance.SetUpGame();
         newItems[itemIndex].isUnlock = true;
         // UIManager.instance.Restart(); // restart the level with a new item
     }
