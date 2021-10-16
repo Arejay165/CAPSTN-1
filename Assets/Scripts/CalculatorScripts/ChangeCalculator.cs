@@ -182,9 +182,21 @@ public class ChangeCalculator : MonoBehaviour
         {
             Destroy(GameManager.instance.customer.gameObject);
         }
-        
-    ///    GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
 
-        GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time 
+        ///    GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
+
+        if (!TutorialManager.instance.canTutorial)
+        {
+            GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time 
+        }
+        else
+        {
+
+            TutorialManager.instance.ActivateTutorialUI();
+
+            TutorialManager.instance.playTutorial = false;
+            TutorialManager.instance.customerCounter = 1;
+        }
+     
     }
 }

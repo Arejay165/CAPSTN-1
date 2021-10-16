@@ -232,8 +232,18 @@ public class MathProblemManager : MonoBehaviour
 
     public void TutorialSpawn()
     {
+
         GenerateStorePrices();
         //  TutorialManager.instance.SpawnCustomer();
-        ItemCustomer();
+
+        if(TutorialManager.instance.customerCounter == 0)
+        {
+            ItemCustomer();
+        }
+        else
+        {
+            PabaryaCustomer();
+        }
+      
     }
 }

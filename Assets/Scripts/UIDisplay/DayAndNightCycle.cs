@@ -93,6 +93,7 @@ public class DayAndNightCycle : MonoBehaviour
                 // Game time is used for how long the game will last. It will continuously count until the end time is reached  
                 if (gameTime < endTime && !isStoreClosed)
                 {
+                    if(!TutorialManager.instance.canTutorial)
                     gameTime += Time.deltaTime;
 
                     if (gameTime >= endTime * 2 / 3)

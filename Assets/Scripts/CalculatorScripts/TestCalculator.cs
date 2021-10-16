@@ -503,7 +503,16 @@ public class TestCalculator : MonoBehaviour
             Destroy(GameManager.instance.customer.gameObject);
         }
         // GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
-        GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time 
+
+        if (!TutorialManager.instance.canTutorial)
+        {
+            GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time
+        }
+        else
+        {
+            TutorialManager.instance.ActivateTutorialUI();
+        }
+              
     }
     public void DisplayItemOrders()
     {

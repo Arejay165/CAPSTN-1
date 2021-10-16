@@ -17,3 +17,6 @@ MonoBehaviour:
   - Give all of your best to sell the items to the customer!
   - Items that glows are sellable and can be clicked to give it to them
   - Playing the game many times would make you unlock the other items
+  - For now, let's wait for our first customer to arrive!
+  hasArrow: 000001000000
+  canSpawnCustomers: 1
