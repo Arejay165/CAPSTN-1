@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Prototypes/Protoype_JACE4.unity
     guid: 9863f60ad84004d41bde06590afde604
+  - enabled: 1
+    path: Assets/Scenes/Tutorial/Tutorial.unity
+    guid: 2c54fe86563759642b92ce305b7c509e
   m_configObjects: {}

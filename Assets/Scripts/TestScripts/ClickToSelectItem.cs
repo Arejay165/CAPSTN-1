@@ -50,7 +50,7 @@ public class ClickToSelectItem : MonoBehaviour
         CursorManager.instance.SetActiveCursorAnimation(CursorType.Arrow);
         RemoveHighlightItem();
 
-        if (!TutorialManager.instance.canTutorial)
+        if (!TutorialManager.instance.canTutorial || TutorialManager.instance == null)
             canSpawn = true;
         else
             canSpawn = false;
@@ -105,7 +105,7 @@ public class ClickToSelectItem : MonoBehaviour
                 
              
             }
-            if (Input.GetMouseButtonUp(0) && !canSpawn && TutorialManager.instance.canTutorial)
+            if (Input.GetMouseButtonUp(0) && !canSpawn || TutorialManager.instance.canTutorial )
             {
                 canSpawn = true;
             }

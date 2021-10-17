@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         {
 
             StartCoroutine(DayStart());
-         //   PlayerManager.instance.lastItemSpawner.canSpawn = true;
+            PlayerManager.instance.lastItemSpawner.canSpawn = true;
         }
         else if (TutorialManager.instance)
         {
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
             if (!TutorialManager.instance.canTutorial)
             {
                 StartCoroutine(DayStart());
-                //PlayerManager.instance.lastItemSpawner.canSpawn = true;
+              //  PlayerManager.instance.lastItemSpawner.canSpawn = true;
             }
             else
             {

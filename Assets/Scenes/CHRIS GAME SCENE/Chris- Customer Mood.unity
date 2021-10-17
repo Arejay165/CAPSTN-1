@@ -6081,6 +6081,21 @@ MonoBehaviour:
   - {fileID: 945456680}
   - {fileID: 361845550}
   - {fileID: 1558594872}
+  text: {fileID: 0}
+  setOfInstructions: []
+  tutorialTexts: []
+  counter: 0
+  arrowIndex: 0
+  isFinished: 0
+  arrows: []
+  tutorialPhrase: 0
+  tutorialCounter: 0
+  tutorial: {fileID: 0}
+  playTutorial: 0
+  tutorialButtons: []
+  customerCounter: -1
+  screenText: {fileID: 0}
+  nextButton: {fileID: 0}
 --- !u!114 &105356693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89154,10 +89169,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Events:
     m_Signals:
-    - {fileID: 11400000, guid: cbfdfac4d89e77c4b9ec83846eebd0fe, type: 2}
-    - {fileID: 11400000, guid: c7f039f6e97e66146b6f695630dde6f4, type: 2}
-    - {fileID: 11400000, guid: f443bd8e1c47e6540a02fecc52f6568d, type: 2}
-    - {fileID: 11400000, guid: e1c8161836e6cd44685520728e455a32, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -90087,8 +90102,8 @@ MonoBehaviour:
   itemsAnswer: []
   changeAnswers: []
   answerFields: []
-  totalPriceAnswerField: {fileID: 961274444}
-  changeAnswerField: {fileID: 2021156539}
+  totalPriceAnswerField: {fileID: 0}
+  changeAnswerField: {fileID: 0}
   customerPaidTitle: {fileID: 1135762059}
   customerPaidText: {fileID: 1340309101}
   changeText: {fileID: 1080324442}
@@ -90156,7 +90171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1833329414
 RectTransform:
   m_ObjectHideFlags: 0
@@ -90198,6 +90213,7 @@ MonoBehaviour:
   denominatorText: {fileID: 1425147018}
   billCounter: {fileID: 0}
   changeInputField: {fileID: 540488737}
+  tmpChangeInputField: {fileID: 0}
   isCountingTime: 0
   timeSpent: 0
   answerAttempts: 0

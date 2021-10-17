@@ -122,4 +122,10 @@ public class UIManager : MonoBehaviour
         Debug.Log("Continue");
     }
 
+    public void Tutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+
+    }
+
 }
