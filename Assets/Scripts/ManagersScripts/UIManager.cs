@@ -118,7 +118,7 @@ public class UIManager : MonoBehaviour
     {
 
         ActivateGameObjects(upgradeUI.name);
-
+        Upgrades.instance.getUpgradeItem();
         Debug.Log("Continue");
     }
 
