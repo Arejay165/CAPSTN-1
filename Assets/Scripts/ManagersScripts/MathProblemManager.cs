@@ -190,19 +190,24 @@ public class MathProblemManager : MonoBehaviour
         }
         generatedItemsWanted.Add(itemsWanted);
 
-        for (int i = 0; i < generatedItemsWanted.Count;)
+
+        if (TutorialManager.instance.canTutorial)
         {
+            for (int i = 0; i < generatedItemsWanted.Count;)
+            {
 
-            int chosenIndex = Random.Range(0, generatedItemsWanted.Count);
-            orderedItemsWanted.Add(generatedItemsWanted[chosenIndex]);
-            generatedItemsWanted.RemoveAt(chosenIndex);
+                int chosenIndex = Random.Range(0, generatedItemsWanted.Count);
+                orderedItemsWanted.Add(generatedItemsWanted[chosenIndex]);
+                generatedItemsWanted.RemoveAt(chosenIndex);
+            }
+
+            foreach (Item selectedItem in orderedItemsWanted[currentIndex])
+            {
+
+                currentItemsWanted.Add(selectedItem);
+            }
         }
-
-        foreach (Item selectedItem in orderedItemsWanted[currentIndex])
-        {
-
-            currentItemsWanted.Add(selectedItem);
-        }
+       
     }
 
     public void PabaryaCustomer()
@@ -215,19 +220,24 @@ public class MathProblemManager : MonoBehaviour
         itemWanted.Add(cash);
         generatedItemsWanted.Add(itemWanted);
 
-        for (int i = 0; i < generatedItemsWanted.Count;)
-        {
 
-            int chosenIndex = Random.Range(0, generatedItemsWanted.Count);
-            orderedItemsWanted.Add(generatedItemsWanted[chosenIndex]);
-            generatedItemsWanted.RemoveAt(chosenIndex);
+        if (TutorialManager.instance.canTutorial)
+        {
+            for (int i = 0; i < generatedItemsWanted.Count;)
+            {
+
+                int chosenIndex = Random.Range(0, generatedItemsWanted.Count);
+                orderedItemsWanted.Add(generatedItemsWanted[chosenIndex]);
+                generatedItemsWanted.RemoveAt(chosenIndex);
+            }
+
+            foreach (Item selectedItem in orderedItemsWanted[currentIndex])
+            {
+
+                currentItemsWanted.Add(selectedItem);
+            }
         }
 
-        foreach (Item selectedItem in orderedItemsWanted[currentIndex])
-        {
-
-            currentItemsWanted.Add(selectedItem);
-        }
     }
 
     public void TutorialSpawn()
