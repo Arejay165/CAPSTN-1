@@ -42,6 +42,12 @@ public class ChangeCalculator : MonoBehaviour
         tmpChangeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
         Debug.Log("Enable Change Calculator");
+
+        if (TutorialManager.instance != null)
+        {
+            TutorialManager.instance.screenText.text = "Divide the upper value to the lower value";
+
+        }
     }
 
     private void OnDisable()

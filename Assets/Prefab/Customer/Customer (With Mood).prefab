@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -6
   m_Sprite: {fileID: 21300000, guid: b13383c0e2e464f42ae1e3ac698abdfe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -116,8 +116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMoodAmount: 0
   maxMoodAmount: 100
-  moodDecay: 1
-  timeForDecay: 5
+  moodDecay: 5
+  timeForDecay: 2
 --- !u!1 &2286334326893376327
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,14 +502,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.092196584, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 2ca1da1bd24a3d6489d1dbc603b342c3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

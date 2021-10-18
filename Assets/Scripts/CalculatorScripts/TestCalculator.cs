@@ -118,6 +118,12 @@ public class TestCalculator : MonoBehaviour
             answerFields[0].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
         }
         isCountingTime = true;
+
+        if(TutorialManager.instance != null)
+        {
+            TutorialManager.instance.screenText.text = "Multiply Quantity to item's price";
+
+        }
     }
 
     private void OnDisable()
@@ -291,11 +297,17 @@ public class TestCalculator : MonoBehaviour
     {
         if(answerFields.Count == index)
         {
+
            totalPriceAnswerField.enabled = true;
             
            totalPriceAnswerField.Select();
             totalPriceAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
+            if (TutorialManager.instance != null)
+            {
+                TutorialManager.instance.screenText.text = "Add all item's total prices";
+
+            }
         }
     }
 
@@ -370,6 +382,12 @@ public class TestCalculator : MonoBehaviour
         changeAnswerField.gameObject.SetActive(true);
         changeAnswerField.Select();
         changeAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+
+        if (TutorialManager.instance != null)
+        {
+            TutorialManager.instance.screenText.text = "Subtract Total Price to Customer Paid";
+
+        }
     }
 
     public void OnTotalPriceInputted()

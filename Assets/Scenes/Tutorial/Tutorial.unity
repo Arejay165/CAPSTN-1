@@ -86587,8 +86587,8 @@ MonoBehaviour:
   gameDayText: {fileID: 1030180337}
   resultDayText: {fileID: 1915504703}
   endScoreText: {fileID: 113696119}
-  briefingDayText: {fileID: 784376148}
-  briefingScoreGoalText: {fileID: 1101287814}
+  briefingDayText: {fileID: 0}
+  briefingScoreGoalText: {fileID: 0}
   gameScoreGoalText: {fileID: 1521529288}
   gameTipJarFill: {fileID: 1850786134}
   starShine: {fileID: 21300000, guid: 8cf07c9a3d080d747be1d79b4e3770d3, type: 3}
