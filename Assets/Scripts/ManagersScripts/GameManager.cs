@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         {
 
             StartCoroutine(DayStart());
-            PlayerManager.instance.lastItemSpawner.canSpawn = true;
+          //  PlayerManager.instance.lastItemSpawner.canSpawn = true;
         }
         else if (TutorialManager.instance)
         {
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
             Destroy(customer.gameObject);
         }
 
-        PlayerManager.instance.lastItemSpawner.canSpawn = false;
+    //    PlayerManager.instance.lastItemSpawner.canSpawn = false;
 
         Debug.Log("Level Over");
         yield return new WaitForSeconds(2f);

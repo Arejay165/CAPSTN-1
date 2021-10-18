@@ -105,7 +105,7 @@ public class ClickToSelectItem : MonoBehaviour
                 
              
             }
-            if (Input.GetMouseButtonUp(0) && !canSpawn || TutorialManager.instance.canTutorial )
+            if (Input.GetMouseButtonUp(0) && !canSpawn && !TutorialManager.instance.tutorial.gameObject.activeSelf)
             {
                 canSpawn = true;
             }

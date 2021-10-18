@@ -23,8 +23,8 @@ public class Scoring : MonoBehaviour
     public TextMeshProUGUI resultDayText;
     public Text endScoreText;
    // public Text highscoreText;
-    public Text briefingDayText;
-    public Text briefingScoreGoalText;
+    public TextMeshProUGUI briefingDayText;
+    public TextMeshProUGUI briefingScoreGoalText;
     public Text gameScoreGoalText;
     public Image gameTipJarFill;
     public Sprite starShine;
@@ -95,7 +95,7 @@ public class Scoring : MonoBehaviour
     public int resultsNextStar;
     public void ShowBriefing()
     {
-        briefingDayText.text = "Day: " + (round+1);
+        briefingDayText.text = (round+1).ToString();
         scoreGoal = 1000 + ((round) * (250));
         briefingScoreGoalText.text = scoreGoal.ToString();
         UpdateGameScoreGoal();
