@@ -18,6 +18,7 @@ public class AnalogueClock : MonoBehaviour
     {
         realSecondsInGameDay = DayAndNightCycle.instance.GetEndTime();
         timeScale = (360f/ realSecondsInGameDay);
+        timeFill.fillAmount = realSecondsInGameDay;
     }
 
     // Update is called once per frame
@@ -27,7 +28,10 @@ public class AnalogueClock : MonoBehaviour
         currentGameTime += timeScale * Time.deltaTime;
 
 
-        timeFill.fillAmount = DayAndNightCycle.instance.GetGameTime()/DayAndNightCycle.instance.GetEndTime();
-        clockHandTransform.eulerAngles = new Vector3(0, 0, currentGameTime * 1);
+        // timeFill.fillAmount = DayAndNightCycle.instance.GetGameTime()/ DayAndNightCycle.instance.GetEndTime();
+        timeFill.fillAmount -= 1.0f / DayAndNightCycle.instance.GetEndTime() * Time.deltaTime;
+        // timeFill.fillAmount = DayAndNightCycle.instance.GetGameTime() * 1;
+        //   timeFill.fillAmount = DayAndNightCycle.instance.GetGameTime()
+        clockHandTransform.eulerAngles = new Vector3(0, 0, -currentGameTime * 1);
     }
 }

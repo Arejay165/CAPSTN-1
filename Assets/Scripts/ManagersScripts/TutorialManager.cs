@@ -41,6 +41,7 @@ public class TutorialManager : MonoBehaviour
     public int customerCounter = -1;
     public TextMeshProUGUI screenText;
     public GameObject nextButton;
+    public List<GameObject> highlightedImage;
 
 
     // public GameObject controlPanel;
@@ -166,8 +167,19 @@ public class TutorialManager : MonoBehaviour
             }
 
             arrows[arrowIndex].SetActive(true);
+            ActivateGlowItems(arrowIndex);
             arrowIndex++;
         }
+    }
+
+    public void ActivateGlowItems(int index)
+    {
+        foreach(GameObject obj in highlightedImage)
+        {
+            obj.SetActive(false);
+        }
+
+        highlightedImage[index].SetActive(true);
     }
 
     public void EnableArrows()
@@ -178,10 +190,11 @@ public class TutorialManager : MonoBehaviour
         {
             case TutorialPhrase.ArrowOnGlowingItemTutorial:
                 ActivateArrows(3);
+                
                 break;
 
             case TutorialPhrase.UpgradeItemArrows:
-                ActivateArrows(4);
+              //  ActivateArrows(4);
                 break;
 
             case TutorialPhrase.ArrowsOnCashBox:

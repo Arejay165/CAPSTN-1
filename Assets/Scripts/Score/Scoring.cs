@@ -93,11 +93,16 @@ public class Scoring : MonoBehaviour
     public HighscoreTable hsTable;
 
     public int resultsNextStar;
+
+    public TextMeshProUGUI minGoalValue;
+   
     public void ShowBriefing()
     {
         briefingDayText.text = (round+1).ToString();
         scoreGoal = 1000 + ((round) * (250));
         briefingScoreGoalText.text = scoreGoal.ToString();
+        resultsNextStar = scoreGoal / 5;
+        minGoalValue.text = resultsNextStar.ToString();
         UpdateGameScoreGoal();
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
