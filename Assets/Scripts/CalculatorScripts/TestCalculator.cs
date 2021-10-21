@@ -305,7 +305,7 @@ public class TestCalculator : MonoBehaviour
 
             if (TutorialManager.instance != null)
             {
-                TutorialManager.instance.screenText.text = "Add all item's total prices";
+                TutorialManager.instance.screenText.text = "Add all the totals";
 
             }
         }
