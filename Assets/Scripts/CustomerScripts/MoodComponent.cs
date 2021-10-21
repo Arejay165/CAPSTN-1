@@ -13,6 +13,10 @@ public class MoodComponent : MonoBehaviour
     [SerializeField]
     float timeForDecay;
     [SerializeField]
+    float neutralMoodValue;
+    [SerializeField]
+    float angryMoodValue;
+    [SerializeField]
     Sprite happySprite;
     [SerializeField]
     Sprite neutralSprite;
@@ -54,7 +58,7 @@ public class MoodComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //ChangeCustomerMoodSprite();
     }
 
     IEnumerator CustomerMoodDecay()
@@ -63,13 +67,15 @@ public class MoodComponent : MonoBehaviour
         {
             yield return new WaitForSeconds(timeForDecay);
             currentMoodAmount -= moodDecay;
+            ChangeCustomerMoodSprite();
+            if (currentMoodAmount <= 0) { 
+                GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
+                Destroy(this.gameObject);
+            }
         }
-        ChangeCustomerMoodSprite();
-        //
-        if(currentMoodAmount <= 0)
-        {
+        
 
-        }
+        
     }
     void InitializeMood()
     {
@@ -87,8 +93,9 @@ public class MoodComponent : MonoBehaviour
 
     void ChangeCustomerMoodSprite()
     {
-        if(currentMoodAmount <= maxMoodAmount)
+        if(currentMoodAmount >= maxMoodAmount)
         {
+            Debug.Log("Happy");
             if (happySprite)
             {
                 if (customerSpriteRenderer.sprite != happySprite) 
@@ -99,8 +106,9 @@ public class MoodComponent : MonoBehaviour
                 }
             }
         }
-        if (currentMoodAmount <= currentMoodAmount / 2)
+        if (currentMoodAmount <= maxMoodAmount / 2)
         {
+            Debug.Log("Neutral");
             if (neutralSprite)
             {
                 if (customerSpriteRenderer.sprite != neutralSprite)
@@ -111,8 +119,9 @@ public class MoodComponent : MonoBehaviour
             }
         }
 
-        if(currentMoodAmount <= currentMoodAmount / 3)
+        if(currentMoodAmount <= maxMoodAmount / 3)
         {
+            Debug.Log("Angry");
             if (angrySprite)
             {
                 if (customerSpriteRenderer.sprite != angrySprite)

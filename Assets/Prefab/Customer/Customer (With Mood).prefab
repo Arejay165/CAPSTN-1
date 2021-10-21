@@ -116,7 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMoodAmount: 0
   maxMoodAmount: 100
-  moodDecay: 5
+  moodDecay: 10
   timeForDecay: 2
   happySprite: {fileID: 21300000, guid: b13383c0e2e464f42ae1e3ac698abdfe, type: 3}
   neutralSprite: {fileID: 21300000, guid: 9606d96015d10694ebf4e5847d6fdbe3, type: 3}
