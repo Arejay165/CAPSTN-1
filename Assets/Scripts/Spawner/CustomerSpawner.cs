@@ -69,7 +69,7 @@ public class CustomerSpawner : MonoBehaviour
                 float spawnTime = 0;
                 if (!DayAndNightCycle.instance.isRushHour)
                 {
-                    spawnTime = Random.Range(3, 3);
+                    spawnTime = Random.Range(0, 0.2f);
                 }
                 yield return new WaitForSeconds(spawnTime);
                 SpawnCustomer();

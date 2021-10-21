@@ -46,7 +46,10 @@ public class ChangeCalculator : MonoBehaviour
         if (TutorialManager.instance != null)
         {
             TutorialManager.instance.screenText.text = "Divide the upper value to the lower value";
-
+        }
+        else
+        {
+            Debug.Log("is null");
         }
     }
 

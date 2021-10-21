@@ -119,10 +119,14 @@ public class TestCalculator : MonoBehaviour
         }
         isCountingTime = true;
 
-        if(TutorialManager.instance != null)
+        if (TutorialManager.instance != null)
         {
             TutorialManager.instance.screenText.text = "Multiply Quantity to item's price";
 
+        }
+        else
+        {
+            Debug.Log("Null");
         }
     }
 
@@ -269,7 +273,7 @@ public class TestCalculator : MonoBehaviour
             else //If input is invalid (not a number)
             {
                 Debug.Log("Invalid Input, retry again");
-                StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
+               // StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
 
 
 
@@ -430,7 +434,7 @@ public class TestCalculator : MonoBehaviour
             else
             {
                 Debug.Log("Invalid Input, retry again");
-                StartCoroutine(WrongInputted(totalPriceAnswerField));
+//                StartCoroutine(WrongInputted(totalPriceAnswerField));
 
 
             }
@@ -478,7 +482,7 @@ public class TestCalculator : MonoBehaviour
             {
                 Debug.Log("Invalid Input, retry again");
 
-                StartCoroutine(WrongInputted(changeAnswerField));
+            //    StartCoroutine(WrongInputted(changeAnswerField));
 
 
             }
@@ -520,11 +524,12 @@ public class TestCalculator : MonoBehaviour
         {
             Destroy(GameManager.instance.customer.gameObject);
         }
-        // GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
+     
 
         if (!TutorialManager.instance.canTutorial)
         {
-            GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time
+            //  GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time
+             GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
         }
         else
         {
