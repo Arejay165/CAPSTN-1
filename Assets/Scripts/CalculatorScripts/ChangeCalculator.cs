@@ -23,9 +23,23 @@ public class ChangeCalculator : MonoBehaviour
         //dividend / divisor = quotient (answer of player)
         // Reverse the division to multiplication
         // divisor * quotient = dividend
-        int divisor = Random.Range(2, 51); // use to multiply to the quotient to always be whole number 
-        int quotient = Random.Range(1, 50); // possible answers 
-        int dividend = divisor * quotient; // determine the dividend
+        int divisor;// use to multiply to the quotient to always be whole number 
+        int quotient; // possible answers 
+        int dividend;// determine the dividend
+
+        if (TutorialManager.instance == null)
+        {
+             divisor = Random.Range(2, 51); // use to multiply to the quotient to always be whole number 
+             quotient = Random.Range(1, 50); // possible answers 
+             dividend = divisor * quotient; // determine the dividend
+        }
+        else
+        {
+            divisor = Random.Range(2, 11); // use to multiply to the quotient to always be whole number 
+            quotient = Random.Range(1, 21); // possible answers 
+            dividend = divisor * quotient; // determine the dividend
+        }
+ 
                                            
 
         MathProblemManager.instance.cash.numValue = dividend;//Random.Range(60, 500);
@@ -45,7 +59,7 @@ public class ChangeCalculator : MonoBehaviour
 
         if (TutorialManager.instance != null)
         {
-            TutorialManager.instance.screenText.text = "Divide the upper value to the lower value";
+            TutorialManager.instance.text.text = "Divide the upper value to the lower value";
         }
         else
         {
@@ -186,7 +200,7 @@ public class ChangeCalculator : MonoBehaviour
     public void ChangeOrderFinish()
     {
 
-        TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
+        TransitionManager.instances.MoveTransition(new Vector2(507f, 1387f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
         if (GameManager.instance.customer)
         {
             Destroy(GameManager.instance.customer.gameObject);

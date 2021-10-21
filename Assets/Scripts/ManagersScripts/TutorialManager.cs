@@ -42,6 +42,8 @@ public class TutorialManager : MonoBehaviour
     public TextMeshProUGUI screenText;
     public GameObject nextButton;
     public List<GameObject> highlightedImage;
+    public TextMeshProUGUI titleInstructText;
+   
 
 
     // public GameObject controlPanel;
@@ -96,6 +98,8 @@ public class TutorialManager : MonoBehaviour
                  text.text = tutorialTexts[tutorialCounter].instructions[counter].ToString();
                  counter++;
                 EnableArrows();
+               //  ingameText.gameObject.SetActive(false);
+                 UIManager.instance.inGameUI.SetActive(false);
             }
             else
             {
@@ -160,15 +164,23 @@ public class TutorialManager : MonoBehaviour
     {
         if (counter == index)
         {
-            Debug.Log("ACtiavte Arrow");
-            foreach (GameObject obj in arrows)
+            //Debug.Log("ACtiavte Arrow");
+            //foreach (GameObject obj in arrows)
+            //{
+            //    obj.SetActive(false);
+            //}
+
+            //arrows[arrowIndex].SetActive(true);
+            ActivateGlowItems(arrowIndex);
+            arrowIndex++;
+        }
+        else
+        {
+            foreach (GameObject obj in highlightedImage)
             {
                 obj.SetActive(false);
             }
 
-            arrows[arrowIndex].SetActive(true);
-            ActivateGlowItems(arrowIndex);
-            arrowIndex++;
         }
     }
 
@@ -189,8 +201,10 @@ public class TutorialManager : MonoBehaviour
         switch (tutorialPhrase)
         {
             case TutorialPhrase.ArrowOnGlowingItemTutorial:
-                ActivateArrows(3);
-                
+                   ActivateArrows(3);
+                //ActivateGlowItems(arrowIndex);
+               // arrowIndex++;
+
                 break;
 
             case TutorialPhrase.UpgradeItemArrows:
@@ -236,7 +250,10 @@ public class TutorialManager : MonoBehaviour
         SpawnCustomer();
         isFinished = false;
         customerCounter++;
-        screenText.text = "Click on the customer desired items";
+      //  ingameText.gameObject.SetActive(true);
+        text.text = "Click on the customer desired items";
+        screenText.text = "";
+
     }
 
 

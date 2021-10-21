@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
+  m_Name: RC_Tuts
+  m_EditorClassIdentifier: 
+  itemName: Rice
+  price: 16
+  numValue: 0
+  denValue: 0
+  itemSprite: {fileID: 21300000, guid: 3ca60f6d87b1a2c43add9ca8898db5cf, type: 3}
+  quantity: 1
+  minRangePrice: 10
+  maxRangePrice: 20
+  isUnlock: 1

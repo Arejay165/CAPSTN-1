@@ -177,8 +177,18 @@ public class MathProblemManager : MonoBehaviour
 
     public void ItemCustomer()
     {
+        int maxInventory;
         List<Item> itemsWanted = new List<Item>();
-        int maxInventory = Random.Range(1, 4);
+        if(TutorialManager.instance != null)
+        {
+            maxInventory = 3;
+            Debug.Log("Item");
+        }
+        else
+        {
+             maxInventory = Random.Range(1, 4);
+        }
+
         for (int i = 0; i < maxInventory; i++)
         {
 

@@ -121,7 +121,7 @@ public class TestCalculator : MonoBehaviour
 
         if (TutorialManager.instance != null)
         {
-            TutorialManager.instance.screenText.text = "Multiply Quantity to item's price";
+            TutorialManager.instance.text.text = "Multiply Quantity to item's price";
 
         }
         else
@@ -194,7 +194,15 @@ public class TestCalculator : MonoBehaviour
 
         perfectAttempts += 2;
 
-         randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 100);
+        if(TutorialManager.instance == null)
+        {
+            randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 100);
+        }
+        else
+        {
+            randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 10);
+        }
+      
         changeCorrectAnswer = randomExtraMoney - totalPriceCorrectAnswer;
         
         DisplayItemOrders();
@@ -309,7 +317,7 @@ public class TestCalculator : MonoBehaviour
 
             if (TutorialManager.instance != null)
             {
-                TutorialManager.instance.screenText.text = "Add all the totals";
+                TutorialManager.instance.text.text = "Add all the totals";
 
             }
         }
@@ -389,7 +397,7 @@ public class TestCalculator : MonoBehaviour
 
         if (TutorialManager.instance != null)
         {
-            TutorialManager.instance.screenText.text = "Subtract Total Price to Customer Paid";
+            TutorialManager.instance.text.text = "Subtract Total Price to Customer Paid";
 
         }
     }
