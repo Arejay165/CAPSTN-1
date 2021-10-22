@@ -239,11 +239,12 @@ public class TestCalculator : MonoBehaviour
                 if (playerInputValue == itemUIClassList[itemOrderIndex].totalPriceAnswer)
                 {
                     Debug.Log("Correct");
-
+                    RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, true);
                     StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
 
                     //Change select to next input field if correct
-                    RecordAnswerResult(itemOrderIndex, true);
+                    
+                    
                     index++;
                     if (index < answerFields.Count)
                     {
@@ -264,8 +265,10 @@ public class TestCalculator : MonoBehaviour
                 else
                 {
                     Debug.Log("Wrong");
+                    RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, false);
                     StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
-                    RecordAnswerResult(itemOrderIndex, false);
+                  
+
 
                     Scoring.instance.ModifyMultiplier(-1f);
                 }
@@ -348,36 +351,49 @@ public class TestCalculator : MonoBehaviour
         gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(507f,0);
 
     }
-    public void RecordAnswerResult(int p_index, bool p_isCorrect)
+    //public void RecordAnswerResult(int p_index, bool p_isCorrect)
+    //{
+    //    AnsweredProblemData newAnswer = new AnsweredProblemData();
+    //    newAnswer.operatingNumbers.Add(itemUIClassList[p_index].price);
+    //    newAnswer.operatingNumbers.Add(itemUIClassList[p_index].quantity);
+    //    newAnswer.answer = itemUIClassList[p_index].totalPriceAnswer;
+    //    newAnswer.mathOperator = MathProblemOperator.multiplication;
+    //    newAnswer.isCorrect = p_isCorrect;
+    //    newAnswer.timeSpent = timeSpent;
+    //    timeSpent = 0f;
+    //    PerformanceManager.instance.answeredProblemDatas.Add(newAnswer);
+    //}
+    public void RecordAnswerResult( float p_answer, MathProblemOperator p_mathOperator, bool p_isCorrect)
     {
         AnsweredProblemData newAnswer = new AnsweredProblemData();
-        newAnswer.operatingNumbers.Add(itemUIClassList[p_index].price);
-        newAnswer.operatingNumbers.Add(itemUIClassList[p_index].quantity);
-        newAnswer.answer = itemUIClassList[p_index].totalPriceAnswer;
-        newAnswer.mathOperator = MathProblemOperator.multiplication;
-        newAnswer.isCorrect = p_isCorrect;
-        newAnswer.timeSpent = timeSpent;
-        timeSpent = 0f;
-        PerformanceManager.instance.answeredProblemDatas.Add(newAnswer);
-    }
-
-    public void RecordAnswerResult(List<float> p_numbers, float p_answer, MathProblemOperator p_mathOperator, bool p_isCorrect)
-    {
-        AnsweredProblemData newAnswer = new AnsweredProblemData();
-        foreach (float selectedNumber in p_numbers)
-        {
-            newAnswer.operatingNumbers.Add(selectedNumber);
-        }
        
+
         newAnswer.answer = p_answer;
         newAnswer.mathOperator = p_mathOperator;
         newAnswer.isCorrect = p_isCorrect;
         newAnswer.timeSpent = timeSpent;
         timeSpent = 0;
         PerformanceManager.instance.answeredProblemDatas.Add(newAnswer);
-       
-        
+
+
     }
+    //public void RecordAnswerResult(List<float> p_numbers, float p_answer, MathProblemOperator p_mathOperator, bool p_isCorrect)
+    //{
+    //    AnsweredProblemData newAnswer = new AnsweredProblemData();
+    //    foreach (float selectedNumber in p_numbers)
+    //    {
+    //        newAnswer.operatingNumbers.Add(selectedNumber);
+    //    }
+
+    //    newAnswer.answer = p_answer;
+    //    newAnswer.mathOperator = p_mathOperator;
+    //    newAnswer.isCorrect = p_isCorrect;
+    //    newAnswer.timeSpent = timeSpent;
+    //    timeSpent = 0;
+    //    PerformanceManager.instance.answeredProblemDatas.Add(newAnswer);
+
+
+    //}
     public void ShowChangeText()
     {
         customerPaidTitle.gameObject.SetActive(true);
@@ -415,8 +431,9 @@ public class TestCalculator : MonoBehaviour
                 if (playerInputValue == totalPriceCorrectAnswer) // Answer is correct
                 {
                     ShowChangeText();
+                    RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, true);
                     StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect));
-                    RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, true);
+                    
 
 
                     changeAnswers.Add(randomExtraMoney);
@@ -425,8 +442,9 @@ public class TestCalculator : MonoBehaviour
                 else // Answer is wrong
                 {
                     Debug.Log("RIGHT ANSWER IS : " + totalPriceCorrectAnswer);
+                    RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, false);
                     StartCoroutine(WrongInputted(totalPriceAnswerField));
-                    RecordAnswerResult(itemsAnswer, totalPriceCorrectAnswer, MathProblemOperator.addition, false);
+                    
                     Scoring.instance.ResetMultiplier();
                 }
                 answerAttempts++;
@@ -460,8 +478,9 @@ public class TestCalculator : MonoBehaviour
                 answerAttempts++;
                 if (playerInputValue == changeCorrectAnswer)
                 {
+                    RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
                     StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
-                    RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, true);
+                    
 
 
 
@@ -471,9 +490,9 @@ public class TestCalculator : MonoBehaviour
                 else// Answer is wrong
                 {
 
-
+                    RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, false);
                     StartCoroutine(WrongInputted(changeAnswerField));
-                    RecordAnswerResult(changeAnswers, changeCorrectAnswer, MathProblemOperator.subtraction, false);
+                    
                     Scoring.instance.ResetMultiplier();
                 }
 
