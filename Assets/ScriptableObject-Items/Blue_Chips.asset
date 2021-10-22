@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
-  m_Name: Chips
+  m_Name: Blue_Chips
   m_EditorClassIdentifier: 
   itemName: Chips_Blue
   price: 5

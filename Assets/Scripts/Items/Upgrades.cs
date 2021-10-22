@@ -11,8 +11,8 @@ public class Upgrades : MonoBehaviour
 
     public List<Item> newItems;
 
-    public Image[] itemSprite;
-    public TextMeshProUGUI[] itemName;
+    public List<Image> itemSprite;
+    public List<TextMeshProUGUI> itemName;
 
     public List<GameObject> newInteractables;
 
@@ -39,10 +39,10 @@ public class Upgrades : MonoBehaviour
             newInteractables[i].SetActive(false);
         }
 
-        for (int i = 0; i< newItems.Count;i++)
-        {
-            newItems[i].isUnlock = false;
-        }
+        //for (int i = 0; i< newItems.Count;i++)
+        //{
+        //    newItems[i].isUnlock = false;
+        //}
 
         
     }
@@ -57,34 +57,48 @@ public class Upgrades : MonoBehaviour
         newInteractables.RemoveAt(itemIndex);
         newItems.RemoveAt(itemIndex);
         GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
-        newItems[itemIndex].isUnlock = true;
+        //newItems[itemIndex].isUnlock = true;
        
     }
    
    public void initializeItem(int index)
    {
-       itemName[index].text = newItems[index].name;
-       itemSprite[index].sprite = newItems[index].itemSprite;
+        if (newItems.Count == 2)
+        {
+            itemName[2].text = null;
+            itemSprite[2].sprite = null;
+        }
+        else if (newItems.Count == 1)
+        {
+            itemName[1].text = null;
+            itemSprite[1].sprite = null;
+        }
+
+        itemName[index].text = newItems[index].name;
+        itemSprite[index].sprite = newItems[index].itemSprite;
+        
+        
+        
+       
+
    }
 
     public void getUpgradeItem()
     {
         int counter = 0;
 
+
         for(int i = 0; i < newItems.Count; i++)
         {
-            if (newItems[i].isUnlock == false)
+            initializeItem(i);
+
+            Debug.Log("Can Pick: " + newItems[i].name);
+
+            counter++;
+        
+            if (i == 3)
             {
-                
-                initializeItem(counter);
-
-                Debug.Log(newItems[counter].name);
-
-                counter++;
-                if (counter == 3)
-                {
-                    break;
-                }
+               break;
             }
 
         }
