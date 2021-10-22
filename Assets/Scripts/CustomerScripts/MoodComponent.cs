@@ -106,7 +106,7 @@ public class MoodComponent : MonoBehaviour
                 }
             }
         }
-        if (currentMoodAmount <= maxMoodAmount / 2)
+        if (currentMoodAmount <= neutralMoodValue)
         {
             Debug.Log("Neutral");
             if (neutralSprite)
@@ -119,7 +119,7 @@ public class MoodComponent : MonoBehaviour
             }
         }
 
-        if(currentMoodAmount <= maxMoodAmount / 3)
+        if(currentMoodAmount <= angryMoodValue)
         {
             Debug.Log("Angry");
             if (angrySprite)
