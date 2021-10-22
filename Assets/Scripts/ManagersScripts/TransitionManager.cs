@@ -29,10 +29,10 @@ public class TransitionManager : MonoBehaviour
 
     IEnumerator MoveAnimation(Vector2 position, float time, RectTransform rectTransform, GameObject obj, bool state)
     {
-        obj.SetActive(true);
-        Tween myTween = rectTransform.DOAnchorPos(position, time);
-        yield return myTween.WaitForCompletion();
-        obj.SetActive(state);
+        obj.SetActive(true); // order sheet or pabarya
+        Tween myTween = rectTransform.DOAnchorPos(position, time); // animation sequence
+        yield return myTween.WaitForCompletion(); // Wait to finish
+        obj.SetActive(state); // State 
 
     }
     

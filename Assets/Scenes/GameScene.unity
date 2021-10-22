@@ -6315,7 +6315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   days: 0
   gameTime: 0
-  endTime: 100
+  endTime: 10
   isStoreClosed: 0
   isMorning: 1
   uIManager: {fileID: 547003739}
@@ -6402,7 +6402,7 @@ MonoBehaviour:
   - {fileID: 945456680}
   - {fileID: 361845550}
   - {fileID: 1558594872}
-  text: {fileID: 0}
+  text: {fileID: 1617314673}
   setOfInstructions: []
   tutorialTexts: []
   counter: 0
@@ -6418,6 +6418,7 @@ MonoBehaviour:
   screenText: {fileID: 1617314673}
   nextButton: {fileID: 0}
   highlightedImage: []
+  titleInstructText: {fileID: 0}
 --- !u!114 &105356693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23511,6 +23512,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7af5cde3f34f0bd40ae36bb7bc477142, type: 2}
   - {fileID: 11400000, guid: 2b39c7befa8e551438de0b6b51701d4d, type: 2}
   - {fileID: 11400000, guid: 374b7754c98b15c4982f18f02579e317, type: 2}
+  - {fileID: 11400000, guid: 608fa28015dd812449ff7d09d3feadd9, type: 2}
+  - {fileID: 11400000, guid: f90808ec875449c4790762ac264ea2d9, type: 2}
+  - {fileID: 11400000, guid: 581321de8057fdb4d895ca295e08da40, type: 2}
+  - {fileID: 11400000, guid: d939a3d114b156d4db8b0de2c3bf701f, type: 2}
   itemSprite:
   - {fileID: 2085933032}
   - {fileID: 982540467}
@@ -94853,7 +94858,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -523, y: 1388}
+  m_AnchoredPosition: {x: 514, y: 1388}
   m_SizeDelta: {x: 1000, y: 1400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1833329415

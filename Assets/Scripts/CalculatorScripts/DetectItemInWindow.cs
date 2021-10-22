@@ -45,6 +45,7 @@ public class DetectItemInWindow : MonoBehaviour
                             if (MathProblemManager.instance.GetCurrentItemsWanted().Count <= 0)
                             {
 
+                              //ordersheet 
                                 TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
                             }
                             
