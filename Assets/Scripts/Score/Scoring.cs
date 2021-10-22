@@ -472,6 +472,7 @@ public class Scoring : MonoBehaviour
         {
             continueButton.SetActive(true);
             round++;
+            
 
         }
         else
@@ -658,6 +659,8 @@ public class Scoring : MonoBehaviour
     void OnGameStarted()
     {
         failPrompt.SetActive(false);
+        restartButton.SetActive(false);
+        continueButton.SetActive(false);
         //Delete all stars made
         if (resultStars.Count > 0)
         {
@@ -682,6 +685,8 @@ public class Scoring : MonoBehaviour
         SetScore(0); //TEMP
         starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 110;
 
+        //round's day
+        resultDayText.text = round.ToString();
 
         //score floater
         scoreFloater.SetActive(false);
