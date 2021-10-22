@@ -68,10 +68,21 @@ public class MoodComponent : MonoBehaviour
             yield return new WaitForSeconds(timeForDecay);
             currentMoodAmount -= moodDecay;
             ChangeCustomerMoodSprite();
-            if (currentMoodAmount <= 0) { 
+            if (currentMoodAmount <= 0) {
+                //If order sheet is active
+                if (TransitionManager.instances.noteBookTransform.gameObject.activeSelf)
+                {
+                    //Hide it 
+                    TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+                }
+                if (TransitionManager.instances.changeTransform.gameObject.activeSelf)
+                {
+                    TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
+                }
                 GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
                 Destroy(this.gameObject);
             }
+
         }
         
 
