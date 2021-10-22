@@ -49,6 +49,7 @@ public class TestCalculator : MonoBehaviour
         newItemUIClass.quantity = p_item.quantity;
         newItemUIClass.totalPriceAnswer = newItemUIClass.quantity * newItemUIClass.price;
         itemsAnswer.Add(newItemUIClass.totalPriceAnswer);
+        
         return newItemUIClass;
     }
     private void Update()
@@ -90,8 +91,11 @@ public class TestCalculator : MonoBehaviour
         changeCorrectAnswer = 0;
         isCountingTime = false;
         timeSpent = 0;
+
         totalPriceAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
         changeAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+        //resets item input field index counter to 0
+        index = 0;
 
         //clears change UI
         changeAnswerField.text = "";
@@ -581,6 +585,7 @@ public class TestCalculator : MonoBehaviour
 
             //Adding to answerField List
             order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().onEndEdit.AddListener(OnPriceInputted);
+            order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().enabled = true;
             answerFields.Add(order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>());
             
             order.transform.SetParent(displayPanel);

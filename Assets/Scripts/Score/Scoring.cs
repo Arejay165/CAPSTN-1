@@ -102,10 +102,11 @@ public class Scoring : MonoBehaviour
     public void ShowBriefing()
     {
         briefingDayText.text = (round+1).ToString();
-        scoreGoal = 1000 + ((round) * (250));
+        scoreGoal = 1000 + ((round-1) * (250));
         briefingScoreGoalText.text = scoreGoal.ToString();
         resultsNextStar = scoreGoal / 5;
         minGoalValue.text = resultsNextStar.ToString();
+        score = 0;
         UpdateGameScoreGoal();
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -352,7 +353,7 @@ public class Scoring : MonoBehaviour
     }
     IEnumerator NewHighscore()
     {
-        starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = -10;
+        starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 1;
         newHighscoreUI.SetActive(true);
         yield return new WaitForSeconds(4.5f);
         newHighscoreUI.SetActive(false);
@@ -568,9 +569,13 @@ public class Scoring : MonoBehaviour
     public void UpdateGameScoreGoal()
     {
         int currentScaledScore = score;
-        
-           
-        currentScaledScore = score - (scoreGoal / 5* gameStarSlotIndex);
+
+
+        currentScaledScore = score;
+        while (currentScaledScore >= scoreGoal / 5)
+        {
+            currentScaledScore -= scoreGoal /5;
+        } 
       
         
    
@@ -686,15 +691,17 @@ public class Scoring : MonoBehaviour
         starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 110;
 
         //round's day
-        resultDayText.text = round.ToString();
+        resultDayText.text = (round + 1).ToString();
 
         //score floater
         scoreFloater.SetActive(false);
         scoreFloater.transform.position = defaultScoreFloaterPos;
         scoreFloater.GetComponent<Text>().color = new Color(scoreFloater.GetComponent<Text>().color.r, scoreFloater.GetComponent<Text>().color.g, scoreFloater.GetComponent<Text>().color.b, 0f);
-        gameDayText.text = "Day: " + round.ToString();
-        scoreGoal = 1000 + ((round - 1) * (250));
-        
+        gameDayText.text = "Day: " + (round + 1).ToString();
+        //scoreGoal = 1000 + ((round - 1) * (250)); //LAT
+
+       
+
         ResetMultiplier();
        
     }
@@ -734,7 +741,7 @@ public class Scoring : MonoBehaviour
         multiplicationEvaluation.gameObject.SetActive(false);
         divisionSolvingTime.gameObject.SetActive(false);
         divisionEvaluation.gameObject.SetActive(false);
-        resultDayText.text = round.ToString();
+        resultDayText.text = (round+1).ToString();
         continueButton.SetActive(false);
         quitButton.SetActive(false);
         ShowResults(score);

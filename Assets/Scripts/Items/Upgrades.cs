@@ -27,7 +27,40 @@ public class Upgrades : MonoBehaviour
             Destroy(this);
         }
     }
+    public void OnEnable()
+    {
+        GameManager.OnGameStart += OnGameStarted;
+        GameManager.OnGameEnd += OnGameEnded;
+    }
 
+    public void OnDisable()
+    {
+
+        GameManager.OnGameStart -= OnGameStarted;
+        GameManager.OnGameEnd -= OnGameEnded;
+        //Reset upgrade uis
+        if (newItems.Count == 2)
+        {
+            itemName[2].text = null;
+            itemSprite[2].sprite = null;
+        }
+        else if (newItems.Count == 1)
+        {
+            itemName[1].text = null;
+            itemSprite[1].sprite = null;
+        }
+    }
+
+    void OnGameStarted()
+    {
+
+    }
+
+    void OnGameEnded()
+    {
+   
+
+    }
     public void Start() //Temp Fix
     {
         //initializeItem();
@@ -61,51 +94,62 @@ public class Upgrades : MonoBehaviour
        
     }
    
-   public void initializeItem(int index)
-   {
-        if (newItems.Count == 2)
-        {
-            itemName[2].text = null;
-            itemSprite[2].sprite = null;
-        }
-        else if (newItems.Count == 1)
-        {
-            itemName[1].text = null;
-            itemSprite[1].sprite = null;
-        }
-        
-
-        itemName[index].text = newItems[index].name;
-        itemSprite[index].sprite = newItems[index].itemSprite;
-        
-        
-   }
-
     public void getUpgradeItem()
     {
-        int counter = 0;
 
-
+        List<string> chosenItems = new List<string>();
         if (newItems.Count == 0)
         {
             GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
         }
         else
         {
-            for (int i = 0; i < newItems.Count; i++)
+            //If there is more than 3(which is amount of buttons) item upgrades available
+            if (newItems.Count > 3)
             {
-                initializeItem(i);
-
-                Debug.Log("Can Pick: " + newItems[i].name);
-
-                counter++;
-
-                if (i == 2)
+                while (chosenItems.Count != 3)
                 {
-                    break;
-                }
+                
+                    //Randomize which item to get
+                    int chosenItemIndex = Random.Range(0, newItems.Count);
+                    bool isUnique = true;
+                    //Check if chosen item was already chosen before
+                    foreach (string selectedItemCheckedName in chosenItems)
+                    {
+                        //There is one that exists already
+                        if(selectedItemCheckedName == newItems[chosenItemIndex].name)
+                        {
+                            isUnique = false;
+                            break;
+                        }
+                        
+                    }
+                    //name doesnt exist yet
+                    if (isUnique)
+                    {
+                        
+                        //sets button to list
+                        itemName[chosenItems.Count].text = newItems[chosenItemIndex].name;
+                        itemSprite[chosenItems.Count].sprite = newItems[chosenItemIndex].itemSprite;
+                        //add to list of chosen items
+                        chosenItems.Add(newItems[chosenItemIndex].name);
 
+                    }
+
+
+                }
+                
             }
+            else
+            {
+                for(int i = 0; i < newItems.Count; i++) 
+                {
+                    //sets button to list
+                    itemName[i].text = newItems[i].name;
+                    itemSprite[i].sprite = newItems[i].itemSprite;
+                }
+            }
+            
         }
        
     }

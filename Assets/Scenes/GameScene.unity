@@ -23590,25 +23590,27 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2b39c7befa8e551438de0b6b51701d4d, type: 2}
   - {fileID: 11400000, guid: 374b7754c98b15c4982f18f02579e317, type: 2}
   - {fileID: 11400000, guid: 608fa28015dd812449ff7d09d3feadd9, type: 2}
+  - {fileID: 11400000, guid: 19b0db22634346b4587a7713142a05a1, type: 2}
   - {fileID: 11400000, guid: f90808ec875449c4790762ac264ea2d9, type: 2}
-  - {fileID: 11400000, guid: 581321de8057fdb4d895ca295e08da40, type: 2}
   - {fileID: 11400000, guid: d939a3d114b156d4db8b0de2c3bf701f, type: 2}
+  - {fileID: 11400000, guid: 581321de8057fdb4d895ca295e08da40, type: 2}
   itemSprite:
-  - {fileID: 2085933032}
-  - {fileID: 982540467}
-  - {fileID: 288093014}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   itemName:
-  - {fileID: 1315999958}
-  - {fileID: 2118245758}
-  - {fileID: 2059026239}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   newInteractables:
-  - {fileID: 489201951}
-  - {fileID: 79118782}
-  - {fileID: 651904851}
-  - {fileID: 1628234223}
-  - {fileID: 791901855}
-  - {fileID: 134925822}
-  - {fileID: 254259828}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &305667660
 Transform:
   m_ObjectHideFlags: 0
