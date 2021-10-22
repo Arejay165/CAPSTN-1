@@ -26,7 +26,13 @@ public class ChangeCalculator : MonoBehaviour
         int divisor = Random.Range(2, 51); // use to multiply to the quotient to always be whole number 
         int quotient = Random.Range(1, 50); // possible answers 
         int dividend = divisor * quotient; // determine the dividend
-                                           
+        
+        while (divisor == 1)
+        {
+            divisor = Random.Range(2, 51); // use to multiply to the quotient to always be whole number 
+            quotient = Random.Range(1, 50); // possible answers 
+            dividend = divisor * quotient;
+        }
 
         MathProblemManager.instance.cash.numValue = dividend;//Random.Range(60, 500);
         MathProblemManager.instance.cash.denValue = divisor;//cash.numValue / Random.Range(2, 50);

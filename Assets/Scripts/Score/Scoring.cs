@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+
 using TMPro;
 public class Scoring : MonoBehaviour
 {
@@ -92,6 +93,8 @@ public class Scoring : MonoBehaviour
 
     public HighscoreTable hsTable;
 
+    public GameObject scoreFloater;
+    Vector3 defaultScoreFloaterPos;
     public int resultsNextStar;
 
     public TextMeshProUGUI minGoalValue;
@@ -468,7 +471,8 @@ public class Scoring : MonoBehaviour
         if (resultStars.Count >= 3)
         {
             continueButton.SetActive(true);
-            
+            round++;
+
         }
         else
         {
@@ -620,7 +624,8 @@ public class Scoring : MonoBehaviour
     public void addScore(int gainScore)
     {
         TextAnimaation();
-        CoinActivator();
+        CoinActivator(gainScore);
+        
         score += gainScore;
         scoreText.text = score.ToString();
         gameTipJarFill.fillAmount = (float)score/(float)scoreGoal;
@@ -633,6 +638,8 @@ public class Scoring : MonoBehaviour
         {
             instance = this;
         }
+        defaultScoreFloaterPos = scoreFloater.transform.position;
+
         
     }
     public void OnEnable()
@@ -674,8 +681,12 @@ public class Scoring : MonoBehaviour
         gameStarSlotIndex = 0;
         SetScore(0); //TEMP
         starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 110;
-        round++;
 
+
+        //score floater
+        scoreFloater.SetActive(false);
+        scoreFloater.transform.position = defaultScoreFloaterPos;
+        scoreFloater.GetComponent<Text>().color = new Color(scoreFloater.GetComponent<Text>().color.r, scoreFloater.GetComponent<Text>().color.g, scoreFloater.GetComponent<Text>().color.b, 0f);
         gameDayText.text = "Day: " + round.ToString();
         scoreGoal = 1000 + ((round - 1) * (250));
         
@@ -743,7 +754,7 @@ public class Scoring : MonoBehaviour
        scoreText.gameObject.transform.DOShakeScale(1, 0.3f,10, 90, true);
     }
 
-   public void CoinActivator()
+   public void CoinActivator(int p_gainedScore)
     {
        // TransitionManager.instances.MoveTransition();
         for(int i = 0; i < ObjectPool.instances.amountToPool; i++)
@@ -752,13 +763,36 @@ public class Scoring : MonoBehaviour
             // ObjectPool.instances.pooledGameobjects[i].
             // CoinAnimation(i);
            ObjectPool.instances.RandomPosition();
-          StartCoroutine(CoinAnimation(i));
+          StartCoroutine(CoinAnimation(i,p_gainedScore));
 
         }
 
     }
 
-    IEnumerator CoinAnimation(int index)
+    IEnumerator ScoreFloating(float p_duration, int p_gainedScore)
+    {
+        Sequence sequence = DOTween.Sequence();
+        scoreFloater.SetActive(true);
+        
+        scoreFloater.GetComponent<Text>().text = "+ " + p_gainedScore;
+        //scoreFloater.SetActive(true);
+        //Move
+        sequence.Append(scoreFloater.transform.DOMove(new Vector3(scoreFloater.transform.position.x, scoreFloater.transform.position.y + 58f, scoreFloater.transform.position.z), p_duration + 0.5f));//(modifiedScale, sizeTweenSpeed).SetEase(Ease.Linear)).Append(timeValueUI.transform.DOScale(OriginalScale, 0.2f).SetEase(Ease.Linear));
+
+        //FadeIn
+        sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, p_duration * 0.05f));
+        sequence.Play();
+        yield return new WaitForSeconds(p_duration *0.5f);
+        scoreFloater.GetComponent<Text>().DOFade(1.0f, p_duration * 0.45f);
+        
+
+        yield return new WaitForSeconds(p_duration * 0.65f);
+        //FadeOut
+        
+        scoreFloater.SetActive(false);
+    }
+
+    IEnumerator CoinAnimation(int index, int p_gainedScore)
     {
 
         Tween tween = ObjectPool.instances.pooledGameobjects[index].GetComponent<Transform>().DOMove(new Vector3(targetLocation.transform.position.x, targetLocation.transform.position.y, targetLocation.transform.position.z), 0.2f);
@@ -766,7 +800,7 @@ public class Scoring : MonoBehaviour
 
         ObjectPool.instances.pooledGameobjects[index].SetActive(false);
         ObjectPool.instances.ResetPosition();
-
+        StartCoroutine(ScoreFloating(2f,p_gainedScore));
         // yield return null;
     }
 
