@@ -95,6 +95,7 @@ public class Customer : MonoBehaviour
             itemUI.transform.SetParent(panel);
             itemUI.GetComponent<Image>().preserveAspect = true;
             itemUI.GetComponent<Image>().sprite = selectedItem.itemSprite;
+            itemUI.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
             itemsImage.Add(itemUI.GetComponent<Image>());
         }
     }
