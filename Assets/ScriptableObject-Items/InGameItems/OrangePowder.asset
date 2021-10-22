@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: OrangePowder
   m_EditorClassIdentifier: 
   itemName: OrangePowder
-  price: 0
+  price: 6
   numValue: 0
   denValue: 0
   itemSprite: {fileID: 21300000, guid: 3b7b7c9164bbbc641adde42052d30dd0, type: 3}
   quantity: 1
   minRangePrice: 2
   maxRangePrice: 20
+  isUnlock: 0

@@ -14,6 +14,6 @@ public class Item : ScriptableObject
     public float quantity;
     public float minRangePrice;
     public float maxRangePrice;
-    public bool isUnlock;
+    //public bool isUnlock;
 
 }
