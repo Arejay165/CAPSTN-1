@@ -73,14 +73,12 @@ public class Upgrades : MonoBehaviour
             itemName[1].text = null;
             itemSprite[1].sprite = null;
         }
+        
 
         itemName[index].text = newItems[index].name;
         itemSprite[index].sprite = newItems[index].itemSprite;
         
         
-        
-       
-
    }
 
     public void getUpgradeItem()
@@ -88,19 +86,27 @@ public class Upgrades : MonoBehaviour
         int counter = 0;
 
 
-        for(int i = 0; i < newItems.Count; i++)
+        if (newItems.Count == 0)
         {
-            initializeItem(i);
-
-            Debug.Log("Can Pick: " + newItems[i].name);
-
-            counter++;
-        
-            if (i == 3)
-            {
-               break;
-            }
-
+            GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
         }
+        else
+        {
+            for (int i = 0; i < newItems.Count; i++)
+            {
+                initializeItem(i);
+
+                Debug.Log("Can Pick: " + newItems[i].name);
+
+                counter++;
+
+                if (i == 3)
+                {
+                    break;
+                }
+
+            }
+        }
+       
     }
 }

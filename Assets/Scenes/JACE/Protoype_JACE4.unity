@@ -14134,13 +14134,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f1e17bf0b76f747be31a679f609f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnedPrefab: {fileID: 0}
-  itemSR: {fileID: 0}
+  itemSpawnedPrefab: {fileID: 945257538436753874, guid: 4f71f23c3ae4d9d49bc93075ae61393d, type: 3}
+  itemSR: {fileID: 254259830}
   canSpawn: 0
-  highlightedSprite: {fileID: 0}
-  defaultItemSprite: {fileID: 0}
-  targetPosition: {fileID: 0}
-  animationTravelTime: 0
+  highlightedSprite: {fileID: 21300000, guid: 289be31d30d61b142a40b52891ef7098, type: 3}
+  defaultItemSprite: {fileID: 21300000, guid: 4ffa85151efe1c745b5cbc1458dd72c3, type: 3}
+  targetPosition: {fileID: 1904060022}
+  animationTravelTime: 0.5
   hintingSparklePFX: {fileID: 0}
   radiatePFX: {fileID: 0}
 --- !u!61 &254259832
