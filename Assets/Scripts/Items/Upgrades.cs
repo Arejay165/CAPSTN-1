@@ -100,7 +100,7 @@ public class Upgrades : MonoBehaviour
 
                 counter++;
 
-                if (i == 3)
+                if (i == 2)
                 {
                     break;
                 }
