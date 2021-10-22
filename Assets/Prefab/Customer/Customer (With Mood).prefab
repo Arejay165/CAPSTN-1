@@ -116,8 +116,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMoodAmount: 0
   maxMoodAmount: 100
-  moodDecay: 5
+  moodDecay: 10
   timeForDecay: 2
+  neutralMoodValue: 50
+  angryMoodValue: 20
+  happySprite: {fileID: 21300000, guid: b13383c0e2e464f42ae1e3ac698abdfe, type: 3}
+  neutralSprite: {fileID: 21300000, guid: 9606d96015d10694ebf4e5847d6fdbe3, type: 3}
+  angrySprite: {fileID: 21300000, guid: 77dfbc7969928b84797c20b92a4ca2b9, type: 3}
+  customerSpriteRenderer: {fileID: 921595463275168961}
 --- !u!1 &2286334326893376327
 GameObject:
   m_ObjectHideFlags: 0
