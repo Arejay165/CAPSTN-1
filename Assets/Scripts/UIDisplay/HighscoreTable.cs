@@ -203,11 +203,14 @@ public class HighscoreTable : MonoBehaviour
             }
 
             highscoreEntryTransformList = new List<Transform>();
+            Debug.Log("CLEARING UI");
             //Clear UI elements
-            foreach (Transform selectedHighscoreEntryTransform in highscoreEntryTransformList)
+            foreach (Transform selectedHighscoreEntryTransform in entryContainer)
             {
+                Debug.Log("DESTROYING");
+                Debug.Log("DESTROY: " +  selectedHighscoreEntryTransform.name);
                 GameObject toBeDeleted = selectedHighscoreEntryTransform.gameObject;
-                highscoreEntryTransformList.Remove(selectedHighscoreEntryTransform);
+                //highscoreEntryTransformList.Remove(selectedHighscoreEntryTransform);
                 Destroy(toBeDeleted);
 
             }
@@ -216,8 +219,24 @@ public class HighscoreTable : MonoBehaviour
             {
                 CreateHighscoreEntryTransform(selectedHighscoreEntry, entryContainer, highscoreEntryTransformList);
 
+
+            }
+            //debugger ui elements
+            foreach (HighscoreEntry selectedHighscoreEntry in highscores.highscoreEntryList)
+            {
+                Debug.Log(selectedHighscoreEntry.name);
+
+
             }
 
+            foreach (Transform selectedHighscoreEntryTransform in highscoreEntryTransformList)
+            {
+                Debug.Log(selectedHighscoreEntryTransform.name);
+
+            }
+
+            Debug.Log("XXXXXXXXXXXXXXX: " + highscores.highscoreEntryList.Count);
+            Debug.Log("YYYYYYYYYYYYYYY: " + highscoreEntryTransformList.Count);
 
         }
 
