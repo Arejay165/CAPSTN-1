@@ -139,6 +139,8 @@ public class ChangeCalculator : MonoBehaviour
                 {
                     //Debug.Log("Isincorrect");
                     StartCoroutine(WrongInputted(tmpChangeInputField));
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
                     RecordAnswerResult(MathProblemOperator.division, false);
                     Scoring.instance.ModifyMultiplier(-1f);
                 }

@@ -202,6 +202,7 @@ MonoBehaviour:
   angrySprite: {fileID: 21300000, guid: 77dfbc7969928b84797c20b92a4ca2b9, type: 3}
   customerSpriteRenderer: {fileID: 921595463275168961}
   correctBonusTime: 2.5
+  penaltyTime: 5
 --- !u!1 &7296001818637686941
 GameObject:
   m_ObjectHideFlags: 0

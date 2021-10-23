@@ -19,7 +19,7 @@ public class DisplayCustomerMood : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DisplayMood();
+        
     }
 
     void InitializeMoodDisplay()
@@ -33,8 +33,9 @@ public class DisplayCustomerMood : MonoBehaviour
         }
     }
 
-    void DisplayMood()
+    public void DisplayMood()
     {
+      
         moodImage.fillAmount = customerMood.GetCurrentMoodAmount() / customerMood.GetMaxMoodAmount();
         //moodSlider.value = customerMood.GetCurrentMoodAmount() / customerMood.GetMaxMoodAmount();
     }

@@ -30,11 +30,12 @@ public class DetectItemInWindow : MonoBehaviour
    
             if (GameManager.instance.customer != null)
             {
-                for(int i = 0; i < MathProblemManager.instance.GetCurrentItemsWanted().Count; i++)
+                MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                for (int i = 0; i < MathProblemManager.instance.GetCurrentItemsWanted().Count; )
                 {
                     if(itemInCounter.item.itemName == MathProblemManager.instance.GetItemInCurrentItemsWanted(i).itemName)
                     {
-                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                        
                         mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
                             GameManager.instance.customer.itemsImage[i].color = global::GameManager.instance.window.darkenImage;
                             GameManager.instance.customer.itemsImage.RemoveAt(i);
@@ -60,10 +61,12 @@ public class DetectItemInWindow : MonoBehaviour
                         
                        
                     }
-                    else
+                    i++;
+                    if (i >= MathProblemManager.instance.GetCurrentItemsWanted().Count)
                     {
                         Debug.Log("Wrong Item");
                         Destroy(itemInCounter.gameObject, 0.2f);
+                        mc.DeductCurrentMoodAmount(mc.penaltyTime);// 1 second
                     }
 
                 }

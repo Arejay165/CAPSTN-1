@@ -282,6 +282,8 @@ public class TestCalculator : MonoBehaviour
                 {
                     Debug.Log("Wrong");
                     RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, false);
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
                     StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
                   
 
@@ -459,6 +461,8 @@ public class TestCalculator : MonoBehaviour
                 {
                     Debug.Log("RIGHT ANSWER IS : " + totalPriceCorrectAnswer);
                     RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, false);
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
                     StartCoroutine(WrongInputted(totalPriceAnswerField));
                     
                     Scoring.instance.ResetMultiplier();
@@ -511,6 +515,8 @@ public class TestCalculator : MonoBehaviour
                 {
 
                     RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, false);
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
                     StartCoroutine(WrongInputted(changeAnswerField));
                     
                     Scoring.instance.ResetMultiplier();

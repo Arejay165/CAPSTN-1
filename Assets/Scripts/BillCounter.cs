@@ -15,16 +15,19 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
        
-        if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf && !TransitionManager.instances.changeTransform.gameObject.activeSelf && MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue !=0)//GameManager.instance.customer.willBuy)
+        if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf && !TransitionManager.instances.changeTransform.gameObject.activeSelf)
         {
-            
-            GameManager.instance.customer.itemsImage[0].color = global::GameManager.instance.window.darkenImage;
-            GameManager.instance.customer.itemsImage.RemoveAt(0);
-            MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(0);
-            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-            mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
+            if (MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue != 0)//GameManager.instance.customer.willBuy)
+            {
+                GameManager.instance.customer.itemsImage[0].color = global::GameManager.instance.window.darkenImage;
+                GameManager.instance.customer.itemsImage.RemoveAt(0);
+                MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(0);
+                MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
 
-            ChangeUI();
+                ChangeUI();
+            }
+            
             // TUTORIAL
             //if (TutorialManager.instance)
             //{
@@ -37,7 +40,19 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
             //        }
             //    }
             //}
+
+
+            else if (MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue == 0)
+            {
+                if (GameManager.instance.customer != null)
+                {
+                    Debug.Log("I PRESSED BIL LBOX");
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
+                }
+            }
         }
+       
     }
 
     void ChangeUI()

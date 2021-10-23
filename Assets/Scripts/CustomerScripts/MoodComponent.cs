@@ -29,7 +29,7 @@ public class MoodComponent : MonoBehaviour
     SpriteRenderer customerSpriteRenderer;
     [SerializeField]
     public float correctBonusTime;
-
+    public float penaltyTime;
     bool pauseDecrease = false;
     #region Getter Setters
 
@@ -57,29 +57,38 @@ public class MoodComponent : MonoBehaviour
     public void IncreaseCurrentMoodAmount(float p_increase)
     {
         pauseDecrease = true;
+        dcm.delayedMoodImage.gameObject.SetActive(true);
         //set color to green
         dcm.delayedMoodImage.color = new Color(0f, 255f, 0f, 1f);
-        dcm.delayedMoodImage.fillAmount = dcm.moodImage.fillAmount;
-        dcm.delayedMoodImage.gameObject.SetActive(true);
-        dcm.delayedMoodImage.fillAmount += ((currentMoodAmount+p_increase)/maxMoodAmount);
-        StartCoroutine(MoodIncreased());
+        dcm.delayedMoodImage.fillAmount = (currentMoodAmount + p_increase) / maxMoodAmount;
+      
+        dcm.delayedMoodImage.fillAmount = ((currentMoodAmount+p_increase)/maxMoodAmount);
+        StartCoroutine(MoodIncreased(p_increase));
     }
 
     public void DeductCurrentMoodAmount(float p_deduction)
     {
-        pauseDecrease = true;
-        //set color to red
-        dcm.delayedMoodImage.color = new Color(255f, 0f, 0f, 1f);
-        dcm.delayedMoodImage.gameObject.SetActive(true);
-        currentMoodAmount -= p_deduction;
-        StartCoroutine(MoodDeducted());
+        //CAN ONLY DEDUCT IF ITS NOT BEING DEDUCTED ALREADY
+        if (!pauseDecrease)
+        {
+            pauseDecrease = true;
+            dcm.delayedMoodImage.gameObject.SetActive(true);
+            //set color to red
+            dcm.delayedMoodImage.color = new Color(255f, 0f, 0f, 1f);
+
+            currentMoodAmount -= p_deduction;
+            dcm.moodImage.fillAmount = currentMoodAmount / maxMoodAmount;
+            Debug.Log("TEST: " + currentMoodAmount);
+            StartCoroutine(MoodDeducted());
+        }
+      
     }
     #endregion
     public IEnumerator MoodDeducted()
     {
         
         yield return new WaitForSeconds(1f);
-        
+        Debug.Log("TEST: " + currentMoodAmount);
         //SCALE TOWARDS THE CURRENT MOOD DISPLAY
         Tween myTween = dcm.delayedMoodImage.DOFillAmount(currentMoodAmount/maxMoodAmount,0.5f);// animation sequence
 
@@ -96,18 +105,21 @@ public class MoodComponent : MonoBehaviour
         pauseDecrease = false ;
     }
 
-    public IEnumerator MoodIncreased()
+    public IEnumerator MoodIncreased(float p_increaseAmount)
     {
         
         yield return new WaitForSeconds(1f);
         
         //SCALE TOWARDS THE CURRENT MOOD DISPLAY
-        Tween myTween = dcm.moodImage.DOFillAmount(dcm.delayedMoodImage.fillAmount, 0.5f);// animation sequence
+        Tween myTween = dcm.moodImage.DOFillAmount((currentMoodAmount+p_increaseAmount )/ maxMoodAmount, 0.5f);// animation sequence
 
         //Transparent fade out
         dcm.delayedMoodImage.DOFade(0.0f, 0.5f);
         yield return myTween.WaitForCompletion(); // Wait to finish
-
+      
+        currentMoodAmount += p_increaseAmount;
+       
+        dcm.moodImage.fillAmount = currentMoodAmount / maxMoodAmount;
         dcm.delayedMoodImage.fillAmount = currentMoodAmount / maxMoodAmount;
 
         //reset
@@ -133,45 +145,68 @@ public class MoodComponent : MonoBehaviour
         while (currentMoodAmount > 0)
         {
             yield return new WaitForSeconds(timeForDecay);
-            currentMoodAmount -= moodDecay;
-            ChangeCustomerMoodSprite();
-            if (currentMoodAmount <= 0) {
-                //If order sheet is active
-                if (TransitionManager.instances.noteBookTransform.gameObject.activeSelf)
+            
+            if (!pauseDecrease)
+            {
+                if (GameManager.instance.customer.moodPanel != null)
                 {
-                    //Hide it 
-                    TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
-                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 6); //3 seconds
-                }
-                if (TransitionManager.instances.changeTransform.gameObject.activeSelf)
-                {
-                    //add bonus mood time
-                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.IncreaseCurrentMoodAmount(mc.correctBonusTime* 6); //3 seconds
-                    TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
-                }
-                GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
-                //Customer despawn
-                if (GameManager.instance.customer)
-                {
+                    if (GameManager.instance.customer.moodPanel.activeSelf)
+                    {
+                        if (dcm.moodImage != null)
+                        {
+                            currentMoodAmount -= moodDecay;
+                            dcm.DisplayMood();
 
-                    //Disable customer bubble
-                    GameManager.instance.customer.panel.gameObject.SetActive(false);
+                            ChangeCustomerMoodSprite();
+                            if (currentMoodAmount <= 0)
+                            {
+                                //If order sheet is active
+                                if (TransitionManager.instances.noteBookTransform.gameObject.activeSelf)
+                                {
+                                    //Hide it 
+                                    TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+                                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                                    mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 6); //3 seconds
+                                }
+                                if (TransitionManager.instances.changeTransform.gameObject.activeSelf)
+                                {
+                                    //add bonus mood time
+                                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                                    mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 6); //3 seconds
+                                    TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
+                                }
+                               
+                            }
 
-                    //Disable customer mood bar
-                    GameManager.instance.customer.moodPanel.SetActive(false);
-                    //animation
-                    DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 1f, false));
-                    Destroy(GameManager.instance.customer.gameObject, 1.5f);
-                    GameManager.instance.customer = null;
+
+
+                        }
+                    }
                 }
+                
+               
             }
 
-        }
-        
+           
 
-        
+        }
+        GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
+        //Customer despawn
+        if (GameManager.instance.customer)
+        {
+
+            //Disable customer bubble
+            GameManager.instance.customer.panel.gameObject.SetActive(false);
+
+            //Disable customer mood bar
+            GameManager.instance.customer.moodPanel.SetActive(false);
+            //animation
+            DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 1f, false));
+            Destroy(GameManager.instance.customer.gameObject, 1.5f);
+            GameManager.instance.customer = null;
+        }
+
+
     }
     void InitializeMood()
     {
