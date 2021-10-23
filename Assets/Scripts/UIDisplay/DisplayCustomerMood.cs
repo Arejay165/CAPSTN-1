@@ -24,13 +24,14 @@ public class DisplayCustomerMood : MonoBehaviour
 
     void InitializeMoodDisplay()
     {
-        customerMood = this.transform.parent.transform.parent.gameObject.GetComponent<MoodComponent>();
-        //moodSlider = this.GetComponent<Slider>();
-        if (customerMood)
-        {
-            //moodSlider.maxValue = customerMood.GetMaxMoodAmount();
-            //moodSlider.minValue = customerMood.GetCurrentMoodAmount();
-        }
+        //This sometimes causes nall ref exception
+        //customerMood = this.transform.parent.transform.parent.gameObject.GetComponent<MoodComponent>();
+        ////moodSlider = this.GetComponent<Slider>();
+        //if (customerMood)
+        //{
+        //    //moodSlider.maxValue = customerMood.GetMaxMoodAmount();
+        //    //moodSlider.minValue = customerMood.GetCurrentMoodAmount();
+        //}
     }
 
     public void DisplayMood()

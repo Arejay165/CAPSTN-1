@@ -498,7 +498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61f74b2b5a019324eb5e0ce24b9cd12c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerMood: {fileID: 0}
+  customerMood: {fileID: 8493476688458719202}
   moodImage: {fileID: 3633648078094793156}
   delayedMoodImage: {fileID: 6431310044702408644}
 --- !u!1 &7296001820505229221
