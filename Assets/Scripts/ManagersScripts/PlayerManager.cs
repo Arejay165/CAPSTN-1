@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject currentSelectedItem;
     public ClickToSelectItem lastItemSpawner;
     public bool isStaying = false;
-
+    public string playerName;
 
     
 
@@ -25,6 +25,12 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+    public void NameEntered(string p_name)
+    {
+        playerName = p_name;
+        GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
     }
  
     public void Shake(GameObject p_object,float p_length, float p_power, float p_rotationMultiplier)

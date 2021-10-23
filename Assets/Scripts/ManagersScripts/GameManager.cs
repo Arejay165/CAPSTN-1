@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public DetectItemInWindow window;
     
     public bool isPlaying = false;
-
+    public bool isFirstTime =true;
 
     public static Action OnGameStart;
     public static Action OnGameEnd;
@@ -61,28 +61,36 @@ public class GameManager : MonoBehaviour
     }
     public void PlayGame()
     {
-
-        //There is no tutorial
-        if (TutorialManager.instance == null)
+        if (isFirstTime)
         {
-
+            UIManager.instance.ActivateGameObjects(UIManager.instance.playerNameUI.name);
+        }
+        else
+        {
             StartCoroutine(DayStart());
-          //  PlayerManager.instance.lastItemSpawner.canSpawn = true;
         }
-        else if (TutorialManager.instance)
-        {
-            //There is tutorial but it's not active
-            if (!TutorialManager.instance.canTutorial)
-            {
-                StartCoroutine(DayStart());
-              //  PlayerManager.instance.lastItemSpawner.canSpawn = true;
-            }
-            else
-            {
-             //   StartCoroutine(DayStart());
-                //Do tutorial
-            }
-        }
+        ////There is no tutorial
+        //if (TutorialManager.instance == null)
+        //{
+
+        //    StartCoroutine(DayStart());
+        //  //  PlayerManager.instance.lastItemSpawner.canSpawn = true;
+        //}
+        //else if (TutorialManager.instance)
+        //{
+        //    //There is tutorial but it's not active
+        //    if (!TutorialManager.instance.canTutorial)
+        //    {
+        //        StartCoroutine(DayStart());
+        //      //  PlayerManager.instance.lastItemSpawner.canSpawn = true;
+        //    }
+        //    else
+        //    {
+        //        //   StartCoroutine(DayStart());
+        //        //Do tutorial
+        //        UIManager.instance.ActivateGameObjects(UIManager.instance.playerNameUI.name);
+        //    }
+        //}
     }
 
     public IEnumerator DayStart()

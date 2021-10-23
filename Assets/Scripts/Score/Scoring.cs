@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+
 using TMPro;
 public class Scoring : MonoBehaviour
 {
@@ -56,7 +57,6 @@ public class Scoring : MonoBehaviour
     //public Text performanceFactName;
     //public Text performanceFactValue;
 
-
     [SerializeField] private int score;
     public int scoreGoal = 0;
     public string scoreFormat = "N0";
@@ -85,6 +85,7 @@ public class Scoring : MonoBehaviour
     public Text divisionEvaluation;
 
     public GameObject continueButton;
+    public GameObject restartButton;
     public GameObject quitButton;
 
     public GameObject enterHighscoreUI;
@@ -92,6 +93,8 @@ public class Scoring : MonoBehaviour
 
     public HighscoreTable hsTable;
 
+    public GameObject scoreFloater;
+    Vector3 defaultScoreFloaterPos;
     public int resultsNextStar;
 
     public TextMeshProUGUI minGoalValue;
@@ -236,90 +239,166 @@ public class Scoring : MonoBehaviour
             GameObject spawnedFallingStarParticleFX = Instantiate(fallingStarFXPrefab, selectedStar.transform);
             spawnedFallingStarParticleFX.transform.position = selectedStar.transform.position;
             Destroy(spawnedFallingStarParticleFX, 3f);
+           
+            
+           
+        }
 
+        //If passing
+        if (resultStars.Count >= 3)
+        {
             //If perfect, do confetti
-            if (resultStars.IndexOf(selectedStar) >= 4)
+            if (resultStars.Count >= 4)
             {
                 foreach (ParticleSystem selectedConfetti in confettis)
                 {
                     selectedConfetti.Play();
                 }
             }
+
+            //HIGHSCORE RECORDING
+            string jsonString = PlayerPrefs.GetString("highscoreTable");
+            Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+            //if it's not 0
+            if (score > 0)
+            {
+                //check if there are highscores
+                //if there is high scores
+                if (highscores != null)
+                {
+
+                    bool nameExists = false;
+                    // find if player name already exists by loop through all highscores
+                    foreach (HighscoreEntry selectedHighscoreEntry in highscores.highscoreEntryList)
+                    {
+                        //if player name is found
+                        if (selectedHighscoreEntry.name == PlayerManager.instance.playerName)
+                        {
+                            nameExists = true;
+                            //compare if current score is higher than old score
+                            if (score > selectedHighscoreEntry.score)
+                            {
+                                //replace high score of same name
+                                hsTable.ReplaceHighscoreEntry(score, PlayerManager.instance.playerName, true);
+                                StartCoroutine(NewHighscore());
+                            }
+
+                        }
+
+
+                    }
+                    //else if player name is not found
+                    if (!nameExists)
+                    {
+                        //check if it hasnt reached max limit of high scores
+                        //if it is max limit for high scores already, replace
+                        if (highscores.highscoreEntryList.Count >= 10)
+                        {
+                            //replace highscore of different name
+                            hsTable.ReplaceHighscoreEntry(score, PlayerManager.instance.playerName, false);
+                            StartCoroutine(NewHighscore());
+                        }
+                        //else if it isnt max limit for highscores yet, add
+                        else if (highscores.highscoreEntryList.Count < 10)
+                        {
+                            // add
+                            hsTable.AddHighscoreEntry(score, PlayerManager.instance.playerName);
+                            StartCoroutine(NewHighscore());
+                        }
+
+                    }
+
+                }
+                //ELSE IF THERE IS NO HIGHSCORES YET
+                else
+                {
+                    // add
+                    hsTable.AddHighscoreEntry(score, PlayerManager.instance.playerName);
+                    StartCoroutine(NewHighscore());
+
+                }
+
+
+                //if (hsTable.highscoresList.Count < 10)
+                //{
+                //    StartCoroutine(NewHighscore());
+                //    starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = -10;
+                //}
+                //else
+                //{
+                //    if (score > hsTable.highscoresList[hsTable.highscoresList.Count - 1])
+                //    {
+                //        starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = -10;
+                //        StartCoroutine(NewHighscore());
+
+
+                //    }
+                //    else
+                //    {
+                //        StartCoroutine(ShowPerformanceStats());
+                //    }
+                //}
+            }
         }
 
-        if (hsTable.highscoresList.Count < 10)
-        {
-            StartCoroutine(NewHighscore());
-            starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = -10;
-        }
+        //else if fail
         else
         {
-            if (score > hsTable.highscoresList[hsTable.highscoresList.Count - 1])
-            {
-                starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = -10;
-                StartCoroutine(NewHighscore());
-
-
-            }
-            else
-            {
-                StartCoroutine(ShowPerformanceStats());
-            }
+            failPrompt.SetActive(true);
+            StartCoroutine(ShowPerformanceStats());
         }
-            
-        
-
-
-        
 
 
     }
     IEnumerator NewHighscore()
     {
+        starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = -10;
         newHighscoreUI.SetActive(true);
         yield return new WaitForSeconds(4.5f);
         newHighscoreUI.SetActive(false);
-        enterHighscoreUI.SetActive(true);
-    }
-
-    public void HighscoreNameEntered(string p_entered)
-    {
-   
+        //enterHighscoreUI.SetActive(true);
         
-        hsTable.AddHighscoreEntry(score,p_entered);
-        string jsonString = PlayerPrefs.GetString("highscoreTable");
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
-   
-        if (highscores != null)
-        {
-           
-            //Sort
-            for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
-            {
-                for (int ii = i + 1; ii < highscores.highscoreEntryList.Count; ii++)
-                {
-                    if (highscores.highscoreEntryList[ii].score > highscores.highscoreEntryList[i].score)
-                    {
-                        //Swap
-                        HighscoreEntry temporaryHighscoreEntry = highscores.highscoreEntryList[i];
-                        highscores.highscoreEntryList[i] = highscores.highscoreEntryList[ii];
-                        highscores.highscoreEntryList[ii] = temporaryHighscoreEntry;
-                        hsTable.highscoresList[ii] = highscores.highscoreEntryList[ii].score;
-                        hsTable.highscoresList[i] = highscores.highscoreEntryList[i].score;
-                    }
-                }
-            }
-
-            hsTable.highscoreEntryTransformList = new List<Transform>();
-            foreach (HighscoreEntry selectedHighscoreEntry in highscores.highscoreEntryList)
-            {
-                hsTable.CreateHighscoreEntryTransform(selectedHighscoreEntry, hsTable.entryContainer, hsTable.highscoreEntryTransformList);
-
-            }
-        }
-        enterHighscoreUI.SetActive(false);
         StartCoroutine(ShowPerformanceStats());
     }
+
+    //public void HighscoreNameEntered(string p_entered)
+    //{
+   
+        
+    //    hsTable.AddHighscoreEntry(score,p_entered);
+    //    string jsonString = PlayerPrefs.GetString("highscoreTable");
+    //    Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+   
+    //    if (highscores != null)
+    //    {
+           
+    //        //Sort
+    //        for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
+    //        {
+    //            for (int ii = i + 1; ii < highscores.highscoreEntryList.Count; ii++)
+    //            {
+    //                if (highscores.highscoreEntryList[ii].score > highscores.highscoreEntryList[i].score)
+    //                {
+    //                    //Swap
+    //                    HighscoreEntry temporaryHighscoreEntry = highscores.highscoreEntryList[i];
+    //                    highscores.highscoreEntryList[i] = highscores.highscoreEntryList[ii];
+    //                    highscores.highscoreEntryList[ii] = temporaryHighscoreEntry;
+    //                    //hsTable.highscoresList[ii] = highscores.highscoreEntryList[ii].score;
+    //                    //hsTable.highscoresList[i] = highscores.highscoreEntryList[i].score;
+    //                }
+    //            }
+    //        }
+
+    //        hsTable.highscoreEntryTransformList = new List<Transform>();
+    //        foreach (HighscoreEntry selectedHighscoreEntry in highscores.highscoreEntryList)
+    //        {
+    //            hsTable.CreateHighscoreEntryTransform(selectedHighscoreEntry, hsTable.entryContainer, hsTable.highscoreEntryTransformList);
+
+    //        }
+    //    }
+    //    enterHighscoreUI.SetActive(false);
+        
+    //}
 
     public void ShowPerformance(Text p_perfromanceTitle, string p_performanceValue)
     {
@@ -359,36 +438,49 @@ public class Scoring : MonoBehaviour
 
             totalMathProblems += addWrongAnswerAmount;
         }
-   
-        
-        yield return new WaitForSeconds(1.5f);
+
+
+        yield return new WaitForSeconds(0.5f);
 
         //Addition
         ShowPerformance(additionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.addition) + " seconds");
         ShowPerformance(additionEvaluation, PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.addition));
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
 
         //Subtraction
         ShowPerformance(subtractionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.subtraction) + " seconds");
         ShowPerformance(subtractionEvaluation, PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.subtraction));
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
 
         //Multiplication
         ShowPerformance(multiplicationSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.multiplication) + " seconds");
         ShowPerformance(multiplicationEvaluation, PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.multiplication));
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
 
         //Division
         ShowPerformance(divisionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.division) + " seconds");
         ShowPerformance(divisionEvaluation, PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division, true) + " / " + PerformanceManager.instance.GetOperatorCount(MathProblemOperator.division));
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
 
         //Overall
         ShowPerformance(totalMathProblemsValue, totalCorrectAnswers.ToString() + " / " + totalMathProblems.ToString());
         ShowPerformance(totalSolvingTimeValue, PerformanceManager.instance.GetAverageTime(MathProblemOperator.none) + " seconds");
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        continueButton.SetActive(true);
+        //if passed
+        if (resultStars.Count >= 3)
+        {
+            continueButton.SetActive(true);
+            round++;
+            
+
+        }
+        else
+        {
+            //play timeline (cutscene bankrupted)
+            restartButton.SetActive(true);
+            
+        }
         quitButton.SetActive(true);
 
     }
@@ -533,7 +625,8 @@ public class Scoring : MonoBehaviour
     public void addScore(int gainScore)
     {
         TextAnimaation();
-        CoinActivator();
+        CoinActivator(gainScore);
+        
         score += gainScore;
         scoreText.text = score.ToString();
         gameTipJarFill.fillAmount = (float)score/(float)scoreGoal;
@@ -546,6 +639,8 @@ public class Scoring : MonoBehaviour
         {
             instance = this;
         }
+        defaultScoreFloaterPos = scoreFloater.transform.position;
+
         
     }
     public void OnEnable()
@@ -563,6 +658,9 @@ public class Scoring : MonoBehaviour
 
     void OnGameStarted()
     {
+        failPrompt.SetActive(false);
+        restartButton.SetActive(false);
+        continueButton.SetActive(false);
         //Delete all stars made
         if (resultStars.Count > 0)
         {
@@ -586,8 +684,14 @@ public class Scoring : MonoBehaviour
         gameStarSlotIndex = 0;
         SetScore(0); //TEMP
         starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 110;
-        round++;
 
+        //round's day
+        resultDayText.text = round.ToString();
+
+        //score floater
+        scoreFloater.SetActive(false);
+        scoreFloater.transform.position = defaultScoreFloaterPos;
+        scoreFloater.GetComponent<Text>().color = new Color(scoreFloater.GetComponent<Text>().color.r, scoreFloater.GetComponent<Text>().color.g, scoreFloater.GetComponent<Text>().color.b, 0f);
         gameDayText.text = "Day: " + round.ToString();
         scoreGoal = 1000 + ((round - 1) * (250));
         
@@ -655,7 +759,7 @@ public class Scoring : MonoBehaviour
        scoreText.gameObject.transform.DOShakeScale(1, 0.3f,10, 90, true);
     }
 
-   public void CoinActivator()
+   public void CoinActivator(int p_gainedScore)
     {
        // TransitionManager.instances.MoveTransition();
         for(int i = 0; i < ObjectPool.instances.amountToPool; i++)
@@ -664,13 +768,36 @@ public class Scoring : MonoBehaviour
             // ObjectPool.instances.pooledGameobjects[i].
             // CoinAnimation(i);
            ObjectPool.instances.RandomPosition();
-          StartCoroutine(CoinAnimation(i));
+          StartCoroutine(CoinAnimation(i,p_gainedScore));
 
         }
 
     }
 
-    IEnumerator CoinAnimation(int index)
+    IEnumerator ScoreFloating(float p_duration, int p_gainedScore)
+    {
+        Sequence sequence = DOTween.Sequence();
+        scoreFloater.SetActive(true);
+        
+        scoreFloater.GetComponent<Text>().text = "+ " + p_gainedScore;
+        //scoreFloater.SetActive(true);
+        //Move
+        sequence.Append(scoreFloater.transform.DOMove(new Vector3(scoreFloater.transform.position.x, scoreFloater.transform.position.y + 58f, scoreFloater.transform.position.z), p_duration + 0.5f));//(modifiedScale, sizeTweenSpeed).SetEase(Ease.Linear)).Append(timeValueUI.transform.DOScale(OriginalScale, 0.2f).SetEase(Ease.Linear));
+
+        //FadeIn
+        sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, p_duration * 0.05f));
+        sequence.Play();
+        yield return new WaitForSeconds(p_duration *0.5f);
+        scoreFloater.GetComponent<Text>().DOFade(1.0f, p_duration * 0.45f);
+        
+
+        yield return new WaitForSeconds(p_duration * 0.65f);
+        //FadeOut
+        
+        scoreFloater.SetActive(false);
+    }
+
+    IEnumerator CoinAnimation(int index, int p_gainedScore)
     {
 
         Tween tween = ObjectPool.instances.pooledGameobjects[index].GetComponent<Transform>().DOMove(new Vector3(targetLocation.transform.position.x, targetLocation.transform.position.y, targetLocation.transform.position.z), 0.2f);
@@ -678,7 +805,7 @@ public class Scoring : MonoBehaviour
 
         ObjectPool.instances.pooledGameobjects[index].SetActive(false);
         ObjectPool.instances.ResetPosition();
-
+        StartCoroutine(ScoreFloating(2f,p_gainedScore));
         // yield return null;
     }
 
