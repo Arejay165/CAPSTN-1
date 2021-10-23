@@ -122,6 +122,7 @@ public class TestCalculator : MonoBehaviour
         if (TutorialManager.instance != null)
         {
             TutorialManager.instance.text.text = "Multiply Quantity to item's price";
+            TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;
 
         }
         else

@@ -60,6 +60,7 @@ public class ChangeCalculator : MonoBehaviour
         if (TutorialManager.instance != null)
         {
             TutorialManager.instance.text.text = "Divide the upper value to the lower value";
+            TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;
         }
         else
         {

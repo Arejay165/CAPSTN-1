@@ -43,6 +43,8 @@ public class TutorialManager : MonoBehaviour
     public GameObject nextButton;
     public List<GameObject> highlightedImage;
     public TextMeshProUGUI titleInstructText;
+    public List<RectTransform> convoTransform;
+    public RectTransform dialogueBox;
    
 
 
@@ -218,11 +220,6 @@ public class TutorialManager : MonoBehaviour
 
     }
 
-    public void ActivateArrow(int index)
-    {
-       
-    }
-
     public void ActivateGlowItems(int index)
     {
         foreach(GameObject obj in highlightedImage)
@@ -289,7 +286,7 @@ public class TutorialManager : MonoBehaviour
 
     public void StartTutorial()
     {
-      
+            dialogueBox.anchoredPosition = convoTransform[1].anchoredPosition;
             tutorial.gameObject.SetActive(false);
             Debug.Log("Tutorial");
             UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
@@ -307,7 +304,7 @@ public class TutorialManager : MonoBehaviour
     {
        // playTutorial = false;
         tutorial.SetActive(true);
-        
+        TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[0].anchoredPosition;
         screenText.text = "Click anywhere to continue";
         NextMessage();
     }
