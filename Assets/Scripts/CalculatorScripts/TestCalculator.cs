@@ -49,6 +49,7 @@ public class TestCalculator : MonoBehaviour
         newItemUIClass.quantity = p_item.quantity;
         newItemUIClass.totalPriceAnswer = newItemUIClass.quantity * newItemUIClass.price;
         itemsAnswer.Add(newItemUIClass.totalPriceAnswer);
+        
         return newItemUIClass;
     }
     private void Update()
@@ -90,8 +91,11 @@ public class TestCalculator : MonoBehaviour
         changeCorrectAnswer = 0;
         isCountingTime = false;
         timeSpent = 0;
+
         totalPriceAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
         changeAnswerField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+        //resets item input field index counter to 0
+        index = 0;
 
         //clears change UI
         changeAnswerField.text = "";
@@ -249,6 +253,10 @@ public class TestCalculator : MonoBehaviour
                 {
                     Debug.Log("Correct");
                     RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, true);
+                    //add bonus mood
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.IncreaseCurrentMoodAmount( mc.correctBonusTime);
+
                     StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
 
                     //Change select to next input field if correct
@@ -275,6 +283,8 @@ public class TestCalculator : MonoBehaviour
                 {
                     Debug.Log("Wrong");
                     RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, false);
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
                     StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
                   
 
@@ -334,7 +344,7 @@ public class TestCalculator : MonoBehaviour
         AudioManager.instance.playSound(0);
         yield return new WaitForSeconds(0.25f);
         p_correct = true;
-        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(507f, 0);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(680f, 0);
     }
 
     IEnumerator WrongInputted(TMP_InputField p_inputField)
@@ -357,7 +367,7 @@ public class TestCalculator : MonoBehaviour
         p_inputField.text = "";
         p_inputField.ActivateInputField();
         p_inputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
-        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(507f,0);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(680f, 0f);
 
     }
     //public void RecordAnswerResult(int p_index, bool p_isCorrect)
@@ -452,6 +462,8 @@ public class TestCalculator : MonoBehaviour
                 {
                     Debug.Log("RIGHT ANSWER IS : " + totalPriceCorrectAnswer);
                     RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, false);
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
                     StartCoroutine(WrongInputted(totalPriceAnswerField));
                     
                     Scoring.instance.ResetMultiplier();
@@ -488,6 +500,10 @@ public class TestCalculator : MonoBehaviour
                 if (playerInputValue == changeCorrectAnswer)
                 {
                     RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
+
+                    //add bonus mood time
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.IncreaseCurrentMoodAmount( mc.correctBonusTime*2);
                     StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
                     
 
@@ -500,6 +516,8 @@ public class TestCalculator : MonoBehaviour
                 {
 
                     RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, false);
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
                     StartCoroutine(WrongInputted(changeAnswerField));
                     
                     Scoring.instance.ResetMultiplier();
@@ -546,11 +564,20 @@ public class TestCalculator : MonoBehaviour
    //     yield return new WaitForSeconds(0.5f);
 
         //awards score
-        TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
-     //   TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+        TransitionManager.instances.MoveTransition(new Vector2(680f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+        //   TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+        //Customer despawn
         if (GameManager.instance.customer)
         {
-            Destroy(GameManager.instance.customer.gameObject);
+            //Disable customer bubble
+            GameManager.instance.customer.panel.gameObject.SetActive(false);
+
+            //Disable customer mood bar
+            GameManager.instance.customer.moodPanel.SetActive(false);
+            //animation
+            DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 1f, false));
+            Destroy(GameManager.instance.customer.gameObject,1.5f);
+            GameManager.instance.customer = null;
         }
      
 
@@ -582,6 +609,7 @@ public class TestCalculator : MonoBehaviour
 
             //Adding to answerField List
             order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().onEndEdit.AddListener(OnPriceInputted);
+            order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().enabled = true;
             answerFields.Add(order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>());
             
             order.transform.SetParent(displayPanel);

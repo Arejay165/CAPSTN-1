@@ -30,11 +30,13 @@ public class DetectItemInWindow : MonoBehaviour
    
             if (GameManager.instance.customer != null)
             {
-                for(int i = 0; i < MathProblemManager.instance.GetCurrentItemsWanted().Count; i++)
+                MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                for (int i = 0; i < MathProblemManager.instance.GetCurrentItemsWanted().Count; )
                 {
                     if(itemInCounter.item.itemName == MathProblemManager.instance.GetItemInCurrentItemsWanted(i).itemName)
                     {
                         
+                        mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
                             GameManager.instance.customer.itemsImage[i].color = global::GameManager.instance.window.darkenImage;
                             GameManager.instance.customer.itemsImage.RemoveAt(i);
                             MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(i);
@@ -44,9 +46,12 @@ public class DetectItemInWindow : MonoBehaviour
                         }
                             if (MathProblemManager.instance.GetCurrentItemsWanted().Count <= 0)
                             {
+                                //Disable customer bubble
+                                GameManager.instance.customer.panel.gameObject.SetActive(false);
 
-                              //ordersheet 
-                                TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
+                              
+                            //ordersheet 
+                            TransitionManager.instances.MoveTransition(new Vector2(680f, 0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
                             }
                             
                             Destroy(itemInCounter.gameObject, 0.2f);
@@ -56,10 +61,12 @@ public class DetectItemInWindow : MonoBehaviour
                         
                        
                     }
-                    else
+                    i++;
+                    if (i >= MathProblemManager.instance.GetCurrentItemsWanted().Count)
                     {
                         Debug.Log("Wrong Item");
                         Destroy(itemInCounter.gameObject, 0.2f);
+                        mc.DeductCurrentMoodAmount(mc.penaltyTime);// 1 second
                     }
 
                 }

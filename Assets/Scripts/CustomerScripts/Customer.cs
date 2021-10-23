@@ -13,7 +13,9 @@ public class Customer : MonoBehaviour
     public List<Image> itemsImage = new List<Image>();
    // public GameObject itemPrefab;
     public Transform panel;
+    public GameObject moodPanel;
     public TestCalculator displayOrder;
+    
     //public bool willBuy;
 
     //private int maxInventory;
@@ -95,6 +97,7 @@ public class Customer : MonoBehaviour
             itemUI.transform.SetParent(panel);
             itemUI.GetComponent<Image>().preserveAspect = true;
             itemUI.GetComponent<Image>().sprite = selectedItem.itemSprite;
+            itemUI.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
             itemsImage.Add(itemUI.GetComponent<Image>());
         }
     }

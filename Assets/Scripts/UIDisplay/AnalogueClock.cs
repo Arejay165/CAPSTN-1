@@ -21,6 +21,30 @@ public class AnalogueClock : MonoBehaviour
         timeFill.fillAmount = realSecondsInGameDay;
     }
 
+    public void OnEnable()
+    {
+
+        GameManager.OnGameStart += OnGameStarted;
+        GameManager.OnGameEnd += OnGameEnded;
+    }
+    public void OnDisable()
+    {
+
+        GameManager.OnGameStart -= OnGameStarted;
+        GameManager.OnGameEnd -= OnGameEnded;
+    }
+
+    void OnGameStarted()
+    {
+        timeFill.fillAmount = 1f;
+    }
+
+    void OnGameEnded()
+    {
+        
+
+    }
+
     // Update is called once per frame
 
     private void Update()

@@ -9,7 +9,8 @@ public class DisplayCustomerMood : MonoBehaviour
     [SerializeField]
     MoodComponent customerMood;
     [SerializeField]
-    Slider moodSlider;
+    public Image moodImage;
+    public Image delayedMoodImage;
     void Start()
     {
         InitializeMoodDisplay();
@@ -18,22 +19,25 @@ public class DisplayCustomerMood : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DisplayMood();
+        
     }
 
     void InitializeMoodDisplay()
     {
-        customerMood = this.transform.parent.transform.parent.gameObject.GetComponent<MoodComponent>();
-        moodSlider = this.GetComponent<Slider>();
-        if (customerMood)
-        {
-            //moodSlider.maxValue = customerMood.GetMaxMoodAmount();
-            //moodSlider.minValue = customerMood.GetCurrentMoodAmount();
-        }
+        //This sometimes causes nall ref exception
+        //customerMood = this.transform.parent.transform.parent.gameObject.GetComponent<MoodComponent>();
+        ////moodSlider = this.GetComponent<Slider>();
+        //if (customerMood)
+        //{
+        //    //moodSlider.maxValue = customerMood.GetMaxMoodAmount();
+        //    //moodSlider.minValue = customerMood.GetCurrentMoodAmount();
+        //}
     }
 
-    void DisplayMood()
+    public void DisplayMood()
     {
-        moodSlider.value = customerMood.GetCurrentMoodAmount() / customerMood.GetMaxMoodAmount();
+      
+        moodImage.fillAmount = customerMood.GetCurrentMoodAmount() / customerMood.GetMaxMoodAmount();
+        //moodSlider.value = customerMood.GetCurrentMoodAmount() / customerMood.GetMaxMoodAmount();
     }
 }

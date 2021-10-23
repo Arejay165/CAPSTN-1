@@ -7814,13 +7814,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f1e17bf0b76f747be31a679f609f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnedPrefab: {fileID: 0}
-  itemSR: {fileID: 0}
+  itemSpawnedPrefab: {fileID: 6474237755129834480, guid: 3cf3683c30bb4d4489ae24ec4504a1a3, type: 3}
+  itemSR: {fileID: 134925824}
   canSpawn: 0
-  highlightedSprite: {fileID: 0}
-  defaultItemSprite: {fileID: 0}
-  targetPosition: {fileID: 0}
-  animationTravelTime: 0
+  highlightedSprite: {fileID: 21300000, guid: 5650fb8fda6f69d48bbaf9d758e57e75, type: 3}
+  defaultItemSprite: {fileID: 21300000, guid: 246344369c9cc2b4590c11d90d382406, type: 3}
+  targetPosition: {fileID: 1904060022}
+  animationTravelTime: 0.5
   hintingSparklePFX: {fileID: 0}
   radiatePFX: {fileID: 0}
 --- !u!61 &134925826
@@ -12810,7 +12810,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1915594523078478787, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.982165
+      value: 2.4602861
       objectReference: {fileID: 0}
     - target: {fileID: 1915594523078478787, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
       propertyPath: m_LocalScale.y
@@ -12834,11 +12834,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1915594523078478787, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.27
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 1915594523078478787, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.019927979
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930835036515486009, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8714120172023677485, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
       propertyPath: m_SortingOrder
@@ -14130,13 +14134,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f1e17bf0b76f747be31a679f609f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnedPrefab: {fileID: 0}
-  itemSR: {fileID: 0}
+  itemSpawnedPrefab: {fileID: 945257538436753874, guid: 4f71f23c3ae4d9d49bc93075ae61393d, type: 3}
+  itemSR: {fileID: 254259830}
   canSpawn: 0
-  highlightedSprite: {fileID: 0}
-  defaultItemSprite: {fileID: 0}
-  targetPosition: {fileID: 0}
-  animationTravelTime: 0
+  highlightedSprite: {fileID: 21300000, guid: 289be31d30d61b142a40b52891ef7098, type: 3}
+  defaultItemSprite: {fileID: 21300000, guid: 4ffa85151efe1c745b5cbc1458dd72c3, type: 3}
+  targetPosition: {fileID: 1904060022}
+  animationTravelTime: 0.5
   hintingSparklePFX: {fileID: 0}
   radiatePFX: {fileID: 0}
 --- !u!61 &254259832
@@ -20165,11 +20169,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1915594523078478787, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
   m_PrefabInstance: {fileID: 1298571375}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &657566228 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 177394133595661808, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
-  m_PrefabInstance: {fileID: 1298571375}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &659671008
 GameObject:
   m_ObjectHideFlags: 0
@@ -23159,13 +23158,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f1e17bf0b76f747be31a679f609f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpawnedPrefab: {fileID: 0}
-  itemSR: {fileID: 0}
+  itemSpawnedPrefab: {fileID: 7400748358871723650, guid: 07378094d78d2084b93b8fc09a4a6c9d, type: 3}
+  itemSR: {fileID: 791901857}
   canSpawn: 0
-  highlightedSprite: {fileID: 0}
-  defaultItemSprite: {fileID: 0}
-  targetPosition: {fileID: 0}
-  animationTravelTime: 0
+  highlightedSprite: {fileID: 21300000, guid: 6c8c2c3c1d4fc8a44a8d824f8b836777, type: 3}
+  defaultItemSprite: {fileID: 21300000, guid: d0cee715198b0134ea4b9e171bdaa537, type: 3}
+  targetPosition: {fileID: 1904060022}
+  animationTravelTime: 0.5
   hintingSparklePFX: {fileID: 0}
   radiatePFX: {fileID: 0}
 --- !u!61 &791901859
@@ -29909,6 +29908,10 @@ PrefabInstance:
     - target: {fileID: 1915594523078478787, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930835036515486009, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8714120172023677485, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
       propertyPath: m_SortingOrder
@@ -48974,6 +48977,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.039999723
       objectReference: {fileID: 0}
+    - target: {fileID: 2930835036515486009, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8714120172023677485, guid: 9200bdc109a24754ba713bad713c2074, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -49252,7 +49259,7 @@ GameObject:
   - component: {fileID: 1315497162}
   - component: {fileID: 1315497164}
   m_Layer: 0
-  m_Name: Chips placeholder
+  m_Name: Blue Chips placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49365,14 +49372,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSpawnedPrefab: {fileID: 2672793170118218431, guid: 0562f0e1f18b64943af7db4368e0d097, type: 3}
-  itemSR: {fileID: 0}
+  itemSR: {fileID: 611198156}
   canSpawn: 0
   highlightedSprite: {fileID: 21300000, guid: 88cb533d693d5fd4f81ba09bc3baeb92, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: 6e99247b893e42f47a0f7c7a28a70751, type: 3}
   targetPosition: {fileID: 1904060022}
-  animationTravelTime: 0
-  hintingSparklePFX: {fileID: 1881375707}
-  radiatePFX: {fileID: 657566228}
+  animationTravelTime: 0.5
+  hintingSparklePFX: {fileID: 0}
+  radiatePFX: {fileID: 0}
 --- !u!1 &1316225470
 GameObject:
   m_ObjectHideFlags: 0
@@ -65010,7 +65017,7 @@ GameObject:
   - component: {fileID: 1410154810}
   - component: {fileID: 1410154812}
   m_Layer: 0
-  m_Name: Chips2  placeholder
+  m_Name: Green Chips  placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65123,14 +65130,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSpawnedPrefab: {fileID: 4810046439777399817, guid: 5a2af51c2203411408718e0946909c03, type: 3}
-  itemSR: {fileID: 0}
+  itemSR: {fileID: 1568664782}
   canSpawn: 0
   highlightedSprite: {fileID: 21300000, guid: 60edb8c5d21bf7f438bcf5fa558300a3, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: aa253a3bc1a3fcb448f834fda14eda53, type: 3}
   targetPosition: {fileID: 1904060022}
-  animationTravelTime: 0
-  hintingSparklePFX: {fileID: 892969895}
-  radiatePFX: {fileID: 744744689}
+  animationTravelTime: 0.5
+  hintingSparklePFX: {fileID: 0}
+  radiatePFX: {fileID: 0}
 --- !u!1 &1410159103
 GameObject:
   m_ObjectHideFlags: 0
@@ -71262,6 +71269,10 @@ PrefabInstance:
     - target: {fileID: 1915594523078478787, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930835036515486009, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8714120172023677485, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
       propertyPath: m_SortingOrder
@@ -82731,7 +82742,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 94.400024, y: 71.676025}
+  m_AnchoredPosition: {x: 94.3999, y: 71.676025}
   m_SizeDelta: {x: 500, y: 190.8091}
   m_Pivot: {x: 0, y: 1}
 --- !u!223 &1636449599
@@ -96247,11 +96258,6 @@ Transform:
 --- !u!224 &1881375705 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1915594523078478787, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
-  m_PrefabInstance: {fileID: 1020542569}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1881375707 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 177394133595661808, guid: c8876f1dc532d8b44a9998beef4d737b, type: 3}
   m_PrefabInstance: {fileID: 1020542569}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1894386517
