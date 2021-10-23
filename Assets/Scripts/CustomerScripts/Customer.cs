@@ -14,6 +14,7 @@ public class Customer : MonoBehaviour
    // public GameObject itemPrefab;
     public Transform panel;
     public TestCalculator displayOrder;
+    
     //public bool willBuy;
 
     //private int maxInventory;

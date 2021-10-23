@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class MoodComponent : MonoBehaviour
 {
     [SerializeField]
@@ -80,7 +80,14 @@ public class MoodComponent : MonoBehaviour
                     TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
                 }
                 GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
-                Destroy(this.gameObject);
+                //Customer despawn
+                if (GameManager.instance.customer)
+                {
+                    //animation
+                    DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 1f, false));
+                    Destroy(GameManager.instance.customer.gameObject, 1.5f);
+                    GameManager.instance.customer = null;
+                }
             }
 
         }

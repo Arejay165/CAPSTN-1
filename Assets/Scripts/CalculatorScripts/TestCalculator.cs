@@ -337,7 +337,7 @@ public class TestCalculator : MonoBehaviour
         AudioManager.instance.playSound(0);
         yield return new WaitForSeconds(0.25f);
         p_correct = true;
-        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(507f, 0);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(680f, 0);
     }
 
     IEnumerator WrongInputted(TMP_InputField p_inputField)
@@ -360,7 +360,7 @@ public class TestCalculator : MonoBehaviour
         p_inputField.text = "";
         p_inputField.ActivateInputField();
         p_inputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
-        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(507f,0);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(680f, 0f);
 
     }
     //public void RecordAnswerResult(int p_index, bool p_isCorrect)
@@ -549,11 +549,15 @@ public class TestCalculator : MonoBehaviour
    //     yield return new WaitForSeconds(0.5f);
 
         //awards score
-        TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
-     //   TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+        TransitionManager.instances.MoveTransition(new Vector2(680f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+        //   TransitionManager.instances.MoveTransition(new Vector2(507f, 1387.0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+        //Customer despawn
         if (GameManager.instance.customer)
         {
-            Destroy(GameManager.instance.customer.gameObject);
+            //animation
+            DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 1f, false));
+            Destroy(GameManager.instance.customer.gameObject,1.5f);
+            GameManager.instance.customer = null;
         }
      
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 public class ChangeCalculator : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -200,10 +201,14 @@ public class ChangeCalculator : MonoBehaviour
     public void ChangeOrderFinish()
     {
 
-        TransitionManager.instances.MoveTransition(new Vector2(507f, 1387f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
+        TransitionManager.instances.MoveTransition(new Vector2(680f, 1387f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
+        //Customer despawn
         if (GameManager.instance.customer)
         {
-            Destroy(GameManager.instance.customer.gameObject);
+            //animation
+            DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 1f, false));
+            Destroy(GameManager.instance.customer.gameObject,1.5f);
+            GameManager.instance.customer = null;
         }
 
         ///    GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());

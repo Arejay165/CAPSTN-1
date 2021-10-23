@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CustomerSpawner : MonoBehaviour
 {
     public GameObject   customerPrefab;
     public Transform      spawnPoint;
+    public Transform inShopPoint;
+    public Transform outShopPoint;
     public TestCalculator displayOrder;
     public bool canSpawn = false;
 
@@ -45,8 +48,9 @@ public class CustomerSpawner : MonoBehaviour
         GameManager.instance.customer = obj.GetComponent<Customer>();
         
         obj.GetComponent<Customer>().displayOrder = this.displayOrder;
-       
 
+        //animation
+        StartCoroutine(MoveAnimation(obj));
 
         //for tutorial
         if (TutorialManager.instance)
@@ -60,6 +64,19 @@ public class CustomerSpawner : MonoBehaviour
     
     }
 
+    IEnumerator MoveAnimation(GameObject obj)
+    {
+        Tween myTween = obj.transform.DOMove(inShopPoint.position, 1f, false);// animation sequence
+        obj.GetComponent<Customer>().panel.gameObject.SetActive(false);
+        
+
+        
+        yield return myTween.WaitForCompletion(); // Wait to finish
+        yield return new WaitForSeconds(0.25f);
+        obj.GetComponent<Customer>().panel.gameObject.SetActive(true);
+    }
+
+
     public IEnumerator SpawnRate()
     {
         if (canSpawn)
@@ -69,7 +86,7 @@ public class CustomerSpawner : MonoBehaviour
                 float spawnTime = 0;
                 if (!DayAndNightCycle.instance.isRushHour)
                 {
-                    spawnTime = Random.Range(0, 0.2f);
+                    spawnTime = Random.Range(0.5f, 1.5f);
                 }
                 yield return new WaitForSeconds(spawnTime);
                 SpawnCustomer();

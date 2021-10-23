@@ -44,9 +44,10 @@ public class DetectItemInWindow : MonoBehaviour
                         }
                             if (MathProblemManager.instance.GetCurrentItemsWanted().Count <= 0)
                             {
-
+                            //Disable customer bubble
+                            GameManager.instance.customer.panel.gameObject.SetActive(false);
                               //ordersheet 
-                                TransitionManager.instances.MoveTransition(new Vector2(507.0f, 0), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
+                                TransitionManager.instances.MoveTransition(new Vector2(680f, 0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
                             }
                             
                             Destroy(itemInCounter.gameObject, 0.2f);
