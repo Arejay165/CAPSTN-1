@@ -27,7 +27,7 @@ public class ChangeCalculator : MonoBehaviour
         int quotient; // possible answers 
         int dividend;// determine the dividend
 
-        if (TutorialManager.instance == null)
+        if (TutorialManager.instance.enabled == false)
         {
              divisor = Random.Range(2, 51); // use to multiply to the quotient to always be whole number 
              quotient = Random.Range(1, 50); // possible answers 
@@ -57,7 +57,7 @@ public class ChangeCalculator : MonoBehaviour
 
       //  Debug.Log("Enable Change Calculator");
 
-        if (TutorialManager.instance != null)
+        if (TutorialManager.instance.enabled == true )
         {
             TutorialManager.instance.text.text = "Divide the upper value to the lower value";
             TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;

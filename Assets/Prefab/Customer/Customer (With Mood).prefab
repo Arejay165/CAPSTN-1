@@ -116,7 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMoodAmount: 0
   maxMoodAmount: 100
-  moodDecay: 10
+  moodDecay: 5
   timeForDecay: 2
   neutralMoodValue: 50
   angryMoodValue: 20

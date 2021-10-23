@@ -119,7 +119,7 @@ public class TestCalculator : MonoBehaviour
         }
         isCountingTime = true;
 
-        if (TutorialManager.instance != null)
+        if (TutorialManager.instance.enabled == true)
         {
             TutorialManager.instance.text.text = "Multiply Quantity to item's price";
             TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;
@@ -195,7 +195,7 @@ public class TestCalculator : MonoBehaviour
 
         perfectAttempts += 2;
 
-        if(TutorialManager.instance == null)
+        if(TutorialManager.instance.enabled == false)
         {
             randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 100);
         }
@@ -319,7 +319,7 @@ public class TestCalculator : MonoBehaviour
            totalPriceAnswerField.Select();
             totalPriceAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
-            if (TutorialManager.instance != null)
+            if (TutorialManager.instance.enabled == true)
             {
                 TutorialManager.instance.text.text = "Add all the totals";
 
@@ -412,7 +412,7 @@ public class TestCalculator : MonoBehaviour
         changeAnswerField.Select();
         changeAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
-        if (TutorialManager.instance != null)
+        if (TutorialManager.instance.enabled == true )
         {
             TutorialManager.instance.text.text = "Subtract Total Price to Customer Paid";
 
