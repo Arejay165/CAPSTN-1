@@ -9,7 +9,7 @@ public class DisplayCustomerMood : MonoBehaviour
     [SerializeField]
     MoodComponent customerMood;
     [SerializeField]
-    Slider moodSlider;
+    Image moodImage;
     void Start()
     {
         InitializeMoodDisplay();
@@ -24,7 +24,7 @@ public class DisplayCustomerMood : MonoBehaviour
     void InitializeMoodDisplay()
     {
         customerMood = this.transform.parent.transform.parent.gameObject.GetComponent<MoodComponent>();
-        moodSlider = this.GetComponent<Slider>();
+        //moodSlider = this.GetComponent<Slider>();
         if (customerMood)
         {
             //moodSlider.maxValue = customerMood.GetMaxMoodAmount();
@@ -34,6 +34,7 @@ public class DisplayCustomerMood : MonoBehaviour
 
     void DisplayMood()
     {
-        moodSlider.value = customerMood.GetCurrentMoodAmount() / customerMood.GetMaxMoodAmount();
+        moodImage.fillAmount = customerMood.GetCurrentMoodAmount() / customerMood.GetMaxMoodAmount();
+        //moodSlider.value = customerMood.GetCurrentMoodAmount() / customerMood.GetMaxMoodAmount();
     }
 }

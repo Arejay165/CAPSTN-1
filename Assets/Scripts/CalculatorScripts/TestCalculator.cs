@@ -252,6 +252,10 @@ public class TestCalculator : MonoBehaviour
                 {
                     Debug.Log("Correct");
                     RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, true);
+                    //add bonus mood
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.SetCurrentMoodAmount(mc.GetCurrentMoodAmount() + mc.correctBonusTime);
+
                     StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
 
                     //Change select to next input field if correct
@@ -491,6 +495,10 @@ public class TestCalculator : MonoBehaviour
                 if (playerInputValue == changeCorrectAnswer)
                 {
                     RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
+
+                    //add bonus mood time
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.SetCurrentMoodAmount(mc.GetCurrentMoodAmount() + mc.correctBonusTime*2);
                     StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
                     
 

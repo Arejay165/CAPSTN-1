@@ -24,6 +24,8 @@ public class MoodComponent : MonoBehaviour
     Sprite angrySprite;
     [SerializeField]
     SpriteRenderer customerSpriteRenderer;
+    [SerializeField]
+    public float correctBonusTime;
 
     #region Getter Setters
 
@@ -74,9 +76,14 @@ public class MoodComponent : MonoBehaviour
                 {
                     //Hide it 
                     TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.SetCurrentMoodAmount(mc.GetCurrentMoodAmount() + mc.correctBonusTime * 6); //3 seconds
                 }
                 if (TransitionManager.instances.changeTransform.gameObject.activeSelf)
                 {
+                    //add bonus mood time
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    mc.SetCurrentMoodAmount(mc.GetCurrentMoodAmount() + (mc.correctBonusTime* 6)); //3 seconds
                     TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
                 }
                 GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());

@@ -34,7 +34,8 @@ public class DetectItemInWindow : MonoBehaviour
                 {
                     if(itemInCounter.item.itemName == MathProblemManager.instance.GetItemInCurrentItemsWanted(i).itemName)
                     {
-                        
+                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                        mc.SetCurrentMoodAmount(mc.GetCurrentMoodAmount() + mc.correctBonusTime * 2); // 1 second
                             GameManager.instance.customer.itemsImage[i].color = global::GameManager.instance.window.darkenImage;
                             GameManager.instance.customer.itemsImage.RemoveAt(i);
                             MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(i);
