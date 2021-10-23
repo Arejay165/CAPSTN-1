@@ -115,7 +115,7 @@ public class MathProblemManager : MonoBehaviour
     }
     public void GenerateStorePrices()
     {
-        Debug.Log("Start");
+       // Debug.Log("Start");
         currentIndex = 0;
         currentItemsWanted.Clear();
         generatedItemsWanted.Clear();
@@ -182,7 +182,7 @@ public class MathProblemManager : MonoBehaviour
         if(TutorialManager.instance != null)
         {
             maxInventory = 3;
-            Debug.Log("Item");
+           // Debug.Log("Item");
         }
         else
         {

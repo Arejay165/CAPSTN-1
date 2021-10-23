@@ -20,3 +20,4 @@ MonoBehaviour:
   - For now, let's wait for our first customer to arrive!
   hasArrow: 000001000000
   canSpawnCustomers: 1
+  canSpawnButtons: 0

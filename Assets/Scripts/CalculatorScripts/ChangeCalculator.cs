@@ -55,7 +55,7 @@ public class ChangeCalculator : MonoBehaviour
         StartCoroutine(InputFieldSelect());
         tmpChangeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
-        Debug.Log("Enable Change Calculator");
+      //  Debug.Log("Enable Change Calculator");
 
         if (TutorialManager.instance != null)
         {
@@ -130,7 +130,7 @@ public class ChangeCalculator : MonoBehaviour
                     RecordAnswerResult(MathProblemOperator.division, true);
 
                     AudioManager.instance.playSound(0);
-                    Debug.Log("Is Correct");
+                   // Debug.Log("Is Correct");
 
 
                 }
@@ -216,9 +216,8 @@ public class ChangeCalculator : MonoBehaviour
         {
 
             TutorialManager.instance.ActivateTutorialUI();
-
-            TutorialManager.instance.playTutorial = false;
             TutorialManager.instance.customerCounter = 1;
+
         }
      
     }

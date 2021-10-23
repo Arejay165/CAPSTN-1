@@ -489,7 +489,7 @@ public class Scoring : MonoBehaviour
             
             if (gameStarSlotIndex < 5)
             {
-                Debug.Log("ssssssssssssssssssssTAAAAAAAAAR: " + gameStarSlotIndex);
+             //   Debug.Log("ssssssssssssssssssssTAAAAAAAAAR: " + gameStarSlotIndex);
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
                 gameStarSlotIndex++;

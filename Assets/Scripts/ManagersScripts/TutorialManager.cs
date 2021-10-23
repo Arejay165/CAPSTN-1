@@ -68,6 +68,7 @@ public class TutorialManager : MonoBehaviour
             NextMessage();
           
             counter = 0;
+            tutorialPhrase = TutorialPhrase.ArrowOnGlowingItemTutorial;
         }
     }
 
@@ -100,7 +101,8 @@ public class TutorialManager : MonoBehaviour
                 EnableArrows();
                //  ingameText.gameObject.SetActive(false);
                  UIManager.instance.inGameUI.SetActive(false);
-            }
+                 nextButton.SetActive(true);
+        }
             else
             {
                 EndTimeline();
@@ -112,7 +114,7 @@ public class TutorialManager : MonoBehaviour
         // currentTutorial.Stop();
         if (playTutorial)
         {
-            Debug.Log("Endtimeline");
+            //Disable Arrows
             foreach (GameObject obj in arrows)
             {
                 obj.SetActive(false);
@@ -126,8 +128,29 @@ public class TutorialManager : MonoBehaviour
             {
                 isFinished = false;
             }
-       
-            tutorialCounter++;
+            
+           
+            if(tutorialCounter == tutorialTexts.Count - 1)
+            {
+                nextButton.SetActive(false);
+                tutorialCounter = tutorialTexts.Count - 1;
+                playTutorial = false;
+                if (tutorialTexts[tutorialCounter].canSpawnButtons)
+                {
+                    tutorialButtons[customerCounter].SetActive(true);
+
+                }
+                nextButton.SetActive(false);
+                Debug.Log("Stuff");
+
+                return;
+               
+            }
+            else
+            {
+                tutorialCounter++;
+            }
+         
             counter = 0;
             tutorialButtons[0].SetActive(false);
 
@@ -144,8 +167,14 @@ public class TutorialManager : MonoBehaviour
         else
         {
             playTutorial = true;
+            nextButton.SetActive(false);
             //  tutorial.SetActive(false);
-            tutorialButtons[customerCounter].SetActive(true);
+            if (tutorialTexts[customerCounter].canSpawnButtons)
+            {
+                tutorialButtons[customerCounter].SetActive(true);
+                
+            }
+         
             
         }
 
@@ -164,13 +193,14 @@ public class TutorialManager : MonoBehaviour
     {
         if (counter == index)
         {
-            //Debug.Log("ACtiavte Arrow");
             //foreach (GameObject obj in arrows)
             //{
             //    obj.SetActive(false);
             //}
 
             //arrows[arrowIndex].SetActive(true);
+
+            //Debug.Log("Same Counter");
             ActivateGlowItems(arrowIndex);
             arrowIndex++;
         }
@@ -182,6 +212,8 @@ public class TutorialManager : MonoBehaviour
             }
 
         }
+
+   
     }
 
     public void ActivateGlowItems(int index)
@@ -203,24 +235,30 @@ public class TutorialManager : MonoBehaviour
             case TutorialPhrase.ArrowOnGlowingItemTutorial:
                    ActivateArrows(3);
                 //ActivateGlowItems(arrowIndex);
-               // arrowIndex++;
-
+                // arrowIndex++;
+              //  tutorialPhrase = TutorialPhrase.UpgradeItemArrows;
                 break;
 
             case TutorialPhrase.UpgradeItemArrows:
-              //  ActivateArrows(4);
+                  ActivateArrows(2);
+                //  ActivateArrows(4);
+             //   tutorialPhrase = TutorialPhrase.ArrowsOnCashBox;
                 break;
 
             case TutorialPhrase.ArrowsOnCashBox:
-             //   ActivateArrows(7);
+                //   ActivateArrows(7);
+                ActivateArrows(2);
+                //  tutorialPhrase = TutorialPhrase.ItemCustomerTutorial;
                 break;
 
             case TutorialPhrase.ItemCustomerTutorial:
-               // ActivateArrows(8);
+                // ActivateArrows(8);
+               // tutorialPhrase = TutorialPhrase.ArrowsOnOrderSheet;
                 break;
 
             case TutorialPhrase.ArrowsOnOrderSheet:
                 //ActivateArrows(8);
+             //     tutorialPhrase = TutorialPhrase.ArrowsOnOrderSheet;
                 break;
 
             case TutorialPhrase.PabaryaCustomerTutorial:
@@ -244,16 +282,17 @@ public class TutorialManager : MonoBehaviour
 
     public void StartTutorial()
     {
-        tutorial.gameObject.SetActive(false);
-        Debug.Log("Tutorial");
-        UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
-        SpawnCustomer();
-        isFinished = false;
-        customerCounter++;
-      //  ingameText.gameObject.SetActive(true);
-        text.text = "Click on the customer desired items";
-        screenText.text = "";
-
+      
+            tutorial.gameObject.SetActive(false);
+            Debug.Log("Tutorial");
+            UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
+            SpawnCustomer();
+            isFinished = false;
+            customerCounter++;
+            //  ingameText.gameObject.SetActive(true);
+            text.text = "Click on the customer desired items";
+            screenText.text = "";
+        
     }
 
 

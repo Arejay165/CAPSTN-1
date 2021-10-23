@@ -10,4 +10,5 @@ public class TutorialTexts : ScriptableObject
     public List<string> instructions;
     public List<bool> hasArrow;
     public bool canSpawnCustomers;
+    public bool canSpawnButtons;
 }

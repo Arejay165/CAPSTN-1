@@ -246,7 +246,7 @@ public class TestCalculator : MonoBehaviour
                 //If it matches, it is correct
                 if (playerInputValue == itemUIClassList[itemOrderIndex].totalPriceAnswer)
                 {
-                    Debug.Log("Correct");
+                    //Debug.Log("Correct");
 
                     StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
 
@@ -255,13 +255,13 @@ public class TestCalculator : MonoBehaviour
                     index++;
                     if (index < answerFields.Count)
                     {
-                        Debug.Log("List still has inputfield");
+                     //   Debug.Log("List still has inputfield");
                         answerFields[index].Select();
                         answerFields[index].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
                     }
                     else
                     {
-                        Debug.Log("All correct answer");
+                        //Debug.Log("All correct answer");
                         SpawnAnswerField();
                     }
                     answerAttempts++;
@@ -271,7 +271,7 @@ public class TestCalculator : MonoBehaviour
                 //If it doesnt match its wrong
                 else
                 {
-                    Debug.Log("Wrong");
+                   // Debug.Log("Wrong");
                     StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
                     RecordAnswerResult(itemOrderIndex, false);
 
@@ -280,7 +280,7 @@ public class TestCalculator : MonoBehaviour
             }
             else //If input is invalid (not a number)
             {
-                Debug.Log("Invalid Input, retry again");
+             //   Debug.Log("Invalid Input, retry again");
                // StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
 
 
