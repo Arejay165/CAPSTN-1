@@ -72,8 +72,13 @@ public class CustomerSpawner : MonoBehaviour
 
 
         yield return myTween.WaitForCompletion(); // Wait to finish
-        yield return new WaitForSeconds(0.25f);
-        obj.GetComponent<Customer>().panel.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.25f); /// null reff
+       
+        if(obj != null)
+        {
+            obj.GetComponent<Customer>().panel.gameObject.SetActive(true);
+        }
+
         GameManager.instance.customer.moodPanel.SetActive(true);
     }
 

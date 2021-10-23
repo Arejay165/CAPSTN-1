@@ -121,7 +121,7 @@ public class UIManager : MonoBehaviour
 
         ActivateGameObjects(upgradeUI.name);
         Upgrades.instance.getUpgradeItem();
-        Debug.Log("Continue");
+        //Debug.Log("Continue");
     }
 
     public void Tutorial()

@@ -283,7 +283,10 @@ public class Scoring : MonoBehaviour
                                 hsTable.ReplaceHighscoreEntry(score, PlayerManager.instance.playerName, true);
                                 StartCoroutine(NewHighscore());
                             }
-
+                            else
+                            {
+                                StartCoroutine(ShowPerformanceStats());
+                            }
                         }
 
 

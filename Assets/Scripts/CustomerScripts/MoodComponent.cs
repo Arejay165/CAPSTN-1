@@ -131,7 +131,9 @@ public class MoodComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         InitializeMood();
+
     }
 
     // Update is called once per frame
@@ -148,41 +150,46 @@ public class MoodComponent : MonoBehaviour
             
             if (!pauseDecrease)
             {
-                if (GameManager.instance.customer.moodPanel != null)
+                if(GameManager.instance.customer != null)
                 {
-                    if (GameManager.instance.customer.moodPanel.activeSelf)
+                    if (GameManager.instance.customer.moodPanel != null)
                     {
-                        if (dcm.moodImage != null)
+                        if (GameManager.instance.customer.moodPanel.activeSelf)
                         {
-                            currentMoodAmount -= moodDecay;
-                            dcm.DisplayMood();
-
-                            ChangeCustomerMoodSprite();
-                            if (currentMoodAmount <= 0)
+                            if (dcm.moodImage != null)
                             {
-                                //If order sheet is active
-                                if (TransitionManager.instances.noteBookTransform.gameObject.activeSelf)
+                                currentMoodAmount -= moodDecay;
+                                dcm.DisplayMood();
+
+                                ChangeCustomerMoodSprite();
+                                if (currentMoodAmount <= 0)
                                 {
-                                    //Hide it 
-                                    TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
-                                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                                    mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 6); //3 seconds
+                                    //If order sheet is active
+                                    if (TransitionManager.instances.noteBookTransform.gameObject.activeSelf)
+                                    {
+                                        //Hide it 
+                                        TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
+                                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                                        mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 6); //3 seconds
+                                    }
+                                    if (TransitionManager.instances.changeTransform.gameObject.activeSelf)
+                                    {
+                                        //add bonus mood time
+                                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                                        mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 6); //3 seconds
+                                        TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
+                                    }
+
                                 }
-                                if (TransitionManager.instances.changeTransform.gameObject.activeSelf)
-                                {
-                                    //add bonus mood time
-                                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                                    mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 6); //3 seconds
-                                    TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
-                                }
-                               
+
+
+
                             }
-
-
-
                         }
                     }
+              
                 }
+               
                 
                
             }

@@ -66200,6 +66200,36 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &1079162132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1079162133}
+  m_Layer: 0
+  m_Name: CustomerInShop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1079162133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079162132}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.12, y: -1.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1698647711}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1095233511
 GameObject:
   m_ObjectHideFlags: 0
@@ -101131,6 +101161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customerPrefab: {fileID: 7605085325810736498, guid: ad6796c86a2013649b0986b66fe78334, type: 3}
   spawnPoint: {fileID: 878413430}
+  inShopPoint: {fileID: 1079162133}
+  outShopPoint: {fileID: 1781368387}
   displayOrder: {fileID: 850421020}
   canSpawn: 1
 --- !u!4 &1698647711
@@ -101145,6 +101177,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 878413430}
+  - {fileID: 1079162133}
+  - {fileID: 1781368387}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -102238,6 +102272,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1780295040}
   m_CullTransparentMesh: 1
+--- !u!1 &1781368386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1781368387}
+  m_Layer: 0
+  m_Name: CustomerOutShop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1781368387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781368386}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.98, y: -1.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1698647711}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1789487168
 GameObject:
   m_ObjectHideFlags: 0
@@ -102768,7 +102832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e01766c87bbe4f49aea8e6915484dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemIconTemplate: {fileID: 3094970959184182628, guid: 36faa6dedfb75cb44ab1108fa40bc0c4, type: 3}
+  itemIconTemplate: {fileID: 708162821809159411, guid: 36faa6dedfb75cb44ab1108fa40bc0c4, type: 3}
   storeItemList:
   - {fileID: 11400000, guid: c47787ac647c67548b2f40ecfe78b2c4, type: 2}
   - {fileID: 11400000, guid: fea9b9275febc4c4f854dd41066a9a92, type: 2}
