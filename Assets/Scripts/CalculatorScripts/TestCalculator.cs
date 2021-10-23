@@ -254,7 +254,7 @@ public class TestCalculator : MonoBehaviour
                     RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, true);
                     //add bonus mood
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.SetCurrentMoodAmount(mc.GetCurrentMoodAmount() + mc.correctBonusTime);
+                    mc.IncreaseCurrentMoodAmount( mc.correctBonusTime);
 
                     StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
 
@@ -498,7 +498,7 @@ public class TestCalculator : MonoBehaviour
 
                     //add bonus mood time
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.SetCurrentMoodAmount(mc.GetCurrentMoodAmount() + mc.correctBonusTime*2);
+                    mc.IncreaseCurrentMoodAmount( mc.correctBonusTime*2);
                     StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
                     
 
@@ -562,6 +562,11 @@ public class TestCalculator : MonoBehaviour
         //Customer despawn
         if (GameManager.instance.customer)
         {
+            //Disable customer bubble
+            GameManager.instance.customer.panel.gameObject.SetActive(false);
+
+            //Disable customer mood bar
+            GameManager.instance.customer.moodPanel.SetActive(false);
             //animation
             DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 1f, false));
             Destroy(GameManager.instance.customer.gameObject,1.5f);

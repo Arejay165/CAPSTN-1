@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 public class MoodComponent : MonoBehaviour
 {
     [SerializeField]
     float currentMoodAmount;
+    [SerializeField]
+    DisplayCustomerMood dcm;
     [SerializeField]
     float maxMoodAmount;
     [SerializeField]
@@ -27,6 +30,7 @@ public class MoodComponent : MonoBehaviour
     [SerializeField]
     public float correctBonusTime;
 
+    bool pauseDecrease = false;
     #region Getter Setters
 
     public float GetCurrentMoodAmount()
@@ -47,10 +51,71 @@ public class MoodComponent : MonoBehaviour
     public void SetCurrentMoodAmount(float currentMoodValue) 
     {
         currentMoodAmount = currentMoodValue;
+        
     }
 
-    #endregion
+    public void IncreaseCurrentMoodAmount(float p_increase)
+    {
+        pauseDecrease = true;
+        //set color to green
+        dcm.delayedMoodImage.color = new Color(0f, 255f, 0f, 1f);
+        dcm.delayedMoodImage.fillAmount = dcm.moodImage.fillAmount;
+        dcm.delayedMoodImage.gameObject.SetActive(true);
+        dcm.delayedMoodImage.fillAmount += ((currentMoodAmount+p_increase)/maxMoodAmount);
+        StartCoroutine(MoodIncreased());
+    }
 
+    public void DeductCurrentMoodAmount(float p_deduction)
+    {
+        pauseDecrease = true;
+        //set color to red
+        dcm.delayedMoodImage.color = new Color(255f, 0f, 0f, 1f);
+        dcm.delayedMoodImage.gameObject.SetActive(true);
+        currentMoodAmount -= p_deduction;
+        StartCoroutine(MoodDeducted());
+    }
+    #endregion
+    public IEnumerator MoodDeducted()
+    {
+        
+        yield return new WaitForSeconds(1f);
+        
+        //SCALE TOWARDS THE CURRENT MOOD DISPLAY
+        Tween myTween = dcm.delayedMoodImage.DOFillAmount(currentMoodAmount/maxMoodAmount,0.5f);// animation sequence
+
+        //Transparent fade out
+        dcm.delayedMoodImage.DOFade(0.0f, 0.5f);
+        yield return myTween.WaitForCompletion(); // Wait to finish
+
+        dcm.delayedMoodImage.fillAmount = currentMoodAmount/maxMoodAmount;
+
+        //reset
+        //make delayedmoodimage visible again
+        dcm.delayedMoodImage.color = new Color(dcm.delayedMoodImage.color.r, dcm.delayedMoodImage.color.g, dcm.delayedMoodImage.color.b, 1f);
+        dcm.delayedMoodImage.gameObject.SetActive(false);
+        pauseDecrease = false ;
+    }
+
+    public IEnumerator MoodIncreased()
+    {
+        
+        yield return new WaitForSeconds(1f);
+        
+        //SCALE TOWARDS THE CURRENT MOOD DISPLAY
+        Tween myTween = dcm.moodImage.DOFillAmount(dcm.delayedMoodImage.fillAmount, 0.5f);// animation sequence
+
+        //Transparent fade out
+        dcm.delayedMoodImage.DOFade(0.0f, 0.5f);
+        yield return myTween.WaitForCompletion(); // Wait to finish
+
+        dcm.delayedMoodImage.fillAmount = currentMoodAmount / maxMoodAmount;
+
+        //reset
+        //make delayedmoodimage visible again
+        dcm.delayedMoodImage.color = new Color(dcm.delayedMoodImage.color.r, dcm.delayedMoodImage.color.g, dcm.delayedMoodImage.color.b, 1f);
+        dcm.delayedMoodImage.gameObject.SetActive(false);
+        pauseDecrease = false;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -77,19 +142,25 @@ public class MoodComponent : MonoBehaviour
                     //Hide it 
                     TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, false);
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.SetCurrentMoodAmount(mc.GetCurrentMoodAmount() + mc.correctBonusTime * 6); //3 seconds
+                    mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 6); //3 seconds
                 }
                 if (TransitionManager.instances.changeTransform.gameObject.activeSelf)
                 {
                     //add bonus mood time
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.SetCurrentMoodAmount(mc.GetCurrentMoodAmount() + (mc.correctBonusTime* 6)); //3 seconds
+                    mc.IncreaseCurrentMoodAmount(mc.correctBonusTime* 6); //3 seconds
                     TransitionManager.instances.MoveTransition(new Vector2(-523f, 1386f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
                 }
                 GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
                 //Customer despawn
                 if (GameManager.instance.customer)
                 {
+
+                    //Disable customer bubble
+                    GameManager.instance.customer.panel.gameObject.SetActive(false);
+
+                    //Disable customer mood bar
+                    GameManager.instance.customer.moodPanel.SetActive(false);
                     //animation
                     DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 1f, false));
                     Destroy(GameManager.instance.customer.gameObject, 1.5f);
@@ -105,6 +176,7 @@ public class MoodComponent : MonoBehaviour
     void InitializeMood()
     {
         currentMoodAmount = maxMoodAmount;
+        dcm.delayedMoodImage.gameObject.SetActive(false);
         customerSpriteRenderer = this.GetComponent<SpriteRenderer>();
         if (customerSpriteRenderer)
         {

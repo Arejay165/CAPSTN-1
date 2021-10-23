@@ -21,7 +21,9 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
             GameManager.instance.customer.itemsImage[0].color = global::GameManager.instance.window.darkenImage;
             GameManager.instance.customer.itemsImage.RemoveAt(0);
             MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(0);
-            
+            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+            mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
+
             ChangeUI();
             // TUTORIAL
             //if (TutorialManager.instance)
@@ -40,7 +42,10 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
 
     void ChangeUI()
     {
-        
+        //Disable customer bubble
+        GameManager.instance.customer.panel.gameObject.SetActive(false);
+
+        //show pabarya sheet
         TransitionManager.instances.MoveTransition(new Vector2(680f, 0f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, true);
    
     }

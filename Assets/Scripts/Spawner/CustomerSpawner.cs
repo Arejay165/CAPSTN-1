@@ -68,12 +68,13 @@ public class CustomerSpawner : MonoBehaviour
     {
         Tween myTween = obj.transform.DOMove(inShopPoint.position, 1f, false);// animation sequence
         obj.GetComponent<Customer>().panel.gameObject.SetActive(false);
-        
+        GameManager.instance.customer.moodPanel.SetActive(false);
 
-        
+
         yield return myTween.WaitForCompletion(); // Wait to finish
         yield return new WaitForSeconds(0.25f);
         obj.GetComponent<Customer>().panel.gameObject.SetActive(true);
+        GameManager.instance.customer.moodPanel.SetActive(true);
     }
 
 

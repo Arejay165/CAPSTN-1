@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7296001819180566219}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 01800888ef836b8469ecedf6393e90c5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 268d97a193c3b4441876be43cf3f1d4b, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemsImage: []
   panel: {fileID: 7296001819012519672}
+  moodPanel: {fileID: 7296001820505229221}
   displayOrder: {fileID: 0}
 --- !u!114 &8493476688458719202
 MonoBehaviour:
@@ -190,6 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMoodAmount: 0
+  dcm: {fileID: 7296001819180566217}
   maxMoodAmount: 100
   moodDecay: 0.5
   timeForDecay: 0.1
@@ -422,8 +424,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7296001818637686914}
-  - {fileID: 3153968464955489297}
   - {fileID: 3276162840751329967}
+  - {fileID: 3153968464955489297}
   m_Father: {fileID: 7296001820505229225}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -497,6 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customerMood: {fileID: 0}
   moodImage: {fileID: 3633648078094793156}
+  delayedMoodImage: {fileID: 6431310044702408644}
 --- !u!1 &7296001820505229221
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,7 +730,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7296001819180566219}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

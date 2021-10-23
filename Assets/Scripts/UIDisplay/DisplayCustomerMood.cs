@@ -9,7 +9,8 @@ public class DisplayCustomerMood : MonoBehaviour
     [SerializeField]
     MoodComponent customerMood;
     [SerializeField]
-    Image moodImage;
+    public Image moodImage;
+    public Image delayedMoodImage;
     void Start()
     {
         InitializeMoodDisplay();

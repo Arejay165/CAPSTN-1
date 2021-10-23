@@ -13,6 +13,7 @@ public class Customer : MonoBehaviour
     public List<Image> itemsImage = new List<Image>();
    // public GameObject itemPrefab;
     public Transform panel;
+    public GameObject moodPanel;
     public TestCalculator displayOrder;
     
     //public bool willBuy;
