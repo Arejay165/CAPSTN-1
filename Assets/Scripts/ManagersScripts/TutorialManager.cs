@@ -189,16 +189,13 @@ public class TutorialManager : MonoBehaviour
     }
 
 
-    public void ActivateArrows(int index)
+    public void ActivateGlow(int index)
     {
         if (counter == index)
         {
-            //foreach (GameObject obj in arrows)
-            //{
-            //    obj.SetActive(false);
-            //}
+           
 
-            //arrows[arrowIndex].SetActive(true);
+            arrows[arrowIndex].SetActive(true);
 
             //Debug.Log("Same Counter");
             ActivateGlowItems(arrowIndex);
@@ -211,9 +208,19 @@ public class TutorialManager : MonoBehaviour
                 obj.SetActive(false);
             }
 
+            foreach (GameObject obj in arrows)
+            {
+                obj.SetActive(false);
+            }
+
         }
 
-   
+
+    }
+
+    public void ActivateArrow(int index)
+    {
+       
     }
 
     public void ActivateGlowItems(int index)
@@ -233,21 +240,21 @@ public class TutorialManager : MonoBehaviour
         switch (tutorialPhrase)
         {
             case TutorialPhrase.ArrowOnGlowingItemTutorial:
-                   ActivateArrows(3);
+                   ActivateGlow(3);
                 //ActivateGlowItems(arrowIndex);
                 // arrowIndex++;
               //  tutorialPhrase = TutorialPhrase.UpgradeItemArrows;
                 break;
 
             case TutorialPhrase.UpgradeItemArrows:
-                  ActivateArrows(2);
+                  ActivateGlow(2);
                 //  ActivateArrows(4);
              //   tutorialPhrase = TutorialPhrase.ArrowsOnCashBox;
                 break;
 
             case TutorialPhrase.ArrowsOnCashBox:
                 //   ActivateArrows(7);
-                ActivateArrows(2);
+                ActivateGlow(2);
                 //  tutorialPhrase = TutorialPhrase.ItemCustomerTutorial;
                 break;
 
