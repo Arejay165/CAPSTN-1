@@ -145,29 +145,33 @@ public class ClickToSelectItem : MonoBehaviour
 
     IEnumerator SmoothStopRadiate()
     {
-        if (radiatePFX.isPlaying)
+        if (radiatePFX != null)
         {
-            var particles = new ParticleSystem.Particle[radiatePFX.main.maxParticles];
-            var currentAmount = radiatePFX.GetParticles(particles);
+            if (radiatePFX.isPlaying)
+            {
+                var particles = new ParticleSystem.Particle[radiatePFX.main.maxParticles];
+                var currentAmount = radiatePFX.GetParticles(particles);
 
-            if (currentAmount <= 0)
-            {
-                radiatePFX.Stop();
-            }
-            else
-            {
-                for (int i = 0; i < currentAmount; i++)
+                if (currentAmount <= 0)
                 {
-                    if (particles[i].remainingLifetime < 0.35f)
+                    radiatePFX.Stop();
+                }
+                else
+                {
+                    for (int i = 0; i < currentAmount; i++)
                     {
-                        radiatePFX.Stop();
+                        if (particles[i].remainingLifetime < 0.35f)
+                        {
+                            radiatePFX.Stop();
+                        }
                     }
                 }
+
+                yield return new WaitForSeconds(0.5f);
+                StartCoroutine(SmoothStopRadiate());
             }
-            
-            yield return new WaitForSeconds(0.5f);
-            StartCoroutine(SmoothStopRadiate());
         }
+       
        
         
 
