@@ -76,7 +76,7 @@ public class ClickToSelectItem : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && canSpawn)
             {
                
-                Debug.Log("Item clicked");
+             //   Debug.Log("Item clicked");
 
                 CursorManager.instance.PlayCursorAnimation(CursorType.ClickItem, CursorType.Arrow);
                 if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf && !TransitionManager.instances.changeTransform.gameObject.activeSelf)
@@ -179,8 +179,12 @@ public class ClickToSelectItem : MonoBehaviour
 
     void SpawnItem()
     {
-        GameObject spawnedItem = Instantiate(itemSpawnedPrefab, this.transform.position, Quaternion.identity);
-        //Animate to go to the counter 
-        spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, animationTravelTime);
+        if (UIManager.instance.inGameUI.activeInHierarchy)
+        {
+            GameObject spawnedItem = Instantiate(itemSpawnedPrefab, this.transform.position, Quaternion.identity);
+            //Animate to go to the counter 
+            spawnedItem.GetComponent<Rigidbody2D>().transform.DOMove(targetPosition.position, animationTravelTime);
+        }
+        
     }
 }

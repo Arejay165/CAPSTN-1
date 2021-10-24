@@ -131,7 +131,7 @@ public class TestCalculator : MonoBehaviour
         }
         else
         {
-            Debug.Log("Null");
+          //  Debug.Log("Null");
         }
     }
 
@@ -251,7 +251,7 @@ public class TestCalculator : MonoBehaviour
                 //If it matches, it is correct
                 if (playerInputValue == itemUIClassList[itemOrderIndex].totalPriceAnswer)
                 {
-                    Debug.Log("Correct");
+                   // Debug.Log("Correct");
                     RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, true);
                     //add bonus mood
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();

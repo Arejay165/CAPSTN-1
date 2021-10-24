@@ -84,7 +84,7 @@ public class MathProblemManager : MonoBehaviour
             {
                 currentIndex = Random.Range(0, orderedItemsWanted.Count);
             }
-            Debug.Log(orderedItemsWanted[currentIndex]);
+        //    Debug.Log(orderedItemsWanted[currentIndex]);
             foreach (Item selectedItem in orderedItemsWanted[currentIndex])
             {
 

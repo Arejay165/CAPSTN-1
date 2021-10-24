@@ -65,7 +65,7 @@ public class ChangeCalculator : MonoBehaviour
         }
         else
         {
-            Debug.Log("is null");
+          //  Debug.Log("is null");
         }
     }
 

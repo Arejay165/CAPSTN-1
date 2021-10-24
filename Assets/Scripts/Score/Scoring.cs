@@ -521,6 +521,7 @@ public class Scoring : MonoBehaviour
     public GameObject CreateGameStarFill(GameObject p_selectedStarSlot)
     {
         //Spawn new star
+        Debug.Log("Spawn Star");
         GameObject spawnedStarFill = Instantiate(starFillPrefab, gameStarRatingContainer.transform);
         spawnedStarFill.transform.position = p_selectedStarSlot.transform.position;
         //Set size of new star (smaller)
@@ -574,7 +575,7 @@ public class Scoring : MonoBehaviour
         int currentScaledScore = score;
 
 
-        currentScaledScore = score;
+      //  currentScaledScore = score;
         while (currentScaledScore >= scoreGoal / 5)
         {
             currentScaledScore -= scoreGoal /5;
@@ -589,7 +590,9 @@ public class Scoring : MonoBehaviour
             
             if (gameStarSlotIndex < 5)
             {
-             //   Debug.Log("ssssssssssssssssssssTAAAAAAAAAR: " + gameStarSlotIndex);
+                //   Debug.Log("ssssssssssssssssssssTAAAAAAAAAR: " + gameStarSlotIndex);
+                //  gameStarSlots[gameStarSlotIndex].gameObject.GetComponent<Image>().sprite = starShine;
+                Debug.Log("Update GameScore");
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
                 gameStarSlotIndex++;

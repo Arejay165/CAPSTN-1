@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator DayEnd()
     {
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundDebriefingUI.name);
-
+        InteractableManager.instances.SpawnController(false);
         if (customer != null)
         {
             Destroy(customer.gameObject);

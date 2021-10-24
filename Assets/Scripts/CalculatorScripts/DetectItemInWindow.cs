@@ -55,7 +55,7 @@ public class DetectItemInWindow : MonoBehaviour
                             }
                             
                             Destroy(itemInCounter.gameObject, 0.2f);
-                            Debug.Log("DESTROYING THRU DETECT CORRECT");
+                        //    Debug.Log("DESTROYING THRU DETECT CORRECT");
                             PlayerManager.instance.lastItemSpawner = null;
                             break;
                         

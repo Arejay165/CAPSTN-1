@@ -78,7 +78,7 @@ public class MoodComponent : MonoBehaviour
 
             currentMoodAmount -= p_deduction;
             dcm.moodImage.fillAmount = currentMoodAmount / maxMoodAmount;
-            Debug.Log("TEST: " + currentMoodAmount);
+       //     Debug.Log("TEST: " + currentMoodAmount);
             StartCoroutine(MoodDeducted());
         }
       
@@ -88,7 +88,7 @@ public class MoodComponent : MonoBehaviour
     {
         
         yield return new WaitForSeconds(1f);
-        Debug.Log("TEST: " + currentMoodAmount);
+     //   Debug.Log("TEST: " + currentMoodAmount);
         //SCALE TOWARDS THE CURRENT MOOD DISPLAY
         Tween myTween = dcm.delayedMoodImage.DOFillAmount(currentMoodAmount/maxMoodAmount,0.5f);// animation sequence
 
@@ -234,7 +234,7 @@ public class MoodComponent : MonoBehaviour
     {
         if(currentMoodAmount >= maxMoodAmount)
         {
-            Debug.Log("Happy");
+           // Debug.Log("Happy");
             if (happySprite)
             {
                 if (customerSpriteRenderer.sprite != happySprite) 
@@ -247,7 +247,7 @@ public class MoodComponent : MonoBehaviour
         }
         if (currentMoodAmount <= neutralMoodValue)
         {
-            Debug.Log("Neutral");
+           // Debug.Log("Neutral");
             if (neutralSprite)
             {
                 if (customerSpriteRenderer.sprite != neutralSprite)
@@ -260,7 +260,7 @@ public class MoodComponent : MonoBehaviour
 
         if(currentMoodAmount <= angryMoodValue)
         {
-            Debug.Log("Angry");
+          //  Debug.Log("Angry");
             if (angrySprite)
             {
                 if (customerSpriteRenderer.sprite != angrySprite)

@@ -87,7 +87,7 @@ public class DayAndNightCycle : MonoBehaviour
     { 
         if (GameManager.instance)
         {
-            if (GameManager.instance.isPlaying) //If game isn't paused
+            if (/*GameManager.instance.isPlaying ||*/ uIManager.inGameUI.activeInHierarchy) //If game isn't paused
             {
 
                 // Game time is used for how long the game will last. It will continuously count until the end time is reached  
