@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+
 [System.Serializable]
 public class ItemUIClass
 {
@@ -33,6 +34,7 @@ public class TestCalculator : MonoBehaviour
 
     [SerializeField] GameObject itemDisplay;
     [SerializeField] Transform displayPanel;
+
 
     public float randomExtraMoney;
     public bool isCountingTime;
@@ -65,6 +67,7 @@ public class TestCalculator : MonoBehaviour
     //{
     //    StackDuplicateItems();
     //}
+
     private void OnEnable()
     {
 
@@ -214,6 +217,7 @@ public class TestCalculator : MonoBehaviour
         customerPaidText.text = randomExtraMoney.ToString();
         
 
+
     }
 
     public int IdentifyAnswerfieldIndex(string p_playerInput)
@@ -308,6 +312,7 @@ public class TestCalculator : MonoBehaviour
     {
         for(int i = 0; i < answerFields.Count; i++)
         {
+            
             if(i == index)
             {
                 answerFields[i].enabled = true;
@@ -611,7 +616,7 @@ public class TestCalculator : MonoBehaviour
             order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().onEndEdit.AddListener(OnPriceInputted);
             order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().enabled = true;
             answerFields.Add(order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>());
-            
+            answerFields[i].characterLimit = 5; //can only reach 10000
             order.transform.SetParent(displayPanel);
             order.transform.localScale = new Vector3(1f, 1f, 1f);
 
