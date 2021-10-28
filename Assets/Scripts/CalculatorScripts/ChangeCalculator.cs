@@ -36,8 +36,8 @@ public class ChangeCalculator : MonoBehaviour
         }
         else
         {
-            divisor = Random.Range(2, 11); // use to multiply to the quotient to always be whole number 
-            quotient = Random.Range(1, 21); // possible answers 
+            divisor = /*Random.Range(2, 11)*/ 2; // use to multiply to the quotient to always be whole number 
+            quotient = /*Random.Range(1, 21)*/ 10; // possible answers 
             dividend = divisor * quotient; // determine the dividend
         }
  
@@ -62,6 +62,12 @@ public class ChangeCalculator : MonoBehaviour
         {
             TutorialManager.instance.text.text = "Divide the upper value to the lower value";
             TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;
+            UIManager.instance.inGameUI.SetActive(false);
+            TutorialManager.instance.tutorial.SetActive(true);
+            TutorialManager.instance.nextButton.SetActive(false);
+            TutorialManager.instance.tutorial.GetComponent<Image>().raycastTarget = false;
+            TutorialManager.instance.itemMask.SetActive(true);
+            TutorialManager.instance.ItemMasksActivator(5);
         }
         else
         {
@@ -104,6 +110,7 @@ public class ChangeCalculator : MonoBehaviour
         if (gameObject.activeSelf)
         {
             tmpChangeInputField.Select();
+           
             string playerInputString = tmpChangeInputField.text;
 
             float playerInputValue = -1;
@@ -230,7 +237,7 @@ public class ChangeCalculator : MonoBehaviour
 
             TutorialManager.instance.ActivateTutorialUI();
             TutorialManager.instance.customerCounter = 1;
-
+            TutorialManager.instance.tutorial.SetActive(false);
         }
      
     }

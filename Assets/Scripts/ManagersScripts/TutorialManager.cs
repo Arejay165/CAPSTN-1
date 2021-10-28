@@ -45,6 +45,8 @@ public class TutorialManager : MonoBehaviour
     public TextMeshProUGUI titleInstructText;
     public List<RectTransform> convoTransform;
     public RectTransform dialogueBox;
+    public List<GameObject> itemMaskChild;
+    public GameObject itemMask;
    
 
 
@@ -314,5 +316,16 @@ public class TutorialManager : MonoBehaviour
     public void RestartTutorial()
     {
         SceneManager.LoadScene("Tutorial");
+    }
+
+    public void ItemMasksActivator(int index)
+    {
+        for(int i = 0; i < itemMaskChild.Count; i++)
+        {
+
+            itemMaskChild[i].SetActive(false);
+        }
+        itemMaskChild[index].SetActive(true);
+
     }
 }

@@ -191,10 +191,20 @@ public class MathProblemManager : MonoBehaviour
 
         for (int i = 0; i < maxInventory; i++)
         {
-
-            int selectedItemIndex = Random.Range(0, storeItemList.Count);
-            Item selectedItem = storeItemList[selectedItemIndex];
-            itemsWanted.Add(selectedItem);
+            if(TutorialManager.instance.enabled == true)
+            {
+                int selectedItemIndex = Random.Range(0, storeItemList.Count);
+                Item selectedItem = storeItemList[i];
+                itemsWanted.Add(selectedItem);
+            }
+            else
+            {
+                int selectedItemIndex = Random.Range(0, storeItemList.Count);
+                Item selectedItem = storeItemList[selectedItemIndex];
+                itemsWanted.Add(selectedItem);
+            }
+          
+           
 
 
         }

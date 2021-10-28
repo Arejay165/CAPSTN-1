@@ -127,6 +127,11 @@ public class TestCalculator : MonoBehaviour
         {
             TutorialManager.instance.text.text = "Multiply Quantity to item's price";
             TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;
+            UIManager.instance.inGameUI.SetActive(false);
+            TutorialManager.instance.tutorial.SetActive(true);
+            TutorialManager.instance.nextButton.SetActive(false);
+            TutorialManager.instance.tutorial.GetComponent<Image>().raycastTarget = false;
+            TutorialManager.instance.ItemMasksActivator(0);
 
         }
         else
@@ -205,7 +210,7 @@ public class TestCalculator : MonoBehaviour
         }
         else
         {
-            randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 10);
+            randomExtraMoney = totalPriceCorrectAnswer + 0;
         }
       
         changeCorrectAnswer = randomExtraMoney - totalPriceCorrectAnswer;
@@ -236,6 +241,7 @@ public class TestCalculator : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
+
             int itemOrderIndex = IdentifyAnswerfieldIndex(p_playerInputString); //Finding which inputfield is being used to write
             float playerInputValue = -1;
 
@@ -245,7 +251,7 @@ public class TestCalculator : MonoBehaviour
             }
 
 
-
+          
             if (playerInputValue != -1) // If input is valid (any number)
             {
                 //If it matches, it is correct
@@ -268,6 +274,9 @@ public class TestCalculator : MonoBehaviour
                      //   Debug.Log("List still has inputfield");
                         answerFields[index].Select();
                         answerFields[index].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+
+                        if(TutorialManager.instance.enabled == true)
+                        TutorialManager.instance.ItemMasksActivator(index);
                     }
                     else
                     {
@@ -323,8 +332,10 @@ public class TestCalculator : MonoBehaviour
     {
         if(answerFields.Count == index)
         {
+            if (TutorialManager.instance.enabled == true)
+                TutorialManager.instance.ItemMasksActivator(3);
 
-           totalPriceAnswerField.enabled = true;
+            totalPriceAnswerField.enabled = true;
             
            totalPriceAnswerField.Select();
             totalPriceAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
@@ -452,7 +463,9 @@ public class TestCalculator : MonoBehaviour
                     ShowChangeText();
                     RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, true);
                     StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect));
-                    
+
+                    if (TutorialManager.instance.enabled == true)
+                        TutorialManager.instance.ItemMasksActivator(4);
 
 
                     changeAnswers.Add(randomExtraMoney);
@@ -585,10 +598,12 @@ public class TestCalculator : MonoBehaviour
         {
             //  GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time
              GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
+             
         }
         else
         {
             TutorialManager.instance.ActivateTutorialUI();
+            TutorialManager.instance.itemMask.SetActive(false);
         }
               
     }
