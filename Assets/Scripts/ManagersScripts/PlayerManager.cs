@@ -7,7 +7,8 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
     public bool isHolding;
-    
+
+    public Camera UICamera;
     public GameObject currentSelectedItem;
     public ClickToSelectItem lastItemSpawner;
     public bool isStaying = false;

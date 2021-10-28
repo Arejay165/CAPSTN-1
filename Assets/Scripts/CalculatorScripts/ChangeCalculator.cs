@@ -10,7 +10,7 @@ public class ChangeCalculator : MonoBehaviour
     public Text numeratorText;
     public Text denominatorText;
     public BillCounter billCounter;
-    public InputField changeInputField;
+ 
     public TMP_InputField tmpChangeInputField;
    
     public bool isCountingTime;
@@ -46,7 +46,7 @@ public class ChangeCalculator : MonoBehaviour
         MathProblemManager.instance.cash.numValue = dividend;//Random.Range(60, 500);
         MathProblemManager.instance.cash.denValue = divisor;//cash.numValue / Random.Range(2, 50);
         MathProblemManager.instance.cash.price = quotient;//cash.numValue / cash.denValue;
-
+        tmpChangeInputField.characterLimit = 5; //can only reach 10000
         tmpChangeInputField.Select();
     
         numeratorText.text = MathProblemManager.instance.cash.numValue.ToString();

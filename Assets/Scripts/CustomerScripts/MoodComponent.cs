@@ -56,14 +56,22 @@ public class MoodComponent : MonoBehaviour
 
     public void IncreaseCurrentMoodAmount(float p_increase)
     {
-        pauseDecrease = true;
-        dcm.delayedMoodImage.gameObject.SetActive(true);
-        //set color to green
-        dcm.delayedMoodImage.color = new Color(0f, 255f, 0f, 1f);
-        dcm.delayedMoodImage.fillAmount = (currentMoodAmount + p_increase) / maxMoodAmount;
-      
-        dcm.delayedMoodImage.fillAmount = ((currentMoodAmount+p_increase)/maxMoodAmount);
-        StartCoroutine(MoodIncreased(p_increase));
+        if (!pauseDecrease)
+        {
+            pauseDecrease = true;
+            dcm.delayedMoodImage.gameObject.SetActive(true);
+            //set color to green
+            dcm.delayedMoodImage.color = new Color(0f, 255f, 0f, 1f);
+            float desiredAmount = ((currentMoodAmount + p_increase) / maxMoodAmount);
+            if (desiredAmount > 1 )
+            {
+                desiredAmount = 1;
+            }
+
+            dcm.delayedMoodImage.fillAmount = desiredAmount;
+            StartCoroutine(MoodIncreased(p_increase));
+        }
+        
     }
 
     public void DeductCurrentMoodAmount(float p_deduction)
@@ -75,8 +83,12 @@ public class MoodComponent : MonoBehaviour
             dcm.delayedMoodImage.gameObject.SetActive(true);
             //set color to red
             dcm.delayedMoodImage.color = new Color(255f, 0f, 0f, 1f);
-
-            currentMoodAmount -= p_deduction;
+            float desiredAmount = currentMoodAmount -= p_deduction;
+            if (desiredAmount < 0)
+            {
+                desiredAmount = 0;
+            }
+            
             dcm.moodImage.fillAmount = currentMoodAmount / maxMoodAmount;
        //     Debug.Log("TEST: " + currentMoodAmount);
             StartCoroutine(MoodDeducted());
@@ -220,6 +232,7 @@ public class MoodComponent : MonoBehaviour
         currentMoodAmount = maxMoodAmount;
         dcm.delayedMoodImage.gameObject.SetActive(false);
         customerSpriteRenderer = this.GetComponent<SpriteRenderer>();
+        dcm.gameObject.transform.parent.gameObject.GetComponent<Canvas>().worldCamera = PlayerManager.instance.UICamera;
         if (customerSpriteRenderer)
         {
             if (happySprite)
