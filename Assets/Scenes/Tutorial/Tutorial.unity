@@ -25530,8 +25530,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -46792,8 +46792,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 2
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -82357,7 +82357,6 @@ MonoBehaviour:
   numeratorText: {fileID: 546895464}
   denominatorText: {fileID: 1954046159}
   billCounter: {fileID: 1306669543}
-  changeInputField: {fileID: 150281027}
   tmpChangeInputField: {fileID: 1607971735}
   isCountingTime: 0
   timeSpent: 0
@@ -83532,14 +83531,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 2
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
@@ -89640,8 +89639,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -783, y: -71.764}
-  m_SizeDelta: {x: 1458.557, y: 128.2355}
+  m_AnchoredPosition: {x: -431, y: -103.839966}
+  m_SizeDelta: {x: 1428.003, y: 180.1746}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1602929272
 MonoBehaviour:
@@ -89663,12 +89662,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4b6ae4df2bab3a64aae58e46d0af7c0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4821df5ab02c82347bbabddc7d4a137a, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 0
+  m_FillAmount: 0.083
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -90102,14 +90101,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 2
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
@@ -90467,6 +90466,7 @@ MonoBehaviour:
   multiplier: 1
   maxMultiplier: 3
   gameMultiplierText: {fileID: 1291829547}
+  scoreToNextGoal: 0
   gameDayText: {fileID: 1030180337}
   resultDayText: {fileID: 1915504703}
   endScoreText: {fileID: 113696119}
@@ -90584,6 +90584,7 @@ MonoBehaviour:
   roundBriefingUI: {fileID: 16317355}
   roundDebriefingUI: {fileID: 229522542}
   playerNameUI: {fileID: 768232801}
+  tutorialUI: {fileID: 1450700602}
 --- !u!4 &1615599873
 Transform:
   m_ObjectHideFlags: 0
@@ -102093,14 +102094,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 2
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
@@ -103515,6 +103516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHolding: 0
+  UICamera: {fileID: 0}
   currentSelectedItem: {fileID: 0}
   lastItemSpawner: {fileID: 0}
   isStaying: 0

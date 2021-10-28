@@ -237,7 +237,9 @@ public class ChangeCalculator : MonoBehaviour
 
             TutorialManager.instance.ActivateTutorialUI();
             TutorialManager.instance.customerCounter = 1;
-            TutorialManager.instance.tutorial.SetActive(false);
+            TutorialManager.instance.tutorial.SetActive(true);
+            TutorialManager.instance.nextButton.SetActive(true);
+            TutorialManager.instance.itemMask.SetActive(false);
         }
      
     }
