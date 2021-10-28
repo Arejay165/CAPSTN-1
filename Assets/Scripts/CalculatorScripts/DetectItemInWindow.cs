@@ -67,6 +67,8 @@ public class DetectItemInWindow : MonoBehaviour
                         Debug.Log("Wrong Item");
                         Destroy(itemInCounter.gameObject, 0.2f);
                         mc.DeductCurrentMoodAmount(mc.penaltyTime);// 1 second
+                        AudioManager.instance.playSound(1);
+                        PlayerManager.instance.Shake(gameObject, 0.2f, 3.5f, 1.5f);
                     }
 
                 }

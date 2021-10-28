@@ -49,6 +49,8 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
                     Debug.Log("I PRESSED BIL LBOX");
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                     mc.DeductCurrentMoodAmount(mc.penaltyTime);
+                    AudioManager.instance.playSound(1);
+                    PlayerManager.instance.Shake(gameObject, 0.2f, 3.5f, 1.5f);
                 }
             }
         }
