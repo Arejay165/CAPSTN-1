@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public GameObject roundBriefingUI;
     public GameObject roundDebriefingUI;
     public GameObject playerNameUI;
+    public GameObject tutorialUI;
     
     private bool isPause; //for demo purposes
 
@@ -88,6 +89,7 @@ public class UIManager : MonoBehaviour
         roundBriefingUI.SetActive(roundBriefingUI.name.Equals(nameOfGameObject));
         roundDebriefingUI.SetActive(roundDebriefingUI.name.Equals(nameOfGameObject));
         playerNameUI.SetActive(playerNameUI.name.Equals(nameOfGameObject));
+        tutorialUI.SetActive(tutorialUI.name.Equals(nameOfGameObject));
     }
 
     public void Pause()
@@ -129,6 +131,11 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial");
 
+    }
+
+    public void ShowTutorial()
+    {
+        ActivateGameObjects(tutorialUI.name);
     }
 
 }

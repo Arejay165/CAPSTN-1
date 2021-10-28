@@ -103430,12 +103430,7 @@ MonoBehaviour:
   tutorialQuestActive: 0
   canTutorial: 1
   currentTutorial: {fileID: 919380822}
-  tutorials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  tutorials: []
   text: {fileID: 271667697}
   setOfInstructions:
   - dwda
@@ -103450,7 +103445,6 @@ MonoBehaviour:
   - czs
   - nh
   tutorialTexts:
-  - {fileID: 11400000, guid: f146ba0fec64d1846a6ef9392b59a593, type: 2}
   - {fileID: 11400000, guid: d2f9d6788192536438d9686d61026a50, type: 2}
   - {fileID: 11400000, guid: cd8cd2b50fad1c24db11cc0b2054fe3a, type: 2}
   - {fileID: 11400000, guid: e2308c59bd0afdd4fa44ef1f6d889d72, type: 2}
@@ -103468,7 +103462,7 @@ MonoBehaviour:
   tutorialPhrase: 0
   tutorialCounter: 0
   tutorial: {fileID: 2119963479}
-  playTutorial: 0
+  playTutorial: 1
   tutorialButtons:
   - {fileID: 1614571189}
   - {fileID: 294331103}
