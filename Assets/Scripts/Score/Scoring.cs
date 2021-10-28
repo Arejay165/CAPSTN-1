@@ -19,6 +19,7 @@ public class Scoring : MonoBehaviour
     public float multiplier;
     public float maxMultiplier;
     public Text gameMultiplierText;
+    [SerializeField] private int scoreToNextGoal = 0;
 
     public Text gameDayText;
     public TextMeshProUGUI resultDayText;
@@ -30,6 +31,7 @@ public class Scoring : MonoBehaviour
     public Image gameTipJarFill;
     public Sprite starShine;
 
+    //public GameObject jarStarFillPrefab;
     
     public GameObject starFillPrefab;
     public GameObject shimmerFXPrefab;
@@ -41,7 +43,7 @@ public class Scoring : MonoBehaviour
     public GameObject gameStarRatingContainer;
     public GameObject starRatingContainer;
     public int starIndex;
-    public List<GameObject> gameStars = new List<GameObject>();
+    public List<GameObject> gameStars;
     public List<GameObject> resultStars = new List<GameObject>();
 
     int gameStarSlotIndex = 0;
@@ -365,44 +367,7 @@ public class Scoring : MonoBehaviour
         StartCoroutine(ShowPerformanceStats());
     }
 
-    //public void HighscoreNameEntered(string p_entered)
-    //{
    
-        
-    //    hsTable.AddHighscoreEntry(score,p_entered);
-    //    string jsonString = PlayerPrefs.GetString("highscoreTable");
-    //    Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
-   
-    //    if (highscores != null)
-    //    {
-           
-    //        //Sort
-    //        for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
-    //        {
-    //            for (int ii = i + 1; ii < highscores.highscoreEntryList.Count; ii++)
-    //            {
-    //                if (highscores.highscoreEntryList[ii].score > highscores.highscoreEntryList[i].score)
-    //                {
-    //                    //Swap
-    //                    HighscoreEntry temporaryHighscoreEntry = highscores.highscoreEntryList[i];
-    //                    highscores.highscoreEntryList[i] = highscores.highscoreEntryList[ii];
-    //                    highscores.highscoreEntryList[ii] = temporaryHighscoreEntry;
-    //                    //hsTable.highscoresList[ii] = highscores.highscoreEntryList[ii].score;
-    //                    //hsTable.highscoresList[i] = highscores.highscoreEntryList[i].score;
-    //                }
-    //            }
-    //        }
-
-    //        hsTable.highscoreEntryTransformList = new List<Transform>();
-    //        foreach (HighscoreEntry selectedHighscoreEntry in highscores.highscoreEntryList)
-    //        {
-    //            hsTable.CreateHighscoreEntryTransform(selectedHighscoreEntry, hsTable.entryContainer, hsTable.highscoreEntryTransformList);
-
-    //        }
-    //    }
-    //    enterHighscoreUI.SetActive(false);
-        
-    //}
 
     public void ShowPerformance(Text p_perfromanceTitle, string p_performanceValue)
     {
@@ -569,30 +534,86 @@ public class Scoring : MonoBehaviour
         Destroy(spawnedBlindingTwinkleParticleFX, 3f);
         return spawnedStarFill;
     }
- 
+
+    //public void UpdateGameScoreGoal()
+    //{
+    //   // int currentScaledScore = score;
+
+    //    Debug.Log(scoreGoal + " score goal");
+
+    //    Debug.Log(score + " current score");
+    //    //  currentScaledScore = score;
+    //    //while (currentScaledScore >= scoreGoal / 5) // 150 = scoreGoal / 5
+    //    //{
+    //    //    currentScaledScore -= scoreGoal /5;
+    //    //}
+
+    //    // Debug.Log(currentScaledScore + " current score");
+
+    //    //scoreToNextGoal -= score;
+
+
+    //    if (scoreToNextGoal < scoreGoal / 5)
+    //    {
+    //        scoreToNextGoal = (scoreGoal / 5); // 150 = scoreGoal / 5
+    //    }
+
+    //    Debug.Log(scoreToNextGoal + " target score");
+
+    //    while (score >= scoreToNextGoal)
+    //    {
+    //        if (gameStarSlotIndex < 5)
+    //        {
+    //            //scoreToNextGoal = (scoreGoal / 5);
+
+    //            if (score > scoreToNextGoal)
+    //            {
+    //                int difference = score - scoreToNextGoal;
+    //                scoreToNextGoal = (scoreGoal / 5) - difference;
+    //            }
+
+    //            Debug.Log("Update GameScore");
+    //            gameStarSlotIndex++;
+    //            GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
+    //            newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
+
+    //        }
+
+
+
+    //    }
+
+    //    if(score <= scoreToNextGoal)
+    //    {
+    //        scoreToNextGoal -= score;
+    //    }
+
+
+
+
+    //    Debug.Log(gameStarSlotIndex + " index");
+    //    gameScoreGoalText.text = scoreToNextGoal.ToString();
+
+
+
+    //}
     public void UpdateGameScoreGoal()
     {
         int currentScaledScore = score;
 
 
-      //  currentScaledScore = score;
-        while (currentScaledScore >= scoreGoal / 5)
-        {
-            currentScaledScore -= scoreGoal /5;
-        } 
-      
-        
-   
-       int scoreToNextGoal = (scoreGoal / 5) - (currentScaledScore);
+        currentScaledScore = score - (scoreGoal / 5 * gameStarSlotIndex);
+
+
+
+        int scoreToNextGoal = (scoreGoal / 5) - (currentScaledScore);
         while (scoreToNextGoal < 1)
         {
             scoreToNextGoal += (scoreGoal / 5);
-            
+
             if (gameStarSlotIndex < 5)
             {
-                //   Debug.Log("ssssssssssssssssssssTAAAAAAAAAR: " + gameStarSlotIndex);
-                //  gameStarSlots[gameStarSlotIndex].gameObject.GetComponent<Image>().sprite = starShine;
-                Debug.Log("Update GameScore");
+                Debug.Log("ssssssssssssssssssssTAAAAAAAAAR: " + gameStarSlotIndex);
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
                 gameStarSlotIndex++;
@@ -602,9 +623,7 @@ public class Scoring : MonoBehaviour
         }
 
         gameScoreGoalText.text = scoreToNextGoal.ToString();
-        
-    
-        
+
     }
 
     public void SetScore(int p_newScore)
@@ -824,3 +843,42 @@ public class Scoring : MonoBehaviour
 
 
 }
+
+//public void HighscoreNameEntered(string p_entered)
+//{
+
+
+//    hsTable.AddHighscoreEntry(score,p_entered);
+//    string jsonString = PlayerPrefs.GetString("highscoreTable");
+//    Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+
+//    if (highscores != null)
+//    {
+
+//        //Sort
+//        for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
+//        {
+//            for (int ii = i + 1; ii < highscores.highscoreEntryList.Count; ii++)
+//            {
+//                if (highscores.highscoreEntryList[ii].score > highscores.highscoreEntryList[i].score)
+//                {
+//                    //Swap
+//                    HighscoreEntry temporaryHighscoreEntry = highscores.highscoreEntryList[i];
+//                    highscores.highscoreEntryList[i] = highscores.highscoreEntryList[ii];
+//                    highscores.highscoreEntryList[ii] = temporaryHighscoreEntry;
+//                    //hsTable.highscoresList[ii] = highscores.highscoreEntryList[ii].score;
+//                    //hsTable.highscoresList[i] = highscores.highscoreEntryList[i].score;
+//                }
+//            }
+//        }
+
+//        hsTable.highscoreEntryTransformList = new List<Transform>();
+//        foreach (HighscoreEntry selectedHighscoreEntry in highscores.highscoreEntryList)
+//        {
+//            hsTable.CreateHighscoreEntryTransform(selectedHighscoreEntry, hsTable.entryContainer, hsTable.highscoreEntryTransformList);
+
+//        }
+//    }
+//    enterHighscoreUI.SetActive(false);
+
+//}
