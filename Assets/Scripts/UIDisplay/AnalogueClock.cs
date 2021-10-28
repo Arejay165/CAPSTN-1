@@ -53,8 +53,8 @@ public class AnalogueClock : MonoBehaviour
 
        // currentGameTime += DayAndNightCycle.instance.GetGameTime() / DayAndNightCycle.instance.GetEndTime();
 
-        timeFill.fillAmount -= 1.0f / DayAndNightCycle.instance.GetEndTime() * Time.deltaTime;
+        timeFill.fillAmount -= (1.0f / DayAndNightCycle.instance.GetEndTime()) * Time.deltaTime;
        // clockHandTransform.eulerAngles = new Vector3(0, 0, -currentGameTime * 1);
-         clockHandTransform.eulerAngles = new Vector3(0, 0, -currentGameTime * 1);
+         clockHandTransform.eulerAngles = new Vector3(0, 0, -currentGameTime + 90f * 1);
     }
 }
