@@ -364,7 +364,7 @@ public class TestCalculator : MonoBehaviour
                     RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, true);
                     //add bonus mood
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.IncreaseCurrentMoodAmount( mc.correctBonusTime);
+                    mc.IncreaseCurrentMoodAmount( mc.correctBonusTime*4);
 
                     StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect, OnPriceCorrect));
 
@@ -630,7 +630,7 @@ public class TestCalculator : MonoBehaviour
 
                     //add bonus mood time
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.IncreaseCurrentMoodAmount( mc.correctBonusTime*2);
+                    mc.IncreaseCurrentMoodAmount( mc.correctBonusTime*4);
                     StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
                     
 
