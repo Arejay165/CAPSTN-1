@@ -82,37 +82,45 @@ public class MoodComponent : MonoBehaviour
         //CAN ONLY DEDUCT IF ITS NOT BEING DEDUCTED ALREADY
         if (!pauseDecrease)
         {
-            pauseDecrease = true;
-            dcm.delayedMoodImage.gameObject.SetActive(true);
-            //set color to red
-            //dcm.delayedMoodImage.color = new Color(255f, 0f, 0f, 1f);
-            dcm.delayedMoodImage.color = Color.white;
-            float desiredAmount = currentMoodAmount -= p_deduction;
+            float desiredAmount = currentMoodAmount - p_deduction;
             if (desiredAmount < 0)
             {
                 desiredAmount = 0;
             }
+            else
+            {
+                pauseDecrease = true;
+            }
             
-            dcm.moodImage.fillAmount = currentMoodAmount / maxMoodAmount;
+            dcm.delayedMoodImage.fillAmount = currentMoodAmount / maxMoodAmount;
+            dcm.delayedMoodImage.gameObject.SetActive(true);
+            //set color to red
+            //dcm.delayedMoodImage.color = new Color(255f, 0f, 0f, 1f);
+            dcm.delayedMoodImage.color = Color.white;
+           
+            
+            dcm.moodImage.fillAmount = desiredAmount / maxMoodAmount;
        //     Debug.Log("TEST: " + currentMoodAmount);
-            StartCoroutine(MoodDeducted());
+            StartCoroutine(MoodDeducted(p_deduction));
         }
       
     }
     #endregion
-    public IEnumerator MoodDeducted()
+    public IEnumerator MoodDeducted(float p_deduction)
     {
         
         yield return new WaitForSeconds(1f);
      //   Debug.Log("TEST: " + currentMoodAmount);
         //SCALE TOWARDS THE CURRENT MOOD DISPLAY
-        Tween myTween = dcm.delayedMoodImage.DOFillAmount(currentMoodAmount/maxMoodAmount,0.5f);// animation sequence
+        Tween myTween = dcm.delayedMoodImage.DOFillAmount((currentMoodAmount - p_deduction) / maxMoodAmount,0.5f);// animation sequence
+        currentMoodAmount -= p_deduction;
 
         //Transparent fade out
         dcm.delayedMoodImage.DOFade(0.0f, 0.5f);
         yield return myTween.WaitForCompletion(); // Wait to finish
 
-        dcm.delayedMoodImage.fillAmount = currentMoodAmount/maxMoodAmount;
+        dcm.delayedMoodImage.fillAmount = currentMoodAmount / maxMoodAmount;
+        dcm.moodImage.fillAmount = currentMoodAmount / maxMoodAmount;
 
         //reset
         //make delayedmoodimage visible again
