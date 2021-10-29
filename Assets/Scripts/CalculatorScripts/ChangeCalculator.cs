@@ -112,10 +112,11 @@ public class ChangeCalculator : MonoBehaviour
         }
 
     }
-
+    
     IEnumerator InputFieldSelect()
     {
-        yield return 0;
+        yield return new WaitForEndOfFrame();
+        tmpChangeInputField.enabled = true;
         tmpChangeInputField.Select();
         tmpChangeInputField.ActivateInputField();
 

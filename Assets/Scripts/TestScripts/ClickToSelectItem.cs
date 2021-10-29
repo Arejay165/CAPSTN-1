@@ -193,7 +193,7 @@ public class ClickToSelectItem : MonoBehaviour
     IEnumerator Cooldown()
     {
         canSpawn = false;
-        yield return new WaitForSeconds(0.65f);
+        yield return new WaitForSeconds(0.35f);
         canSpawn = true;
     }
 
