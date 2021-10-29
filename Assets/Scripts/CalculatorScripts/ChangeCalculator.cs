@@ -34,7 +34,7 @@ public class ChangeCalculator : MonoBehaviour
         if (TutorialManager.instance.enabled == false)
         {
              divisor = Random.Range(2, 51); // use to multiply to the quotient to always be whole number 
-             quotient = Random.Range(1, 50); // possible answers 
+             quotient = Random.Range(1, 20); // possible answers 
              dividend = divisor * quotient; // determine the dividend
         }
         else
