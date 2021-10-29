@@ -8,6 +8,7 @@ public class AnalogueClock : MonoBehaviour
     [SerializeField] private float realSecondsInGameDay = 0;
     [SerializeField] private Transform clockHandTransform;
     [SerializeField] private Image timeFill;
+    [SerializeField] float timeSpeed = 1f;
  
     [SerializeField] float currentGameTime = 0;
     float timeScale = 0f;
@@ -49,7 +50,7 @@ public class AnalogueClock : MonoBehaviour
 
     private void Update()
     {
-        currentGameTime += timeScale * Time.deltaTime;
+        currentGameTime += timeScale * timeSpeed * Time.deltaTime;
 
         // currentGameTime += DayAndNightCycle.instance.GetGameTime() / DayAndNightCycle.instance.GetEndTime();
 

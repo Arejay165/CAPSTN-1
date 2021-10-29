@@ -83,7 +83,7 @@ public class Scoring : MonoBehaviour
     public Text multiplicationEvaluation;
     public Text divisionSolvingTime;
     public Text divisionEvaluation;
-
+ 
     public GameObject continueButton;
     public GameObject restartButton;
     public GameObject quitButton;
@@ -98,7 +98,7 @@ public class Scoring : MonoBehaviour
     public int resultsNextStar;
 
     public TextMeshProUGUI minGoalValue;
-   
+    public TextMeshProUGUI newHighScoreText;
     public void ShowBriefing()
     {
         briefingDayText.text = (round+1).ToString();
@@ -358,6 +358,7 @@ public class Scoring : MonoBehaviour
     {
         starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 1;
         newHighscoreUI.SetActive(true);
+        newHighScoreText.text = score.ToString();
         yield return new WaitForSeconds(4.5f);
         newHighscoreUI.SetActive(false);
         //enterHighscoreUI.SetActive(true);
