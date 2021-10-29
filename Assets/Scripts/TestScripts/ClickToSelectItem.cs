@@ -69,8 +69,8 @@ public class ClickToSelectItem : MonoBehaviour
         {
             if (!CursorManager.instance.isLooping)
             {
-               
-                CursorManager.instance.SetActiveCursorAnimation(CursorType.HoverItem);
+            
+                CursorManager.instance.PlayCursorAnimation(CursorType.HoverItem);
             }
        
             if (Input.GetMouseButtonDown(0) && canSpawn)
@@ -78,7 +78,7 @@ public class ClickToSelectItem : MonoBehaviour
                
              //   Debug.Log("Item clicked");
 
-                CursorManager.instance.PlayCursorAnimation(CursorType.ClickItem, CursorType.Arrow);
+                //CursorManager.instance.PlayCursorAnimation(CursorType.ClickItem, CursorType.Arrow);
                 if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf && !TransitionManager.instances.changeTransform.gameObject.activeSelf)
                 {
                     SpawnItem();
@@ -139,6 +139,7 @@ public class ClickToSelectItem : MonoBehaviour
         if (defaultItemSprite != null && itemSR != null) itemSR.sprite = defaultItemSprite;
      
         if (hintingSparklePFX ) hintingSparklePFX.Stop();
+        CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
         StartCoroutine(SmoothStopRadiate());
 
 

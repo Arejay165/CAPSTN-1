@@ -7,11 +7,20 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
 {
 
     public bool clickable = true;
-
+    [SerializeField]
+    SpriteRenderer itemSR;
+    [SerializeField]
+    Sprite defaultItemSprite;
+    [SerializeField] ParticleSystem hintingSparklePFX;
+    [SerializeField] ParticleSystem radiatePFX;
+    [SerializeField]
+    Sprite highlightedSprite;
     private void Start()
     {
         
     }
+
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (clickable)
@@ -65,7 +74,86 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
         
        
     }
+    private void OnMouseOver()
+    {
+        HighlightItem();
 
+        //If the item is clicked
+        //Spawn one at a time
+        if (GameManager.instance.isPlaying)
+        {
+            if (!CursorManager.instance.isLooping)
+            {
+
+                CursorManager.instance.PlayCursorAnimation(CursorType.HoverItem);
+            }
+        }
+    }
+
+    private void OnMouseExit()
+    {
+
+        //CursorManager.instance.SetActiveCursorAnimation(CursorType.Arrow);
+        RemoveHighlightItem();
+    }
+
+    void HighlightItem()
+    {
+        //Sprite change to highlighted 
+
+        //Change the current sprite to the highlighted sprite 
+        if (highlightedSprite != null && itemSR != null) itemSR.sprite = highlightedSprite;
+        if (hintingSparklePFX && !hintingSparklePFX.isPlaying) hintingSparklePFX.Play();
+        if (radiatePFX && !radiatePFX.isPlaying) radiatePFX.Play();
+
+    }
+
+    void RemoveHighlightItem()
+    {
+
+        if (defaultItemSprite != null && itemSR != null) itemSR.sprite = defaultItemSprite;
+
+        if (hintingSparklePFX) hintingSparklePFX.Stop();
+        CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
+        StartCoroutine(SmoothStopRadiate());
+
+
+
+    }
+
+    IEnumerator SmoothStopRadiate()
+    {
+        if (radiatePFX != null)
+        {
+            if (radiatePFX.isPlaying)
+            {
+                var particles = new ParticleSystem.Particle[radiatePFX.main.maxParticles];
+                var currentAmount = radiatePFX.GetParticles(particles);
+
+                if (currentAmount <= 0)
+                {
+                    radiatePFX.Stop();
+                }
+                else
+                {
+                    for (int i = 0; i < currentAmount; i++)
+                    {
+                        if (particles[i].remainingLifetime < 0.35f)
+                        {
+                            radiatePFX.Stop();
+                        }
+                    }
+                }
+
+                yield return new WaitForSeconds(0.5f);
+                StartCoroutine(SmoothStopRadiate());
+            }
+        }
+
+
+
+
+    }
     void ChangeUI()
     {
         //Disable customer bubble

@@ -161,6 +161,15 @@ public class TestCalculator : MonoBehaviour
 
     private void OnDisable()
     {
+        //clears answerfields
+        if (answerFields.Count > 0)
+        {
+            foreach (TMP_InputField selectedItemUI in answerFields)
+            {
+                Destroy(selectedItemUI.transform.parent.gameObject);
+            }
+            answerFields.Clear();
+        }
         foreach (TMP_InputField selectedAnswerField in answerFields)
         {
             selectedAnswerField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
@@ -674,6 +683,7 @@ public class TestCalculator : MonoBehaviour
             yield return new WaitForSeconds(0.075f);
             blinkCount++;
         }
+
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
    //     yield return new WaitForSeconds(0.5f);
 
@@ -706,7 +716,7 @@ public class TestCalculator : MonoBehaviour
             TutorialManager.instance.ActivateTutorialUI();
             TutorialManager.instance.itemMask.SetActive(false);
         }
-              
+     
     }
     public void DisplayItemOrders()
     {
