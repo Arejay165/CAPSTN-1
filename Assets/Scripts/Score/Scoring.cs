@@ -274,7 +274,7 @@ public class Scoring : MonoBehaviour
         if (resultStars.Count >= 1)
         {
             backgroundImage.sprite = levelComplete;
-            levelText.text = "Level Complete";
+            levelText.text = "Level    Complete";
             AudioManager.instance.playSound(4);
             //If perfect, do confetti
             if (resultStars.Count >= 3)
