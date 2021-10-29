@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/ArjayScene.unity
     guid: acbdb438676df6041b6ec5a012eb89cf
   - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
     path: Assets/Scenes/JACE/Protoype_JACE4.unity
     guid: 9863f60ad84004d41bde06590afde604
   - enabled: 1

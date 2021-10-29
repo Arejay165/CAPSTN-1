@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     public SFX[] sounds;
+    public Musics[] BGM;
 
     private void Awake()
     {
@@ -22,20 +23,21 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    /*public void Start()
-    {
-        Debug.Log(sounds.Length);
-
-        for(int i = 0; i <= sounds.Length;i++)
-        {
-            sounds[i].sound.Stop();
-        }
-    }*/
+ 
 
     public void playSound(int index)
     {
         sounds[index].sound.Play();  
     }
 
-   
+    public void playMusic(int index)
+    {
+        BGM[index].musicFile.Play();
+    }
+
+    public void stopMusic(int index)
+    {
+        BGM[index].musicFile.Stop();
+    }
+
 }

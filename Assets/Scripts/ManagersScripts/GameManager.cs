@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
         
     }
     
+   
+
     public void TogglePlaying()
     {
         isPlaying = isPlaying ? false : true;
@@ -68,6 +70,9 @@ public class GameManager : MonoBehaviour
         else
         {
             StartCoroutine(DayStart());
+            
+            
+
         }
         ////There is no tutorial
         //if (TutorialManager.instance == null)
@@ -97,11 +102,12 @@ public class GameManager : MonoBehaviour
     {
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundBriefingUI.name);
         Scoring.instance.ShowBriefing();
+        AudioManager.instance.stopMusic(0);
         SetUpRound();
         yield return new WaitForSeconds(2f);
         UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
         StartRound();
-      
+        AudioManager.instance.playMusic(1);
     }
 
     public IEnumerator DayEnd()
@@ -116,6 +122,7 @@ public class GameManager : MonoBehaviour
     //    PlayerManager.instance.lastItemSpawner.canSpawn = false;
 
         Debug.Log("Level Over");
+        AudioManager.instance.stopMusic(1);
         yield return new WaitForSeconds(2f);
         UIManager.instance.ActivateGameObjects(UIManager.instance.endGameUI.name);
         TransitionManager.instances.MoveTransition(new Vector2(0, 0), 0.5f, UIManager.instance.endGameUI.GetComponent<RectTransform>(), UIManager.instance.endGameUI.gameObject, true);
@@ -133,9 +140,10 @@ public class GameManager : MonoBehaviour
         else
         {
             UIManager.instance.ActivateGameObjects(UIManager.instance.titleScreenUI.name);
+            AudioManager.instance.playMusic(0);
         }
      
-
+       
     
     }
 

@@ -53,7 +53,7 @@ public class DetectItemInWindow : MonoBehaviour
                             //ordersheet 
                             TransitionManager.instances.MoveTransition(new Vector2(680f, 0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
                             }
-                            
+                            AudioManager.instance.playSound(2);
                             Destroy(itemInCounter.gameObject, 0.2f);
                         //    Debug.Log("DESTROYING THRU DETECT CORRECT");
                             PlayerManager.instance.lastItemSpawner = null;
@@ -65,6 +65,7 @@ public class DetectItemInWindow : MonoBehaviour
                     if (i >= MathProblemManager.instance.GetCurrentItemsWanted().Count)
                     {
                         Debug.Log("Wrong Item");
+                        AudioManager.instance.playSound(3);
                         Destroy(itemInCounter.gameObject, 0.2f);
                         mc.DeductCurrentMoodAmount(mc.penaltyTime);// 1 second
                     }
@@ -74,6 +75,7 @@ public class DetectItemInWindow : MonoBehaviour
             else
             {
                 Debug.Log("Wrong Item");
+                AudioManager.instance.playSound(3);
                 Destroy(itemInCounter.gameObject, 0.2f);
             }
         }

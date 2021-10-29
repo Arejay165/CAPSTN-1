@@ -250,6 +250,7 @@ public class Scoring : MonoBehaviour
         //If passing
         if (resultStars.Count >= 3)
         {
+            AudioManager.instance.playSound(4);
             //If perfect, do confetti
             if (resultStars.Count >= 4)
             {
@@ -351,6 +352,7 @@ public class Scoring : MonoBehaviour
         else
         {
             failPrompt.SetActive(true);
+            AudioManager.instance.playSound(5);
             StartCoroutine(ShowPerformanceStats());
         }
 
@@ -439,6 +441,7 @@ public class Scoring : MonoBehaviour
         //if passed
         if (resultStars.Count >= 3)
         {
+          
             continueButton.SetActive(true);
             round++;
             
@@ -535,68 +538,7 @@ public class Scoring : MonoBehaviour
         return spawnedStarFill;
     }
 
-    //public void UpdateGameScoreGoal()
-    //{
-    //   // int currentScaledScore = score;
-
-    //    Debug.Log(scoreGoal + " score goal");
-
-    //    Debug.Log(score + " current score");
-    //    //  currentScaledScore = score;
-    //    //while (currentScaledScore >= scoreGoal / 5) // 150 = scoreGoal / 5
-    //    //{
-    //    //    currentScaledScore -= scoreGoal /5;
-    //    //}
-
-    //    // Debug.Log(currentScaledScore + " current score");
-
-    //    //scoreToNextGoal -= score;
-
-
-    //    if (scoreToNextGoal < scoreGoal / 5)
-    //    {
-    //        scoreToNextGoal = (scoreGoal / 5); // 150 = scoreGoal / 5
-    //    }
-
-    //    Debug.Log(scoreToNextGoal + " target score");
-
-    //    while (score >= scoreToNextGoal)
-    //    {
-    //        if (gameStarSlotIndex < 5)
-    //        {
-    //            //scoreToNextGoal = (scoreGoal / 5);
-
-    //            if (score > scoreToNextGoal)
-    //            {
-    //                int difference = score - scoreToNextGoal;
-    //                scoreToNextGoal = (scoreGoal / 5) - difference;
-    //            }
-
-    //            Debug.Log("Update GameScore");
-    //            gameStarSlotIndex++;
-    //            GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
-    //            newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
-
-    //        }
-
-
-
-    //    }
-
-    //    if(score <= scoreToNextGoal)
-    //    {
-    //        scoreToNextGoal -= score;
-    //    }
-
-
-
-
-    //    Debug.Log(gameStarSlotIndex + " index");
-    //    gameScoreGoalText.text = scoreToNextGoal.ToString();
-
-
-
-    //}
+    
     public void UpdateGameScoreGoal()
     {
         int currentScaledScore = score;
@@ -613,7 +555,7 @@ public class Scoring : MonoBehaviour
 
             if (gameStarSlotIndex < 5)
             {
-                Debug.Log("ssssssssssssssssssssTAAAAAAAAAR: " + gameStarSlotIndex);
+               
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
                 gameStarSlotIndex++;
