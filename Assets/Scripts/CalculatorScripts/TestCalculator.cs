@@ -699,7 +699,7 @@ public class TestCalculator : MonoBehaviour
             //Disable customer mood bar
             GameManager.instance.customer.moodPanel.SetActive(false);
             //animation
-            DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 1f, false));
+            DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 0.5f, false));
             Destroy(GameManager.instance.customer.gameObject,1.5f);
             GameManager.instance.customer = null;
         }
