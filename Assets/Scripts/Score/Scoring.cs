@@ -105,6 +105,11 @@ public class Scoring : MonoBehaviour
 
     public TextMeshProUGUI minGoalValue;
     public TextMeshProUGUI newHighScoreText;
+
+    public Text levelText;
+
+    public Image backgroundImage;
+    public Sprite levelComplete;
     public void ShowBriefing()
     {
         
@@ -268,6 +273,8 @@ public class Scoring : MonoBehaviour
         //If passing
         if (resultStars.Count >= 1)
         {
+            backgroundImage.sprite = levelComplete;
+            levelText.text = "Level Complete";
             AudioManager.instance.playSound(4);
             //If perfect, do confetti
             if (resultStars.Count >= 3)
@@ -370,7 +377,10 @@ public class Scoring : MonoBehaviour
         //else if fail
         else
         {
-            failPrompt.SetActive(true);
+            //  failPrompt.SetActive(true);
+            levelText.text = "Level Failed";
+            resultDayText.text = "";
+            backgroundImage.sprite = failImage;
             AudioManager.instance.playSound(5);
             StartCoroutine(ShowPerformanceStats());
         }
@@ -653,7 +663,7 @@ public class Scoring : MonoBehaviour
 
     void OnGameStarted()
     {
-        failPrompt.SetActive(false);
+       // failPrompt.SetActive(false);
         restartButton.SetActive(false);
         continueButton.SetActive(false);
         //Delete all stars made
