@@ -9,7 +9,7 @@ public class DigitalClock : MonoBehaviour
     
     public TextMeshProUGUI timeValueUI;
     public bool isCountdowning = false;
-    Color defaultColor;
+    [SerializeField] Color defaultColor;
     float defaultSize;
 
 
