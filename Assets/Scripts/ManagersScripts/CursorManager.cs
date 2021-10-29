@@ -36,7 +36,8 @@ public class CursorManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetActiveCursorAnimation(CursorType.Arrow);
+        //SetActiveCursorAnimation(CursorType.Arrow);
+        PlayCursorAnimation(CursorType.Arrow);
         postCursorAnimation.cursorType = CursorType.None;
     }
 
@@ -52,28 +53,28 @@ public class CursorManager : MonoBehaviour
             
                 currentFrame = (currentFrame + 1) % frameCount;
                 Cursor.SetCursor(cursorAnimation.textureArray[currentFrame], cursorAnimation.offset, CursorMode.Auto);
-     
-           
-                
-                if (currentFrame >= frameCount - 1)
+
+
+
+            if (currentFrame >= frameCount - 1)
+            {
+
+
+                if (postCursorAnimation.cursorType != CursorType.None)
                 {
 
-                
-                    if (postCursorAnimation.cursorType != CursorType.None)
-                    {
 
-                        
-                        SetActiveCursorAnimation(postCursorAnimation.cursorType);
-                        postCursorAnimation.cursorType = CursorType.None;
-                    }
-                    else
-                    {
-                    isLooping = false;
-                    }
+                    SetActiveCursorAnimation(postCursorAnimation.cursorType);
+                    postCursorAnimation.cursorType = CursorType.None;
                 }
-                
-                
+                else
+                {
+                    isLooping = false;
+                }
             }
+
+
+        }
         
       
         if (Input.GetKeyDown(KeyCode.T)) SetActiveCursorAnimation(CursorType.Arrow);
@@ -149,6 +150,35 @@ public class CursorManager : MonoBehaviour
             }
         }
 
+        //cursorAnimation.cursorType = p_cursorAnimation.cursorType;
+        //cursorAnimation.textureArray = p_cursorAnimation.textureArray;
+        //cursorAnimation.frameRate = p_cursorAnimation.frameRate;
+        //cursorAnimation.offset = p_cursorAnimation.offset;
+
+    }
+    public void PlayCursorAnimation(CursorType p_cursorType)
+    {
+        if (GetCursorAnimation(p_cursorType) != null)
+        {
+            
+                isLooping = true;
+            cursorAnimation.cursorType = GetCursorAnimation(p_cursorType).cursorType;
+            cursorAnimation.textureArray = GetCursorAnimation(p_cursorType).textureArray;
+            cursorAnimation.frameRate = GetCursorAnimation(p_cursorType).frameRate;
+            cursorAnimation.offset = GetCursorAnimation(p_cursorType).offset;
+           // cursorAnimation = GetCursorAnimation(p_cursorType);
+            currentFrame = 0;
+
+                frameTimer = cursorAnimation.frameRate;
+                frameCount = cursorAnimation.textureArray.Length;
+                postCursorAnimation.cursorType = GetCursorAnimation(p_cursorType).cursorType;
+            
+        }
+
+        //cursorAnimation.cursorType = p_cursorAnimation.cursorType;
+        //cursorAnimation.textureArray = p_cursorAnimation.textureArray;
+        //cursorAnimation.frameRate = p_cursorAnimation.frameRate;
+        //cursorAnimation.offset = p_cursorAnimation.offset;
 
     }
     [System.Serializable]

@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayStart()
     {
+        CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundBriefingUI.name);
         Scoring.instance.ShowBriefing();
         AudioManager.instance.stopMusic(0);
@@ -114,6 +115,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayEnd()
     {
+        CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundDebriefingUI.name);
         InteractableManager.instances.SpawnController(false);
         if (customer != null)
