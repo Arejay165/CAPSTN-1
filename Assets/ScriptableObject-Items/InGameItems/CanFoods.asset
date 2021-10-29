@@ -19,5 +19,4 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: b49f02ad48df7854cbf14d341b8527bd, type: 3}
   quantity: 1
   minRangePrice: 50
-  maxRangePrice: 200
-  isUnlock: 0
+  maxRangePrice: 125
