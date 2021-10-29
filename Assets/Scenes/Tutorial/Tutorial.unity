@@ -46299,7 +46299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSpawnedPrefab: {fileID: 3097938141694360139, guid: 6c23f26a728f3f84da75d594e21e138f, type: 3}
   itemSR: {fileID: 1724240603}
-  canSpawn: 0
+  canSpawn: 1
   highlightedSprite: {fileID: 21300000, guid: d5eb3cef08a9320448b9baf8a6d4359e, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: 88560842a85a7f544ba591cab773c960, type: 3}
   targetPosition: {fileID: 629293353}
@@ -47089,6 +47089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeValueUI: {fileID: 2009670955}
   isCountdowning: 0
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &799941931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66957,8 +66958,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 679, y: 325}
-  m_SizeDelta: {x: 881.3391, y: 173.0436}
+  m_AnchoredPosition: {x: 704.484, y: 332}
+  m_SizeDelta: {x: 809.772, y: 159.04}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1103266275
 MonoBehaviour:
@@ -74529,7 +74530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSpawnedPrefab: {fileID: 2596027499759561030, guid: 864a26e95bf197a4d89c8d305ec662ee, type: 3}
   itemSR: {fileID: 1865092753}
-  canSpawn: 0
+  canSpawn: 1
   highlightedSprite: {fileID: 21300000, guid: 0b5bf41f1fc0fe249bbd345157e79838, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: 0b5bf41f1fc0fe249bbd345157e79838, type: 3}
   targetPosition: {fileID: 629293353}
@@ -75256,6 +75257,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71d07022cf618554285ab0a5da36b9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickable: 1
+  itemSR: {fileID: 0}
+  defaultItemSprite: {fileID: 0}
+  hintingSparklePFX: {fileID: 0}
+  radiatePFX: {fileID: 0}
+  highlightedSprite: {fileID: 0}
 --- !u!212 &1306669544
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -76656,8 +76663,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 681.14, y: -55.2713}
-  m_SizeDelta: {x: 791.23, y: 171.2274}
+  m_AnchoredPosition: {x: 698.43, y: -17.564701}
+  m_SizeDelta: {x: 825.8, y: 155.1569}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1347068662
 MonoBehaviour:
@@ -76995,8 +77002,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 681.1455, y: 130.96898}
-  m_SizeDelta: {x: 791.2274, y: 179.102}
+  m_AnchoredPosition: {x: 698.43, y: 158.0218}
+  m_SizeDelta: {x: 825.8, y: 173.0584}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1360677504
 MonoBehaviour:
@@ -90465,7 +90472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSpawnedPrefab: {fileID: 17627874219613309, guid: 4531dd07bad7c2d469578cbdbe97d135, type: 3}
   itemSR: {fileID: 1605715746}
-  canSpawn: 0
+  canSpawn: 1
   highlightedSprite: {fileID: 21300000, guid: 7b3504b370df9ad4bae47097cb747ad6, type: 3}
   defaultItemSprite: {fileID: 21300000, guid: 59b13e72fe610784eb05499583bb4c23, type: 3}
   targetPosition: {fileID: 629293353}
@@ -91117,6 +91124,7 @@ MonoBehaviour:
   starIndex: 0
   gameStars: []
   resultStars: []
+  briefingStarGoals: []
   gameStarSlots:
   - {fileID: 2052570272}
   - {fileID: 575600816}
@@ -91129,6 +91137,7 @@ MonoBehaviour:
   - {fileID: 389922501}
   - {fileID: 2143516478}
   - {fileID: 2001729814}
+  resultStarGoals: []
   failImage: {fileID: 21300000, guid: a5981b65810049548b6805c2b7446439, type: 3}
   levelPasserImage: {fileID: 0}
   failPrompt: {fileID: 0}
@@ -91164,6 +91173,9 @@ MonoBehaviour:
   resultsNextStar: 0
   minGoalValue: {fileID: 1332103095}
   newHighScoreText: {fileID: 0}
+  levelText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  levelComplete: {fileID: 0}
 --- !u!114 &1615599871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104386,6 +104398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHolding: 0
+  GameCamera: {fileID: 0}
   UICamera: {fileID: 0}
   currentSelectedItem: {fileID: 0}
   lastItemSpawner: {fileID: 0}
