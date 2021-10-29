@@ -20,4 +20,3 @@ MonoBehaviour:
   quantity: 1
   minRangePrice: 20
   maxRangePrice: 150
-  isUnlock: 0
