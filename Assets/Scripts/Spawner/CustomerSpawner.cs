@@ -79,7 +79,11 @@ public class CustomerSpawner : MonoBehaviour
             obj.GetComponent<Customer>().panel.gameObject.SetActive(true);
         }
 
-        GameManager.instance.customer.moodPanel.SetActive(true);
+        if (GameManager.instance.customer!=null)
+        {
+            GameManager.instance.customer.moodPanel.SetActive(true);
+        }
+        
     }
 
 

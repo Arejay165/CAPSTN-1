@@ -128,6 +128,13 @@ public class GameManager : MonoBehaviour
         UIManager.instance.ActivateGameObjects(UIManager.instance.endGameUI.name);
         TransitionManager.instances.MoveTransition(new Vector2(0, 0), 0.5f, UIManager.instance.endGameUI.GetComponent<RectTransform>(), UIManager.instance.endGameUI.gameObject, true);
         Scoring.instance.Results();
+        foreach (ClickToSelectItem selectedItem in InteractableManager.instances.clickToSelectItems)
+        {
+            selectedItem.canSpawn = true;
+        }
+        //window.invincibility = false;
+
+        InteractableManager.instances.cashBox.clickable = true;
 
     }
     virtual protected void Start()

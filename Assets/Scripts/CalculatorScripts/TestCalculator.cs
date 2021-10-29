@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System;
 
 [System.Serializable]
 public class ItemUIClass
@@ -35,6 +36,8 @@ public class TestCalculator : MonoBehaviour
     [SerializeField] GameObject itemDisplay;
     [SerializeField] Transform displayPanel;
 
+    string text = "";
+    string validCharacters = "0123456789";
 
     public float randomExtraMoney;
     public bool isCountingTime;
@@ -78,6 +81,10 @@ public class TestCalculator : MonoBehaviour
         //    Destroy(selectedAnswerField.gameObject);
         //}
         //clears ui list
+        
+        totalPriceAnswerField.onValidateInput += delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+        changeAnswerField.onValidateInput += delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+
         foreach (Transform child in displayPanel.transform)
         {
 
@@ -86,7 +93,16 @@ public class TestCalculator : MonoBehaviour
 
         }
         //clears answerfields
-        answerFields.Clear();
+        if (answerFields.Count > 0)
+        {
+            foreach (TMP_InputField selectedItemUI in answerFields)
+            {
+                Destroy(selectedItemUI.transform.parent.gameObject);
+            }
+            answerFields.Clear();
+        }
+    
+
         itemUIClassList.Clear();
         itemsAnswer.Clear();
         changeAnswers.Clear();
@@ -145,12 +161,17 @@ public class TestCalculator : MonoBehaviour
 
     private void OnDisable()
     {
-        //Deregister OnGameStart Event in GameManager
+        foreach (TMP_InputField selectedAnswerField in answerFields)
+        {
+            selectedAnswerField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+        }
+        totalPriceAnswerField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+        changeAnswerField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+       
         GameManager.OnGameStart -= OnGameStarted;
-      
 
+        
 
- 
     }
 
     public void OnGameStarted()
@@ -160,6 +181,23 @@ public class TestCalculator : MonoBehaviour
      
 
     }
+
+    private char MyValidate(string validCharacters, char charToValidate)
+    {
+        //Checks if a dollar sign is entered....
+        if (validCharacters.IndexOf(charToValidate) != -1)
+        {
+            //valid characters
+            return charToValidate;
+        }
+        else
+        {
+            // ... if it is change it to an empty character.
+            charToValidate = '\0';
+        }
+        return charToValidate;
+    }
+
     //private void OnDisable()
     //{
     //    itemUIClassList.Clear();
@@ -209,7 +247,7 @@ public class TestCalculator : MonoBehaviour
 
         if(TutorialManager.instance.enabled == false)
         {
-            randomExtraMoney = totalPriceCorrectAnswer + Random.Range(0, 100);
+            randomExtraMoney = totalPriceCorrectAnswer + UnityEngine.Random.Range(0, 100);
         }
         else
         {
@@ -241,6 +279,58 @@ public class TestCalculator : MonoBehaviour
         }
         return -1;
     }
+
+    //public void InputfieldSelected(InputField p_selectedInputField)
+    //{
+    //    p_selectedInputField.gameObject.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+    //}
+    //public void InputFieldDeselected(InputField p_selectedInputField)
+    //{
+    //    p_selectedInputField.gameObject.GetComponent<Image>().color = Color.white;
+    //}
+
+    private IEnumerator WaitForInputActivation(TMP_InputField p_selectedInputField)
+    {
+
+        yield return new WaitForEndOfFrame();
+        p_selectedInputField.enabled = true;
+        p_selectedInputField.Select();
+        p_selectedInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+
+    }
+
+    public void OnPriceCorrect()
+    {
+        //Change select to next input field if correct
+
+
+        index++;
+        if (index < answerFields.Count)
+        {
+            //   Debug.Log("List still has inputfield");
+            //answerFields[index].Select();
+            StartCoroutine(WaitForInputActivation(answerFields[index]));
+            //answerFields[index].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+
+            if (TutorialManager.instance.enabled == true)
+                TutorialManager.instance.ItemMasksActivator(index);
+        }
+        else
+        {
+            //Debug.Log("All correct answer");
+            SpawnAnswerField();
+        }
+     
+
+    }
+
+    public void OnPriceWrong()
+    {
+
+
+        Scoring.instance.ModifyMultiplier(-1f);
+    }
+
     public void OnPriceInputted(string p_playerInputString)
     {
         if (gameObject.activeSelf)
@@ -267,28 +357,9 @@ public class TestCalculator : MonoBehaviour
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                     mc.IncreaseCurrentMoodAmount( mc.correctBonusTime);
 
-                    StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect));
+                    StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect, OnPriceCorrect));
 
-                    //Change select to next input field if correct
-                    
-                    
-                    index++;
-                    if (index < answerFields.Count)
-                    {
-                     //   Debug.Log("List still has inputfield");
-                        answerFields[index].Select();
-                        answerFields[index].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
-
-                        if(TutorialManager.instance.enabled == true)
-                        TutorialManager.instance.ItemMasksActivator(index);
-                    }
-                    else
-                    {
-                        //Debug.Log("All correct answer");
-                        SpawnAnswerField();
-                    }
-                    answerAttempts++;
-                
+                  
 
                 }
                 //If it doesnt match its wrong
@@ -298,12 +369,11 @@ public class TestCalculator : MonoBehaviour
                     RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, false);
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                     mc.DeductCurrentMoodAmount(mc.penaltyTime);
-                    StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
+                    StartCoroutine(WrongInputted(answerFields[itemOrderIndex],OnPriceWrong));
                   
 
-
-                    Scoring.instance.ModifyMultiplier(-1f);
                 }
+                answerAttempts++;
             }
             else //If input is invalid (not a number)
             {
@@ -342,8 +412,9 @@ public class TestCalculator : MonoBehaviour
 
             totalPriceAnswerField.enabled = true;
             
-           totalPriceAnswerField.Select();
-            totalPriceAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+           //totalPriceAnswerField.Select();
+            StartCoroutine(WaitForInputActivation(totalPriceAnswerField));
+            //totalPriceAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
             if (TutorialManager.instance.enabled == true)
             {
@@ -353,7 +424,7 @@ public class TestCalculator : MonoBehaviour
         }
     }
 
-    IEnumerator CorrectInputted(TMP_InputField p_inputField, bool p_correct)
+    IEnumerator CorrectInputted(TMP_InputField p_inputField, bool p_correct, Action p_postFunction = null)
     {
 
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
@@ -361,9 +432,14 @@ public class TestCalculator : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         p_correct = true;
         gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(680f, 0);
+        if (p_postFunction != null)
+        {
+            p_postFunction.Invoke();
+        }
+       
     }
 
-    IEnumerator WrongInputted(TMP_InputField p_inputField)
+    IEnumerator WrongInputted(TMP_InputField p_inputField, Action p_postFunction)
     {
 
         PlayerManager.instance.Shake(gameObject,0.25f, 3.5f, 1.5f);
@@ -378,7 +454,10 @@ public class TestCalculator : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
             blinkCount++;
         }
-
+        if (p_postFunction != null)
+        {
+            p_postFunction.Invoke();
+        }
         AudioManager.instance.playSound(1);
         p_inputField.text = "";
         p_inputField.ActivateInputField();
@@ -435,8 +514,9 @@ public class TestCalculator : MonoBehaviour
         customerPaidText.gameObject.SetActive(true);
         changeText.gameObject.SetActive(true);
         changeAnswerField.gameObject.SetActive(true);
-        changeAnswerField.Select();
-        changeAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
+        StartCoroutine(WaitForInputActivation(changeAnswerField));
+        //changeAnswerField.Select();
+        //changeAnswerField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
         if (TutorialManager.instance.enabled == true )
         {
@@ -444,7 +524,20 @@ public class TestCalculator : MonoBehaviour
 
         }
     }
+    public void OnTotalPriceCorrect()
+    {
+        if (TutorialManager.instance.enabled == true)
+            TutorialManager.instance.ItemMasksActivator(4);
 
+
+        changeAnswers.Add(randomExtraMoney);
+        changeAnswers.Add(totalPriceCorrectAnswer);
+    }
+
+    public void OnTotalPriceWrong()
+    {
+        Scoring.instance.ResetMultiplier();
+    }
     public void OnTotalPriceInputted()
     {
         if (gameObject.activeSelf)
@@ -467,14 +560,9 @@ public class TestCalculator : MonoBehaviour
                 {
                     ShowChangeText();
                     RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, true);
-                    StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect));
+                    StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect, OnTotalPriceCorrect));
 
-                    if (TutorialManager.instance.enabled == true)
-                        TutorialManager.instance.ItemMasksActivator(4);
-
-
-                    changeAnswers.Add(randomExtraMoney);
-                    changeAnswers.Add(totalPriceCorrectAnswer);
+                   
                 }
                 else // Answer is wrong
                 {
@@ -482,9 +570,8 @@ public class TestCalculator : MonoBehaviour
                     RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, false);
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                     mc.DeductCurrentMoodAmount(mc.penaltyTime);
-                    StartCoroutine(WrongInputted(totalPriceAnswerField));
-                    
-                    Scoring.instance.ResetMultiplier();
+                    StartCoroutine(WrongInputted(totalPriceAnswerField,OnTotalPriceWrong));
+                
                 }
                 answerAttempts++;
             }
@@ -498,6 +585,19 @@ public class TestCalculator : MonoBehaviour
         }
     }
 
+    public void OnChangeCorrect()
+    {
+
+
+        OrderSheetFinish();
+        index = 0;
+    }
+
+    public void OnChangeWrong()
+    {
+
+        Scoring.instance.ResetMultiplier();
+    }
     public void OnChangeInputted()
     {
         if (gameObject.activeSelf)
@@ -522,13 +622,10 @@ public class TestCalculator : MonoBehaviour
                     //add bonus mood time
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                     mc.IncreaseCurrentMoodAmount( mc.correctBonusTime*2);
-                    StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect));
+                    StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
                     
 
 
-
-                    OrderSheetFinish();
-                    index = 0;
                 }
                 else// Answer is wrong
                 {
@@ -536,9 +633,8 @@ public class TestCalculator : MonoBehaviour
                     RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, false);
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                     mc.DeductCurrentMoodAmount(mc.penaltyTime);
-                    StartCoroutine(WrongInputted(changeAnswerField));
-                    
-                    Scoring.instance.ResetMultiplier();
+                    StartCoroutine(WrongInputted(changeAnswerField, OnChangeWrong));
+                  
                 }
 
             }
@@ -629,12 +725,16 @@ public class TestCalculator : MonoBehaviour
 
             //Adding to answerField List
             order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().onEndEdit.AddListener(OnPriceInputted);
+    
             order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().enabled = true;
+            order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+
             answerFields.Add(order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>());
             answerFields[i].characterLimit = 5; //can only reach 10000
             order.transform.SetParent(displayPanel);
             order.transform.localScale = new Vector3(1f, 1f, 1f);
 
+            
         }
 
 

@@ -47,9 +47,13 @@ public class Scoring : MonoBehaviour
     public List<GameObject> resultStars = new List<GameObject>();
 
     int gameStarSlotIndex = 0;
+
+
+    public GameObject[] briefingStarGoals;
     public GameObject[] gameStarSlots;
     public GameObject[] resultStarSlots;
 
+    public GameObject[] resultStarGoals;
 
     public Sprite failImage;
     public Image levelPasserImage;
@@ -103,22 +107,35 @@ public class Scoring : MonoBehaviour
     public TextMeshProUGUI newHighScoreText;
     public void ShowBriefing()
     {
+        
         briefingDayText.text = (round+1).ToString();
         scoreGoal = 1000 + ((round-1) * (250));
         briefingScoreGoalText.text = scoreGoal.ToString();
-        resultsNextStar = scoreGoal / 5;
+        for (int i = 0; i < resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
+        {
+            briefingStarGoals[i].GetComponent<TextMeshProUGUI>().text = ((i + 1) * (scoreGoal / 3)).ToString();
+
+        }
+        resultsNextStar = scoreGoal / 3;
         minGoalValue.text = resultsNextStar.ToString();
         score = 0;
         UpdateGameScoreGoal();
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
     {
+       
+        for (int i =0; i< resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
+        {
+            resultStarGoals[i].GetComponent<TextMeshProUGUI>().text = ( (i+1) * (scoreGoal / 3)).ToString();
+
+        }
+
         if (countingCoroutine != null)
         {
             StopCoroutine(countingCoroutine);
         }
 
-
+        
         
         //Day Failed if score is less than half of score goal
         //if (score < scoreGoal/2) 
@@ -134,7 +151,7 @@ public class Scoring : MonoBehaviour
 
     private IEnumerator CountText(int p_newValue, int p_Value = 0)
     {
-        resultsNextStar = scoreGoal / 5;
+        resultsNextStar = scoreGoal / 3;
 
         WaitForSeconds wait = new WaitForSeconds(1f / fpsCount);
         int previousValue = p_Value;
@@ -173,14 +190,14 @@ public class Scoring : MonoBehaviour
                 if (previousValue >= resultsNextStar)
                 {
                     //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(5) stars, it'll become 5 stars)
-                    if (backUpStarRatingsCounted < 5)
+                    if (backUpStarRatingsCounted < 3)
                     {
                         
                         //Do UI UX Animation for that star
                         GameObject newStarFill = CreateStarFill(resultStarSlots[backUpStarRatingsCounted]);
                         StartCoroutine(FitStarToSlot(newStarFill, resultStarSlots[backUpStarRatingsCounted].GetComponent<RectTransform>().sizeDelta));
                         backUpStarRatingsCounted++;
-                        resultsNextStar += scoreGoal / 5;
+                        resultsNextStar += scoreGoal / 3;
                         
                     }
                     
@@ -208,7 +225,7 @@ public class Scoring : MonoBehaviour
                 int starRatingForScoreCounted = (int)((((float)previousValue / (float)scoreGoal) * 100));
                 if (starRatingForScoreCounted % percentageIncrementPerStar == 0 && starRatingForScoreCounted != 0)
                 {
-                    //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(5) stars, it'll become 5 stars)
+                    //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(3) stars, it'll become 3 stars)
                     starRatingForScoreCounted = Mathf.Clamp((starRatingForScoreCounted / percentageIncrementPerStar), 0, resultStarSlots.Length);
 
                     //Makes sure there is only 1 copy
@@ -248,11 +265,11 @@ public class Scoring : MonoBehaviour
         }
 
         //If passing
-        if (resultStars.Count >= 3)
+        if (resultStars.Count >= 1)
         {
             AudioManager.instance.playSound(4);
             //If perfect, do confetti
-            if (resultStars.Count >= 4)
+            if (resultStars.Count >= 3)
             {
                 foreach (ParticleSystem selectedConfetti in confettis)
                 {
@@ -386,7 +403,7 @@ public class Scoring : MonoBehaviour
         int totalCorrectAnswers = 0;
         int totalMathProblems = 0;
         //Correctly Answered Math Problems
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             string currentCorrectAnswersForOperatorString = PerformanceManager.instance.GetOperatorCount((MathProblemOperator)i, true);
             int addCorrectAnswerAmount = 0;
@@ -400,7 +417,7 @@ public class Scoring : MonoBehaviour
         }
 
         //Wrongly Answered Math Problems
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             string currentWrongAnswersForOperatorString = PerformanceManager.instance.GetOperatorCount((MathProblemOperator)i, false);
             int addWrongAnswerAmount= 0;
@@ -548,16 +565,16 @@ public class Scoring : MonoBehaviour
         int currentScaledScore = score;
 
 
-        currentScaledScore = score - (scoreGoal / 5 * gameStarSlotIndex);
+        currentScaledScore = score - (scoreGoal / 3 * gameStarSlotIndex);
 
 
 
-        int scoreToNextGoal = (scoreGoal / 5) - (currentScaledScore);
+        int scoreToNextGoal = (scoreGoal / 3) - (currentScaledScore);
         while (scoreToNextGoal < 1)
         {
-            scoreToNextGoal += (scoreGoal / 5);
+            scoreToNextGoal += (scoreGoal / 3);
 
-            if (gameStarSlotIndex < 5)
+            if (gameStarSlotIndex < 3)
             {
                
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
@@ -667,7 +684,7 @@ public class Scoring : MonoBehaviour
         //score floater
         scoreFloater.SetActive(false);
         scoreFloater.transform.position = defaultScoreFloaterPos;
-        scoreFloater.GetComponent<Text>().color = new Color(scoreFloater.GetComponent<Text>().color.r, scoreFloater.GetComponent<Text>().color.g, scoreFloater.GetComponent<Text>().color.b, 0f);
+        scoreFloater.GetComponent<Text>().color = new Color(scoreFloater.GetComponent<Text>().color.r, scoreFloater.GetComponent<Text>().color.g, scoreFloater.GetComponent<Text>().color.b, 100f);
         gameDayText.text = "Day: " + (round + 1).ToString();
         //scoreGoal = 1000 + ((round - 1) * (250)); //LAT
 

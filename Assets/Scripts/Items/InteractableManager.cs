@@ -6,7 +6,8 @@ public class InteractableManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public static InteractableManager instances;
-    public List<ClickToSelectItem> clickToSelectItems; 
+    public List<ClickToSelectItem> clickToSelectItems;
+    public BillCounter cashBox;
     void Start()
     {
         if(instances == null)
