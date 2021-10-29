@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundBriefingUI.name);
         Scoring.instance.ShowBriefing();
         AudioManager.instance.stopMusic(0);
+        AudioManager.instance.stopMusic(2);
         SetUpRound();
         yield return new WaitForSeconds(2f);
         UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);

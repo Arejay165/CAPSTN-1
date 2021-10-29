@@ -266,6 +266,7 @@ public class Scoring : MonoBehaviour
             //if it's not 0
             if (score > 0)
             {
+               
                 //check if there are highscores
                 //if there is high scores
                 if (highscores != null)
@@ -412,7 +413,9 @@ public class Scoring : MonoBehaviour
         }
 
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
+
+        AudioManager.instance.playMusic(2);
 
         //Addition
         ShowPerformance(additionSolvingTime, PerformanceManager.instance.GetAverageTime(MathProblemOperator.addition) + " seconds");

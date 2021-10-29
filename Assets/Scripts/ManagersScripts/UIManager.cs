@@ -116,12 +116,14 @@ public class UIManager : MonoBehaviour
     public void Restart()
     {
         GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
+       
     }
 
     public void Continue() // Open Upgrade
     {
 
         ActivateGameObjects(upgradeUI.name);
+      
         Upgrades.instance.getUpgradeItem();
         InteractableManager.instances.SpawnController(true);
         //Debug.Log("Continue");
