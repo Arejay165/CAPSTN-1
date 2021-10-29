@@ -105,7 +105,8 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.stopMusic(0);
         AudioManager.instance.stopMusic(2);
         SetUpRound();
-        yield return new WaitForSeconds(2f);
+        AudioManager.instance.playSound(6);
+        yield return new WaitForSeconds(3f);
         UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
         StartRound();
         AudioManager.instance.playMusic(1);
