@@ -8,6 +8,7 @@ public class DetectItemInWindow : MonoBehaviour
 
     [SerializeField] private Scoring score;
     [SerializeField] public Color darkenImage;
+    //public bool invincibility = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,62 +23,74 @@ public class DetectItemInWindow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        if(collision.gameObject.tag == "Item")
-        {
-            collision.gameObject.transform.SetParent(this.gameObject.transform);
-            ItemDescription itemInCounter = collision.GetComponent<ItemDescription>();
-   
-            if (GameManager.instance.customer != null)
+        //if (invincibility == false)
+        //{
+            if (collision.gameObject.tag == "Item")
             {
-                MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                for (int i = 0; i < MathProblemManager.instance.GetCurrentItemsWanted().Count; )
+                collision.gameObject.transform.SetParent(this.gameObject.transform);
+                ItemDescription itemInCounter = collision.GetComponent<ItemDescription>();
+
+                if (GameManager.instance.customer != null)
                 {
-                    if(itemInCounter.item.itemName == MathProblemManager.instance.GetItemInCurrentItemsWanted(i).itemName)
+                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                    for (int i = 0; i < MathProblemManager.instance.GetCurrentItemsWanted().Count;)
                     {
-                        
-                        mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
+                        if (itemInCounter.item.itemName == MathProblemManager.instance.GetItemInCurrentItemsWanted(i).itemName)
+                        {
+
+                            mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
                             GameManager.instance.customer.itemsImage[i].color = global::GameManager.instance.window.darkenImage;
                             GameManager.instance.customer.itemsImage.RemoveAt(i);
                             MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(i);
-                        if (PlayerManager.instance.lastItemSpawner)
-                        {
-                            PlayerManager.instance.lastItemSpawner.canSpawn = true;
-                        }
+                            if (PlayerManager.instance.lastItemSpawner)
+                            {
+                                PlayerManager.instance.lastItemSpawner.canSpawn = true;
+                            }
                             if (MathProblemManager.instance.GetCurrentItemsWanted().Count <= 0)
                             {
                                 //Disable customer bubble
                                 GameManager.instance.customer.panel.gameObject.SetActive(false);
 
-                              
-                            //ordersheet 
-                            TransitionManager.instances.MoveTransition(new Vector2(680f, 0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
+
+                                //ordersheet 
+                                TransitionManager.instances.MoveTransition(new Vector2(680f, 0f), 0.5f, TransitionManager.instances.noteBookTransform, TransitionManager.instances.noteBookTransform.gameObject, true);
                             }
-                            
+
                             Destroy(itemInCounter.gameObject, 0.2f);
-                        //    Debug.Log("DESTROYING THRU DETECT CORRECT");
+                            //    Debug.Log("DESTROYING THRU DETECT CORRECT");
                             PlayerManager.instance.lastItemSpawner = null;
                             break;
-                        
-                       
-                    }
-                    i++;
-                    if (i >= MathProblemManager.instance.GetCurrentItemsWanted().Count)
-                    {
-                        Debug.Log("Wrong Item");
-                        Destroy(itemInCounter.gameObject, 0.2f);
-                        mc.DeductCurrentMoodAmount(mc.penaltyTime);// 1 second
-                        AudioManager.instance.playSound(1);
-                        PlayerManager.instance.Shake(gameObject, 0.2f, 3.5f, 1.5f);
-                    }
 
+
+                        }
+                        i++;
+                        if (i >= MathProblemManager.instance.GetCurrentItemsWanted().Count)
+                        {
+
+                            Debug.Log("Wrong Item");
+                            Destroy(itemInCounter.gameObject, 0.2f);
+                            mc.DeductCurrentMoodAmount(mc.penaltyTime);// 1 second
+                            AudioManager.instance.playSound(1);
+              
+                            PlayerManager.instance.CamShake(PlayerManager.instance.GameCamera.gameObject, 0.3f, 0.05f, 15f);
+                        }
+
+                    }
+                }
+                else
+                {
+                    Debug.Log("Wrong Item");
+                    Destroy(itemInCounter.gameObject, 0.2f);
                 }
             }
-            else
-            {
-                Debug.Log("Wrong Item");
-                Destroy(itemInCounter.gameObject, 0.2f);
-            }
-        }
+        //}
+       
     }
+
+    //IEnumerator Cooldown()
+    //{
+    //    invincibility = true;
+    //    yield return new WaitForSeconds(0.45f);
+    //    invincibility = false;
+    //}
 }

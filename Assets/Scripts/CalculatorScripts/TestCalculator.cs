@@ -35,6 +35,8 @@ public class TestCalculator : MonoBehaviour
     [SerializeField] GameObject itemDisplay;
     [SerializeField] Transform displayPanel;
 
+    string text = "";
+    string validCharacters = "0123456789";
 
     public float randomExtraMoney;
     public bool isCountingTime;
@@ -78,6 +80,10 @@ public class TestCalculator : MonoBehaviour
         //    Destroy(selectedAnswerField.gameObject);
         //}
         //clears ui list
+        
+        totalPriceAnswerField.onValidateInput += delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+        changeAnswerField.onValidateInput += delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+
         foreach (Transform child in displayPanel.transform)
         {
 
@@ -145,12 +151,17 @@ public class TestCalculator : MonoBehaviour
 
     private void OnDisable()
     {
-        //Deregister OnGameStart Event in GameManager
+        foreach (TMP_InputField selectedAnswerField in answerFields)
+        {
+            selectedAnswerField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+        }
+        totalPriceAnswerField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+        changeAnswerField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+       
         GameManager.OnGameStart -= OnGameStarted;
-      
 
+        
 
- 
     }
 
     public void OnGameStarted()
@@ -160,6 +171,23 @@ public class TestCalculator : MonoBehaviour
      
 
     }
+
+    private char MyValidate(string validCharacters, char charToValidate)
+    {
+        //Checks if a dollar sign is entered....
+        if (validCharacters.IndexOf(charToValidate) != -1)
+        {
+            //valid characters
+            return charToValidate;
+        }
+        else
+        {
+            // ... if it is change it to an empty character.
+            charToValidate = '\0';
+        }
+        return charToValidate;
+    }
+
     //private void OnDisable()
     //{
     //    itemUIClassList.Clear();
@@ -630,11 +658,14 @@ public class TestCalculator : MonoBehaviour
             //Adding to answerField List
             order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().onEndEdit.AddListener(OnPriceInputted);
             order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().enabled = true;
+            order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>().onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
+
             answerFields.Add(order.transform.GetChild(3).gameObject.GetComponent<TMP_InputField>());
             answerFields[i].characterLimit = 5; //can only reach 10000
             order.transform.SetParent(displayPanel);
             order.transform.localScale = new Vector3(1f, 1f, 1f);
 
+            
         }
 
 

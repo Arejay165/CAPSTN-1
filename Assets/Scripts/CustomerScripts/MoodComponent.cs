@@ -31,6 +31,8 @@ public class MoodComponent : MonoBehaviour
     public float correctBonusTime;
     public float penaltyTime;
     bool pauseDecrease = false;
+
+    Color currentColorMood = Color.green;
     #region Getter Setters
 
     public float GetCurrentMoodAmount()
@@ -61,7 +63,8 @@ public class MoodComponent : MonoBehaviour
             pauseDecrease = true;
             dcm.delayedMoodImage.gameObject.SetActive(true);
             //set color to green
-            dcm.delayedMoodImage.color = new Color(0f, 255f, 0f, 1f);
+            //dcm.delayedMoodImage.color = new Color(0f, 255f, 0f, 1f);
+            dcm.delayedMoodImage.color = Color.white;
             float desiredAmount = ((currentMoodAmount + p_increase) / maxMoodAmount);
             if (desiredAmount > 1 )
             {
@@ -82,7 +85,8 @@ public class MoodComponent : MonoBehaviour
             pauseDecrease = true;
             dcm.delayedMoodImage.gameObject.SetActive(true);
             //set color to red
-            dcm.delayedMoodImage.color = new Color(255f, 0f, 0f, 1f);
+            //dcm.delayedMoodImage.color = new Color(255f, 0f, 0f, 1f);
+            dcm.delayedMoodImage.color = Color.white;
             float desiredAmount = currentMoodAmount -= p_deduction;
             if (desiredAmount < 0)
             {
@@ -112,7 +116,9 @@ public class MoodComponent : MonoBehaviour
 
         //reset
         //make delayedmoodimage visible again
-        dcm.delayedMoodImage.color = new Color(dcm.delayedMoodImage.color.r, dcm.delayedMoodImage.color.g, dcm.delayedMoodImage.color.b, 1f);
+        //color
+        //dcm.delayedMoodImage.color = new Color(dcm.delayedMoodImage.color.r, dcm.delayedMoodImage.color.g, dcm.delayedMoodImage.color.b, 1f);
+        dcm.delayedMoodImage.color = Color.white;
         dcm.delayedMoodImage.gameObject.SetActive(false);
         pauseDecrease = false ;
     }
@@ -136,7 +142,8 @@ public class MoodComponent : MonoBehaviour
 
         //reset
         //make delayedmoodimage visible again
-        dcm.delayedMoodImage.color = new Color(dcm.delayedMoodImage.color.r, dcm.delayedMoodImage.color.g, dcm.delayedMoodImage.color.b, 1f);
+        //dcm.delayedMoodImage.color = new Color(dcm.delayedMoodImage.color.r, dcm.delayedMoodImage.color.g, dcm.delayedMoodImage.color.b, 1f);
+        dcm.delayedMoodImage.color = Color.white;
         dcm.delayedMoodImage.gameObject.SetActive(false);
         pauseDecrease = false;
     }
@@ -145,7 +152,7 @@ public class MoodComponent : MonoBehaviour
     {
         
         InitializeMood();
-
+        dcm.moodImage.color = Color.green;
     }
 
     // Update is called once per frame
@@ -254,6 +261,8 @@ public class MoodComponent : MonoBehaviour
                 {
 
                     customerSpriteRenderer.sprite = happySprite;
+                    currentColorMood = Color.green;
+                    dcm.moodImage.color = currentColorMood;
                 
                 }
             }
@@ -266,8 +275,10 @@ public class MoodComponent : MonoBehaviour
                 if (customerSpriteRenderer.sprite != neutralSprite)
                 {
                     customerSpriteRenderer.sprite = neutralSprite;
+                    currentColorMood = Color.yellow;
+                    dcm.moodImage.color = currentColorMood;
                 }
-                
+           
             }
         }
 
@@ -279,6 +290,8 @@ public class MoodComponent : MonoBehaviour
                 if (customerSpriteRenderer.sprite != angrySprite)
                 {
                     customerSpriteRenderer.sprite = angrySprite;
+                    currentColorMood = Color.red;
+                    dcm.moodImage.color = currentColorMood;
                 }
 
             }

@@ -24,7 +24,7 @@ public class ClickToSelectItem : MonoBehaviour
     [SerializeField] ParticleSystem hintingSparklePFX;
     [SerializeField] ParticleSystem radiatePFX;
 
-  
+
     private void OnEnable()
     {
 
@@ -44,7 +44,7 @@ public class ClickToSelectItem : MonoBehaviour
 
 
     }
-
+ 
     void OnGameStarted()
     {
         CursorManager.instance.SetActiveCursorAnimation(CursorType.Arrow);
@@ -83,6 +83,7 @@ public class ClickToSelectItem : MonoBehaviour
                 {
                     SpawnItem();
                     canSpawn = false;
+                    StartCoroutine(Cooldown());
                 }
                 
                 //canSpawn = false;
@@ -105,10 +106,11 @@ public class ClickToSelectItem : MonoBehaviour
                 
              
             }
-            if (Input.GetMouseButtonUp(0) && !canSpawn && !TutorialManager.instance.tutorial.gameObject.activeSelf)
-            {
-                canSpawn = true;
-            }
+            //if (Input.GetMouseButtonUp(0) && !canSpawn && !TutorialManager.instance.tutorial.gameObject.activeSelf)
+            //{
+            //    canSpawn = true;
+            //}
+         
         }
 
 
@@ -187,4 +189,12 @@ public class ClickToSelectItem : MonoBehaviour
         }
         
     }
+
+    IEnumerator Cooldown()
+    {
+        canSpawn = false;
+        yield return new WaitForSeconds(0.65f);
+        canSpawn = true;
+    }
+
 }

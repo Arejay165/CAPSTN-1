@@ -13,6 +13,9 @@ public class ChangeCalculator : MonoBehaviour
  
     public TMP_InputField tmpChangeInputField;
    
+    string text = "";
+    string validCharacters = "0123456789";
+
     public bool isCountingTime;
     public float timeSpent;
 
@@ -40,8 +43,8 @@ public class ChangeCalculator : MonoBehaviour
             quotient = /*Random.Range(1, 21)*/ 10; // possible answers 
             dividend = divisor * quotient; // determine the dividend
         }
- 
-                                           
+
+        tmpChangeInputField.onValidateInput += delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
 
         MathProblemManager.instance.cash.numValue = dividend;//Random.Range(60, 500);
         MathProblemManager.instance.cash.denValue = divisor;//cash.numValue / Random.Range(2, 50);
@@ -77,12 +80,29 @@ public class ChangeCalculator : MonoBehaviour
 
     private void OnDisable()
     {
-
+        tmpChangeInputField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
         tmpChangeInputField.text = "";
         tmpChangeInputField.Select();
    
 
     }
+
+    private char MyValidate(string validCharacters, char charToValidate)
+    {
+        //Checks if a dollar sign is entered....
+        if (validCharacters.IndexOf(charToValidate) != -1)
+        {
+            //valid characters
+            return charToValidate;
+        }
+        else
+        {
+            // ... if it is change it to an empty character.
+            charToValidate = '\0';
+        }
+        return charToValidate;
+    }
+
     private void Update()
     {
         if (isCountingTime)

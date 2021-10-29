@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class BillCounter : MonoBehaviour, IPointerDownHandler
 {
-  
-  
+
+    public bool clickable = true;
 
     private void Start()
     {
@@ -14,46 +14,55 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-       
-        if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf && !TransitionManager.instances.changeTransform.gameObject.activeSelf)
+        if (clickable)
         {
-            if (MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue != 0)//GameManager.instance.customer.willBuy)
+            if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf && !TransitionManager.instances.changeTransform.gameObject.activeSelf)
             {
-                GameManager.instance.customer.itemsImage[0].color = global::GameManager.instance.window.darkenImage;
-                GameManager.instance.customer.itemsImage.RemoveAt(0);
-                MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(0);
-                MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
-
-                ChangeUI();
-            }
-            
-            // TUTORIAL
-            //if (TutorialManager.instance)
-            //{
-            //    if (TutorialManager.instance.tutorialQuestActive)
-            //    {
-            //        if (TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 4)
-            //        {
-            //            TutorialManager.instance.ToggleTutorialQuest();
-            //            TutorialManager.instance.StartTimeline();
-            //        }
-            //    }
-            //}
-
-
-            else if (MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue == 0)
-            {
-                if (GameManager.instance.customer != null)
+                if (MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue != 0)//GameManager.instance.customer.willBuy)
                 {
-                    Debug.Log("I PRESSED BIL LBOX");
-                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
-                    AudioManager.instance.playSound(1);
-                    PlayerManager.instance.Shake(gameObject, 0.2f, 3.5f, 1.5f);
+                    if (GameManager.instance.customer != null)
+                    {
+                        GameManager.instance.customer.itemsImage[0].color = global::GameManager.instance.window.darkenImage;
+                        GameManager.instance.customer.itemsImage.RemoveAt(0);
+                        MathProblemManager.instance.GetCurrentItemsWanted().RemoveAt(0);
+                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                        mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
+
+                        ChangeUI();
+                        StartCoroutine(Cooldown());
+                    }
+
+                }
+
+                // TUTORIAL
+                //if (TutorialManager.instance)
+                //{
+                //    if (TutorialManager.instance.tutorialQuestActive)
+                //    {
+                //        if (TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 4)
+                //        {
+                //            TutorialManager.instance.ToggleTutorialQuest();
+                //            TutorialManager.instance.StartTimeline();
+                //        }
+                //    }
+                //}
+
+
+                else if (MathProblemManager.instance.GetGeneratedItemsWanted()[0].numValue == 0)
+                {
+                    if (GameManager.instance.customer != null)
+                    {
+                        Debug.Log("I PRESSED BIL LBOX");
+                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                        mc.DeductCurrentMoodAmount(mc.penaltyTime);
+                        AudioManager.instance.playSound(1);
+                        PlayerManager.instance.CamShake(PlayerManager.instance.GameCamera.gameObject, 0.3f, 0.05f, 15f);
+                        StartCoroutine(Cooldown());
+                    }
                 }
             }
         }
+        
        
     }
 
@@ -65,5 +74,12 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
         //show pabarya sheet
         TransitionManager.instances.MoveTransition(new Vector2(680f, 0f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, true);
    
+    }
+
+    IEnumerator Cooldown()
+    {
+        clickable = false;
+        yield return new WaitForSeconds(0.45f);
+        clickable = true;
     }
 }
