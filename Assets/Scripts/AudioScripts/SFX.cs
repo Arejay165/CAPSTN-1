@@ -8,6 +8,4 @@ public class SFX
 {
     public string name;
     public AudioSource sound;
-
-    
 }
