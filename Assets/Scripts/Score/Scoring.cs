@@ -472,7 +472,7 @@ public class Scoring : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         //if passed
-        if (resultStars.Count >= 3)
+        if (resultStars.Count >= 1)
         {
           
             continueButton.SetActive(true);
