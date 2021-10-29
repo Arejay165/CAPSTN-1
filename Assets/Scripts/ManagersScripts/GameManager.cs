@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.stopMusic(2);
         SetUpRound();
         AudioManager.instance.playSound(6);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
         StartRound();
         AudioManager.instance.playMusic(1);
@@ -127,7 +127,8 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Level Over");
         AudioManager.instance.stopMusic(1);
-        yield return new WaitForSeconds(2f);
+        AudioManager.instance.playSound(4);
+        yield return new WaitForSeconds(4f);
         UIManager.instance.ActivateGameObjects(UIManager.instance.endGameUI.name);
         TransitionManager.instances.MoveTransition(new Vector2(0, 0), 0.5f, UIManager.instance.endGameUI.GetComponent<RectTransform>(), UIManager.instance.endGameUI.gameObject, true);
         Scoring.instance.Results();

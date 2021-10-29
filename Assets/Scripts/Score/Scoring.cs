@@ -197,6 +197,7 @@ public class Scoring : MonoBehaviour
                         GameObject newStarFill = CreateStarFill(resultStarSlots[backUpStarRatingsCounted]);
                         StartCoroutine(FitStarToSlot(newStarFill, resultStarSlots[backUpStarRatingsCounted].GetComponent<RectTransform>().sizeDelta));
                         backUpStarRatingsCounted++;
+                        AudioManager.instance.playSound(7);
                         resultsNextStar += scoreGoal / 3;
                         
                     }
@@ -381,6 +382,7 @@ public class Scoring : MonoBehaviour
         starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 1;
         newHighscoreUI.SetActive(true);
         newHighScoreText.text = score.ToString();
+        AudioManager.instance.playSound(8);
         yield return new WaitForSeconds(4.5f);
         newHighscoreUI.SetActive(false);
         //enterHighscoreUI.SetActive(true);
