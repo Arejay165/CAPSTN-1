@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class Upgrades : MonoBehaviour
@@ -126,7 +127,8 @@ public class Upgrades : MonoBehaviour
       
         if (newItems.Count == 0)
         {
-            GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
+            //GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
+            SceneManager.LoadScene("EndGame");
         }
         else
         {
