@@ -76,6 +76,8 @@ public class ChangeCalculator : MonoBehaviour
         {
           //  Debug.Log("is null");
         }
+
+        AudioManager.instance.playSound(9);
     }
 
     private void OnDisable()
@@ -83,8 +85,8 @@ public class ChangeCalculator : MonoBehaviour
         tmpChangeInputField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
         tmpChangeInputField.text = "";
         tmpChangeInputField.Select();
-   
 
+        AudioManager.instance.playSound(10);
     }
 
     private char MyValidate(string validCharacters, char charToValidate)

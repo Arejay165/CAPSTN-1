@@ -157,6 +157,8 @@ public class TestCalculator : MonoBehaviour
         {
           //  Debug.Log("Null");
         }
+
+        AudioManager.instance.playSound(9);
     }
 
     private void OnDisable()
@@ -179,7 +181,7 @@ public class TestCalculator : MonoBehaviour
        
         GameManager.OnGameStart -= OnGameStarted;
 
-        
+        AudioManager.instance.playSound(10);
 
     }
 
