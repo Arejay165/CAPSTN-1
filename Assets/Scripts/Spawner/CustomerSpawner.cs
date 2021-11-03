@@ -51,6 +51,7 @@ public class CustomerSpawner : MonoBehaviour
 
         //animation
         StartCoroutine(MoveAnimation(obj));
+        AudioManager.instance.playSound(11);
 
         //for tutorial
         if (TutorialManager.instance)

@@ -99,7 +99,9 @@ public class Customer : MonoBehaviour
             itemUI.GetComponent<Image>().sprite = selectedItem.itemSprite;
             itemUI.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
             itemsImage.Add(itemUI.GetComponent<Image>());
+            AudioManager.instance.playSound(12);
         }
+       
     }
 
    
