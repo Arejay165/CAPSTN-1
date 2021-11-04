@@ -112,8 +112,8 @@ public class Scoring : MonoBehaviour
     public Image backgroundImage;
     public Sprite levelComplete;
 
-    public TextMeshProUGUI livesCounterText;
-    public int livesCounter;
+   // public TextMeshProUGUI livesCounterText;
+    //public int livesCounter;
 
     
 
@@ -385,7 +385,7 @@ public class Scoring : MonoBehaviour
         else
         {
             //  failPrompt.SetActive(true);
-            TakeDamage();
+            //TakeDamage();
             levelText.text = "Level Failed";
          
             resultDayText.text = "";
@@ -654,7 +654,7 @@ public class Scoring : MonoBehaviour
             instance = this;
         }
         defaultScoreFloaterPos = scoreFloater.transform.position;
-        livesCounterText.text = "3";
+       // livesCounterText.text = "3";
         
     }
     public void OnEnable()
@@ -762,16 +762,16 @@ public class Scoring : MonoBehaviour
 
     }
 
-    public void TakeDamage()
-    {
-        livesCounter -= 1;
-        livesCounterText.text = livesCounter.ToString();
+    //public void TakeDamage()
+    //{
+    //    livesCounter -= 1;
+    //    livesCounterText.text = livesCounter.ToString();
 
-        if(livesCounter <= 0)
-        {
-            SceneManager.LoadScene("EndGame");
-        }
-    }
+    //    if(livesCounter <= 0)
+    //    {
+    //        SceneManager.LoadScene("EndGame");
+    //    }
+    //}
 
     public void StarAnimation()
     {

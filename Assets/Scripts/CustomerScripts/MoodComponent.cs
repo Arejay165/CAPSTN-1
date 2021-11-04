@@ -32,6 +32,7 @@ public class MoodComponent : MonoBehaviour
     public float penaltyTime;
     bool pauseDecrease = false;
 
+
     Color currentColorMood = Color.green;
     #region Getter Setters
 
@@ -161,12 +162,16 @@ public class MoodComponent : MonoBehaviour
         
         InitializeMood();
         dcm.moodImage.color = Color.green;
+       
+       
     }
 
     // Update is called once per frame
     void Update()
     {
         //ChangeCustomerMoodSprite();
+        
+
     }
 
     IEnumerator CustomerMoodDecay()
@@ -189,6 +194,8 @@ public class MoodComponent : MonoBehaviour
                                 dcm.DisplayMood();
 
                                 ChangeCustomerMoodSprite();
+                               
+
                                 if (currentMoodAmount <= 0)
                                 {
                                     //If order sheet is active
@@ -209,6 +216,8 @@ public class MoodComponent : MonoBehaviour
 
                                 }
 
+                               
+                                
 
 
                             }
@@ -270,6 +279,7 @@ public class MoodComponent : MonoBehaviour
                 if (customerSpriteRenderer.sprite != happySprite) 
                 {
 
+
                     customerSpriteRenderer.sprite = happySprite;
                     currentColorMood = Color.green;
                     dcm.moodImage.color = currentColorMood;
@@ -277,9 +287,9 @@ public class MoodComponent : MonoBehaviour
                 }
             }
         }
-        if (currentMoodAmount <= neutralMoodValue)
+        if (currentMoodAmount <= neutralMoodValue && currentMoodAmount >= angryMoodValue)
         {
-           // Debug.Log("Neutral");
+            // Debug.Log("Neutral");
             if (neutralSprite)
             {
                 if (customerSpriteRenderer.sprite != neutralSprite)
@@ -287,13 +297,20 @@ public class MoodComponent : MonoBehaviour
                     customerSpriteRenderer.sprite = neutralSprite;
                     currentColorMood = Color.yellow;
                     dcm.moodImage.color = currentColorMood;
+
+                    if (customerSpriteRenderer.sprite == neutralSprite)
+                    {
+                        AudioManager.instance.playSound(14);
+                        Debug.Log("Play Audio Neutral");
+                    }
+                        
                 }
-           
             }
         }
 
         if(currentMoodAmount <= angryMoodValue)
         {
+           
           //  Debug.Log("Angry");
             if (angrySprite)
             {
@@ -302,9 +319,20 @@ public class MoodComponent : MonoBehaviour
                     customerSpriteRenderer.sprite = angrySprite;
                     currentColorMood = Color.red;
                     dcm.moodImage.color = currentColorMood;
+
+                    if (customerSpriteRenderer.sprite == angrySprite)
+                    {
+                        AudioManager.instance.playSound(15);
+                        Debug.Log("Play Audio Angry");
+                    }
+                       
                 }
 
             }
         }
+
+        
     }
+
+   
 }
