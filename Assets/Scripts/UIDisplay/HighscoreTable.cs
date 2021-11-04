@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HighscoreTable : MonoBehaviour
 {
@@ -285,15 +286,15 @@ public class HighscoreTable : MonoBehaviour
 
             if (selectedChildTransform.gameObject.name == "RankValue")
             {
-                selectedChildTransform.GetComponent<Text>().text = rankString;
+                selectedChildTransform.GetComponent<TextMeshProUGUI>().text = rankString;
             }
             else if (selectedChildTransform.gameObject.name == "ScoreValue")
             {
-                selectedChildTransform.GetComponent<Text>().text = score.ToString();
+                selectedChildTransform.GetComponent<TextMeshProUGUI>().text = score.ToString();
             }
             else if (selectedChildTransform.gameObject.name == "NameValue")
             {
-                selectedChildTransform.GetComponent<Text>().text = name;
+                selectedChildTransform.GetComponent<TextMeshProUGUI>().text = name;
             }
         }
 
