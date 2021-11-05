@@ -112,6 +112,13 @@ public class Scoring : MonoBehaviour
     public Image backgroundImage;
     public Sprite levelComplete;
 
+    public GameObject briefingShutter;
+    public GameObject briefingInfo;
+    public GameObject gameShutter;
+    public GameObject debriefingShutter;
+    public GameObject debriefingInfo;
+    public GameObject resultShutter;
+
     public TextMeshProUGUI livesCounterText;
     public int livesCounter;
 
@@ -120,6 +127,8 @@ public class Scoring : MonoBehaviour
     public void ShowBriefing()
     {
         
+        briefingShutter.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+        briefingInfo.SetActive(true);
         briefingDayText.text = (round+1).ToString();
         scoreGoal = 1000 + ((round-1) * (250));
         briefingScoreGoalText.text = scoreGoal.ToString();
@@ -132,6 +141,7 @@ public class Scoring : MonoBehaviour
         minGoalValue.text = resultsNextStar.ToString();
         score = 0;
         UpdateGameScoreGoal();
+
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
     {

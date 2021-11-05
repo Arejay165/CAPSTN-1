@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using DG.Tweening;
+using UnityEngine.UI;
+using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager   instance;
@@ -107,16 +109,28 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.stopMusic(2);
         SetUpRound();
         AudioManager.instance.playSound(6);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
+        Scoring.instance.briefingShutter.GetComponent<RectTransform>().position = new Vector3(1100, 720, Scoring.instance.briefingShutter.GetComponent<RectTransform>().position.z);
+        Scoring.instance.briefingInfo.SetActive(false);
         UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().position = new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().position.x, 720, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z);
+        Scoring.instance.gameShutter.SetActive(true);
+        Scoring.instance.briefingShutter.SetActive(false);
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().DOMove(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().position.x, 3220, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z), 1f, false);
+        yield return new WaitForSeconds(2f);
+        
         StartRound();
         AudioManager.instance.playMusic(1);
     }
 
     public IEnumerator DayEnd()
     {
+        Scoring.instance.gameShutter.SetActive(true);
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().position = new Vector3(1280, 3220, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z);
+
+        Scoring.instance.debriefingInfo.SetActive(true);
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
-        UIManager.instance.ActivateGameObjects(UIManager.instance.roundDebriefingUI.name);
+      //  UIManager.instance.ActivateGameObjects(UIManager.instance.roundDebriefingUI.name);
         InteractableManager.instances.SpawnController(false);
         if (customer != null)
         {
@@ -128,8 +142,22 @@ public class GameManager : MonoBehaviour
         Debug.Log("Level Over");
         AudioManager.instance.stopMusic(1);
         AudioManager.instance.playSound(4);
-        yield return new WaitForSeconds(4f);
+
+        yield return new WaitForSeconds(3f);
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().DOMove(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().position.x, 720, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z), 1f, false);
+
+        yield return new WaitForSeconds(3f);
+
+        Scoring.instance.debriefingInfo.SetActive(false);
+
         UIManager.instance.ActivateGameObjects(UIManager.instance.endGameUI.name);
+        Scoring.instance.resultShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, Scoring.instance.resultShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
+        Scoring.instance.resultShutter.SetActive(true);
+        Scoring.instance.gameShutter.SetActive(false);
+        Scoring.instance.resultShutter.GetComponent<RectTransform>().DOAnchorPos(new Vector3(0, 1500,0), 1f, false);
+
+ 
+        
         TransitionManager.instances.MoveTransition(new Vector2(0, 0), 0.5f, UIManager.instance.endGameUI.GetComponent<RectTransform>(), UIManager.instance.endGameUI.gameObject, true);
         Scoring.instance.Results();
         foreach (ClickToSelectItem selectedItem in InteractableManager.instances.clickToSelectItems)
