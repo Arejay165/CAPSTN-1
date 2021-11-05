@@ -112,14 +112,21 @@ public class Scoring : MonoBehaviour
     public Image backgroundImage;
     public Sprite levelComplete;
 
-   // public TextMeshProUGUI livesCounterText;
-    //public int livesCounter;
+    public GameObject briefingShutter;
+    public GameObject briefingInfo;
+    public GameObject gameShutter;
+    public GameObject debriefingShutter;
+    public GameObject debriefingInfo;
+    public GameObject resultShutter;
 
+ 
     
 
     public void ShowBriefing()
     {
         
+        briefingShutter.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+        briefingInfo.SetActive(true);
         briefingDayText.text = (round+1).ToString();
         scoreGoal = 1000 + ((round-1) * (250));
         briefingScoreGoalText.text = scoreGoal.ToString();
@@ -132,6 +139,7 @@ public class Scoring : MonoBehaviour
         minGoalValue.text = resultsNextStar.ToString();
         score = 0;
         UpdateGameScoreGoal();
+
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
     {
@@ -385,7 +393,7 @@ public class Scoring : MonoBehaviour
         else
         {
             //  failPrompt.SetActive(true);
-            //TakeDamage();
+           
             levelText.text = "Level Failed";
          
             resultDayText.text = "";
@@ -654,7 +662,7 @@ public class Scoring : MonoBehaviour
             instance = this;
         }
         defaultScoreFloaterPos = scoreFloater.transform.position;
-       // livesCounterText.text = "3";
+      
         
     }
     public void OnEnable()
@@ -761,17 +769,6 @@ public class Scoring : MonoBehaviour
       
 
     }
-
-    //public void TakeDamage()
-    //{
-    //    livesCounter -= 1;
-    //    livesCounterText.text = livesCounter.ToString();
-
-    //    if(livesCounter <= 0)
-    //    {
-    //        SceneManager.LoadScene("EndGame");
-    //    }
-    //}
 
     public void StarAnimation()
     {
