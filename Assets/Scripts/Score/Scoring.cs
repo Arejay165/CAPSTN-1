@@ -124,8 +124,8 @@ public class Scoring : MonoBehaviour
 
     public void ShowBriefing()
     {
-        
-        briefingShutter.GetComponent<RectTransform>().position = new Vector3(0, 0, 0);
+        briefingShutter.SetActive(true);
+        briefingShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 0);
         briefingInfo.SetActive(true);
         briefingDayText.text = (round+1).ToString();
         scoreGoal = 1000 + ((round-1) * (250));
