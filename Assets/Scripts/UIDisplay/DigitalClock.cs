@@ -62,7 +62,7 @@ public class DigitalClock : MonoBehaviour
         Vector3 modifiedScale;
         float sizeTweenSpeed;
         float colorTweenSpeed;
-        if (descendingTime <= 10)
+        if (descendingTime <= 10 && !DayAndNightCycle.instance.GetIsStoreClosed())
         {
             modifiedScale = new Vector3(OriginalScale.x + 0.5f, OriginalScale.y + 0.5f, OriginalScale.z + 0.5f);
             sizeTweenSpeed = 0.2f;

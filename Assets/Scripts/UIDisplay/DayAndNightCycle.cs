@@ -15,7 +15,7 @@ public class DayAndNightCycle : MonoBehaviour
 
     // Used to stop the gameTime and Clock Display 
     [SerializeField]
-    bool        isStoreClosed = false;
+    bool        isStoreClosed = true;
     [SerializeField]
     bool        isMorning = true;
 

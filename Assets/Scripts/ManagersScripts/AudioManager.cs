@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
 
     public void playMusic(int index)
     {
-       // BGM[index].musicFile.Play();
+       BGM[index].musicFile.Play();
     }
 
     public void stopMusic(int index)

@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.stopMusic(2);
         SetUpRound();
         AudioManager.instance.playSound(6);
+
         yield return new WaitForSeconds(3f);
         Scoring.instance.briefingShutter.GetComponent<RectTransform>().position = new Vector3(1100, 720, Scoring.instance.briefingShutter.GetComponent<RectTransform>().position.z);
         Scoring.instance.briefingInfo.SetActive(false);
@@ -117,10 +118,12 @@ public class GameManager : MonoBehaviour
         Scoring.instance.gameShutter.SetActive(true);
         Scoring.instance.briefingShutter.SetActive(false);
         Scoring.instance.gameShutter.GetComponent<RectTransform>().DOMove(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().position.x, 3220, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z), 1f, false);
-        yield return new WaitForSeconds(2f);
-        
+
         StartRound();
         AudioManager.instance.playMusic(1);
+        //yield return new WaitForSeconds(3f);
+        
+       
     }
 
     public IEnumerator DayEnd()
