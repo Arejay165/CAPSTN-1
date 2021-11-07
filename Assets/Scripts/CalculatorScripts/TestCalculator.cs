@@ -21,6 +21,7 @@ public class TestCalculator : MonoBehaviour
     [Header("Stats")]
     public int answerAttempts;
     public int perfectAttempts;
+    public bool isFinished = false;
     public List<ItemUIClass> itemUIClassList = new List<ItemUIClass>(); // Datas for the Item UIs that will be in the answer pad
     public List<float> itemsAnswer = new List<float>();
     public List<float> changeAnswers = new List<float>();
@@ -73,7 +74,7 @@ public class TestCalculator : MonoBehaviour
 
     private void OnEnable()
     {
-
+        isFinished = false;
         ////Register OnGameStart Event in GameManager
         //GameManager.OnGameStart += OnGameStarted;
         //foreach (InputField selectedAnswerField in answerFields)
@@ -623,13 +624,13 @@ public class TestCalculator : MonoBehaviour
                 playerInputValue = inputVal;
 
             }
-            if (playerInputValue != -1)
+            if (playerInputValue != -1 && isFinished == false)
             {
                 answerAttempts++;
                 if (playerInputValue == changeCorrectAnswer)
                 {
                     RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
-
+                    isFinished = true;
                     //add bonus mood time
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                     mc.IncreaseCurrentMoodAmount( mc.correctBonusTime*4);
@@ -720,6 +721,9 @@ public class TestCalculator : MonoBehaviour
             TutorialManager.instance.ActivateTutorialUI();
             TutorialManager.instance.itemMask.SetActive(false);
         }
+
+        yield return new WaitForSeconds(2f);
+        isFinished = false;
      
     }
     public void DisplayItemOrders()

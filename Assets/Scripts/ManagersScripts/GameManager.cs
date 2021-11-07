@@ -7,14 +7,14 @@ using UnityEngine.UI;
 using TMPro;
 public class GameManager : MonoBehaviour
 {
-    public static GameManager   instance;
-    public Customer             customer;
+    public static GameManager instance;
+    public Customer customer;
 
     public CustomerSpawner customerSpawner;
     public DetectItemInWindow window;
-    
+
     public bool isPlaying = false;
-    public bool isFirstTime =true;
+    public bool isFirstTime = true;
 
     public static Action OnGameStart;
     public static Action OnGameEnd;
@@ -29,10 +29,10 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
         //PlayerPrefs.DeleteAll();
-        
+
     }
-    
-   
+
+
 
     public void TogglePlaying()
     {
@@ -40,20 +40,20 @@ public class GameManager : MonoBehaviour
     }
 
     public void SetUpRound() //TEMPORARY FIX FOR RESTARTING GAME AFTER UPGRADING, I THINK ITS BEST TO USE OBSERVER PATTERN UNITY EVENTS 
-    {                       
-        
+    {
+
 
         if (customer)
         {
             Destroy(customer.gameObject);
         }
-        
-       
-        
+
+
+
 
         TransitionManager.instances?.changeTransform.gameObject.SetActive(false);
         TransitionManager.instances?.noteBookTransform.gameObject.SetActive(false);
-       
+
 
     }
 
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
         OnGameStart.Invoke();
-      
+
     }
     public void PlayGame()
     {
@@ -72,8 +72,8 @@ public class GameManager : MonoBehaviour
         else
         {
             StartCoroutine(DayStart());
-            
-            
+
+
 
         }
         ////There is no tutorial
@@ -111,44 +111,44 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.playSound(6);
 
         yield return new WaitForSeconds(3f);
-        Scoring.instance.briefingShutter.GetComponent<RectTransform>().position = new Vector3(1100, 720, Scoring.instance.briefingShutter.GetComponent<RectTransform>().position.z);
+        Scoring.instance.briefingShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, Scoring.instance.briefingShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
         Scoring.instance.briefingInfo.SetActive(false);
         UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
-        Scoring.instance.gameShutter.GetComponent<RectTransform>().position = new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().position.x, 720, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z);
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
         Scoring.instance.gameShutter.SetActive(true);
         Scoring.instance.briefingShutter.SetActive(false);
-        Scoring.instance.gameShutter.GetComponent<RectTransform>().DOMove(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().position.x, 3220, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z), 1f, false);
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
 
         StartRound();
         AudioManager.instance.playMusic(1);
         //yield return new WaitForSeconds(3f);
-        
-       
+
+
     }
 
     public IEnumerator DayEnd()
     {
         Scoring.instance.gameShutter.SetActive(true);
-        Scoring.instance.gameShutter.GetComponent<RectTransform>().position = new Vector3(960, 3220, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z);
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
 
         Scoring.instance.debriefingInfo.SetActive(true);
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
-      //  UIManager.instance.ActivateGameObjects(UIManager.instance.roundDebriefingUI.name);
+        //  UIManager.instance.ActivateGameObjects(UIManager.instance.roundDebriefingUI.name);
         InteractableManager.instances.SpawnController(false);
         if (customer != null)
         {
             Destroy(customer.gameObject);
         }
 
-    //    PlayerManager.instance.lastItemSpawner.canSpawn = false;
+        //    PlayerManager.instance.lastItemSpawner.canSpawn = false;
 
         Debug.Log("Level Over");
         AudioManager.instance.stopMusic(1);
         AudioManager.instance.playSound(4);
 
         yield return new WaitForSeconds(3f);
-        Scoring.instance.gameShutter.GetComponent<RectTransform>().DOMove(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().position.x, 540, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z), 1f, false);
-
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        //540
         yield return new WaitForSeconds(3f);
 
         Scoring.instance.debriefingInfo.SetActive(false);
@@ -157,10 +157,10 @@ public class GameManager : MonoBehaviour
         Scoring.instance.resultShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, Scoring.instance.resultShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
         Scoring.instance.resultShutter.SetActive(true);
         Scoring.instance.gameShutter.SetActive(false);
-        Scoring.instance.resultShutter.GetComponent<RectTransform>().DOAnchorPos(new Vector3(0, 1500,0), 1f, false);
+        Scoring.instance.resultShutter.GetComponent<RectTransform>().DOAnchorPos(new Vector3(0, 1500, 0), 1f, false);
 
- 
-        
+
+
         TransitionManager.instances.MoveTransition(new Vector2(0, 0), 0.5f, UIManager.instance.endGameUI.GetComponent<RectTransform>(), UIManager.instance.endGameUI.gameObject, true);
         Scoring.instance.Results();
         foreach (ClickToSelectItem selectedItem in InteractableManager.instances.clickToSelectItems)
@@ -168,7 +168,28 @@ public class GameManager : MonoBehaviour
             selectedItem.canSpawn = true;
         }
         //window.invincibility = false;
+        if (GameManager.instance.customer != null)
+        {
+            Destroy(GameManager.instance.customer.gameObject);
+     
+            //Disable customer bubble
+            if (GameManager.instance.customer.panel.gameObject != null)
+            {
+                GameManager.instance.customer.panel.gameObject.SetActive(false);
 
+            }
+            if (GameManager.instance.customer.moodPanel != null)
+            {
+                //Disable customer mood bar
+                GameManager.instance.customer.moodPanel.SetActive(false);
+            }
+
+  
+            Destroy(GameManager.instance.customer.gameObject);
+            GameManager.instance.customer = null;
+
+            
+        }
         InteractableManager.instances.cashBox.clickable = true;
 
     }
@@ -185,17 +206,17 @@ public class GameManager : MonoBehaviour
             UIManager.instance.ActivateGameObjects(UIManager.instance.titleScreenUI.name);
             AudioManager.instance.playMusic(0);
         }
-     
-       
-    
+
+
+
     }
 
     private void OnDisable()
     {
-        
+
     }
 
 
-  
+
 
 }

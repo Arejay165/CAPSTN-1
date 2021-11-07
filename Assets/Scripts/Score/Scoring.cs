@@ -143,7 +143,28 @@ public class Scoring : MonoBehaviour
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
     {
-       
+        if (GameManager.instance.customer != null)
+        {
+            Destroy(GameManager.instance.customer.gameObject);
+
+            //Disable customer bubble
+            if (GameManager.instance.customer.panel.gameObject != null)
+            {
+                GameManager.instance.customer.panel.gameObject.SetActive(false);
+
+            }
+            if (GameManager.instance.customer.moodPanel != null)
+            {
+                //Disable customer mood bar
+                GameManager.instance.customer.moodPanel.SetActive(false);
+            }
+
+
+            Destroy(GameManager.instance.customer.gameObject);
+            GameManager.instance.customer = null;
+
+
+        }
         for (int i =0; i< resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
         {
             resultStarGoals[i].GetComponent<TextMeshProUGUI>().text = ( (i+1) * (scoreGoal / 3)).ToString();

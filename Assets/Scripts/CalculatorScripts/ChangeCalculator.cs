@@ -10,7 +10,7 @@ public class ChangeCalculator : MonoBehaviour
     public Text numeratorText;
     public Text denominatorText;
     public BillCounter billCounter;
- 
+    public bool isFinished = false;
     public TMP_InputField tmpChangeInputField;
    
     string text = "";
@@ -27,6 +27,7 @@ public class ChangeCalculator : MonoBehaviour
         //dividend / divisor = quotient (answer of player)
         // Reverse the division to multiplication
         // divisor * quotient = dividend
+        isFinished = false;
         int divisor;// use to multiply to the quotient to always be whole number 
         int quotient; // possible answers 
         int dividend;// determine the dividend
@@ -143,7 +144,7 @@ public class ChangeCalculator : MonoBehaviour
 
                 playerInputValue = inputVal;
             }
-            if (playerInputValue != -1)
+            if (playerInputValue != -1 && isFinished == false)
             {
 
                 if (playerInputValue == MathProblemManager.instance.cash.denValue)
@@ -152,7 +153,7 @@ public class ChangeCalculator : MonoBehaviour
                     StartCoroutine(SheetCompleted(tmpChangeInputField));
 
                     answerAttempts++;
-                 
+                    isFinished = true;
 
                     Scoring.instance.addScore((int)(100 * Scoring.instance.multiplier));
                     if (answerAttempts == perfectAttempts)
@@ -193,8 +194,42 @@ public class ChangeCalculator : MonoBehaviour
             blinkCount++;
         }
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
-       // yield return new WaitForSeconds(0.5f);
-        ChangeOrderFinish();
+        // yield return new WaitForSeconds(0.5f);
+
+        TransitionManager.instances.MoveTransition(new Vector2(680f, 1387f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
+        //Customer despawn
+        if (GameManager.instance.customer)
+        {
+            //Disable customer bubble
+            GameManager.instance.customer.panel.gameObject.SetActive(false);
+
+            //Disable customer mood bar
+            GameManager.instance.customer.moodPanel.SetActive(false);
+            //animation
+            DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 0.5f, false));
+            Destroy(GameManager.instance.customer.gameObject, 1.5f);
+            GameManager.instance.customer = null;
+        }
+
+        ///    GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
+
+        if (!TutorialManager.instance.canTutorial)
+        {
+            GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time 
+        }
+        else
+        {
+
+            TutorialManager.instance.ActivateTutorialUI();
+            TutorialManager.instance.customerCounter = 1;
+            TutorialManager.instance.tutorial.SetActive(true);
+            TutorialManager.instance.nextButton.SetActive(true);
+            TutorialManager.instance.itemMask.SetActive(false);
+        }
+
+        yield return new WaitForSeconds(2f);
+        isFinished = false; 
+        //ChangeOrderFinish();
     }
 
     IEnumerator WrongInputted(TMP_InputField p_inputField)
@@ -235,36 +270,6 @@ public class ChangeCalculator : MonoBehaviour
     public void ChangeOrderFinish()
     {
 
-        TransitionManager.instances.MoveTransition(new Vector2(680f, 1387f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, false);
-        //Customer despawn
-        if (GameManager.instance.customer)
-        {
-            //Disable customer bubble
-            GameManager.instance.customer.panel.gameObject.SetActive(false);
 
-            //Disable customer mood bar
-            GameManager.instance.customer.moodPanel.SetActive(false);
-            //animation
-            DOTween.Sequence().Append(GameManager.instance.customer.gameObject.transform.DOMove(GameManager.instance.customerSpawner.outShopPoint.position, 0.5f, false));
-            Destroy(GameManager.instance.customer.gameObject,1.5f);
-            GameManager.instance.customer = null;
-        }
-
-        ///    GameManager.instance.customerSpawner.StartCoroutine(GameManager.instance.customerSpawner.SpawnRate());
-
-        if (!TutorialManager.instance.canTutorial)
-        {
-            GameManager.instance.customerSpawner.SpawnCustomer(); //No waiting time 
-        }
-        else
-        {
-
-            TutorialManager.instance.ActivateTutorialUI();
-            TutorialManager.instance.customerCounter = 1;
-            TutorialManager.instance.tutorial.SetActive(true);
-            TutorialManager.instance.nextButton.SetActive(true);
-            TutorialManager.instance.itemMask.SetActive(false);
-        }
-     
     }
 }
