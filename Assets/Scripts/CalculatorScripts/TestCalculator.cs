@@ -600,7 +600,7 @@ public class TestCalculator : MonoBehaviour
     public void OnChangeCorrect()
     {
 
-
+       // changeAnswerField.DeactivateInputField();
         OrderSheetFinish();
         index = 0;
     }
@@ -634,6 +634,7 @@ public class TestCalculator : MonoBehaviour
                     //add bonus mood time
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                     mc.IncreaseCurrentMoodAmount( mc.correctBonusTime*4);
+                    //changeAnswerField.DeactivateInputField();
                     StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
                     
 
@@ -670,6 +671,7 @@ public class TestCalculator : MonoBehaviour
         {
             Scoring.instance.ModifyMultiplier(1f);
         }
+
        
         StartCoroutine(SheetCompleted(changeAnswerField));
     
