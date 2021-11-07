@@ -23458,7 +23458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   days: 0
   gameTime: 0
-  endTime: 60
+  endTime: 180
   isStoreClosed: 0
   isMorning: 1
   uIManager: {fileID: 1623941616}
