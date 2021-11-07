@@ -3218,13 +3218,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 149932700}
   m_TextComponent: {fileID: 1974979183}
   m_Placeholder: {fileID: 618992564}
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 1
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -5410,13 +5410,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 272558283}
   m_TextComponent: {fileID: 1397823931}
   m_Placeholder: {fileID: 1616580526}
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 1
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -67083,13 +67083,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1250896450}
   m_TextComponent: {fileID: 1632288176}
   m_Placeholder: {fileID: 4994584}
-  m_ContentType: 0
+  m_ContentType: 3
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 2
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 2
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -95631,6 +95631,7 @@ MonoBehaviour:
   numeratorText: {fileID: 1346227544}
   denominatorText: {fileID: 308826342}
   billCounter: {fileID: 0}
+  isFinished: 0
   tmpChangeInputField: {fileID: 336858014}
   isCountingTime: 0
   timeSpent: 0
@@ -112808,6 +112809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   answerAttempts: 0
   perfectAttempts: 0
+  isFinished: 0
   itemUIClassList: []
   itemsAnswer: []
   changeAnswers: []
