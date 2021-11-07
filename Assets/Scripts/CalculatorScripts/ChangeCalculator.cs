@@ -212,10 +212,11 @@ public class ChangeCalculator : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
             blinkCount++;
         }
-        p_inputField.text = "";
      
+        p_inputField.text = "";
+        p_inputField.ActivateInputField();
         tmpChangeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
-        p_inputField.Select();
+        
     }
     public void RecordAnswerResult(MathProblemOperator p_mathOperator, bool p_isCorrect)
     {

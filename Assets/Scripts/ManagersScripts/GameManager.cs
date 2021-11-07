@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator DayEnd()
     {
         Scoring.instance.gameShutter.SetActive(true);
-        Scoring.instance.gameShutter.GetComponent<RectTransform>().position = new Vector3(1280, 3220, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z);
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().position = new Vector3(960, 3220, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z);
 
         Scoring.instance.debriefingInfo.SetActive(true);
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.playSound(4);
 
         yield return new WaitForSeconds(3f);
-        Scoring.instance.gameShutter.GetComponent<RectTransform>().DOMove(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().position.x, 720, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z), 1f, false);
+        Scoring.instance.gameShutter.GetComponent<RectTransform>().DOMove(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().position.x, 540, Scoring.instance.gameShutter.GetComponent<RectTransform>().position.z), 1f, false);
 
         yield return new WaitForSeconds(3f);
 
