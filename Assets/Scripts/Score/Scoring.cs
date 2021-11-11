@@ -827,7 +827,7 @@ public class Scoring : MonoBehaviour
         scoreFloater.GetComponent<Text>().text = "+ " + p_gainedScore;
         //scoreFloater.SetActive(true);
         //Move
-        sequence.Append(scoreFloater.transform.DOMove(new Vector3(scoreFloater.transform.position.x, scoreFloater.transform.position.y + 58f, scoreFloater.transform.position.z), p_duration + 0.5f));//(modifiedScale, sizeTweenSpeed).SetEase(Ease.Linear)).Append(timeValueUI.transform.DOScale(OriginalScale, 0.2f).SetEase(Ease.Linear));
+        sequence.Append(scoreFloater.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.x, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.y + 58f, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.z), p_duration + 0.5f));//(modifiedScale, sizeTweenSpeed).SetEase(Ease.Linear)).Append(timeValueUI.transform.DOScale(OriginalScale, 0.2f).SetEase(Ease.Linear));
 
         //FadeIn
         sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, p_duration * 0.05f));
