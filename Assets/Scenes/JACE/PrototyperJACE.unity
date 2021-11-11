@@ -21272,7 +21272,7 @@ Transform:
   m_LocalScale: {x: 0.09793811, y: 1.348124, z: 1}
   m_Children: []
   m_Father: {fileID: 260025024}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &97716862
 SpriteRenderer:
@@ -37931,6 +37931,7 @@ Transform:
   - {fileID: 497228851}
   - {fileID: 1801144781}
   - {fileID: 1511276973}
+  - {fileID: 1278495484}
   - {fileID: 330207025}
   - {fileID: 97716861}
   m_Father: {fileID: 0}
@@ -39019,7 +39020,7 @@ Transform:
   m_LocalScale: {x: 0.20338193, y: 1.348124, z: 1}
   m_Children: []
   m_Father: {fileID: 260025024}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &330207026
 SpriteRenderer:
@@ -67388,6 +67389,12 @@ MonoBehaviour:
   levelText: {fileID: 390416201}
   backgroundImage: {fileID: 1757752599}
   levelComplete: {fileID: 21300000, guid: 5fecd9853c3a28b4a845857832a3b616, type: 3}
+  briefingShutter: {fileID: 0}
+  briefingInfo: {fileID: 0}
+  gameShutter: {fileID: 0}
+  debriefingShutter: {fileID: 0}
+  debriefingInfo: {fileID: 0}
+  resultShutter: {fileID: 0}
 --- !u!114 &965782339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67411,6 +67418,8 @@ MonoBehaviour:
   roundDebriefingUI: {fileID: 1578724912}
   playerNameUI: {fileID: 543617256}
   tutorialUI: {fileID: 498559724}
+  dayBackGround: {fileID: 1511276972}
+  nightBackGround: {fileID: 1278495483}
 --- !u!114 &965782340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82574,6 +82583,89 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1270773125}
   m_CullTransparentMesh: 1
+--- !u!1 &1278495483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1278495484}
+  - component: {fileID: 1278495485}
+  m_Layer: 0
+  m_Name: Background2_Blurred (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1278495484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278495483}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0268, y: 0.0133, z: 0}
+  m_LocalScale: {x: 0.31987998, y: 0.31712, z: 0.9971}
+  m_Children: []
+  m_Father: {fileID: 260025024}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1278495485
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278495483}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -100
+  m_Sprite: {fileID: 21300000, guid: c61a2a26808c1bc48b8a9fc8cd0f362f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 80, y: 45}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1001 &1280170462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119655,6 +119747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   answerAttempts: 0
   perfectAttempts: 0
+  isFinished: 0
   itemUIClassList: []
   itemsAnswer: []
   changeAnswers: []
@@ -127344,6 +127437,7 @@ MonoBehaviour:
   numeratorText: {fileID: 544577509}
   denominatorText: {fileID: 1773995912}
   billCounter: {fileID: 0}
+  isFinished: 0
   tmpChangeInputField: {fileID: 1541952093}
   isCountingTime: 0
   timeSpent: 0

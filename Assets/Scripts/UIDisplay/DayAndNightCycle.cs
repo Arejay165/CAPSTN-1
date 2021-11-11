@@ -27,6 +27,7 @@ public class DayAndNightCycle : MonoBehaviour
     public UIManager uIManager;
 
     public bool isRushHour = false;
+
     public void Awake()
     {
         if (instance == null)
@@ -50,6 +51,8 @@ public class DayAndNightCycle : MonoBehaviour
     void OnGameStarted()
     {
         SetGameTime(0);
+        UIManager.instance.dayBackGround.SetActive(true);
+        UIManager.instance.nightBackGround.SetActive(false);
         isRushHour = false;
         SetStoreClosed(false);
     }
@@ -96,8 +99,16 @@ public class DayAndNightCycle : MonoBehaviour
                     if(!TutorialManager.instance.canTutorial)
                     gameTime += Time.deltaTime;
 
+                    if(gameTime >= endTime / 2)
+                    {
+                        UIManager.instance.dayBackGround.SetActive(false);
+                        UIManager.instance.nightBackGround.SetActive(true);
+                    }
+                   
                     if (gameTime >= endTime * 2 / 3)
                     {
+
+                       
                         if (isMorning)
                         {
                             isMorning = false;
@@ -113,7 +124,7 @@ public class DayAndNightCycle : MonoBehaviour
             }
         }
         
-        
+       
         
     }
 

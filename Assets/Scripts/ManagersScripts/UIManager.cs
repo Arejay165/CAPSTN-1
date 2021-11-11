@@ -18,7 +18,10 @@ public class UIManager : MonoBehaviour
     public GameObject roundDebriefingUI;
     public GameObject playerNameUI;
     public GameObject tutorialUI;
-    
+
+    public GameObject dayBackGround;
+    public GameObject nightBackGround;
+
     private bool isPause; //for demo purposes
 
     //public List<GameObject> tutorialUIs = new List<GameObject>();
