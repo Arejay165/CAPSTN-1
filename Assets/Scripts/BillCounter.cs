@@ -19,8 +19,30 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     {
         
     }
+    private void OnEnable()
+    {
+
+        //Register OnGameStart Event in GameManager
+    
+        GameManager.OnGameEnd += OnGameEnded;
+    }
+
+    private void OnDisable()
+    {
+        //Deregister OnGameStart Event in GameManager
+
+        GameManager.OnGameEnd -= OnGameEnded;
 
 
+
+
+
+    }
+
+    void OnGameEnded()
+    {
+        RemoveHighlightItem();
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         if (clickable)
@@ -76,12 +98,13 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     }
     private void OnMouseOver()
     {
-        HighlightItem();
+       
 
         //If the item is clicked
         //Spawn one at a time
         if (GameManager.instance.isPlaying)
         {
+            HighlightItem();
             if (!CursorManager.instance.isLooping)
             {
 

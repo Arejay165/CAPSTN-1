@@ -44,7 +44,8 @@ public class ClickToSelectItem : MonoBehaviour
 
 
     }
- 
+
+
     void OnGameStarted()
     {
         CursorManager.instance.SetActiveCursorAnimation(CursorType.Arrow);
@@ -57,16 +58,17 @@ public class ClickToSelectItem : MonoBehaviour
     }
     void OnGameEnded()
     {
-
+        RemoveHighlightItem();
     }
     private void OnMouseOver()
     {
-        HighlightItem();
+       
 
         //If the item is clicked
         //Spawn one at a time
         if (GameManager.instance.isPlaying)
         {
+            HighlightItem();
             if (!CursorManager.instance.isLooping)
             {
             

@@ -88782,7 +88782,6 @@ MonoBehaviour:
   multiplier: 1
   maxMultiplier: 3
   gameMultiplierText: {fileID: 1520160956}
-  scoreToNextGoal: 0
   gameDayText: {fileID: 486838025}
   resultDayText: {fileID: 2086605422}
   endScoreText: {fileID: 76560692}

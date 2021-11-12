@@ -138,9 +138,9 @@ public class Customer : MonoBehaviour
         foreach (Image selectedImage in itemsImage)
         {
             selectedImage.gameObject.SetActive(false);
-            var tc = selectedImage.gameObject.GetComponent<Image>().color;
-            tc.a = 1f;
-            selectedImage.gameObject.GetComponent<Image>().color = tc;
+            //var tc = selectedImage.gameObject.GetComponent<Image>().color;
+            //tc.a = 1f;
+            //selectedImage.gameObject.GetComponent<Image>().color = tc;
         }
         
         if (disappearing)
@@ -154,25 +154,31 @@ public class Customer : MonoBehaviour
     
     public IEnumerator ThoughtBubbleAppear()
     {
-        float duration = 0.5f;
-        Sequence sequence = DOTween.Sequence();
+        float duration = 0.25f;
+        //Sequence sequence = DOTween.Sequence();
         panel.gameObject.SetActive(true);
 
         //Move
-        panel.gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(savedSize.x, savedSize.y), duration -0.25f);
+    //    panel.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(savedSize.x,4f);
+        panel.gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(savedSize.x, savedSize.y), duration);
 
         //FadeIn
-        sequence.Append(panel.gameObject.GetComponent<Image>().DOFade(1.0f, duration));
-        sequence.Play();
-        yield return sequence.WaitForCompletion(); // Wait to finish
+        // sequence.Append(
+        panel.gameObject.GetComponent<Image>().DOFade(1.0f, duration);//);
+        //sequence.Play();
+       
+        //yield return sequence.WaitForCompletion(); // Wait to finish
         //yield return new WaitForSeconds(duration * 0.5f);
-        panel.gameObject.GetComponent<ContentSizeFitter>().enabled = true;
-        panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
+        
         foreach (Image selectedImage in itemsImage)
         {
+            yield return new WaitForSeconds(duration / itemsImage.Count);
+            selectedImage.DOFade(1.0f, duration / itemsImage.Count);
             selectedImage.gameObject.SetActive(true);
+            
         }
-
+        panel.gameObject.GetComponent<ContentSizeFitter>().enabled = true;
+        panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
 
 
     }

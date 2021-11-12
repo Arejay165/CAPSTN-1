@@ -178,6 +178,8 @@ MonoBehaviour:
   panel: {fileID: 7296001819012519672}
   moodPanel: {fileID: 7296001820505229221}
   displayOrder: {fileID: 0}
+  saved: 0
+  disappearing: 0
   savedSize: {x: 0, y: 0}
 --- !u!114 &8493476688458719202
 MonoBehaviour:

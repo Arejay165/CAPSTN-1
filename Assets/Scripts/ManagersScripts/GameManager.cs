@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayStart()
     {
+
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundBriefingUI.name);
         Scoring.instance.ShowBriefing();
@@ -128,6 +129,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayEnd()
     {
+        OnGameEnd.Invoke();
+        TogglePlaying();
         Scoring.instance.gameShutter.SetActive(true);
         Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
 
@@ -195,7 +198,7 @@ public class GameManager : MonoBehaviour
     }
     virtual protected void Start()
     {
-
+        isPlaying = false;
         if (TutorialManager.instance.canTutorial)
         {
             //   UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
