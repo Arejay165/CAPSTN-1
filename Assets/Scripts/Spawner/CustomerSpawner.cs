@@ -68,7 +68,7 @@ public class CustomerSpawner : MonoBehaviour
     IEnumerator MoveAnimation(GameObject obj)
     {
         Tween myTween = obj.transform.DOMove(inShopPoint.position, 1f, false);// animation sequence
-        obj.GetComponent<Customer>().panel.gameObject.SetActive(false);
+        StartCoroutine(obj.GetComponent<Customer>().ThoughtBubbleDisappear());
         GameManager.instance.customer.moodPanel.SetActive(false);
 
 
@@ -77,7 +77,7 @@ public class CustomerSpawner : MonoBehaviour
        
         if(obj != null)
         {
-            obj.GetComponent<Customer>().panel.gameObject.SetActive(true);
+            StartCoroutine(obj.GetComponent<Customer>().ThoughtBubbleAppear());
         }
 
         if (GameManager.instance.customer!=null)

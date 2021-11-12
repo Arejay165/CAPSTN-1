@@ -239,7 +239,7 @@ public class MoodComponent : MonoBehaviour
         {
 
             //Disable customer bubble
-            GameManager.instance.customer.panel.gameObject.SetActive(false);
+            StartCoroutine(GameManager.instance.customer.ThoughtBubbleDisappear());
 
             //Disable customer mood bar
             GameManager.instance.customer.moodPanel.SetActive(false);

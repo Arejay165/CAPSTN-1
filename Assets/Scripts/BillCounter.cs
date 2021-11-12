@@ -157,7 +157,7 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     void ChangeUI()
     {
         //Disable customer bubble
-        GameManager.instance.customer.panel.gameObject.SetActive(false);
+        StartCoroutine(GameManager.instance.customer.ThoughtBubbleDisappear());
 
         //show pabarya sheet
         TransitionManager.instances.MoveTransition(new Vector2(680f, 0f), 0.5f, TransitionManager.instances.changeTransform, TransitionManager.instances.changeTransform.gameObject, true);

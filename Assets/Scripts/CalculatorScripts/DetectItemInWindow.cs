@@ -49,7 +49,7 @@ public class DetectItemInWindow : MonoBehaviour
                             if (MathProblemManager.instance.GetCurrentItemsWanted().Count <= 0)
                             {
                                 //Disable customer bubble
-                                GameManager.instance.customer.panel.gameObject.SetActive(false);
+                                StartCoroutine(GameManager.instance.customer.ThoughtBubbleDisappear());
 
 
                                 //ordersheet 

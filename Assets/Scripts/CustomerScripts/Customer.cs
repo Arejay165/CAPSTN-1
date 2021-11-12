@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using DG.Tweening;
 
 public class Customer : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Customer : MonoBehaviour
     public Transform panel;
     public GameObject moodPanel;
     public TestCalculator displayOrder;
+    public Vector2 savedSize;
     
     //public bool willBuy;
 
@@ -99,29 +101,99 @@ public class Customer : MonoBehaviour
             itemUI.GetComponent<Image>().sprite = selectedItem.itemSprite;
             itemUI.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
             itemsImage.Add(itemUI.GetComponent<Image>());
+            var tc = itemUI.GetComponent<Image>().color;
+            tc.a = 0f;
+            itemUI.GetComponent<Image>().color = tc;
             AudioManager.instance.playSound(12);
         }
-       
+        // LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)HorizontalLayoutGroup.transform);
+        //Canvas.ForceUpdateCanvases();
+        //StartCoroutine(WaitUntilEndOfFrame());
+        //Canvas.ForceUpdateCanvases();
+        var tempColor = panel.gameObject.GetComponent<Image>().color;
+        tempColor.a = 0f;
+        panel.gameObject.GetComponent<Image>().color = tempColor;
+        StartCoroutine(SaveRectSize());
+        
+
+
     }
+
+    IEnumerator SaveRectSize()
+    {
+        
+        yield return new WaitForSeconds(0.00001f);
+    
+        savedSize = new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height);
+
+        panel.gameObject.GetComponent<ContentSizeFitter>().enabled = false;
+        panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = false;
 
    
 
-    //void RNG_item()
-    //{
+        foreach (Image selectedImage in itemsImage)
+        {
+            selectedImage.gameObject.SetActive(false);
+            var tc = selectedImage.gameObject.GetComponent<Image>().color;
+            tc.a = 1f;
+            selectedImage.gameObject.GetComponent<Image>().color = tc;
+        }
 
-    //    for (int i = 0; i < maxInventory; i++)
-    //    {
-
-    //        RNG = Random.Range(0, maxInventory);
-    //        Debug.Log("Customer wants: " + items[RNG].itemName);
-    //        itemSprites[i].sprite = items[RNG].itemSprite;
-    //        itemsWanted.Add(items[RNG]);
-
-    //    }
-
-    //}
+    }
 
 
+
+    
+    public IEnumerator ThoughtBubbleAppear()
+    {
+        float duration = 1f;
+        Sequence sequence = DOTween.Sequence();
+        panel.gameObject.SetActive(true);
+
+        //Move
+        panel.gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(savedSize.x, savedSize.y), duration -0.25f);
+
+        //FadeIn
+        sequence.Append(panel.gameObject.GetComponent<Image>().DOFade(1.0f, duration));
+        sequence.Play();
+        yield return sequence.WaitForCompletion(); // Wait to finish
+        //yield return new WaitForSeconds(duration * 0.5f);
+        panel.gameObject.GetComponent<ContentSizeFitter>().enabled = true;
+        panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
+        foreach (Image selectedImage in itemsImage)
+        {
+            selectedImage.gameObject.SetActive(true);
+        }
+
+
+
+    }
+    public IEnumerator ThoughtBubbleDisappear()
+    {
+        panel.gameObject.GetComponent<ContentSizeFitter>().enabled = false;
+        panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = false;
+        panel.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0f);
+        foreach (Image selectedImage in itemsImage)
+        {
+            selectedImage.gameObject.SetActive(false);
+        }
+
+        float duration = 1f;
+        Sequence sequence = DOTween.Sequence();
+
+        panel.gameObject.SetActive(false);
+
+
+
+        //Move
+        sequence.Append(panel.gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(0f, 0f), duration + 0.5f));
+
+        //FadeIn
+        sequence.Append(panel.gameObject.GetComponent<Image>().DOFade(0.0f, duration * 0.05f));
+        sequence.Play();
+        yield return new WaitForSeconds(duration * 0.5f);
+      
+    }
 }
 
    

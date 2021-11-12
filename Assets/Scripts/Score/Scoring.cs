@@ -150,7 +150,7 @@ public class Scoring : MonoBehaviour
             //Disable customer bubble
             if (GameManager.instance.customer.panel.gameObject != null)
             {
-                GameManager.instance.customer.panel.gameObject.SetActive(false);
+                StartCoroutine(GameManager.instance.customer.ThoughtBubbleDisappear());
 
             }
             if (GameManager.instance.customer.moodPanel != null)
