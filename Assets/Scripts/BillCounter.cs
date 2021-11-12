@@ -167,7 +167,7 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     IEnumerator Cooldown()
     {
         clickable = false;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.15f);
         clickable = true;
     }
 }
