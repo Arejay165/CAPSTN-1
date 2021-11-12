@@ -115,7 +115,7 @@ public class Customer : MonoBehaviour
         var tempColor = panel.gameObject.GetComponent<Image>().color;
         tempColor.a = 0f;
         panel.gameObject.GetComponent<Image>().color = tempColor;
-        Debug.Log(new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height));
+        //Debug.Log(new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height));
         StartCoroutine(SaveRectSize());
         
 
@@ -125,9 +125,9 @@ public class Customer : MonoBehaviour
     IEnumerator SaveRectSize()
     {
        
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         saved = true;
-        Debug.Log(new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height));
+        //Debug.Log(new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height));
         //savedSize = new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height);
         savedSize = panel.gameObject.GetComponent<RectTransform>().sizeDelta;
         panel.gameObject.GetComponent<ContentSizeFitter>().enabled = false;
@@ -154,7 +154,7 @@ public class Customer : MonoBehaviour
     
     public IEnumerator ThoughtBubbleAppear()
     {
-        float duration = 1f;
+        float duration = 0.5f;
         Sequence sequence = DOTween.Sequence();
         panel.gameObject.SetActive(true);
 
@@ -178,7 +178,7 @@ public class Customer : MonoBehaviour
     }
     public IEnumerator ThoughtBubbleDisappear()
     {
-        float duration = 1f;
+        float duration = 0.25f;
         if (saved)
         {
             panel.gameObject.GetComponent<ContentSizeFitter>().enabled = false;
@@ -197,10 +197,10 @@ public class Customer : MonoBehaviour
 
 
             //Move
-            sequence.Append(panel.gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(0f, 0f), duration + 0.5f));
+            sequence.Append(panel.gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(0f, 0f), duration));
 
             //FadeIn
-            sequence.Append(panel.gameObject.GetComponent<Image>().DOFade(0.0f, duration * 0.05f));
+            sequence.Append(panel.gameObject.GetComponent<Image>().DOFade(0.0f, duration));
             sequence.Play();
         }
         else if (!saved)
@@ -208,7 +208,7 @@ public class Customer : MonoBehaviour
             disappearing = true;
         }
      
-        yield return new WaitForSeconds(duration * 0.5f);
+        yield return new WaitForSeconds(duration);
       
     }
 }

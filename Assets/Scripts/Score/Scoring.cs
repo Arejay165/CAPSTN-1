@@ -20,7 +20,7 @@ public class Scoring : MonoBehaviour
     public float multiplier;
     public float maxMultiplier;
     public Text gameMultiplierText;
-    [SerializeField] private int scoreToNextGoal = 0;
+
 
     public Text gameDayText;
     public TextMeshProUGUI resultDayText;
@@ -104,6 +104,7 @@ public class Scoring : MonoBehaviour
     Vector3 defaultScoreFloaterPos;
     public int resultsNextStar;
     public int gameNextStar;
+    int backUpStarRatingsCounted = 0;
 
     public TextMeshProUGUI minGoalValue;
     public TextMeshProUGUI newHighScoreText;
@@ -139,7 +140,8 @@ public class Scoring : MonoBehaviour
         resultsNextStar = scoreGoal / 3;
         minGoalValue.text = resultsNextStar.ToString();
         score = 0;
-        UpdateGameScoreGoal();
+        gameScoreGoalText.text = ((scoreGoal / 3) * (1)).ToString();
+        gameNextStar = scoreGoal / 3;
 
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -625,16 +627,16 @@ public class Scoring : MonoBehaviour
         //while (scoreToNextGoal < 1)
         //{
         //    scoreToNextGoal += (scoreGoal / 3);
-        if (score >= ((scoreGoal/3) * gameStarSlotIndex)) // if 500 > ((1500/3) * 1) //if 500 > 500
+        if (score >= ((scoreGoal/3) * (gameStarSlotIndex + 1))) // if 500 > ((1500/3) * 1) //if 500 > 500
         {
             if (gameStarSlotIndex < 3)
             {
-                gameScoreGoalText.text = ((scoreGoal / 3) * gameStarSlotIndex).ToString();
+               
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
                 gameStarSlotIndex++;
 
-
+                gameScoreGoalText.text = ((scoreGoal / 3) * (gameStarSlotIndex + 1)).ToString();
             }
         }
 
@@ -675,7 +677,7 @@ public class Scoring : MonoBehaviour
     public IEnumerator GameCountText(int p_newValue, int p_Value = 0)
     {
       //Animation
-        gameNextStar = scoreGoal / 3;
+        
 
         WaitForSeconds wait = new WaitForSeconds(1f / fpsCount);
         int previousValue = p_Value;
@@ -692,7 +694,7 @@ public class Scoring : MonoBehaviour
         }
 
         //Animated Look where numbers roll like a slot machine for awhile
-        int backUpStarRatingsCounted = 0;
+        
         if (previousValue < p_newValue)
         {
             //Back up counter
@@ -716,7 +718,7 @@ public class Scoring : MonoBehaviour
                     //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(5) stars, it'll become 5 stars)
                     if (backUpStarRatingsCounted < 3)
                     {
-
+                        
                         UpdateGameScoreGoal();
                         backUpStarRatingsCounted++;
 

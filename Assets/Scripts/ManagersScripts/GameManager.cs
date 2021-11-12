@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
         Scoring.instance.gameShutter.SetActive(true);
         Scoring.instance.briefingShutter.SetActive(false);
         Scoring.instance.gameShutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
-
+      
         StartRound();
         AudioManager.instance.playMusic(1);
         //yield return new WaitForSeconds(3f);

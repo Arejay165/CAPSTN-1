@@ -340,7 +340,7 @@ public class TestCalculator : MonoBehaviour
     {
 
 
-        Scoring.instance.ModifyMultiplier(-1f);
+        Scoring.instance.ResetMultiplier();
     }
 
     public void OnPriceInputted(string p_playerInputString)
