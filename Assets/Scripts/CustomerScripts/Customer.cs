@@ -16,6 +16,8 @@ public class Customer : MonoBehaviour
     public Transform panel;
     public GameObject moodPanel;
     public TestCalculator displayOrder;
+    public bool saved = false;
+    public bool disappearing = false;
     public Vector2 savedSize;
     
     //public bool willBuy;
@@ -113,6 +115,7 @@ public class Customer : MonoBehaviour
         var tempColor = panel.gameObject.GetComponent<Image>().color;
         tempColor.a = 0f;
         panel.gameObject.GetComponent<Image>().color = tempColor;
+        Debug.Log(new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height));
         StartCoroutine(SaveRectSize());
         
 
@@ -121,11 +124,12 @@ public class Customer : MonoBehaviour
 
     IEnumerator SaveRectSize()
     {
-        
-        yield return new WaitForSeconds(0.00001f);
-    
-        savedSize = new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height);
-
+       
+        yield return new WaitForSeconds(0.1f);
+        saved = true;
+        Debug.Log(new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height));
+        //savedSize = new Vector2(panel.gameObject.GetComponent<RectTransform>().rect.width, panel.gameObject.GetComponent<RectTransform>().rect.height);
+        savedSize = panel.gameObject.GetComponent<RectTransform>().sizeDelta;
         panel.gameObject.GetComponent<ContentSizeFitter>().enabled = false;
         panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = false;
 
@@ -138,7 +142,11 @@ public class Customer : MonoBehaviour
             tc.a = 1f;
             selectedImage.gameObject.GetComponent<Image>().color = tc;
         }
-
+        
+        if (disappearing)
+        {
+            StartCoroutine(ThoughtBubbleDisappear());
+        }
     }
 
 
@@ -170,27 +178,36 @@ public class Customer : MonoBehaviour
     }
     public IEnumerator ThoughtBubbleDisappear()
     {
-        panel.gameObject.GetComponent<ContentSizeFitter>().enabled = false;
-        panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = false;
-        panel.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0f);
-        foreach (Image selectedImage in itemsImage)
-        {
-            selectedImage.gameObject.SetActive(false);
-        }
-
         float duration = 1f;
-        Sequence sequence = DOTween.Sequence();
+        if (saved)
+        {
+            panel.gameObject.GetComponent<ContentSizeFitter>().enabled = false;
+            panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = false;
+            panel.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 0f);
+            foreach (Image selectedImage in itemsImage)
+            {
+                selectedImage.gameObject.SetActive(false);
+            }
 
-        panel.gameObject.SetActive(false);
+          
+            Sequence sequence = DOTween.Sequence();
+
+            panel.gameObject.SetActive(false);
 
 
 
-        //Move
-        sequence.Append(panel.gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(0f, 0f), duration + 0.5f));
+            //Move
+            sequence.Append(panel.gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(0f, 0f), duration + 0.5f));
 
-        //FadeIn
-        sequence.Append(panel.gameObject.GetComponent<Image>().DOFade(0.0f, duration * 0.05f));
-        sequence.Play();
+            //FadeIn
+            sequence.Append(panel.gameObject.GetComponent<Image>().DOFade(0.0f, duration * 0.05f));
+            sequence.Play();
+        }
+        else if (!saved)
+        {
+            disappearing = true;
+        }
+     
         yield return new WaitForSeconds(duration * 0.5f);
       
     }
