@@ -103,6 +103,7 @@ public class Scoring : MonoBehaviour
     public GameObject scoreFloater;
     Vector3 defaultScoreFloaterPos;
     public int resultsNextStar;
+    public int gameNextStar;
 
     public TextMeshProUGUI minGoalValue;
     public TextMeshProUGUI newHighScoreText;
@@ -612,21 +613,23 @@ public class Scoring : MonoBehaviour
     
     public void UpdateGameScoreGoal()
     {
-        int currentScaledScore = score;
+       // int currentScaledScore = score;
 
 
-        currentScaledScore = score - (scoreGoal / 3 * gameStarSlotIndex);
+       // currentScaledScore = score - (scoreGoal / 3 * gameStarSlotIndex);
 
 
-
-        int scoreToNextGoal = (scoreGoal / 3) - (currentScaledScore);
-        while (scoreToNextGoal < 1)
+        
+        //int scoreToNextGoal = (scoreGoal / 3) - (currentScaledScore);
+        //int scoreToNextGoal = 0;
+        //while (scoreToNextGoal < 1)
+        //{
+        //    scoreToNextGoal += (scoreGoal / 3);
+        if (score >= ((scoreGoal/3) * gameStarSlotIndex)) // if 500 > ((1500/3) * 1) //if 500 > 500
         {
-            scoreToNextGoal += (scoreGoal / 3);
-
             if (gameStarSlotIndex < 3)
             {
-               
+                gameScoreGoalText.text = ((scoreGoal / 3) * gameStarSlotIndex).ToString();
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
                 gameStarSlotIndex++;
@@ -635,7 +638,9 @@ public class Scoring : MonoBehaviour
             }
         }
 
-        gameScoreGoalText.text = scoreToNextGoal.ToString();
+        //}
+       // gameScoreGoalText.text = scoreToNextGoal.ToString();
+
 
     }
 
@@ -665,15 +670,122 @@ public class Scoring : MonoBehaviour
         gameMultiplierText.text = multiplier.ToString() + "x";
         
     }
+
+    public IEnumerator GameCountText(int p_newValue, int p_Value = 0)
+    {
+      //Animation
+        gameNextStar = scoreGoal / 3;
+
+        WaitForSeconds wait = new WaitForSeconds(1f / fpsCount);
+        int previousValue = p_Value;
+        int stepAmount;
+
+        if (p_newValue - previousValue < 0)
+        {
+            stepAmount = Mathf.FloorToInt((p_newValue - previousValue) / (fpsCount * duration));
+        }
+        else
+        {
+            stepAmount = Mathf.CeilToInt((p_newValue - previousValue) / (fpsCount * duration));
+
+        }
+
+        //Animated Look where numbers roll like a slot machine for awhile
+        int backUpStarRatingsCounted = 0;
+        if (previousValue < p_newValue)
+        {
+            //Back up counter
+
+            while (previousValue < p_newValue)
+            {
+                previousValue += stepAmount;
+                if (previousValue > p_newValue)
+                {
+                    previousValue = p_newValue;
+                }
+
+                //Update Text to new Value
+                scoreText.text = previousValue.ToString(scoreFormat);
+
+                //Calcualtes how many stars did the player get
+
+
+                if (previousValue >= gameNextStar)
+                {
+                    //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(5) stars, it'll become 5 stars)
+                    if (backUpStarRatingsCounted < 3)
+                    {
+
+                        UpdateGameScoreGoal();
+                        backUpStarRatingsCounted++;
+
+                        gameNextStar += scoreGoal / 3;
+
+                    }
+
+                }
+
+                yield return wait;
+
+            }
+
+        }
+        else if (previousValue > p_newValue)
+        {
+            while (previousValue > p_newValue)
+            {
+                previousValue += stepAmount;
+                if (previousValue < p_newValue)
+                {
+                    previousValue = p_newValue;
+                }
+
+                //Update Text to new Value
+                scoreText.text = previousValue.ToString(scoreFormat);
+
+                //Calcualtes how many stars did the player get
+                int starRatingForScoreCounted = (int)((((float)previousValue / (float)scoreGoal) * 100));
+                if (starRatingForScoreCounted % percentageIncrementPerStar == 0 && starRatingForScoreCounted != 0)
+                {
+                    //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(3) stars, it'll become 3 stars)
+                    starRatingForScoreCounted = Mathf.Clamp((starRatingForScoreCounted / percentageIncrementPerStar), 0, gameStarSlots.Length);
+
+                    //Makes sure there is only 1 copy
+                    if (backUpStarRatingsCounted == starRatingForScoreCounted - 1)
+                    {
+                        //Do UI UX Animation for that star
+                        UpdateGameScoreGoal();
+                        backUpStarRatingsCounted++;
+                    }
+
+
+
+                }
+
+                yield return wait;
+
+            }
+
+        }
+        else if (previousValue == p_newValue)
+        {
+            scoreText.text = previousValue.ToString(scoreFormat);
+        }
+    }
     public void addScore(int gainScore)
     {
         TextAnimaation();
         CoinActivator(gainScore);
-        
+        StartCoroutine(GameCountText(score + gainScore, score));
         score += gainScore;
-        scoreText.text = score.ToString();
-        gameTipJarFill.fillAmount = (float)score/(float)scoreGoal;
-        UpdateGameScoreGoal();
+        //scoreText.text = score.ToString();
+       // gameTipJarFill.fillAmount = (float)score / (float)scoreGoal;
+
+        Tween myTween = gameTipJarFill.DOFillAmount((float)score / (float)scoreGoal, 0.5f);// animation sequence
+
+
+
+
     }
 
     private void Start()
@@ -682,7 +794,7 @@ public class Scoring : MonoBehaviour
         {
             instance = this;
         }
-        defaultScoreFloaterPos = scoreFloater.transform.position;
+        defaultScoreFloaterPos = scoreFloater.GetComponent<RectTransform>().anchoredPosition;
       
         
     }
@@ -733,7 +845,7 @@ public class Scoring : MonoBehaviour
 
         //score floater
         scoreFloater.SetActive(false);
-        scoreFloater.transform.position = defaultScoreFloaterPos;
+        scoreFloater.GetComponent<RectTransform>().anchoredPosition = defaultScoreFloaterPos;
         scoreFloater.GetComponent<Text>().color = new Color(scoreFloater.GetComponent<Text>().color.r, scoreFloater.GetComponent<Text>().color.g, scoreFloater.GetComponent<Text>().color.b, 100f);
         gameDayText.text = "Day: " + (round + 1).ToString();
         //scoreGoal = 1000 + ((round - 1) * (250)); //LAT

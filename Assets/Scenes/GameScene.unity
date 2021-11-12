@@ -88867,6 +88867,7 @@ MonoBehaviour:
   hsTable: {fileID: 893906393}
   scoreFloater: {fileID: 1179802900}
   resultsNextStar: 0
+  gameNextStar: 0
   minGoalValue: {fileID: 1610931834}
   newHighScoreText: {fileID: 1697926283}
   levelText: {fileID: 1604563191}
