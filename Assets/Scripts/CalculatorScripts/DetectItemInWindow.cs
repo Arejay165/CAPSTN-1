@@ -70,7 +70,7 @@ public class DetectItemInWindow : MonoBehaviour
                         Destroy(itemInCounter.gameObject, 0.2f);
                         mc.DeductCurrentMoodAmount(mc.penaltyTime);// 1 second
                         AudioManager.instance.playSound(3);
-                        PlayerManager.instance.CamShake(PlayerManager.instance.GameCamera.gameObject, 0.3f, 0.05f, 15f);
+                        PlayerManager.instance.CamShake(PlayerManager.instance.GameCamera.gameObject, 0.2f, 0.05f, 15f);
                     }
 
                 }

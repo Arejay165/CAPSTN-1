@@ -109,8 +109,16 @@ public class MoodComponent : MonoBehaviour
     #endregion
     public IEnumerator MoodDeducted(float p_deduction)
     {
-        
-        yield return new WaitForSeconds(1f);
+        int blink = 3;
+        for (int i =0; i < blink; i++)
+        {
+            dcm.gameObject.SetActive(false);
+            yield return new WaitForSeconds((0.5f / (float)blink) * 0.25f);
+            dcm.gameObject.SetActive(true);
+            yield return new WaitForSeconds((0.5f / (float)blink) * 0.75f);
+        }
+     
+       // yield return new WaitForSeconds(1f);
      //   Debug.Log("TEST: " + currentMoodAmount);
         //SCALE TOWARDS THE CURRENT MOOD DISPLAY
         Tween myTween = dcm.delayedMoodImage.DOFillAmount((currentMoodAmount - p_deduction) / maxMoodAmount,0.5f);// animation sequence

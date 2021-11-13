@@ -123,7 +123,22 @@ public class Scoring : MonoBehaviour
 
  
     
+    public int FlattenTheNumber(int p_digits, int p_multipleOf = 10)
+    {
+        Debug.Log("THIS WORK");
+        int remainder = p_digits % p_multipleOf;
+        if (remainder * 2 >= p_multipleOf)
+        {
+            // Round up
 
+            return p_digits - remainder + p_multipleOf;
+        }
+        else
+        {
+            // Round down
+            return p_digits - remainder;
+        }
+    }
     public void ShowBriefing()
     {
         briefingShutter.SetActive(true);
@@ -131,17 +146,24 @@ public class Scoring : MonoBehaviour
         briefingInfo.SetActive(true);
         briefingDayText.text = (round+1).ToString();
         scoreGoal = 1000 + ((round-1) * (250));
+        scoreGoal = FlattenTheNumber(scoreGoal);
         briefingScoreGoalText.text = scoreGoal.ToString();
         for (int i = 0; i < resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
         {
-            briefingStarGoals[i].GetComponent<TextMeshProUGUI>().text = ((i + 1) * (scoreGoal / 3)).ToString();
+            int scoreForStar = ((i + 1) * (scoreGoal / 3));
+            scoreForStar = FlattenTheNumber(scoreForStar);
+            briefingStarGoals[i].GetComponent<TextMeshProUGUI>().text = scoreForStar.ToString();
 
         }
         resultsNextStar = scoreGoal / 3;
+        resultsNextStar = FlattenTheNumber(resultsNextStar);
         minGoalValue.text = resultsNextStar.ToString();
         score = 0;
-        gameScoreGoalText.text = ((scoreGoal / 3) * (1)).ToString();
+        int scoreTilNextStar = ((scoreGoal / 3) * (1));
+        scoreTilNextStar = FlattenTheNumber(scoreTilNextStar);
+        gameScoreGoalText.text = scoreTilNextStar.ToString();
         gameNextStar = scoreGoal / 3;
+        gameNextStar = FlattenTheNumber(gameNextStar);
 
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -170,7 +192,9 @@ public class Scoring : MonoBehaviour
         }
         for (int i =0; i< resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
         {
-            resultStarGoals[i].GetComponent<TextMeshProUGUI>().text = ( (i+1) * (scoreGoal / 3)).ToString();
+            int scoreForStar = ((i + 1) * (scoreGoal / 3));
+            scoreForStar = FlattenTheNumber(scoreForStar);
+            resultStarGoals[i].GetComponent<TextMeshProUGUI>().text = scoreForStar.ToString();
 
         }
 
@@ -195,7 +219,7 @@ public class Scoring : MonoBehaviour
 
     private IEnumerator CountText(int p_newValue, int p_Value = 0)
     {
-        resultsNextStar = scoreGoal / 3;
+     //   resultsNextStar = scoreGoal / 3;
 
         WaitForSeconds wait = new WaitForSeconds(1f / fpsCount);
         int previousValue = p_Value;
@@ -243,7 +267,7 @@ public class Scoring : MonoBehaviour
                         backUpStarRatingsCounted++;
                         AudioManager.instance.playSound(7);
                         resultsNextStar += scoreGoal / 3;
-                        
+                        resultsNextStar = FlattenTheNumber(resultsNextStar);
                     }
                     
                 }
@@ -615,19 +639,21 @@ public class Scoring : MonoBehaviour
     
     public void UpdateGameScoreGoal()
     {
-       // int currentScaledScore = score;
+        // int currentScaledScore = score;
 
 
-       // currentScaledScore = score - (scoreGoal / 3 * gameStarSlotIndex);
+        // currentScaledScore = score - (scoreGoal / 3 * gameStarSlotIndex);
 
 
-        
+
         //int scoreToNextGoal = (scoreGoal / 3) - (currentScaledScore);
         //int scoreToNextGoal = 0;
         //while (scoreToNextGoal < 1)
         //{
         //    scoreToNextGoal += (scoreGoal / 3);
-        if (score >= ((scoreGoal/3) * (gameStarSlotIndex + 1))) // if 500 > ((1500/3) * 1) //if 500 > 500
+        int scoreTilNextStar = ((scoreGoal / 3) * (gameStarSlotIndex + 1));
+        scoreTilNextStar = FlattenTheNumber(scoreTilNextStar);
+        if (score >= scoreTilNextStar) // if 500 > ((1500/3) * 1) //if 500 > 500
         {
             if (gameStarSlotIndex < 3)
             {
@@ -636,7 +662,7 @@ public class Scoring : MonoBehaviour
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
                 gameStarSlotIndex++;
 
-                gameScoreGoalText.text = ((scoreGoal / 3) * (gameStarSlotIndex + 1)).ToString();
+                gameScoreGoalText.text = scoreTilNextStar.ToString();
             }
         }
 
@@ -723,7 +749,7 @@ public class Scoring : MonoBehaviour
                         backUpStarRatingsCounted++;
 
                         gameNextStar += scoreGoal / 3;
-
+                        gameNextStar = FlattenTheNumber(gameNextStar);
                     }
 
                 }

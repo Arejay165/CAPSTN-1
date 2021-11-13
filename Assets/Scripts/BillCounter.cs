@@ -87,7 +87,7 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
                         MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                         mc.DeductCurrentMoodAmount(mc.penaltyTime);
                         AudioManager.instance.playSound(3);
-                        PlayerManager.instance.CamShake(PlayerManager.instance.GameCamera.gameObject, 0.3f, 0.05f, 15f);
+                        PlayerManager.instance.CamShake(PlayerManager.instance.GameCamera.gameObject, 0.2f, 0.05f, 15f);
                         StartCoroutine(Cooldown());
                     }
                 }
@@ -168,7 +168,7 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
                     }
                 }
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.25f); // initially 0.5
                 StartCoroutine(SmoothStopRadiate());
             }
         }

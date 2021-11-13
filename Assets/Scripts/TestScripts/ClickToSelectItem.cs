@@ -172,7 +172,7 @@ public class ClickToSelectItem : MonoBehaviour
                     }
                 }
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.25f); // initially 0.5
                 StartCoroutine(SmoothStopRadiate());
             }
         }
