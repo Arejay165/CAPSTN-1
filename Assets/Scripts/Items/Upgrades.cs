@@ -101,6 +101,7 @@ public class Upgrades : MonoBehaviour
    {
         if(chosenItems.Count > itemIndex)
         {
+
             MathProblemManager.instance.storeItemList.Add(chosenItems[itemIndex]);
             //newItems.RemoveAt(itemIndex);
 

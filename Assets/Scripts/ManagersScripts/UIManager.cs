@@ -18,7 +18,8 @@ public class UIManager : MonoBehaviour
     public GameObject roundDebriefingUI;
     public GameObject playerNameUI;
     public GameObject tutorialUI;
-    
+    public GameObject creditsUI;
+    public GameObject highscoreUI;
     private bool isPause; //for demo purposes
 
     //public List<GameObject> tutorialUIs = new List<GameObject>();
@@ -74,6 +75,16 @@ public class UIManager : MonoBehaviour
         ActivateGameObjects(titleScreenUI.name);
     }
 
+    public void OpenHighscore()
+    {
+        ActivateGameObjects(highscoreUI.name);
+    }
+
+    public void OpenCredits()
+    {
+        ActivateGameObjects(creditsUI.name);
+    }
+
     public void Settings()
     {
         ActivateGameObjects(settingsUI.name);
@@ -90,6 +101,8 @@ public class UIManager : MonoBehaviour
         roundDebriefingUI.SetActive(roundDebriefingUI.name.Equals(nameOfGameObject));
         playerNameUI.SetActive(playerNameUI.name.Equals(nameOfGameObject));
         tutorialUI.SetActive(tutorialUI.name.Equals(nameOfGameObject));
+        highscoreUI.SetActive(highscoreUI.name.Equals(nameOfGameObject));
+        creditsUI.SetActive(creditsUI.name.Equals(nameOfGameObject));
     }
 
     public void Pause()
