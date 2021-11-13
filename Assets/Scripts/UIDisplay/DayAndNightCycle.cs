@@ -13,6 +13,8 @@ public class DayAndNightCycle : MonoBehaviour
     [SerializeField]
     float       endTime;
 
+    public float nightTime;
+
     // Used to stop the gameTime and Clock Display 
     [SerializeField]
     bool        isStoreClosed = true;
@@ -99,21 +101,26 @@ public class DayAndNightCycle : MonoBehaviour
                     if(!TutorialManager.instance.canTutorial)
                     gameTime += Time.deltaTime;
 
-                    if(gameTime >= endTime / 2)
+                    if(gameTime >= nightTime)
                     {
                         UIManager.instance.dayBackGround.SetActive(false);
                         UIManager.instance.nightBackGround.SetActive(true);
-                    }
-                   
-                    if (gameTime >= endTime * 2 / 3)
-                    {
 
-                       
+                        
+
                         if (isMorning)
                         {
                             isMorning = false;
                         }
+
                     }
+                   
+                    //if (gameTime >= endTime * 2 / 3)
+                    //{
+
+                       
+                       
+                    //}
                 }
                 else if (!isStoreClosed)
                 {

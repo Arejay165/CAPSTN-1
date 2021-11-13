@@ -119,9 +119,16 @@ public class GameManager : MonoBehaviour
         Scoring.instance.gameShutter.SetActive(true);
         Scoring.instance.briefingShutter.SetActive(false);
         Scoring.instance.gameShutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
-      
+
         StartRound();
         AudioManager.instance.playMusic(1);
+
+        yield return new WaitForSeconds(DayAndNightCycle.instance.nightTime);
+        if (DayAndNightCycle.instance.GetIsMorning() == false)
+        {
+            AudioManager.instance.stopMusic(1);
+            AudioManager.instance.playMusic(3);
+        }
         //yield return new WaitForSeconds(3f);
 
 
@@ -146,7 +153,7 @@ public class GameManager : MonoBehaviour
         //    PlayerManager.instance.lastItemSpawner.canSpawn = false;
 
         Debug.Log("Level Over");
-        AudioManager.instance.stopMusic(1);
+        AudioManager.instance.stopMusic(3);
         AudioManager.instance.playSound(4);
 
         yield return new WaitForSeconds(3f);
