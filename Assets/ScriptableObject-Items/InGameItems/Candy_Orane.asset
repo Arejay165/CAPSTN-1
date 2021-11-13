@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
   m_Name: Candy_Orane
   m_EditorClassIdentifier: 
-  itemName: OrangeCandy
+  itemName: Orange Candy
   price: 8
   numValue: 0
   denValue: 0

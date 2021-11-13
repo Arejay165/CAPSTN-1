@@ -18,5 +18,5 @@ MonoBehaviour:
   denValue: 0
   itemSprite: {fileID: 21300000, guid: fffd68ca8852e984795b7a6951edd4fe, type: 3}
   quantity: 1
-  minRangePrice: 15
+  minRangePrice: 10
   maxRangePrice: 35
