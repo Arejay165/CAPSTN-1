@@ -20,6 +20,10 @@ public class UIManager : MonoBehaviour
     public GameObject tutorialUI;
     public GameObject creditsUI;
     public GameObject highscoreUI;
+
+    public GameObject dayBackGround;
+    public GameObject nightBackGround;
+
     private bool isPause; //for demo purposes
 
     //public List<GameObject> tutorialUIs = new List<GameObject>();
