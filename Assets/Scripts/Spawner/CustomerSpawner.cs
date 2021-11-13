@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class CustomerSpawner : MonoBehaviour
 {
-    public GameObject   customerPrefab;
+    public List<GameObject>   customerPrefabs;
     public Transform      spawnPoint;
     public Transform inShopPoint;
     public Transform outShopPoint;
@@ -44,7 +44,8 @@ public class CustomerSpawner : MonoBehaviour
 
     public void SpawnCustomer()
     {
-        GameObject obj = Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
+        int randomCustomerIndex = Random.Range(0, customerPrefabs.Count);
+        GameObject obj = Instantiate(customerPrefabs[randomCustomerIndex], spawnPoint.position, Quaternion.identity);
         GameManager.instance.customer = obj.GetComponent<Customer>();
         
         obj.GetComponent<Customer>().displayOrder = this.displayOrder;
