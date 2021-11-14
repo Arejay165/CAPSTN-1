@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public GameObject tutorialUI;
     public GameObject creditsUI;
     public GameObject highscoreUI;
+    public GameObject quitConfirmation;
 
     public GameObject dayBackGround;
     public GameObject nightBackGround;
@@ -107,20 +108,25 @@ public class UIManager : MonoBehaviour
         tutorialUI.SetActive(tutorialUI.name.Equals(nameOfGameObject));
         highscoreUI.SetActive(highscoreUI.name.Equals(nameOfGameObject));
         creditsUI.SetActive(creditsUI.name.Equals(nameOfGameObject));
+
     }
 
     public void Pause()
     {
-        ///    ActivateGameObjects(pauseGameUI.name);
+        pauseGameUI.SetActive(true);
+        //ActivateGameObjects(pauseGameUI.name);
         Debug.Log("Ispause");
         isPause = true;
+        GameManager.instance.isPlaying = false;
         Time.timeScale = 0;
     }
 
     public void Resume()
     {
-        //   ActivateGameObjects(inGameUI.name);
+        pauseGameUI.SetActive(false);
+        //ActivateGameObjects(inGameUI.name);
         Debug.Log("Resume");
+        GameManager.instance.isPlaying = true;
         isPause = false;
         Time.timeScale = 1f;
     }

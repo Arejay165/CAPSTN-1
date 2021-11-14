@@ -156,13 +156,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("Level Over");
         AudioManager.instance.stopMusic(3);
         AudioManager.instance.playSound(4);
-
+       
         yield return new WaitForSeconds(3f);
+        Scoring.instance.HideTimesUp();
         Scoring.instance.gameShutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
         //540
         yield return new WaitForSeconds(3f);
 
-        Scoring.instance.HideTimesUp();
+       
 
         UIManager.instance.ActivateGameObjects(UIManager.instance.endGameUI.name);
         Scoring.instance.resultShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, Scoring.instance.resultShutter.GetComponent<RectTransform>().anchoredPosition3D.z);

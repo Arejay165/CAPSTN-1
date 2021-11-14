@@ -124,22 +124,22 @@ public class Scoring : MonoBehaviour
  
     public void ShowTimesUp()
     {
-        debriefingInfo.SetActive(true);
-        debriefingInfo.GetComponent<Image>().DOFade(1.0f,0.5f); 
-        debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(1.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale(8,8).SetEase(Ease.Linear);
+        //debriefingInfo.SetActive(true);
+        debriefingInfo.GetComponent<Image>().DOFade(1.0f,0.05f); 
+        //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(1.0f, 0.5f);
+        debriefingInfo.GetComponent<RectTransform>().DOScale( new Vector2(8,8),0.15f).SetEase(Ease.Linear);
       
     }
     public void HideTimesUp()
     {
-        debriefingInfo.SetActive(false);
-        debriefingInfo.GetComponent<Image>().DOFade(0.0f, 0.5f);
-        debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(0.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale(0, 0).SetEase(Ease.Linear);
+        //debriefingInfo.SetActive(false);
+        debriefingInfo.GetComponent<Image>().DOFade(0.0f, 0.05f);
+        //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(0.0f, 0.5f);
+        debriefingInfo.GetComponent<RectTransform>().DOScale(new Vector2(0,0), 0.15f).SetEase(Ease.Linear);
     }
     public int FlattenTheNumber(int p_digits, int p_multipleOf = 10)
     {
-        Debug.Log("THIS WORK");
+       // Debug.Log("THIS WORK");
         int remainder = p_digits % p_multipleOf;
         if (remainder * 2 >= p_multipleOf)
         {
@@ -837,9 +837,13 @@ public class Scoring : MonoBehaviour
         {
             instance = this;
         }
+        var desiredColor = debriefingInfo.GetComponent<Image>().color;
+        desiredColor.a = 0;
+        debriefingInfo.GetComponent<Image>().color = desiredColor;
         defaultScoreFloaterPos = scoreFloater.GetComponent<RectTransform>().anchoredPosition;
-      
-        
+        debriefingInfo.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
+
+
     }
     public void OnEnable()
     {
