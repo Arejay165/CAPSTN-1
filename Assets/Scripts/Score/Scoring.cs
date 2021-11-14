@@ -860,7 +860,8 @@ public class Scoring : MonoBehaviour
 
     void OnGameStarted()
     {
-       // failPrompt.SetActive(false);
+        PerformanceManager.instance.answeredProblemDatas.Clear();
+        // failPrompt.SetActive(false);
         restartButton.SetActive(false);
         continueButton.SetActive(false);
         //Delete all stars made
@@ -905,7 +906,7 @@ public class Scoring : MonoBehaviour
 
     void OnGameEnded()
     {
-        PerformanceManager.instance.answeredProblemDatas.Clear();
+        
         
 
     }
