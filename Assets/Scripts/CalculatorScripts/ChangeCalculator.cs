@@ -58,7 +58,7 @@ public class ChangeCalculator : MonoBehaviour
         isCountingTime = true;
         perfectAttempts = 1;
         StartCoroutine(InputFieldSelect());
-        tmpChangeInputField.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+        tmpChangeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
         //  Debug.Log("Enable Change Calculator");
 

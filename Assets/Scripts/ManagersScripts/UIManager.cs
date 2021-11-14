@@ -25,8 +25,11 @@ public class UIManager : MonoBehaviour
     public GameObject dayBackGround;
     public GameObject nightBackGround;
 
+    public bool isIngame = false;
     private bool isPause; //for demo purposes
-
+    public bool quitConfirmationGoTitleScreen = true;
+    public bool quitConfirmationOpen = false;
+    
     //public List<GameObject> tutorialUIs = new List<GameObject>();
 
     private void Awake()
@@ -56,22 +59,47 @@ public class UIManager : MonoBehaviour
         ActivateGameObjects(inGameUI.name);
     }
    
+    public void OpenQuitConfirmation()
+    {
+        quitConfirmationOpen = true;
+        quitConfirmation.SetActive(true);
+    }
 
+    public void QuitConfirmationGoBack()
+    {
+        quitConfirmationOpen = false;
+        quitConfirmation.SetActive(false);
+        
+        if (quitConfirmationGoTitleScreen == true)
+        {
+            ActivateGameObjects(titleScreenUI.name);
+        }
+        else if (quitConfirmationGoTitleScreen == false)
+        {
+            ActivateGameObjects(inGameUI.name);
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
-            if (!isPause)
+            if (isIngame)
             {
-                Pause();
+                if (!quitConfirmationOpen)
+                {
+                    if (!isPause)
+                    {
+                        Pause();
+                    }
+                    else
+                    {
+                        Resume();
+                    }
+                }
             }
-            else
-            {
-                Resume();
-            }
+           
         }   
     }
 
@@ -82,12 +110,18 @@ public class UIManager : MonoBehaviour
 
     public void OpenHighscore()
     {
-        ActivateGameObjects(highscoreUI.name);
+        if (!quitConfirmationOpen)
+        {
+            ActivateGameObjects(highscoreUI.name);
+        }
     }
 
     public void OpenCredits()
     {
-        ActivateGameObjects(creditsUI.name);
+        if (!quitConfirmationOpen)
+        {
+            ActivateGameObjects(creditsUI.name);
+        }
     }
 
     public void Settings()
@@ -142,6 +176,14 @@ public class UIManager : MonoBehaviour
        
     }
 
+    public void RestartInPause()
+    {
+        Resume();
+        GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
+          
+    }
+
+
     public void Continue() // Open Upgrade
     {
 
@@ -160,7 +202,11 @@ public class UIManager : MonoBehaviour
 
     public void ShowTutorial()
     {
-        ActivateGameObjects(tutorialUI.name);
+        if (!quitConfirmationOpen)
+        {
+            ActivateGameObjects(tutorialUI.name);
+        }
+        
     }
 
 }
