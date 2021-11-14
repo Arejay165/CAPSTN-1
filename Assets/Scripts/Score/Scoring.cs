@@ -178,6 +178,7 @@ public class Scoring : MonoBehaviour
         gameScoreGoalText.text = scoreTilNextStar.ToString();
         gameNextStar = scoreGoal / 3;
         gameNextStar = FlattenTheNumber(gameNextStar);
+     
 
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -665,18 +666,23 @@ public class Scoring : MonoBehaviour
         //while (scoreToNextGoal < 1)
         //{
         //    scoreToNextGoal += (scoreGoal / 3);
-        int scoreTilNextStar = ((scoreGoal / 3) * (gameStarSlotIndex + 1));
-        scoreTilNextStar = FlattenTheNumber(scoreTilNextStar);
-        if (score >= scoreTilNextStar) // if 500 > ((1500/3) * 1) //if 500 > 500
+        Debug.Log("Updating game score goal");
+        //int scoreTilNextStar = ((scoreGoal / 3) * (gameStarSlotIndex + 1));
+        //scoreTilNextStar = FlattenTheNumber(scoreTilNextStar);
+       // if (score >= scoreTilNextStar) // if 500 > ((1500/3) * 1) //if 500 > 500
+        if (score >= gameNextStar) // if 500 > ((1500/3) * 1) //if 500 > 500
         {
+            Debug.Log("work 1");
+
             if (gameStarSlotIndex < 3)
             {
-               
+                Debug.Log(gameStarSlotIndex);
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
                 gameStarSlotIndex++;
-
-                gameScoreGoalText.text = scoreTilNextStar.ToString();
+                gameNextStar += scoreGoal / 3;
+                gameNextStar = FlattenTheNumber(gameNextStar);
+                gameScoreGoalText.text = gameNextStar.ToString();
             }
         }
 
@@ -762,8 +768,7 @@ public class Scoring : MonoBehaviour
                         UpdateGameScoreGoal();
                         backUpStarRatingsCounted++;
 
-                        gameNextStar += scoreGoal / 3;
-                        gameNextStar = FlattenTheNumber(gameNextStar);
+           
                     }
 
                 }
@@ -884,7 +889,9 @@ public class Scoring : MonoBehaviour
             }
             gameStars.Clear();
         }
+        backUpStarRatingsCounted = 0;
         gameStarSlotIndex = 0;
+        Debug.Log(gameStarSlotIndex);
         SetScore(0); //TEMP
         starRatingContainer.gameObject.GetComponent<Canvas>().sortingOrder = 110;
 
