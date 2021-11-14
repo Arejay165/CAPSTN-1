@@ -141,7 +141,8 @@ public class GameManager : MonoBehaviour
         Scoring.instance.gameShutter.SetActive(true);
         Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
 
-        Scoring.instance.debriefingInfo.SetActive(true);
+        Scoring.instance.ShowTimesUp();
+      
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
         //  UIManager.instance.ActivateGameObjects(UIManager.instance.roundDebriefingUI.name);
         InteractableManager.instances.SpawnController(false);
@@ -161,7 +162,7 @@ public class GameManager : MonoBehaviour
         //540
         yield return new WaitForSeconds(3f);
 
-        Scoring.instance.debriefingInfo.SetActive(false);
+        Scoring.instance.HideTimesUp();
 
         UIManager.instance.ActivateGameObjects(UIManager.instance.endGameUI.name);
         Scoring.instance.resultShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, Scoring.instance.resultShutter.GetComponent<RectTransform>().anchoredPosition3D.z);

@@ -122,7 +122,21 @@ public class Scoring : MonoBehaviour
     public GameObject resultShutter;
 
  
-    
+    public void ShowTimesUp()
+    {
+        debriefingInfo.SetActive(true);
+        debriefingInfo.GetComponent<Image>().DOFade(1.0f,0.5f); 
+        debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(1.0f, 0.5f);
+        debriefingInfo.GetComponent<RectTransform>().DOScale(8,8).SetEase(Ease.Linear);
+      
+    }
+    public void HideTimesUp()
+    {
+        debriefingInfo.SetActive(false);
+        debriefingInfo.GetComponent<Image>().DOFade(0.0f, 0.5f);
+        debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(0.0f, 0.5f);
+        debriefingInfo.GetComponent<RectTransform>().DOScale(0, 0).SetEase(Ease.Linear);
+    }
     public int FlattenTheNumber(int p_digits, int p_multipleOf = 10)
     {
         Debug.Log("THIS WORK");
