@@ -837,11 +837,16 @@ public class Scoring : MonoBehaviour
         {
             instance = this;
         }
-        var desiredColor = debriefingInfo.GetComponent<Image>().color;
-        desiredColor.a = 0;
-        debriefingInfo.GetComponent<Image>().color = desiredColor;
+        if (debriefingInfo != null)
+        {
+            var desiredColor = debriefingInfo.GetComponent<Image>().color;
+            desiredColor.a = 0;
+            debriefingInfo.GetComponent<Image>().color = desiredColor;
+          
+            debriefingInfo.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
+        }
+
         defaultScoreFloaterPos = scoreFloater.GetComponent<RectTransform>().anchoredPosition;
-        debriefingInfo.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
 
 
     }
