@@ -8807,7 +8807,6 @@ GameObject:
   - component: {fileID: 249746819}
   - component: {fileID: 249746821}
   - component: {fileID: 249746820}
-  - component: {fileID: 249746822}
   m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
@@ -8841,7 +8840,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249746818}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -8872,21 +8871,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249746818}
   m_CullTransparentMesh: 1
---- !u!114 &249746822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249746818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4796007988745149a8035c419ebd6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rectTransform: {fileID: 0}
-  moveUp: 0
-  endPosition: 0
 --- !u!1 &249856154
 GameObject:
   m_ObjectHideFlags: 0
@@ -39359,7 +39343,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e6c4c06c085f4474fb0011f64ef6c1e1, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
@@ -40925,7 +40909,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 703596481}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf12d515dc485e44da9478e0c6369064, type: 3}
   m_Name: 
@@ -54945,7 +54929,6 @@ MonoBehaviour:
   answerAttempts: 0
   perfectAttempts: 0
   isFinished: 0
-  currentInputCorrect: 0
   itemUIClassList: []
   itemsAnswer: []
   changeAnswers: []
@@ -94870,6 +94853,9 @@ MonoBehaviour:
   quitConfirmation: {fileID: 0}
   dayBackGround: {fileID: 1126800855}
   nightBackGround: {fileID: 1251783183}
+  isIngame: 0
+  quitConfirmationGoTitleScreen: 1
+  quitConfirmationOpen: 0
 --- !u!4 &1615599873
 Transform:
   m_ObjectHideFlags: 0
@@ -107196,7 +107182,6 @@ GameObject:
   - component: {fileID: 1776495582}
   - component: {fileID: 1776495584}
   - component: {fileID: 1776495583}
-  - component: {fileID: 1776495585}
   m_Layer: 5
   m_Name: Arrow (2)
   m_TagString: Untagged
@@ -107230,7 +107215,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776495581}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -107261,21 +107246,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776495581}
   m_CullTransparentMesh: 1
---- !u!114 &1776495585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776495581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4796007988745149a8035c419ebd6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rectTransform: {fileID: 0}
-  moveUp: 0
-  endPosition: 0
 --- !u!1 &1780295040
 GameObject:
   m_ObjectHideFlags: 0
@@ -122887,7 +122857,6 @@ GameObject:
   - component: {fileID: 2097513275}
   - component: {fileID: 2097513277}
   - component: {fileID: 2097513276}
-  - component: {fileID: 2097513278}
   m_Layer: 5
   m_Name: Arrow (1)
   m_TagString: Untagged
@@ -122921,7 +122890,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097513274}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -122952,21 +122921,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097513274}
   m_CullTransparentMesh: 1
---- !u!114 &2097513278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097513274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4796007988745149a8035c419ebd6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rectTransform: {fileID: 0}
-  moveUp: 0
-  endPosition: 0
 --- !u!1 &2098926653
 GameObject:
   m_ObjectHideFlags: 0

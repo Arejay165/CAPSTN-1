@@ -150,7 +150,7 @@ public class TestCalculator : MonoBehaviour
 
         if (TutorialManager.instance.enabled == true)
         {
-            TutorialManager.instance.text.text = "Multiply Quantity to item's price";
+            TutorialManager.instance.text.text = "Multiple the item’s price to it’s quantity";
             TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;
             UIManager.instance.inGameUI.SetActive(false);
             TutorialManager.instance.tutorial.SetActive(true);
