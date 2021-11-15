@@ -22,7 +22,7 @@ public class TestCalculator : MonoBehaviour
     public int answerAttempts;
     public int perfectAttempts;
     public bool isFinished = false;
-    public bool currentInputCorrect = false;
+ 
     public List<ItemUIClass> itemUIClassList = new List<ItemUIClass>(); // Datas for the Item UIs that will be in the answer pad
     public List<float> itemsAnswer = new List<float>();
     public List<float> changeAnswers = new List<float>();
@@ -79,7 +79,7 @@ public class TestCalculator : MonoBehaviour
     private void OnEnable()
     {
         isFinished = false;
-        currentInputCorrect = false;
+    
         ////Register OnGameStart Event in GameManager
         //GameManager.OnGameStart += OnGameStarted;
         //foreach (InputField selectedAnswerField in answerFields)
@@ -313,7 +313,7 @@ public class TestCalculator : MonoBehaviour
         p_selectedInputField.enabled = true;
         p_selectedInputField.Select();
         p_selectedInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
-        currentInputCorrect = false;
+     
 
     }
 
@@ -327,6 +327,7 @@ public class TestCalculator : MonoBehaviour
         {
             //   Debug.Log("List still has inputfield");
             //answerFields[index].Select();
+           
             StartCoroutine(WaitForInputActivation(answerFields[index]));
             //answerFields[index].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
@@ -335,6 +336,7 @@ public class TestCalculator : MonoBehaviour
         }
         else
         {
+       
             //Debug.Log("All correct answer");
             SpawnAnswerField();
         }
@@ -374,10 +376,11 @@ public class TestCalculator : MonoBehaviour
                     //add bonus mood
                     MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                     mc.IncreaseCurrentMoodAmount( mc.correctBonusTime*4);
-                    currentInputCorrect = true;
+                    InitializedInputField();
                     StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect, OnPriceCorrect));
+                    
 
-                  
+
 
                 }
                 //If it doesnt match its wrong
@@ -392,6 +395,7 @@ public class TestCalculator : MonoBehaviour
 
                 }
                 answerAttempts++;
+                
             }
             else //If input is invalid (not a number)
             {
@@ -401,7 +405,7 @@ public class TestCalculator : MonoBehaviour
 
 
             }
-            InitializedInputField();
+      
         }
     }
 
@@ -417,6 +421,7 @@ public class TestCalculator : MonoBehaviour
             else
             {
                 answerFields[i].enabled = false;
+         
             }
         }
     }
@@ -445,6 +450,7 @@ public class TestCalculator : MonoBehaviour
     IEnumerator CorrectInputted(TMP_InputField p_inputField, bool p_correct, Action p_postFunction = null)
     {
 
+       
         p_inputField.gameObject.GetComponent<Image>().color = new Color(0f, 255f, 0f);
         AudioManager.instance.playSound(0);
         yield return new WaitForSeconds(0.25f);
@@ -465,16 +471,14 @@ public class TestCalculator : MonoBehaviour
         int blinkCount = 0;
         while (blinkCount < 3)
         {
-            if (currentInputCorrect == false)
-            {
-                p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
-            }
+          
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(255f, 0f, 0f);
+            
 
             yield return new WaitForSeconds(0.1f);
-            if (currentInputCorrect == false)
-            {
-                p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
-            }
+         
+            p_inputField.gameObject.GetComponent<Image>().color = new Color(233f, 231f, 214f);
+            
 
             yield return new WaitForSeconds(0.05f);
             blinkCount++;

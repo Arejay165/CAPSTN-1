@@ -173,8 +173,12 @@ public class Customer : MonoBehaviour
         foreach (Image selectedImage in itemsImage)
         {
             yield return new WaitForSeconds(duration / itemsImage.Count);
-            selectedImage.DOFade(1.0f, duration / itemsImage.Count);
-            selectedImage.gameObject.SetActive(true);
+            if (selectedImage != null)
+            {
+                selectedImage.DOFade(1.0f, duration / itemsImage.Count);
+                selectedImage.gameObject.SetActive(true);
+            }
+           
             
         }
         panel.gameObject.GetComponent<ContentSizeFitter>().enabled = true;

@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
     {
         if (isFirstTime)
         {
+            UIManager.instance.quitConfirmationGoTitleScreen = false;
+            
             UIManager.instance.ActivateGameObjects(UIManager.instance.playerNameUI.name);
         }
         else
@@ -102,7 +104,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayStart()
     {
-
+        UIManager.instance.isIngame = true;
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundBriefingUI.name);
         Scoring.instance.ShowBriefing();
@@ -136,6 +138,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayEnd()
     {
+        UIManager.instance.isIngame = false;
         OnGameEnd.Invoke();
         TogglePlaying();
         Scoring.instance.gameShutter.SetActive(true);

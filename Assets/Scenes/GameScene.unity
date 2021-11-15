@@ -23465,7 +23465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
+  m_ReferencePixelsPerUnit: 1000
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
@@ -25556,8 +25556,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1623941616}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ActivateGameObjects
-        m_Mode: 5
+        m_MethodName: OpenQuitConfirmation
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -57263,7 +57263,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1623941616}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: Restart
+        m_MethodName: RestartInPause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -92136,6 +92136,9 @@ MonoBehaviour:
   quitConfirmation: {fileID: 924349306}
   dayBackGround: {fileID: 885611825}
   nightBackGround: {fileID: 1143913577}
+  isIngame: 0
+  quitConfirmationGoTitleScreen: 1
+  quitConfirmationOpen: 0
 --- !u!114 &1623941617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93136,8 +93139,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1623941616}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ActivateGameObjects
-        m_Mode: 5
+        m_MethodName: OpenQuitConfirmation
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -123386,7 +123389,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1623941616}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: BackToMenu
+        m_MethodName: QuitConfirmationGoBack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

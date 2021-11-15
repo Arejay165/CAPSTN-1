@@ -123,7 +123,7 @@ public class MoodComponent : MonoBehaviour
         //SCALE TOWARDS THE CURRENT MOOD DISPLAY
         Tween myTween = dcm.delayedMoodImage.DOFillAmount((currentMoodAmount - p_deduction) / maxMoodAmount,0.5f);// animation sequence
         currentMoodAmount -= p_deduction;
-
+        ChangeCustomerMoodSprite();
         //Transparent fade out
         dcm.delayedMoodImage.DOFade(0.0f, 0.5f);
         yield return myTween.WaitForCompletion(); // Wait to finish
@@ -138,6 +138,7 @@ public class MoodComponent : MonoBehaviour
         dcm.delayedMoodImage.color = Color.white;
         dcm.delayedMoodImage.gameObject.SetActive(false);
         pauseDecrease = false ;
+        
     }
 
     public IEnumerator MoodIncreased(float p_increaseAmount)
@@ -153,7 +154,7 @@ public class MoodComponent : MonoBehaviour
         yield return myTween.WaitForCompletion(); // Wait to finish
       
         currentMoodAmount += p_increaseAmount;
-       
+        ChangeCustomerMoodSprite();
         dcm.moodImage.fillAmount = currentMoodAmount / maxMoodAmount;
         dcm.delayedMoodImage.fillAmount = currentMoodAmount / maxMoodAmount;
 
