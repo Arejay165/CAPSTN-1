@@ -90,6 +90,7 @@ public class TutorialManager : MonoBehaviour
 
     public void DisableInGameUI()
     {
+        GameManager.instance.isPlaying = true;
         UIManager.instance.inGameUI.SetActive(false);
     }
 

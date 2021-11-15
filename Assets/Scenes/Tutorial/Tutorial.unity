@@ -56584,7 +56584,7 @@ PlayableDirector:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919380820}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 136f5a2ab0fc231429506501c2c46c19, type: 2}
   m_InitialState: 1
@@ -56612,7 +56612,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919380820}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
   m_Name: 
@@ -106165,9 +106165,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerPrefabs:
-  - {fileID: 8184720426343147226, guid: 3153eb30f49a0ef49967e37e5b829ac0, type: 3}
-  - {fileID: 921595463275168967, guid: 302dfcfe956293f41a57ab9f67250a2e, type: 3}
-  - {fileID: 3049038263911287163, guid: a859d8a8a16312c49af69b74c676236b, type: 3}
+  - {fileID: 7605085325810736498, guid: ad6796c86a2013649b0986b66fe78334, type: 3}
+  - {fileID: 7605085325810736498, guid: ad6796c86a2013649b0986b66fe78334, type: 3}
+  - {fileID: 7605085325810736498, guid: ad6796c86a2013649b0986b66fe78334, type: 3}
   spawnPoint: {fileID: 878413430}
   inShopPoint: {fileID: 1079162133}
   outShopPoint: {fileID: 1781368387}
@@ -108029,7 +108029,7 @@ MonoBehaviour:
   customer: {fileID: 0}
   customerSpawner: {fileID: 1698647710}
   window: {fileID: 0}
-  isPlaying: 1
+  isPlaying: 0
   isFirstTime: 1
 --- !u!114 &1810923671
 MonoBehaviour:
