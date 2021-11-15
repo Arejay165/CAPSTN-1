@@ -146,8 +146,8 @@ public class TutorialManager : MonoBehaviour
 
                 }
                 nextButton.SetActive(false);
-               // Debug.Log("Stuff");
-
+                // Debug.Log("Stuff");
+     
                 return;
                
             }
@@ -310,14 +310,17 @@ public class TutorialManager : MonoBehaviour
             //  ingameText.gameObject.SetActive(true);
             text.text = "Click on the customer desired items";
             screenText.text = "";
-        
+             screenText.transform.parent.gameObject.SetActive(false);
+
     }
 
 
     public void ActivateTutorialUI()
     {
-       // playTutorial = false;
+
+        // playTutorial = false;
         tutorial.SetActive(true);
+        screenText.transform.parent.gameObject.SetActive(true);
         TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[0].anchoredPosition;
         screenText.text = "Click anywhere to continue";
         NextMessage();
