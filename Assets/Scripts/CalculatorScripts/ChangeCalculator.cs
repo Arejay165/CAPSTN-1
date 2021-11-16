@@ -71,7 +71,8 @@ public class ChangeCalculator : MonoBehaviour
             TutorialManager.instance.nextButton.SetActive(false);
             TutorialManager.instance.tutorial.GetComponent<Image>().raycastTarget = false;
             TutorialManager.instance.itemMask.SetActive(true);
-            TutorialManager.instance.ItemMasksActivator(5);
+            // TutorialManager.instance.ItemMasksActivator(5);
+           StartCoroutine(TutorialManager.instance.DelayItemMaskActivator(5));
         }
         else
         {

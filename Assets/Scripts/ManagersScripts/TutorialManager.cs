@@ -342,5 +342,20 @@ public class TutorialManager : MonoBehaviour
         }
         itemMaskChild[index].SetActive(true);
 
+
+    }
+
+    public IEnumerator DelayItemMaskActivator(int index)
+    {
+        for (int i = 0; i < itemMaskChild.Count; i++)
+        {
+
+            itemMaskChild[i].SetActive(false);
+        }
+        yield return new WaitForSeconds(0.6f);
+        
+        itemMaskChild[index].SetActive(true);
+
+
     }
 }
