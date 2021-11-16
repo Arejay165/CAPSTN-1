@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     public GameObject dayBackGround;
     public GameObject nightBackGround;
 
+    public GameObject quitConfirmTSCopy;
     public bool isIngame = false;
     private bool isPause; //for demo purposes
     public bool quitConfirmationGoTitleScreen = true;
@@ -61,7 +62,14 @@ public class UIManager : MonoBehaviour
    
     public void OpenQuitConfirmation()
     {
+        //? means null checker
+        ActivateGameObjects("");
         quitConfirmationOpen = true;
+       
+        if (quitConfirmationGoTitleScreen == true)
+        {
+            quitConfirmTSCopy.SetActive(true);
+        }
         quitConfirmation.SetActive(true);
     }
 
@@ -72,11 +80,13 @@ public class UIManager : MonoBehaviour
         
         if (quitConfirmationGoTitleScreen == true)
         {
+            quitConfirmTSCopy.SetActive(false);
             ActivateGameObjects(titleScreenUI.name);
+            
         }
         else if (quitConfirmationGoTitleScreen == false)
         {
-            ActivateGameObjects(inGameUI.name);
+            ActivateGameObjects(pauseGameUI.name);
         }
     }
 
@@ -142,7 +152,7 @@ public class UIManager : MonoBehaviour
         tutorialUI.SetActive(tutorialUI.name.Equals(nameOfGameObject));
         highscoreUI.SetActive(highscoreUI.name.Equals(nameOfGameObject));
         creditsUI.SetActive(creditsUI.name.Equals(nameOfGameObject));
-
+       // quitConfirmation.SetActive(quitConfirmation.name.Equals(nameOfGameObject));
     }
 
     public void Pause()

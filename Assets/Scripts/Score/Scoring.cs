@@ -993,6 +993,7 @@ public class Scoring : MonoBehaviour
 
     IEnumerator ScoreFloating(float p_duration, int p_gainedScore)
     {
+        scoreFloater.GetComponent<RectTransform>().anchoredPosition = defaultScoreFloaterPos;
         Sequence sequence = DOTween.Sequence();
         scoreFloater.SetActive(true);
         
@@ -1002,7 +1003,7 @@ public class Scoring : MonoBehaviour
         sequence.Append(scoreFloater.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.x, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.y + 58f, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.z), p_duration + 0.5f));//(modifiedScale, sizeTweenSpeed).SetEase(Ease.Linear)).Append(timeValueUI.transform.DOScale(OriginalScale, 0.2f).SetEase(Ease.Linear));
 
         //FadeIn
-        sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, p_duration * 0.05f));
+      //  sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, 0.15f)); //2
         sequence.Play();
         yield return new WaitForSeconds(p_duration *0.5f);
         scoreFloater.GetComponent<Text>().DOFade(1.0f, p_duration * 0.45f);

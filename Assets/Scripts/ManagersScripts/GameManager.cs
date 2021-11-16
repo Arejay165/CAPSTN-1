@@ -139,8 +139,10 @@ public class GameManager : MonoBehaviour
     public IEnumerator DayEnd()
     {
         UIManager.instance.isIngame = false;
+
         OnGameEnd.Invoke();
         TogglePlaying();
+        GameManager.instance.isPlaying = false;
         Scoring.instance.gameShutter.SetActive(true);
         Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
 
