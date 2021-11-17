@@ -132546,6 +132546,7 @@ MonoBehaviour:
   cheatCodeUI: {fileID: 1228418382}
   dayBackGround: {fileID: 1718220009}
   nightBackGround: {fileID: 2005714798}
+  quitConfirmTSCopy: {fileID: 0}
   isIngame: 0
   quitConfirmationGoTitleScreen: 1
   quitConfirmationOpen: 0
@@ -132657,11 +132658,13 @@ MonoBehaviour:
   levelText: {fileID: 1260747563}
   backgroundImage: {fileID: 757229622}
   levelComplete: {fileID: 21300000, guid: 5fecd9853c3a28b4a845857832a3b616, type: 3}
+  shutter: {fileID: 0}
   briefingShutter: {fileID: 1855825063}
   briefingInfo: {fileID: 1983533510}
   gameShutter: {fileID: 1123482678}
   debriefingShutter: {fileID: 1123482678}
-  debriefingInfo: {fileID: 1986466277}
+  timesUpFrame: {fileID: 0}
+  timesUpText: {fileID: 0}
   resultShutter: {fileID: 481324890}
   isSkip: 0
 --- !u!114 &2031478791

@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public GameObject dayBackGround;
     public GameObject nightBackGround;
 
+    public GameObject quitConfirmTSCopy;
     public bool isIngame = false;
     private bool isPause; //for demo purposes
     public bool quitConfirmationGoTitleScreen = true;
@@ -65,7 +66,14 @@ public class UIManager : MonoBehaviour
    
     public void OpenQuitConfirmation()
     {
+        //? means null checker
+        ActivateGameObjects("");
         quitConfirmationOpen = true;
+       
+        if (quitConfirmationGoTitleScreen == true)
+        {
+            quitConfirmTSCopy.SetActive(true);
+        }
         quitConfirmation.SetActive(true);
     }
 
@@ -76,11 +84,13 @@ public class UIManager : MonoBehaviour
         
         if (quitConfirmationGoTitleScreen == true)
         {
+            quitConfirmTSCopy.SetActive(false);
             ActivateGameObjects(titleScreenUI.name);
+            
         }
         else if (quitConfirmationGoTitleScreen == false)
         {
-            ActivateGameObjects(inGameUI.name);
+            ActivateGameObjects(pauseGameUI.name);
         }
     }
 
@@ -227,15 +237,22 @@ public class UIManager : MonoBehaviour
 
     public void Tutorial()
     {
-        SceneManager.LoadScene("Tutorial");
+        StartCoroutine(Scoring.instance.ShutterEffect(tutorialUI, playerNameUI, LoadTutorial));
+      
 
     }
 
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
     public void ShowTutorial()
     {
         if (!quitConfirmationOpen)
         {
-            ActivateGameObjects(tutorialUI.name);
+            //ActivateGameObjects(tutorialUI.name);
+            StartCoroutine(Scoring.instance.ShutterEffect(titleScreenUI, tutorialUI));
+
         }
         
     }

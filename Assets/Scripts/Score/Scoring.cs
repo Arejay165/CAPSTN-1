@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-
+using System;
 using TMPro;
 public class Scoring : MonoBehaviour
 {
@@ -114,29 +114,106 @@ public class Scoring : MonoBehaviour
     public Image backgroundImage;
     public Sprite levelComplete;
 
+    public GameObject shutter;
     public GameObject briefingShutter;
     public GameObject briefingInfo;
     public GameObject gameShutter;
     public GameObject debriefingShutter;
-    public GameObject debriefingInfo;
+    public GameObject timesUpFrame;
+    public GameObject timesUpText;
     public GameObject resultShutter;
     public bool isSkip;
 
+    public IEnumerator ShutterDownEffect(GameObject p_initialUI, Action p_afterAction)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
+
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(1f);
+
+        p_initialUI.SetActive(false);
+        shutter.SetActive(false);
+
+        //End result
+        //shutter.SetActive(false);
+        //p_targetUI.SetActive(true);
+        p_afterAction.Invoke();
+     
+        
+    }
+
+    public IEnumerator ShutterEffect(GameObject p_initialUI, Action p_afterAction)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
+
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+
+        //Shutter Up
+        p_initialUI.SetActive(false);
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+
+        //End result
+        //shutter.SetActive(false);
+        //p_targetUI.SetActive(true);
+        p_afterAction.Invoke();
+    }
+
+
+    public IEnumerator ShutterEffect(GameObject p_initialUI, GameObject p_targetUI , Action p_afterAction = null)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
+        
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+
+        //Shutter Up
+        p_initialUI.SetActive(false);
+        p_targetUI.SetActive(true);
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+        if (p_afterAction != null)
+        {
+            p_afterAction.Invoke();
+        }
+        
+        //End result
+        //shutter.SetActive(false);
+
+    }
 
     public void ShowTimesUp()
     {
         //debriefingInfo.SetActive(true);
-        debriefingInfo.GetComponent<Image>().DOFade(1.0f, 0.05f);
+        timesUpFrame.GetComponent<Image>().DOFade(1.0f,0.05f);
+        timesUpText.GetComponent<Image>().DOFade(1.0f, 0.05f);
         //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(1.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale(new Vector2(8, 8), 0.15f).SetEase(Ease.Linear);
+        timesUpFrame.GetComponent<RectTransform>().DOScale( new Vector2(8,8),0.15f).SetEase(Ease.Linear);
+        timesUpText.GetComponent<RectTransform>().DOScale(new Vector2(8, 8), 0.15f).SetEase(Ease.Linear);
+
 
     }
     public void HideTimesUp()
     {
         //debriefingInfo.SetActive(false);
-        debriefingInfo.GetComponent<Image>().DOFade(0.0f, 0.05f);
+        timesUpFrame.GetComponent<Image>().DOFade(0.0f, 0.05f);
+        timesUpText.GetComponent<Image>().DOFade(0.0f, 0.05f);
         //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(0.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale(new Vector2(0, 0), 0.15f).SetEase(Ease.Linear);
+        timesUpFrame.GetComponent<RectTransform>().DOScale(new Vector2(0,0), 0.15f).SetEase(Ease.Linear);
+        timesUpText.GetComponent<RectTransform>().DOScale(new Vector2(0, 0), 0.15f).SetEase(Ease.Linear);
     }
     public int FlattenTheNumber(int p_digits, int p_multipleOf = 10)
     {
@@ -857,13 +934,13 @@ public class Scoring : MonoBehaviour
         {
             instance = this;
         }
-        if (debriefingInfo != null)
+        if (timesUpFrame != null)
         {
-            var desiredColor = debriefingInfo.GetComponent<Image>().color;
+            var desiredColor = timesUpFrame.GetComponent<Image>().color;
             desiredColor.a = 0;
-            debriefingInfo.GetComponent<Image>().color = desiredColor;
+            timesUpFrame.GetComponent<Image>().color = desiredColor;
           
-            debriefingInfo.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
+            timesUpFrame.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
         }
 
         defaultScoreFloaterPos = scoreFloater.GetComponent<RectTransform>().anchoredPosition;
@@ -1008,6 +1085,7 @@ public class Scoring : MonoBehaviour
 
     IEnumerator ScoreFloating(float p_duration, int p_gainedScore)
     {
+        scoreFloater.GetComponent<RectTransform>().anchoredPosition = defaultScoreFloaterPos;
         Sequence sequence = DOTween.Sequence();
         scoreFloater.SetActive(true);
         //Transform floatingScoreTransform = scoreFloater.transform;
@@ -1017,7 +1095,7 @@ public class Scoring : MonoBehaviour
         sequence.Append(scoreFloater.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.x, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.y + 58f, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.z), p_duration + 0.5f));//(modifiedScale, sizeTweenSpeed).SetEase(Ease.Linear)).Append(timeValueUI.transform.DOScale(OriginalScale, 0.2f).SetEase(Ease.Linear));
 
         //FadeIn
-        sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, p_duration * 0.05f));
+      //  sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, 0.15f)); //2
         sequence.Play();
         //yield return new WaitForSeconds(p_duration *0.5f);
         scoreFloater.GetComponent<Text>().DOFade(1.0f, p_duration * 0.45f);

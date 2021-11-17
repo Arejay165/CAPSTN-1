@@ -21,6 +21,11 @@ public class ChangeCalculator : MonoBehaviour
 
     public int answerAttempts;
     public int perfectAttempts;
+
+    public void Start()
+    {
+        tmpChangeInputField.onSubmit.AddListener(OnPriceInputted);
+    }
     private void OnEnable()
     {
         //Test for whole number answer for Division 
@@ -131,7 +136,7 @@ public class ChangeCalculator : MonoBehaviour
 
 
 
-    public void OnPriceInputted()
+    public void OnPriceInputted(string p_playerInputString)
     {
         if (gameObject.activeSelf)
         {
