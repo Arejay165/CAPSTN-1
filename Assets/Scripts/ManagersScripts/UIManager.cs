@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     public GameObject creditsUI;
     public GameObject highscoreUI;
     public GameObject quitConfirmation;
-    public GameObject shutterUI;
+    
     public GameObject dayBackGround;
     public GameObject nightBackGround;
 

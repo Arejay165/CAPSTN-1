@@ -119,7 +119,8 @@ public class Scoring : MonoBehaviour
     public GameObject briefingInfo;
     public GameObject gameShutter;
     public GameObject debriefingShutter;
-    public GameObject debriefingInfo;
+    public GameObject timesUpFrame;
+    public GameObject timesUpText;
     public GameObject resultShutter;
 
     public IEnumerator ShutterDownEffect(GameObject p_initialUI, Action p_afterAction)
@@ -196,17 +197,22 @@ public class Scoring : MonoBehaviour
     public void ShowTimesUp()
     {
         //debriefingInfo.SetActive(true);
-        debriefingInfo.GetComponent<Image>().DOFade(1.0f,0.05f); 
+        timesUpFrame.GetComponent<Image>().DOFade(1.0f,0.05f);
+        timesUpText.GetComponent<Image>().DOFade(1.0f, 0.05f);
         //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(1.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale( new Vector2(8,8),0.15f).SetEase(Ease.Linear);
-      
+        timesUpFrame.GetComponent<RectTransform>().DOScale( new Vector2(8,8),0.15f).SetEase(Ease.Linear);
+        timesUpText.GetComponent<RectTransform>().DOScale(new Vector2(8, 8), 0.15f).SetEase(Ease.Linear);
+
+
     }
     public void HideTimesUp()
     {
         //debriefingInfo.SetActive(false);
-        debriefingInfo.GetComponent<Image>().DOFade(0.0f, 0.05f);
+        timesUpFrame.GetComponent<Image>().DOFade(0.0f, 0.05f);
+        timesUpText.GetComponent<Image>().DOFade(0.0f, 0.05f);
         //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(0.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale(new Vector2(0,0), 0.15f).SetEase(Ease.Linear);
+        timesUpFrame.GetComponent<RectTransform>().DOScale(new Vector2(0,0), 0.15f).SetEase(Ease.Linear);
+        timesUpText.GetComponent<RectTransform>().DOScale(new Vector2(0, 0), 0.15f).SetEase(Ease.Linear);
     }
     public int FlattenTheNumber(int p_digits, int p_multipleOf = 10)
     {
@@ -913,13 +919,13 @@ public class Scoring : MonoBehaviour
         {
             instance = this;
         }
-        if (debriefingInfo != null)
+        if (timesUpFrame != null)
         {
-            var desiredColor = debriefingInfo.GetComponent<Image>().color;
+            var desiredColor = timesUpFrame.GetComponent<Image>().color;
             desiredColor.a = 0;
-            debriefingInfo.GetComponent<Image>().color = desiredColor;
+            timesUpFrame.GetComponent<Image>().color = desiredColor;
           
-            debriefingInfo.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
+            timesUpFrame.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
         }
 
         defaultScoreFloaterPos = scoreFloater.GetComponent<RectTransform>().anchoredPosition;
