@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-
+using System;
 using TMPro;
 public class Scoring : MonoBehaviour
 {
@@ -114,6 +114,7 @@ public class Scoring : MonoBehaviour
     public Image backgroundImage;
     public Sprite levelComplete;
 
+    public GameObject shutter;
     public GameObject briefingShutter;
     public GameObject briefingInfo;
     public GameObject gameShutter;
@@ -121,7 +122,77 @@ public class Scoring : MonoBehaviour
     public GameObject debriefingInfo;
     public GameObject resultShutter;
 
- 
+    public IEnumerator ShutterDownEffect(GameObject p_initialUI, Action p_afterAction)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
+
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(1f);
+
+        p_initialUI.SetActive(false);
+        shutter.SetActive(false);
+
+        //End result
+        //shutter.SetActive(false);
+        //p_targetUI.SetActive(true);
+        p_afterAction.Invoke();
+     
+        
+    }
+
+    public IEnumerator ShutterEffect(GameObject p_initialUI, Action p_afterAction)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
+
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+
+        //Shutter Up
+        p_initialUI.SetActive(false);
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+
+        //End result
+        //shutter.SetActive(false);
+        //p_targetUI.SetActive(true);
+        p_afterAction.Invoke();
+    }
+
+
+    public IEnumerator ShutterEffect(GameObject p_initialUI, GameObject p_targetUI , Action p_afterAction = null)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
+        
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+
+        //Shutter Up
+        p_initialUI.SetActive(false);
+        p_targetUI.SetActive(true);
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+        if (p_afterAction != null)
+        {
+            p_afterAction.Invoke();
+        }
+        
+        //End result
+        //shutter.SetActive(false);
+
+    }
+
     public void ShowTimesUp()
     {
         //debriefingInfo.SetActive(true);

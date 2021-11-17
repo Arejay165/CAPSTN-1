@@ -71,15 +71,18 @@ public class TestCalculator : MonoBehaviour
       
     }
 
-    //private void Start()
-    //{
-    //    StackDuplicateItems();
-    //}
+    private void Start()
+    {
+        totalPriceAnswerField.onSubmit.AddListener(OnTotalPriceInputted);
+        changeAnswerField.onSubmit.AddListener(OnChangeInputted);
+       // StackDuplicateItems();
+    }
 
     private void OnEnable()
     {
         isFinished = false;
-    
+        
+        
         ////Register OnGameStart Event in GameManager
         //GameManager.OnGameStart += OnGameStarted;
         //foreach (InputField selectedAnswerField in answerFields)
@@ -543,13 +546,13 @@ public class TestCalculator : MonoBehaviour
     {
         Scoring.instance.ResetMultiplier();
     }
-    public void OnTotalPriceInputted()
+    public void OnTotalPriceInputted(string p_playerInputString)
     {
         if (gameObject.activeSelf)
         {
             if (GameManager.instance.isPlaying)
             {
-                string playerInputString = totalPriceAnswerField.text;
+                string playerInputString = p_playerInputString;
 
                 float playerInputValue = -1;
 
@@ -607,13 +610,13 @@ public class TestCalculator : MonoBehaviour
 
         Scoring.instance.ResetMultiplier();
     }
-    public void OnChangeInputted()
+    public void OnChangeInputted(string p_playerInputString)
     {
         if (gameObject.activeSelf)
         {
             if (GameManager.instance.isPlaying)
             {
-                string playerInputString = changeAnswerField.text;
+                string playerInputString = p_playerInputString;
                 float playerInputValue = -1;
 
 

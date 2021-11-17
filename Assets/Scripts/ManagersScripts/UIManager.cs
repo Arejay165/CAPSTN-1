@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     public GameObject creditsUI;
     public GameObject highscoreUI;
     public GameObject quitConfirmation;
-
+    public GameObject shutterUI;
     public GameObject dayBackGround;
     public GameObject nightBackGround;
 
@@ -206,15 +206,22 @@ public class UIManager : MonoBehaviour
 
     public void Tutorial()
     {
-        SceneManager.LoadScene("Tutorial");
+        StartCoroutine(Scoring.instance.ShutterEffect(tutorialUI, playerNameUI, LoadTutorial));
+      
 
     }
 
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
     public void ShowTutorial()
     {
         if (!quitConfirmationOpen)
         {
-            ActivateGameObjects(tutorialUI.name);
+            //ActivateGameObjects(tutorialUI.name);
+            StartCoroutine(Scoring.instance.ShutterEffect(titleScreenUI, tutorialUI));
+
         }
         
     }

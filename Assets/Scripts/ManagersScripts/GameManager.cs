@@ -68,8 +68,14 @@ public class GameManager : MonoBehaviour
         if (isFirstTime)
         {
             UIManager.instance.quitConfirmationGoTitleScreen = false;
+
+            //ActivateGameObjects(tutorialUI.name);
+            StartCoroutine(Scoring.instance.ShutterEffect(UIManager.instance.tutorialUI, UIManager.instance.playerNameUI));
+
             
-            UIManager.instance.ActivateGameObjects(UIManager.instance.playerNameUI.name);
+           
+            
+           //UIManager.instance.ActivateGameObjects(UIManager.instance.playerNameUI.name);
         }
         else
         {
@@ -104,6 +110,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayStart()
     {
+     
         UIManager.instance.isIngame = true;
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundBriefingUI.name);
