@@ -8,12 +8,12 @@ using UnityEngine.SceneManagement;
 using TMPro;
 public class Scoring : MonoBehaviour
 {
-    public static Scoring   instance;
-   // public GameObject[]     stars;
+    public static Scoring instance;
+    // public GameObject[]     stars;
 
-   // private int             score;
+    // private int             score;
     [SerializeField]
-    Text                    scoreText;
+    Text scoreText;
 
 
     public int round = 0;
@@ -25,7 +25,7 @@ public class Scoring : MonoBehaviour
     public Text gameDayText;
     public TextMeshProUGUI resultDayText;
     public Text endScoreText;
-   // public Text highscoreText;
+    // public Text highscoreText;
     public TextMeshProUGUI briefingDayText;
     public TextMeshProUGUI briefingScoreGoalText;
     public Text gameScoreGoalText;
@@ -33,7 +33,7 @@ public class Scoring : MonoBehaviour
     public Sprite starShine;
 
     //public GameObject jarStarFillPrefab;
-    
+
     public GameObject starFillPrefab;
     public GameObject shimmerFXPrefab;
     public GameObject fallingStarFXPrefab;
@@ -78,9 +78,9 @@ public class Scoring : MonoBehaviour
     #endregion
     private Coroutine countingCoroutine;
 
-   
+
     public Text totalMathProblemsValue;
-   
+
     public Text totalSolvingTimeValue;
     public Text additionSolvingTime;
     public Text additionEvaluation;
@@ -90,7 +90,7 @@ public class Scoring : MonoBehaviour
     public Text multiplicationEvaluation;
     public Text divisionSolvingTime;
     public Text divisionEvaluation;
- 
+
     public GameObject continueButton;
     public GameObject restartButton;
     public GameObject quitButton;
@@ -122,25 +122,25 @@ public class Scoring : MonoBehaviour
     public GameObject resultShutter;
     public bool isSkip;
 
- 
+
     public void ShowTimesUp()
     {
         //debriefingInfo.SetActive(true);
-        debriefingInfo.GetComponent<Image>().DOFade(1.0f,0.05f); 
+        debriefingInfo.GetComponent<Image>().DOFade(1.0f, 0.05f);
         //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(1.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale( new Vector2(8,8),0.15f).SetEase(Ease.Linear);
-      
+        debriefingInfo.GetComponent<RectTransform>().DOScale(new Vector2(8, 8), 0.15f).SetEase(Ease.Linear);
+
     }
     public void HideTimesUp()
     {
         //debriefingInfo.SetActive(false);
         debriefingInfo.GetComponent<Image>().DOFade(0.0f, 0.05f);
         //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(0.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale(new Vector2(0,0), 0.15f).SetEase(Ease.Linear);
+        debriefingInfo.GetComponent<RectTransform>().DOScale(new Vector2(0, 0), 0.15f).SetEase(Ease.Linear);
     }
     public int FlattenTheNumber(int p_digits, int p_multipleOf = 10)
     {
-       // Debug.Log("THIS WORK");
+        // Debug.Log("THIS WORK");
         int remainder = p_digits % p_multipleOf;
         if (remainder * 2 >= p_multipleOf)
         {
@@ -159,8 +159,8 @@ public class Scoring : MonoBehaviour
         briefingShutter.SetActive(true);
         briefingShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 0);
         briefingInfo.SetActive(true);
-        briefingDayText.text = (round+1).ToString();
-        scoreGoal = 1000 + ((round-1) * (250));
+        briefingDayText.text = (round + 1).ToString();
+        scoreGoal = 1000 + ((round - 1) * (250));
         scoreGoal = FlattenTheNumber(scoreGoal);
         briefingScoreGoalText.text = scoreGoal.ToString();
         for (int i = 0; i < resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
@@ -179,7 +179,9 @@ public class Scoring : MonoBehaviour
         gameScoreGoalText.text = scoreTilNextStar.ToString();
         gameNextStar = scoreGoal / 3;
         gameNextStar = FlattenTheNumber(gameNextStar);
-     
+        isSkip = false;
+        UIManager.instance.canSkip = false;
+
 
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -206,7 +208,7 @@ public class Scoring : MonoBehaviour
 
 
         }
-        for (int i =0; i< resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
+        for (int i = 0; i < resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
         {
             int scoreForStar = ((i + 1) * (scoreGoal / 3));
             scoreForStar = FlattenTheNumber(scoreForStar);
@@ -219,8 +221,8 @@ public class Scoring : MonoBehaviour
             StopCoroutine(countingCoroutine);
         }
 
-        
-        
+
+
         //Day Failed if score is less than half of score goal
         //if (score < scoreGoal/2) 
         //{
@@ -235,7 +237,7 @@ public class Scoring : MonoBehaviour
 
     private IEnumerator CountText(int p_newValue, int p_Value = 0)
     {
-     //   resultsNextStar = scoreGoal / 3;
+        //   resultsNextStar = scoreGoal / 3;
 
         WaitForSeconds wait = new WaitForSeconds(1f / fpsCount);
         int previousValue = p_Value;
@@ -269,14 +271,14 @@ public class Scoring : MonoBehaviour
                 endScoreText.text = previousValue.ToString(scoreFormat);
 
                 //Calcualtes how many stars did the player get
-              
-               
+
+
                 if (previousValue >= resultsNextStar)
                 {
                     //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(5) stars, it'll become 5 stars)
                     if (backUpStarRatingsCounted < 3)
                     {
-                        
+
                         //Do UI UX Animation for that star
                         GameObject newStarFill = CreateStarFill(resultStarSlots[backUpStarRatingsCounted]);
                         StartCoroutine(FitStarToSlot(newStarFill, resultStarSlots[backUpStarRatingsCounted].GetComponent<RectTransform>().sizeDelta));
@@ -285,7 +287,7 @@ public class Scoring : MonoBehaviour
                         resultsNextStar += scoreGoal / 3;
                         resultsNextStar = FlattenTheNumber(resultsNextStar);
                     }
-                    
+
                 }
 
                 yield return wait;
@@ -293,7 +295,7 @@ public class Scoring : MonoBehaviour
             }
 
         }
-        else if(previousValue > p_newValue)
+        else if (previousValue > p_newValue)
         {
             while (previousValue > p_newValue)
             {
@@ -329,7 +331,7 @@ public class Scoring : MonoBehaviour
                 yield return wait;
 
             }
-           
+
         }
         else if (previousValue == p_newValue)
         {
@@ -344,9 +346,9 @@ public class Scoring : MonoBehaviour
             GameObject spawnedFallingStarParticleFX = Instantiate(fallingStarFXPrefab, selectedStar.transform);
             spawnedFallingStarParticleFX.transform.position = selectedStar.transform.position;
             Destroy(spawnedFallingStarParticleFX, 3f);
-           
-            
-           
+
+
+
         }
 
         //If passing
@@ -370,7 +372,7 @@ public class Scoring : MonoBehaviour
             //if it's not 0
             if (score > 0)
             {
-               
+
                 //check if there are highscores
                 //if there is high scores
                 if (highscores != null)
@@ -457,12 +459,18 @@ public class Scoring : MonoBehaviour
         else
         {
             //  failPrompt.SetActive(true);
-           
-            levelText.text = "Level Failed";
-         
+
+            if (!isSkip)
+            {
+                levelText.text = "Level Failed";
+                AudioManager.instance.playSound(5);
+                backgroundImage.sprite = failImage;
+            }
+            else
+            {
+                levelText.text = "Level Skip";
+            }
             resultDayText.text = "";
-            backgroundImage.sprite = failImage;
-            AudioManager.instance.playSound(5);
             StartCoroutine(ShowPerformanceStats());
         }
 
@@ -477,11 +485,11 @@ public class Scoring : MonoBehaviour
         yield return new WaitForSeconds(4.5f);
         newHighscoreUI.SetActive(false);
         //enterHighscoreUI.SetActive(true);
-        
+
         StartCoroutine(ShowPerformanceStats());
     }
 
-   
+
 
     public void ShowPerformance(Text p_perfromanceTitle, string p_performanceValue)
     {
@@ -513,7 +521,7 @@ public class Scoring : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             string currentWrongAnswersForOperatorString = PerformanceManager.instance.GetOperatorCount((MathProblemOperator)i, false);
-            int addWrongAnswerAmount= 0;
+            int addWrongAnswerAmount = 0;
             if (int.TryParse(currentWrongAnswersForOperatorString, out int currentWrongAnswersForOperatorInt)) // convert string to float
             {
                 addWrongAnswerAmount = currentWrongAnswersForOperatorInt;
@@ -553,7 +561,7 @@ public class Scoring : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         //if passed
-        if (resultStars.Count >= 1)
+        if (resultStars.Count >= 1 || isSkip)
         {
           
             continueButton.SetActive(true);
@@ -563,9 +571,11 @@ public class Scoring : MonoBehaviour
         }
         else
         {
-            //play timeline (cutscene bankrupted)
-            restartButton.SetActive(true);
-            
+            if (!isSkip)
+            {
+                //play timeline (cutscene bankrupted)
+                restartButton.SetActive(true);
+            }
         }
         quitButton.SetActive(true);
 
