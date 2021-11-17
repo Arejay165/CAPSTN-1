@@ -120,7 +120,7 @@ public class Scoring : MonoBehaviour
     public GameObject debriefingShutter;
     public GameObject debriefingInfo;
     public GameObject resultShutter;
-
+    public bool isSkip;
  
     public void ShowTimesUp()
     {
@@ -178,7 +178,7 @@ public class Scoring : MonoBehaviour
         gameScoreGoalText.text = scoreTilNextStar.ToString();
         gameNextStar = scoreGoal / 3;
         gameNextStar = FlattenTheNumber(gameNextStar);
-     
+        isSkip = false;
 
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -456,12 +456,19 @@ public class Scoring : MonoBehaviour
         else
         {
             //  failPrompt.SetActive(true);
-           
-            levelText.text = "Level Failed";
-         
+
+
+            if (!isSkip)
+            {
+                levelText.text = "Level Failed";
+                AudioManager.instance.playSound(5);
+                backgroundImage.sprite = failImage;
+            }
+            else
+            {
+                levelText.text = "Level Skip";
+            }
             resultDayText.text = "";
-            backgroundImage.sprite = failImage;
-            AudioManager.instance.playSound(5);
             StartCoroutine(ShowPerformanceStats());
         }
 
@@ -552,7 +559,7 @@ public class Scoring : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         //if passed
-        if (resultStars.Count >= 1)
+        if (resultStars.Count >= 1 || isSkip)
         {
           
             continueButton.SetActive(true);
@@ -563,7 +570,11 @@ public class Scoring : MonoBehaviour
         else
         {
             //play timeline (cutscene bankrupted)
-            restartButton.SetActive(true);
+            if (!isSkip)
+            {
+                restartButton.SetActive(true);
+            }
+   
             
         }
         quitButton.SetActive(true);

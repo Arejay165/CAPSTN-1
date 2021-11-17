@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     public GameObject creditsUI;
     public GameObject highscoreUI;
     public GameObject quitConfirmation;
+    public GameObject cheatCodeUI;
 
     public GameObject dayBackGround;
     public GameObject nightBackGround;
@@ -58,6 +59,8 @@ public class UIManager : MonoBehaviour
         //? means null checker
         ActivateGameObjects(inGameUI.name);
     }
+
+    
    
     public void OpenQuitConfirmation()
     {
@@ -100,7 +103,33 @@ public class UIManager : MonoBehaviour
                 }
             }
            
-        }   
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (isIngame)
+            {
+                if (!isPause)
+                {
+                    ActivateCheatCode();
+                }
+                else
+                {
+                    Resume();
+                }
+           
+            }
+        }
+    }
+
+
+    public void ActivateCheatCode()
+    {
+        isPause = true;
+        GameManager.instance.isPlaying = false;
+        Time.timeScale = 0;
+        ActivateGameObjects(cheatCodeUI.name);
     }
 
     public void BackToMenu()
@@ -142,13 +171,14 @@ public class UIManager : MonoBehaviour
         tutorialUI.SetActive(tutorialUI.name.Equals(nameOfGameObject));
         highscoreUI.SetActive(highscoreUI.name.Equals(nameOfGameObject));
         creditsUI.SetActive(creditsUI.name.Equals(nameOfGameObject));
+        cheatCodeUI.SetActive(cheatCodeUI.name.Equals(nameOfGameObject));
 
     }
 
     public void Pause()
     {
-        pauseGameUI.SetActive(true);
-        //ActivateGameObjects(pauseGameUI.name);
+       // pauseGameUI.SetActive(true);
+        ActivateGameObjects(pauseGameUI.name);
         Debug.Log("Ispause");
         isPause = true;
         GameManager.instance.isPlaying = false;
@@ -157,8 +187,8 @@ public class UIManager : MonoBehaviour
 
     public void Resume()
     {
-        pauseGameUI.SetActive(false);
-        //ActivateGameObjects(inGameUI.name);
+       // pauseGameUI.SetActive(false);
+        ActivateGameObjects(inGameUI.name);
         Debug.Log("Resume");
         GameManager.instance.isPlaying = true;
         isPause = false;

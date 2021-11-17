@@ -138,9 +138,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayEnd()
     {
+        UIManager.instance.Resume();
         UIManager.instance.isIngame = false;
         OnGameEnd.Invoke();
         TogglePlaying();
+       
+
         Scoring.instance.gameShutter.SetActive(true);
         Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
 
@@ -206,6 +209,8 @@ public class GameManager : MonoBehaviour
             
         }
         InteractableManager.instances.cashBox.clickable = true;
+
+       // Scoring.instance.isSkip = false;
 
     }
     virtual protected void Start()
