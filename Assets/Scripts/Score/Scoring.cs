@@ -120,6 +120,7 @@ public class Scoring : MonoBehaviour
     public GameObject debriefingShutter;
     public GameObject debriefingInfo;
     public GameObject resultShutter;
+    public bool isSkip;
 
  
     public void ShowTimesUp()
