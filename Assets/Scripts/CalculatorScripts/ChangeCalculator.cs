@@ -65,6 +65,7 @@ public class ChangeCalculator : MonoBehaviour
         if (TutorialManager.instance.enabled == true )
         {
             TutorialManager.instance.text.text = "Divide the upper value to the lower value";
+            TutorialManager.instance.titleInstructText.text = "Pabarya Sheet";
             TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;
             UIManager.instance.inGameUI.SetActive(false);
             TutorialManager.instance.tutorial.SetActive(true);
@@ -226,6 +227,7 @@ public class ChangeCalculator : MonoBehaviour
             TutorialManager.instance.tutorial.SetActive(true);
             TutorialManager.instance.nextButton.SetActive(true);
             TutorialManager.instance.itemMask.SetActive(false);
+
         }
 
         yield return new WaitForSeconds(2f);

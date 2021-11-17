@@ -156,6 +156,7 @@ public class TestCalculator : MonoBehaviour
             TutorialManager.instance.tutorial.SetActive(true);
             TutorialManager.instance.nextButton.SetActive(false);
             TutorialManager.instance.tutorial.GetComponent<Image>().raycastTarget = false;
+            TutorialManager.instance.titleInstructText.text = "Order Sheet";
             //TutorialManager.instance.ItemMasksActivator(0);
             StartCoroutine(TutorialManager.instance.DelayItemMaskActivator(0));
         }

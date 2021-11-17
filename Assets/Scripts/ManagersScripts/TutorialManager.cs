@@ -325,6 +325,7 @@ public class TutorialManager : MonoBehaviour
         screenText.transform.parent.gameObject.SetActive(true);
         TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[0].anchoredPosition;
         screenText.text = "Click anywhere to continue";
+        titleInstructText.text = "Tutorial";
         NextMessage();
     }
 
