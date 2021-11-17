@@ -32240,7 +32240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &607513629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58438,7 +58438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1179802901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58909,7 +58909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1197416672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89742,7 +89742,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1524227042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92332,7 +92332,6 @@ MonoBehaviour:
   gameNextStar: 0
   minGoalValue: {fileID: 1610931834}
   newHighScoreText: {fileID: 1697926283}
-  goalValueAchive: {fileID: 0}
   levelText: {fileID: 1604563191}
   backgroundImage: {fileID: 715502789}
   levelComplete: {fileID: 21300000, guid: 5fecd9853c3a28b4a845857832a3b616, type: 3}
@@ -100042,7 +100041,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.3
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -106259,7 +106258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1851366036
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -120,7 +120,7 @@ public class Scoring : MonoBehaviour
     public GameObject debriefingShutter;
     public GameObject debriefingInfo;
     public GameObject resultShutter;
-    public bool isSkip;
+
  
     public void ShowTimesUp()
     {
@@ -178,10 +178,7 @@ public class Scoring : MonoBehaviour
         gameScoreGoalText.text = scoreTilNextStar.ToString();
         gameNextStar = scoreGoal / 3;
         gameNextStar = FlattenTheNumber(gameNextStar);
-        isSkip = false;
-        UIManager.instance.canSkip = false;
-
-
+     
 
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -459,19 +456,12 @@ public class Scoring : MonoBehaviour
         else
         {
             //  failPrompt.SetActive(true);
-
-
-            if (!isSkip)
-            {
-                levelText.text = "Level Failed";
-                AudioManager.instance.playSound(5);
-                backgroundImage.sprite = failImage;
-            }
-            else
-            {
-                levelText.text = "Level Skip";
-            }
+           
+            levelText.text = "Level Failed";
+         
             resultDayText.text = "";
+            backgroundImage.sprite = failImage;
+            AudioManager.instance.playSound(5);
             StartCoroutine(ShowPerformanceStats());
         }
 
@@ -562,7 +552,7 @@ public class Scoring : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         //if passed
-        if (resultStars.Count >= 1 || isSkip)
+        if (resultStars.Count >= 1)
         {
           
             continueButton.SetActive(true);
@@ -573,11 +563,7 @@ public class Scoring : MonoBehaviour
         else
         {
             //play timeline (cutscene bankrupted)
-            if (!isSkip)
-            {
-                restartButton.SetActive(true);
-            }
-   
+            restartButton.SetActive(true);
             
         }
         quitButton.SetActive(true);
@@ -616,7 +602,7 @@ public class Scoring : MonoBehaviour
     public GameObject CreateGameStarFill(GameObject p_selectedStarSlot)
     {
         //Spawn new star
-     //   Debug.Log("Spawn Star");
+        Debug.Log("Spawn Star");
         GameObject spawnedStarFill = Instantiate(starFillPrefab, gameStarRatingContainer.transform);
         spawnedStarFill.transform.position = p_selectedStarSlot.transform.position;
         //Set size of new star (smaller)
@@ -680,17 +666,17 @@ public class Scoring : MonoBehaviour
         //while (scoreToNextGoal < 1)
         //{
         //    scoreToNextGoal += (scoreGoal / 3);
-       // Debug.Log("Updating game score goal");
+        Debug.Log("Updating game score goal");
         //int scoreTilNextStar = ((scoreGoal / 3) * (gameStarSlotIndex + 1));
         //scoreTilNextStar = FlattenTheNumber(scoreTilNextStar);
        // if (score >= scoreTilNextStar) // if 500 > ((1500/3) * 1) //if 500 > 500
         if (score >= gameNextStar) // if 500 > ((1500/3) * 1) //if 500 > 500
         {
-          //  Debug.Log("work 1");
-         
+            Debug.Log("work 1");
+
             if (gameStarSlotIndex < 3)
             {
-             //   Debug.Log(gameStarSlotIndex);
+                Debug.Log(gameStarSlotIndex);
                 GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
                 newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
                 gameStarSlotIndex++;
@@ -699,14 +685,13 @@ public class Scoring : MonoBehaviour
                 gameScoreGoalText.text = gameNextStar.ToString();
             }
         }
-
-        if(gameStars.Count >= 3)
+        if (gameStars.Count >= 3)
         {
-            gameScoreGoalText.text = "Passed";
-        }
+            gameScoreGoalText.text = "PASS";
 
+        }
         //}
-       // gameScoreGoalText.text = scoreToNextGoal.ToString();
+        // gameScoreGoalText.text = scoreToNextGoal.ToString();
 
 
     }
@@ -1014,7 +999,7 @@ public class Scoring : MonoBehaviour
     {
         Sequence sequence = DOTween.Sequence();
         scoreFloater.SetActive(true);
-        
+        //Transform floatingScoreTransform = scoreFloater.transform;
         scoreFloater.GetComponent<Text>().text = "+ " + p_gainedScore;
         //scoreFloater.SetActive(true);
         //Move
@@ -1023,13 +1008,15 @@ public class Scoring : MonoBehaviour
         //FadeIn
         sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, p_duration * 0.05f));
         sequence.Play();
-        yield return new WaitForSeconds(p_duration *0.5f);
+        //yield return new WaitForSeconds(p_duration *0.5f);
         scoreFloater.GetComponent<Text>().DOFade(1.0f, p_duration * 0.45f);
         
 
         yield return new WaitForSeconds(p_duration * 0.65f);
         //FadeOut
-        
+        //Back to original position
+        sequence.Append(scoreFloater.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.x, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.y - 58f, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.z), p_duration + 0.5f));
+        //scoreFloater.transform.position = floatingScoreTransform.position;
         scoreFloater.SetActive(false);
     }
 
@@ -1041,7 +1028,7 @@ public class Scoring : MonoBehaviour
 
         ObjectPool.instances.pooledGameobjects[index].SetActive(false);
         ObjectPool.instances.ResetPosition();
-        StartCoroutine(ScoreFloating(2f,p_gainedScore));
+        StartCoroutine(ScoreFloating(1f,p_gainedScore));
         // yield return null;
     }
 
