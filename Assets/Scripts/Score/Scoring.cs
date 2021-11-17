@@ -687,7 +687,7 @@ public class Scoring : MonoBehaviour
         if (score >= gameNextStar) // if 500 > ((1500/3) * 1) //if 500 > 500
         {
           //  Debug.Log("work 1");
-
+         
             if (gameStarSlotIndex < 3)
             {
              //   Debug.Log(gameStarSlotIndex);
@@ -698,6 +698,11 @@ public class Scoring : MonoBehaviour
                 gameNextStar = FlattenTheNumber(gameNextStar);
                 gameScoreGoalText.text = gameNextStar.ToString();
             }
+        }
+
+        if(gameStars.Count >= 3)
+        {
+            gameScoreGoalText.text = "Passed";
         }
 
         //}
