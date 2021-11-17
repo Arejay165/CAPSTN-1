@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     private bool isPause; //for demo purposes
     public bool quitConfirmationGoTitleScreen = true;
     public bool quitConfirmationOpen = false;
+    public bool canSkip;
     
     //public List<GameObject> tutorialUIs = new List<GameObject>();
 
@@ -108,7 +109,7 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (isIngame)
+            if (isIngame && canSkip)
             {
                 if (!isPause)
                 {

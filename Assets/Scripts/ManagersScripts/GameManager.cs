@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
         OnGameStart.Invoke();
+        UIManager.instance.canSkip = true;
 
     }
     public void PlayGame()
@@ -132,8 +133,6 @@ public class GameManager : MonoBehaviour
             AudioManager.instance.playMusic(3);
         }
         //yield return new WaitForSeconds(3f);
-
-
     }
 
     public IEnumerator DayEnd()

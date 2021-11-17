@@ -179,6 +179,9 @@ public class Scoring : MonoBehaviour
         gameNextStar = scoreGoal / 3;
         gameNextStar = FlattenTheNumber(gameNextStar);
         isSkip = false;
+        UIManager.instance.canSkip = false;
+
+
 
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
