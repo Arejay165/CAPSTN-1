@@ -56,9 +56,7 @@ public class Scoring : MonoBehaviour
 
     public GameObject[] resultStarGoals;
 
-    public Sprite failImage;
-    public Image levelPasserImage;
-    public GameObject failPrompt, successPrompt;
+
     public GameObject coinPrefab;
     public GameObject targetLocation;
     //public Text performanceFactName;
@@ -91,6 +89,9 @@ public class Scoring : MonoBehaviour
     public Text divisionSolvingTime;
     public Text divisionEvaluation;
  
+
+
+    //BUTTONS
     public GameObject continueButton;
     public GameObject restartButton;
     public GameObject quitButton;
@@ -110,9 +111,8 @@ public class Scoring : MonoBehaviour
     public TextMeshProUGUI newHighScoreText;
 
     public Text levelText;
-
-    public Image backgroundImage;
-    public Sprite levelComplete;
+    public TextMeshProUGUI textPassOrFail;
+    public Image dayImage;
 
     public GameObject shutter;
     public GameObject briefingShutter;
@@ -122,6 +122,11 @@ public class Scoring : MonoBehaviour
     public GameObject timesUpFrame;
     public GameObject timesUpText;
     public GameObject resultShutter;
+
+    public Sprite passTitleSprite;
+    public Sprite passButtonSprite;
+    public Sprite failTitleSprite;
+    public Sprite failButtonSprite;
 
     public IEnumerator ShutterDownEffect(GameObject p_initialUI, Action p_afterAction)
     {
@@ -201,7 +206,7 @@ public class Scoring : MonoBehaviour
         timesUpText.GetComponent<Image>().DOFade(1.0f, 0.05f);
         //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(1.0f, 0.5f);
         timesUpFrame.GetComponent<RectTransform>().DOScale( new Vector2(8,8),0.15f).SetEase(Ease.Linear);
-        timesUpText.GetComponent<RectTransform>().DOScale(new Vector2(8, 8), 0.15f).SetEase(Ease.Linear);
+        timesUpText.GetComponent<RectTransform>().DOScale(new Vector2(1, 1), 0.15f).SetEase(Ease.Linear);
 
 
     }
@@ -428,8 +433,17 @@ public class Scoring : MonoBehaviour
         //If passing
         if (resultStars.Count >= 1)
         {
-            backgroundImage.sprite = levelComplete;
-            levelText.text = "Level    Complete";
+            textPassOrFail.text = "Complete!";
+            
+            dayImage.sprite = passTitleSprite;
+            continueButton.GetComponent<Image>().sprite = passButtonSprite;
+            quitButton.GetComponent<Image>().sprite = passButtonSprite;
+            restartButton.GetComponent<Image>().sprite = passButtonSprite;
+            
+            levelText.gameObject.SetActive(true);
+            textPassOrFail.gameObject.SetActive(true);
+            dayImage.gameObject.SetActive(true);
+   
             AudioManager.instance.playSound(4);
             //If perfect, do confetti
             if (resultStars.Count >= 3)
@@ -533,11 +547,19 @@ public class Scoring : MonoBehaviour
         else
         {
             //  failPrompt.SetActive(true);
-           
-            levelText.text = "Level Failed";
+            textPassOrFail.text = "Failed!";
+
+            dayImage.sprite = failTitleSprite;
+ 
          
-            resultDayText.text = "";
-            backgroundImage.sprite = failImage;
+            resultDayText.text = (round + 1).ToString();
+            continueButton.GetComponent<Image>().sprite = failButtonSprite;
+            quitButton.GetComponent<Image>().sprite = failButtonSprite;
+            restartButton.GetComponent<Image>().sprite = failButtonSprite;
+            levelText.gameObject.SetActive(true);
+            textPassOrFail.gameObject.SetActive(true);
+            dayImage.gameObject.SetActive(true);
+
             AudioManager.instance.playSound(5);
             StartCoroutine(ShowPerformanceStats());
         }
@@ -600,7 +622,19 @@ public class Scoring : MonoBehaviour
 
 
         yield return new WaitForSeconds(1.0f);
-
+        if (AudioManager.instance.BGM[0].musicFile.isPlaying)
+        {
+            AudioManager.instance.stopMusic(0);
+        }
+        else if (AudioManager.instance.BGM[1].musicFile.isPlaying)
+        {
+            AudioManager.instance.stopMusic(1);
+        }
+        else if (AudioManager.instance.BGM[3].musicFile.isPlaying)
+        {
+            AudioManager.instance.stopMusic(3);
+        }
+ 
         AudioManager.instance.playMusic(2);
 
         //Addition
@@ -681,9 +715,12 @@ public class Scoring : MonoBehaviour
         //Spawn new star
         Debug.Log("Spawn Star");
         GameObject spawnedStarFill = Instantiate(starFillPrefab, gameStarRatingContainer.transform);
-        spawnedStarFill.transform.position = p_selectedStarSlot.transform.position;
+        Vector2 selectedStarSlotSize = p_selectedStarSlot.GetComponent<RectTransform>().sizeDelta;
+        spawnedStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(45f, 45f);
+
+        spawnedStarFill.GetComponent<RectTransform>().anchoredPosition = p_selectedStarSlot.GetComponent<RectTransform>().anchoredPosition;//transform.position = p_selectedStarSlot.transform.position;
         //Set size of new star (smaller)
-        
+
         gameStars.Add(spawnedStarFill);
         return spawnedStarFill;
     }
@@ -692,17 +729,17 @@ public class Scoring : MonoBehaviour
     {
         //Spawn new star
         GameObject spawnedStarFill = Instantiate(starFillPrefab, starRatingContainer.transform);
-        spawnedStarFill.transform.position = p_selectedStarSlot.transform.position;
+        spawnedStarFill.GetComponent<RectTransform>().anchoredPosition = p_selectedStarSlot.GetComponent<RectTransform>().anchoredPosition;
         resultStars.Add(spawnedStarFill);
         //Reference the selected star slot's size
         Vector2 selectedStarSlotSize = p_selectedStarSlot.GetComponent<RectTransform>().sizeDelta;
 
         //Set the spawned star's size to 3x the selected star slot's size
-        spawnedStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(selectedStarSlotSize.x*3f, selectedStarSlotSize.y*3f);
+        spawnedStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(selectedStarSlotSize.x-(selectedStarSlotSize.x*0.2f), selectedStarSlotSize.y - (selectedStarSlotSize.y * 0.2f));
         
         //Set transparency/Opacity of new star
         var desiredColor = spawnedStarFill.GetComponent<Image>().color;
-        desiredColor.a = 0f;
+        desiredColor.a = 1f;
         spawnedStarFill.GetComponent<Image>().color = desiredColor;
 
 
@@ -995,8 +1032,8 @@ public class Scoring : MonoBehaviour
 
     void OnGameEnded()
     {
-        
-        
+
+
 
     }
     public void starCheck()
@@ -1028,6 +1065,13 @@ public class Scoring : MonoBehaviour
         multiplicationEvaluation.gameObject.SetActive(false);
         divisionSolvingTime.gameObject.SetActive(false);
         divisionEvaluation.gameObject.SetActive(false);
+
+        levelText.gameObject.SetActive(false);
+        textPassOrFail.gameObject.SetActive(false);
+        dayImage.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
         resultDayText.text = (round+1).ToString();
         continueButton.SetActive(false);
         quitButton.SetActive(false);

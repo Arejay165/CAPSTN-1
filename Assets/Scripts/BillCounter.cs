@@ -127,8 +127,16 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
 
         //Change the current sprite to the highlighted sprite 
         if (highlightedSprite != null && itemSR != null) itemSR.sprite = highlightedSprite;
-        if (hintingSparklePFX && !hintingSparklePFX.isPlaying) hintingSparklePFX.Play();
-        if (radiatePFX && !radiatePFX.isPlaying) radiatePFX.Play();
+        if (hintingSparklePFX && !hintingSparklePFX.isPlaying)
+        {
+            hintingSparklePFX.Play();
+      
+        }
+        if (radiatePFX && !radiatePFX.isPlaying)
+        {
+            radiatePFX.Play();
+      
+        }
 
     }
 
