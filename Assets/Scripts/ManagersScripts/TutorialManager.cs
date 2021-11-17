@@ -206,7 +206,8 @@ public class TutorialManager : MonoBehaviour
             ActivateGlowItems(arrowIndex);
             arrowIndex++;
             tutorialPhrase++;
-            Debug.Log(tutorialPhrase);
+            //  Debug.Log(tutorialPhrase);
+            dialogueBox.anchoredPosition = convoTransform[1].anchoredPosition;
         }
         else
         {
@@ -228,6 +229,7 @@ public class TutorialManager : MonoBehaviour
         {
             obj.SetActive(false);
         }
+        dialogueBox.anchoredPosition = convoTransform[0].anchoredPosition;
 
     }
 
