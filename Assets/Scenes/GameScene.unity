@@ -92240,6 +92240,7 @@ MonoBehaviour:
   gameNextStar: 0
   minGoalValue: {fileID: 1610931834}
   newHighScoreText: {fileID: 1697926283}
+  goalValueAchive: {fileID: 0}
   levelText: {fileID: 1604563191}
   backgroundImage: {fileID: 715502789}
   levelComplete: {fileID: 21300000, guid: 5fecd9853c3a28b4a845857832a3b616, type: 3}
@@ -99918,7 +99919,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.3
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

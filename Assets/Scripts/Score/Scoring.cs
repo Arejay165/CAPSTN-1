@@ -108,6 +108,7 @@ public class Scoring : MonoBehaviour
 
     public TextMeshProUGUI minGoalValue;
     public TextMeshProUGUI newHighScoreText;
+   
 
     public Text levelText;
 
@@ -175,9 +176,12 @@ public class Scoring : MonoBehaviour
         score = 0;
         int scoreTilNextStar = ((scoreGoal / 3) * (1));
         scoreTilNextStar = FlattenTheNumber(scoreTilNextStar);
+
         gameScoreGoalText.text = scoreTilNextStar.ToString();
         gameNextStar = scoreGoal / 3;
         gameNextStar = FlattenTheNumber(gameNextStar);
+       
+      
 
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -671,17 +675,23 @@ public class Scoring : MonoBehaviour
         {
             if (gameStarSlotIndex < 3)
             {
-               
-                GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
-                newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
-                gameStarSlotIndex++;
+              
+               GameObject newStarFill = CreateGameStarFill(gameStarSlots[gameStarSlotIndex]);
+               newStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.x, gameStarSlots[gameStarSlotIndex].GetComponent<RectTransform>().sizeDelta.y);
+               gameStarSlotIndex++;
 
-                gameScoreGoalText.text = scoreTilNextStar.ToString();
+               gameScoreGoalText.text = scoreTilNextStar.ToString();
+               
+              
             }
         }
+        if (gameStars.Count >= 3)
+        {
+            gameScoreGoalText.text = "PASS";
 
+        }
         //}
-       // gameScoreGoalText.text = scoreToNextGoal.ToString();
+        // gameScoreGoalText.text = scoreToNextGoal.ToString();
 
 
     }
