@@ -685,9 +685,13 @@ public class Scoring : MonoBehaviour
                 gameScoreGoalText.text = gameNextStar.ToString();
             }
         }
+        if (gameStars.Count >= 3)
+        {
+            gameScoreGoalText.text = "PASS";
 
+        }
         //}
-       // gameScoreGoalText.text = scoreToNextGoal.ToString();
+        // gameScoreGoalText.text = scoreToNextGoal.ToString();
 
 
     }
@@ -995,7 +999,7 @@ public class Scoring : MonoBehaviour
     {
         Sequence sequence = DOTween.Sequence();
         scoreFloater.SetActive(true);
-        
+        //Transform floatingScoreTransform = scoreFloater.transform;
         scoreFloater.GetComponent<Text>().text = "+ " + p_gainedScore;
         //scoreFloater.SetActive(true);
         //Move
@@ -1004,13 +1008,15 @@ public class Scoring : MonoBehaviour
         //FadeIn
         sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, p_duration * 0.05f));
         sequence.Play();
-        yield return new WaitForSeconds(p_duration *0.5f);
+        //yield return new WaitForSeconds(p_duration *0.5f);
         scoreFloater.GetComponent<Text>().DOFade(1.0f, p_duration * 0.45f);
         
 
         yield return new WaitForSeconds(p_duration * 0.65f);
         //FadeOut
-        
+        //Back to original position
+        sequence.Append(scoreFloater.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.x, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.y - 58f, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.z), p_duration + 0.5f));
+        //scoreFloater.transform.position = floatingScoreTransform.position;
         scoreFloater.SetActive(false);
     }
 
@@ -1022,7 +1028,7 @@ public class Scoring : MonoBehaviour
 
         ObjectPool.instances.pooledGameobjects[index].SetActive(false);
         ObjectPool.instances.ResetPosition();
-        StartCoroutine(ScoreFloating(2f,p_gainedScore));
+        StartCoroutine(ScoreFloating(1f,p_gainedScore));
         // yield return null;
     }
 

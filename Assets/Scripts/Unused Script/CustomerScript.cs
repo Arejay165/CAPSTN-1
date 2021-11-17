@@ -25,7 +25,7 @@ public class CustomerScript : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<DragDrop>().gameObject.name == "Asset-SodaBottle")
         {
-            Scoring.instance.addScore(100);
+            Scoring.instance.addScore((int)(100 * Scoring.instance.multiplier));
             itemWant.SetActive(false);
             Destroy(collision.gameObject);
         }
