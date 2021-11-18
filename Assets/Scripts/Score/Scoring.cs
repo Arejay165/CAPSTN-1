@@ -30,6 +30,9 @@ public class Scoring : MonoBehaviour
     public TextMeshProUGUI briefingScoreGoalText;
     public Text gameScoreGoalText;
     public Image gameTipJarFill;
+    public Image backgroundImage;
+    public Sprite failImage;
+
     public Sprite starShine;
 
     //public GameObject jarStarFillPrefab;
