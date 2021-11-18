@@ -556,27 +556,37 @@ public class Scoring : MonoBehaviour
 
             if (!isSkip)
             {
-                levelText.text = "Level Failed";
+            
                 AudioManager.instance.playSound(5);
-                backgroundImage.sprite = failImage;
+                //backgroundImage.sprite = failImage;
+                textPassOrFail.text = "Failed!";
+                dayImage.sprite = failTitleSprite;
+                continueButton.GetComponent<Image>().sprite = failButtonSprite;
+                quitButton.GetComponent<Image>().sprite = failButtonSprite;
+                restartButton.GetComponent<Image>().sprite = failButtonSprite;
+                levelText.gameObject.SetActive(true);
+                textPassOrFail.gameObject.SetActive(true);
+                dayImage.gameObject.SetActive(true);
+
             }
             else
             {
-                levelText.text = "Level Skip";
+              
+                textPassOrFail.text = "Skipped!";
+                dayImage.sprite = passTitleSprite;
+                continueButton.GetComponent<Image>().sprite = passButtonSprite;
+                quitButton.GetComponent<Image>().sprite = passButtonSprite;
+                restartButton.GetComponent<Image>().sprite = passButtonSprite;
+                levelText.gameObject.SetActive(true);
+                textPassOrFail.gameObject.SetActive(true);
+                dayImage.gameObject.SetActive(true);
             }
             resultDayText.text = "";
-            textPassOrFail.text = "Failed!";
+       
 
-            dayImage.sprite = failTitleSprite;
- 
          
             resultDayText.text = (round + 1).ToString();
-            continueButton.GetComponent<Image>().sprite = failButtonSprite;
-            quitButton.GetComponent<Image>().sprite = failButtonSprite;
-            restartButton.GetComponent<Image>().sprite = failButtonSprite;
-            levelText.gameObject.SetActive(true);
-            textPassOrFail.gameObject.SetActive(true);
-            dayImage.gameObject.SetActive(true);
+
 
             AudioManager.instance.playSound(5);
             StartCoroutine(ShowPerformanceStats());
