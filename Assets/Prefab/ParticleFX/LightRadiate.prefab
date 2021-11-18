@@ -53,8 +53,8 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
-  playOnAwake: 1
+  prewarm: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -987,22 +987,22 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.17021179
+          time: 0.1205983
           value: 1
-          inSlope: -0.9198471
-          outSlope: -0.9198471
+          inSlope: -1.1061614
+          outSlope: -1.1061614
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.24786407
+          outWeight: 0.13786137
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 0.8691322
-          outSlope: 0.8691322
+          inSlope: 1.3181913
+          outSlope: 1.3181913
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.24463548
+          inWeight: 0.08534336
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -4785,7 +4785,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0

@@ -26,7 +26,9 @@ public class UIManager : MonoBehaviour
     public GameObject dayBackGround;
     public GameObject nightBackGround;
 
+
     public GameObject quitConfirmTSCopy;
+
     public bool isIngame = false;
     private bool isPause; //for demo purposes
     public bool quitConfirmationGoTitleScreen = true;
@@ -182,6 +184,15 @@ public class UIManager : MonoBehaviour
         tutorialUI.SetActive(tutorialUI.name.Equals(nameOfGameObject));
         highscoreUI.SetActive(highscoreUI.name.Equals(nameOfGameObject));
         creditsUI.SetActive(creditsUI.name.Equals(nameOfGameObject));
+        if (titleScreenUI.name.Equals(nameOfGameObject))
+        {
+            if (!AudioManager.instance.BGM[0].musicFile.isPlaying)
+            {
+                AudioManager.instance.playMusic(0);
+            }
+            
+        }
+       // quitConfirmation.SetActive(quitConfirmation.name.Equals(nameOfGameObject));
         cheatCodeUI.SetActive(cheatCodeUI.name.Equals(nameOfGameObject));
 
     }

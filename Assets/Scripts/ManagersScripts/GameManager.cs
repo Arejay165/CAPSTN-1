@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
         StartRound();
         AudioManager.instance.playMusic(1);
 
-        yield return new WaitForSeconds(DayAndNightCycle.instance.nightTime);
+        yield return new WaitForSeconds(DayAndNightCycle.instance.GetEndTime()-DayAndNightCycle.instance.nightTime);
         if (DayAndNightCycle.instance.GetIsMorning() == false)
         {
             AudioManager.instance.stopMusic(1);
@@ -230,7 +230,7 @@ public class GameManager : MonoBehaviour
         else
         {
             UIManager.instance.ActivateGameObjects(UIManager.instance.titleScreenUI.name);
-            AudioManager.instance.playMusic(0);
+           
         }
 
 
