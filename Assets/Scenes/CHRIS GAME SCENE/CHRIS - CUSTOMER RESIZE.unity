@@ -23782,7 +23782,7 @@ MonoBehaviour:
   days: 0
   gameTime: 0
   endTime: 180
-  nightTime: 60
+  nightTime: 120
   isStoreClosed: 0
   isMorning: 1
   uIManager: {fileID: 1623941616}
