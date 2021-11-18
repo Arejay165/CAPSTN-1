@@ -21,14 +21,19 @@ public class UIManager : MonoBehaviour
     public GameObject creditsUI;
     public GameObject highscoreUI;
     public GameObject quitConfirmation;
+    public GameObject cheatCodeUI;
 
     public GameObject dayBackGround;
     public GameObject nightBackGround;
+
+
+    public GameObject quitConfirmTSCopy;
 
     public bool isIngame = false;
     private bool isPause; //for demo purposes
     public bool quitConfirmationGoTitleScreen = true;
     public bool quitConfirmationOpen = false;
+    public bool canSkip;
     
     //public List<GameObject> tutorialUIs = new List<GameObject>();
 
@@ -58,10 +63,19 @@ public class UIManager : MonoBehaviour
         //? means null checker
         ActivateGameObjects(inGameUI.name);
     }
+
+    
    
     public void OpenQuitConfirmation()
     {
+        //? means null checker
+        ActivateGameObjects("");
         quitConfirmationOpen = true;
+       
+        if (quitConfirmationGoTitleScreen == true)
+        {
+            quitConfirmTSCopy.SetActive(true);
+        }
         quitConfirmation.SetActive(true);
     }
 
@@ -72,11 +86,13 @@ public class UIManager : MonoBehaviour
         
         if (quitConfirmationGoTitleScreen == true)
         {
+            quitConfirmTSCopy.SetActive(false);
             ActivateGameObjects(titleScreenUI.name);
+            
         }
         else if (quitConfirmationGoTitleScreen == false)
         {
-            ActivateGameObjects(inGameUI.name);
+            ActivateGameObjects(pauseGameUI.name);
         }
     }
 
@@ -100,7 +116,33 @@ public class UIManager : MonoBehaviour
                 }
             }
            
-        }   
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (isIngame && canSkip)
+            {
+                if (!isPause)
+                {
+                    ActivateCheatCode();
+                }
+                else
+                {
+                    Resume();
+                }
+           
+            }
+        }
+    }
+
+
+    public void ActivateCheatCode()
+    {
+        isPause = true;
+        GameManager.instance.isPlaying = false;
+        Time.timeScale = 0;
+        ActivateGameObjects(cheatCodeUI.name);
     }
 
     public void BackToMenu()
@@ -142,13 +184,23 @@ public class UIManager : MonoBehaviour
         tutorialUI.SetActive(tutorialUI.name.Equals(nameOfGameObject));
         highscoreUI.SetActive(highscoreUI.name.Equals(nameOfGameObject));
         creditsUI.SetActive(creditsUI.name.Equals(nameOfGameObject));
+        if (titleScreenUI.name.Equals(nameOfGameObject))
+        {
+            if (!AudioManager.instance.BGM[0].musicFile.isPlaying)
+            {
+                AudioManager.instance.playMusic(0);
+            }
+            
+        }
+       // quitConfirmation.SetActive(quitConfirmation.name.Equals(nameOfGameObject));
+        cheatCodeUI.SetActive(cheatCodeUI.name.Equals(nameOfGameObject));
 
     }
 
     public void Pause()
     {
-        pauseGameUI.SetActive(true);
-        //ActivateGameObjects(pauseGameUI.name);
+       // pauseGameUI.SetActive(true);
+        ActivateGameObjects(pauseGameUI.name);
         Debug.Log("Ispause");
         isPause = true;
         GameManager.instance.isPlaying = false;
@@ -157,8 +209,8 @@ public class UIManager : MonoBehaviour
 
     public void Resume()
     {
-        pauseGameUI.SetActive(false);
-        //ActivateGameObjects(inGameUI.name);
+       // pauseGameUI.SetActive(false);
+        ActivateGameObjects(inGameUI.name);
         Debug.Log("Resume");
         GameManager.instance.isPlaying = true;
         isPause = false;
@@ -196,15 +248,22 @@ public class UIManager : MonoBehaviour
 
     public void Tutorial()
     {
-        SceneManager.LoadScene("Tutorial");
+        StartCoroutine(Scoring.instance.ShutterEffect(tutorialUI, playerNameUI, LoadTutorial));
+      
 
     }
 
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
     public void ShowTutorial()
     {
         if (!quitConfirmationOpen)
         {
-            ActivateGameObjects(tutorialUI.name);
+            //ActivateGameObjects(tutorialUI.name);
+            StartCoroutine(Scoring.instance.ShutterEffect(titleScreenUI, tutorialUI));
+
         }
         
     }

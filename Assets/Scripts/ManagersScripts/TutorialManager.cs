@@ -69,10 +69,11 @@ public class TutorialManager : MonoBehaviour
     {
         if (canTutorial)
         {
+            tutorialPhrase = TutorialPhrase.ArrowOnGlowingItemTutorial;
             NextMessage();
           
             counter = 0;
-            tutorialPhrase = TutorialPhrase.ArrowOnGlowingItemTutorial;
+    
         }
     }
 
@@ -103,11 +104,10 @@ public class TutorialManager : MonoBehaviour
                  screenText.text = "Click anywhere to continue";
                  text.text = tutorialTexts[tutorialCounter].instructions[counter].ToString();
                  counter++;
-                EnableArrows();
-               //  ingameText.gameObject.SetActive(false);
+                 EnableArrows();
                  UIManager.instance.inGameUI.SetActive(false);
                  nextButton.SetActive(true);
-        }
+           }
             else
             {
                 EndTimeline();
@@ -146,8 +146,8 @@ public class TutorialManager : MonoBehaviour
 
                 }
                 nextButton.SetActive(false);
-                Debug.Log("Stuff");
-
+                // Debug.Log("Stuff");
+     
                 return;
                
             }
@@ -196,30 +196,40 @@ public class TutorialManager : MonoBehaviour
 
     public void ActivateGlow(int index)
     {
+       
         if (counter == index)
         {
            
-
             arrows[arrowIndex].SetActive(true);
 
-            //Debug.Log("Same Counter");
+            Debug.Log("Counter: " + counter + " " + " Index: " + index + " Tutorial Phase " + tutorialPhrase);
             ActivateGlowItems(arrowIndex);
             arrowIndex++;
+            tutorialPhrase++;
+            //  Debug.Log(tutorialPhrase);
+            dialogueBox.anchoredPosition = convoTransform[1].anchoredPosition;
         }
         else
         {
-            foreach (GameObject obj in highlightedImage)
-            {
-                obj.SetActive(false);
-            }
-
-            foreach (GameObject obj in arrows)
-            {
-                obj.SetActive(false);
-            }
-
+            DisableTutorialObjects();
         }
 
+
+    }
+
+    void DisableTutorialObjects()
+    {
+        Debug.Log("Disable");
+        foreach (GameObject obj in highlightedImage)
+        {
+            obj.SetActive(false);
+        }
+
+        foreach (GameObject obj in arrows)
+        {
+            obj.SetActive(false);
+        }
+        dialogueBox.anchoredPosition = convoTransform[0].anchoredPosition;
 
     }
 
@@ -240,27 +250,30 @@ public class TutorialManager : MonoBehaviour
         switch (tutorialPhrase)
         {
             case TutorialPhrase.ArrowOnGlowingItemTutorial:
-                   ActivateGlow(3);
+                 ActivateGlow(3);
+                // tutorialPhrase = TutorialPhrase.UpgradeItemArrows;
                 //ActivateGlowItems(arrowIndex);
                 // arrowIndex++;
-              //  tutorialPhrase = TutorialPhrase.UpgradeItemArrows;
+
                 break;
 
             case TutorialPhrase.UpgradeItemArrows:
                   ActivateGlow(2);
                 //  ActivateArrows(4);
-             //   tutorialPhrase = TutorialPhrase.ArrowsOnCashBox;
+                //tutorialPhrase = TutorialPhrase.ArrowsOnCashBox;
                 break;
 
             case TutorialPhrase.ArrowsOnCashBox:
                 //   ActivateArrows(7);
                 ActivateGlow(2);
+            //   DisableTutorialObjects();
                 //  tutorialPhrase = TutorialPhrase.ItemCustomerTutorial;
                 break;
 
             case TutorialPhrase.ItemCustomerTutorial:
+                ActivateGlow(0);
                 // ActivateArrows(8);
-               // tutorialPhrase = TutorialPhrase.ArrowsOnOrderSheet;
+                // tutorialPhrase = TutorialPhrase.ArrowsOnOrderSheet;
                 break;
 
             case TutorialPhrase.ArrowsOnOrderSheet:
@@ -299,16 +312,20 @@ public class TutorialManager : MonoBehaviour
             //  ingameText.gameObject.SetActive(true);
             text.text = "Click on the customer desired items";
             screenText.text = "";
-        
+             screenText.transform.parent.gameObject.SetActive(false);
+
     }
 
 
     public void ActivateTutorialUI()
     {
-       // playTutorial = false;
+
+        // playTutorial = false;
         tutorial.SetActive(true);
+        screenText.transform.parent.gameObject.SetActive(true);
         TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[0].anchoredPosition;
         screenText.text = "Click anywhere to continue";
+        titleInstructText.text = "Tutorial";
         NextMessage();
     }
 
@@ -327,6 +344,21 @@ public class TutorialManager : MonoBehaviour
             itemMaskChild[i].SetActive(false);
         }
         itemMaskChild[index].SetActive(true);
+
+
+    }
+
+    public IEnumerator DelayItemMaskActivator(int index)
+    {
+        for (int i = 0; i < itemMaskChild.Count; i++)
+        {
+
+            itemMaskChild[i].SetActive(false);
+        }
+        yield return new WaitForSeconds(0.6f);
+        
+        itemMaskChild[index].SetActive(true);
+
 
     }
 }

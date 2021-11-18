@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = true;
         OnGameStart.Invoke();
+        UIManager.instance.canSkip = true;
 
     }
     public void PlayGame()
@@ -68,8 +69,14 @@ public class GameManager : MonoBehaviour
         if (isFirstTime)
         {
             UIManager.instance.quitConfirmationGoTitleScreen = false;
+
+            //ActivateGameObjects(tutorialUI.name);
+            StartCoroutine(Scoring.instance.ShutterEffect(UIManager.instance.tutorialUI, UIManager.instance.playerNameUI));
+
             
-            UIManager.instance.ActivateGameObjects(UIManager.instance.playerNameUI.name);
+           
+            
+           //UIManager.instance.ActivateGameObjects(UIManager.instance.playerNameUI.name);
         }
         else
         {
@@ -104,6 +111,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayStart()
     {
+     
         UIManager.instance.isIngame = true;
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundBriefingUI.name);
@@ -125,22 +133,23 @@ public class GameManager : MonoBehaviour
         StartRound();
         AudioManager.instance.playMusic(1);
 
-        yield return new WaitForSeconds(DayAndNightCycle.instance.nightTime);
+        yield return new WaitForSeconds(DayAndNightCycle.instance.GetEndTime()-DayAndNightCycle.instance.nightTime);
         if (DayAndNightCycle.instance.GetIsMorning() == false)
         {
             AudioManager.instance.stopMusic(1);
             AudioManager.instance.playMusic(3);
         }
         //yield return new WaitForSeconds(3f);
-
-
     }
 
     public IEnumerator DayEnd()
     {
+        UIManager.instance.Resume();
         UIManager.instance.isIngame = false;
+
         OnGameEnd.Invoke();
         TogglePlaying();
+        GameManager.instance.isPlaying = false;
         Scoring.instance.gameShutter.SetActive(true);
         Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, Scoring.instance.gameShutter.GetComponent<RectTransform>().anchoredPosition3D.z);
 
@@ -207,6 +216,8 @@ public class GameManager : MonoBehaviour
         }
         InteractableManager.instances.cashBox.clickable = true;
 
+       // Scoring.instance.isSkip = false;
+
     }
     virtual protected void Start()
     {
@@ -219,7 +230,7 @@ public class GameManager : MonoBehaviour
         else
         {
             UIManager.instance.ActivateGameObjects(UIManager.instance.titleScreenUI.name);
-            AudioManager.instance.playMusic(0);
+           
         }
 
 

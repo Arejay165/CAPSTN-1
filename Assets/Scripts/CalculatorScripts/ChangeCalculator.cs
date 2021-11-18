@@ -21,6 +21,11 @@ public class ChangeCalculator : MonoBehaviour
 
     public int answerAttempts;
     public int perfectAttempts;
+
+    public void Start()
+    {
+        tmpChangeInputField.onSubmit.AddListener(OnPriceInputted);
+    }
     private void OnEnable()
     {
         //Test for whole number answer for Division 
@@ -34,7 +39,7 @@ public class ChangeCalculator : MonoBehaviour
 
         if (TutorialManager.instance.enabled == false)
         {
-             divisor = Random.Range(2, 51); // use to multiply to the quotient to always be whole number 
+             divisor = Random.Range(2, 30); // use to multiply to the quotient to always be whole number 
              quotient = Random.Range(1, 20); // possible answers 
              dividend = divisor * quotient; // determine the dividend
         }
@@ -65,13 +70,15 @@ public class ChangeCalculator : MonoBehaviour
         if (TutorialManager.instance.enabled == true )
         {
             TutorialManager.instance.text.text = "Divide the upper value to the lower value";
+            TutorialManager.instance.titleInstructText.text = "Pabarya Sheet";
             TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;
             UIManager.instance.inGameUI.SetActive(false);
             TutorialManager.instance.tutorial.SetActive(true);
             TutorialManager.instance.nextButton.SetActive(false);
             TutorialManager.instance.tutorial.GetComponent<Image>().raycastTarget = false;
             TutorialManager.instance.itemMask.SetActive(true);
-            TutorialManager.instance.ItemMasksActivator(5);
+            // TutorialManager.instance.ItemMasksActivator(5);
+           StartCoroutine(TutorialManager.instance.DelayItemMaskActivator(5));
         }
         else
         {
@@ -129,7 +136,7 @@ public class ChangeCalculator : MonoBehaviour
 
 
 
-    public void OnPriceInputted()
+    public void OnPriceInputted(string p_playerInputString)
     {
         if (gameObject.activeSelf)
         {
@@ -225,6 +232,7 @@ public class ChangeCalculator : MonoBehaviour
             TutorialManager.instance.tutorial.SetActive(true);
             TutorialManager.instance.nextButton.SetActive(true);
             TutorialManager.instance.itemMask.SetActive(false);
+
         }
 
         yield return new WaitForSeconds(2f);

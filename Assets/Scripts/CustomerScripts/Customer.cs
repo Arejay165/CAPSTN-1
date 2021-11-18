@@ -181,8 +181,12 @@ public class Customer : MonoBehaviour
            
             
         }
-        panel.gameObject.GetComponent<ContentSizeFitter>().enabled = true;
-        panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
+        if(panel != null)
+        {
+            panel.gameObject.GetComponent<ContentSizeFitter>().enabled = true;
+            panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
+        }
+      
 
 
     }

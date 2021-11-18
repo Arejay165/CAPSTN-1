@@ -4,16 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-
+using System;
 using TMPro;
 public class Scoring : MonoBehaviour
 {
-    public static Scoring   instance;
-   // public GameObject[]     stars;
+    public static Scoring instance;
+    // public GameObject[]     stars;
 
-   // private int             score;
+    // private int             score;
     [SerializeField]
-    Text                    scoreText;
+    Text scoreText;
 
 
     public int round = 0;
@@ -25,7 +25,7 @@ public class Scoring : MonoBehaviour
     public Text gameDayText;
     public TextMeshProUGUI resultDayText;
     public Text endScoreText;
-   // public Text highscoreText;
+    // public Text highscoreText;
     public TextMeshProUGUI briefingDayText;
     public TextMeshProUGUI briefingScoreGoalText;
     public Text gameScoreGoalText;
@@ -33,7 +33,7 @@ public class Scoring : MonoBehaviour
     public Sprite starShine;
 
     //public GameObject jarStarFillPrefab;
-    
+
     public GameObject starFillPrefab;
     public GameObject shimmerFXPrefab;
     public GameObject fallingStarFXPrefab;
@@ -56,9 +56,7 @@ public class Scoring : MonoBehaviour
 
     public GameObject[] resultStarGoals;
 
-    public Sprite failImage;
-    public Image levelPasserImage;
-    public GameObject failPrompt, successPrompt;
+
     public GameObject coinPrefab;
     public GameObject targetLocation;
     //public Text performanceFactName;
@@ -78,9 +76,9 @@ public class Scoring : MonoBehaviour
     #endregion
     private Coroutine countingCoroutine;
 
-   
+
     public Text totalMathProblemsValue;
-   
+
     public Text totalSolvingTimeValue;
     public Text additionSolvingTime;
     public Text additionEvaluation;
@@ -91,6 +89,9 @@ public class Scoring : MonoBehaviour
     public Text divisionSolvingTime;
     public Text divisionEvaluation;
  
+
+
+    //BUTTONS
     public GameObject continueButton;
     public GameObject restartButton;
     public GameObject quitButton;
@@ -110,36 +111,118 @@ public class Scoring : MonoBehaviour
     public TextMeshProUGUI newHighScoreText;
 
     public Text levelText;
+    public TextMeshProUGUI textPassOrFail;
+    public Image dayImage;
 
-    public Image backgroundImage;
-    public Sprite levelComplete;
-
+    public GameObject shutter;
     public GameObject briefingShutter;
     public GameObject briefingInfo;
     public GameObject gameShutter;
     public GameObject debriefingShutter;
-    public GameObject debriefingInfo;
+    public GameObject timesUpFrame;
+    public GameObject timesUpText;
     public GameObject resultShutter;
+    public bool isSkip;
 
- 
+    public Sprite passTitleSprite;
+    public Sprite passButtonSprite;
+    public Sprite failTitleSprite;
+    public Sprite failButtonSprite;
+
+    public IEnumerator ShutterDownEffect(GameObject p_initialUI, Action p_afterAction)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
+
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(1f);
+
+        p_initialUI.SetActive(false);
+        shutter.SetActive(false);
+
+        //End result
+        //shutter.SetActive(false);
+        //p_targetUI.SetActive(true);
+        p_afterAction.Invoke();
+     
+        
+    }
+
+    public IEnumerator ShutterEffect(GameObject p_initialUI, Action p_afterAction)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
+
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+
+        //Shutter Up
+        p_initialUI.SetActive(false);
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+
+        //End result
+        //shutter.SetActive(false);
+        //p_targetUI.SetActive(true);
+        p_afterAction.Invoke();
+    }
+
+
+    public IEnumerator ShutterEffect(GameObject p_initialUI, GameObject p_targetUI , Action p_afterAction = null)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
+        
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+
+        //Shutter Up
+        p_initialUI.SetActive(false);
+        p_targetUI.SetActive(true);
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(3f);
+        if (p_afterAction != null)
+        {
+            p_afterAction.Invoke();
+        }
+        
+        //End result
+        //shutter.SetActive(false);
+
+    }
+
     public void ShowTimesUp()
     {
         //debriefingInfo.SetActive(true);
-        debriefingInfo.GetComponent<Image>().DOFade(1.0f,0.05f); 
+        timesUpFrame.GetComponent<Image>().DOFade(1.0f,0.05f);
+        timesUpText.GetComponent<Image>().DOFade(1.0f, 0.05f);
         //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(1.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale( new Vector2(8,8),0.15f).SetEase(Ease.Linear);
-      
+        timesUpFrame.GetComponent<RectTransform>().DOScale( new Vector2(8,8),0.15f).SetEase(Ease.Linear);
+        timesUpText.GetComponent<RectTransform>().DOScale(new Vector2(1, 1), 0.15f).SetEase(Ease.Linear);
+
+
     }
     public void HideTimesUp()
     {
         //debriefingInfo.SetActive(false);
-        debriefingInfo.GetComponent<Image>().DOFade(0.0f, 0.05f);
+        timesUpFrame.GetComponent<Image>().DOFade(0.0f, 0.05f);
+        timesUpText.GetComponent<Image>().DOFade(0.0f, 0.05f);
         //debriefingInfo.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().DOFade(0.0f, 0.5f);
-        debriefingInfo.GetComponent<RectTransform>().DOScale(new Vector2(0,0), 0.15f).SetEase(Ease.Linear);
+        timesUpFrame.GetComponent<RectTransform>().DOScale(new Vector2(0,0), 0.15f).SetEase(Ease.Linear);
+        timesUpText.GetComponent<RectTransform>().DOScale(new Vector2(0, 0), 0.15f).SetEase(Ease.Linear);
     }
     public int FlattenTheNumber(int p_digits, int p_multipleOf = 10)
     {
-       // Debug.Log("THIS WORK");
+        // Debug.Log("THIS WORK");
         int remainder = p_digits % p_multipleOf;
         if (remainder * 2 >= p_multipleOf)
         {
@@ -158,8 +241,8 @@ public class Scoring : MonoBehaviour
         briefingShutter.SetActive(true);
         briefingShutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 0);
         briefingInfo.SetActive(true);
-        briefingDayText.text = (round+1).ToString();
-        scoreGoal = 1000 + ((round-1) * (250));
+        briefingDayText.text = (round + 1).ToString();
+        scoreGoal = 1000 + ((round - 1) * (250));
         scoreGoal = FlattenTheNumber(scoreGoal);
         briefingScoreGoalText.text = scoreGoal.ToString();
         for (int i = 0; i < resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
@@ -178,7 +261,9 @@ public class Scoring : MonoBehaviour
         gameScoreGoalText.text = scoreTilNextStar.ToString();
         gameNextStar = scoreGoal / 3;
         gameNextStar = FlattenTheNumber(gameNextStar);
-     
+        isSkip = false;
+        UIManager.instance.canSkip = false;
+
 
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
@@ -205,7 +290,7 @@ public class Scoring : MonoBehaviour
 
 
         }
-        for (int i =0; i< resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
+        for (int i = 0; i < resultStarGoals.Length; i++)// (GameObject selectedStarGoals in resultStarGoals)
         {
             int scoreForStar = ((i + 1) * (scoreGoal / 3));
             scoreForStar = FlattenTheNumber(scoreForStar);
@@ -218,8 +303,8 @@ public class Scoring : MonoBehaviour
             StopCoroutine(countingCoroutine);
         }
 
-        
-        
+
+
         //Day Failed if score is less than half of score goal
         //if (score < scoreGoal/2) 
         //{
@@ -234,7 +319,7 @@ public class Scoring : MonoBehaviour
 
     private IEnumerator CountText(int p_newValue, int p_Value = 0)
     {
-     //   resultsNextStar = scoreGoal / 3;
+        //   resultsNextStar = scoreGoal / 3;
 
         WaitForSeconds wait = new WaitForSeconds(1f / fpsCount);
         int previousValue = p_Value;
@@ -268,14 +353,14 @@ public class Scoring : MonoBehaviour
                 endScoreText.text = previousValue.ToString(scoreFormat);
 
                 //Calcualtes how many stars did the player get
-              
-               
+
+
                 if (previousValue >= resultsNextStar)
                 {
                     //Makes sure that the star is within the minimum and maximum amount of stars that can be gained. (If it's more than maxStarAmount(5) stars, it'll become 5 stars)
                     if (backUpStarRatingsCounted < 3)
                     {
-                        
+
                         //Do UI UX Animation for that star
                         GameObject newStarFill = CreateStarFill(resultStarSlots[backUpStarRatingsCounted]);
                         StartCoroutine(FitStarToSlot(newStarFill, resultStarSlots[backUpStarRatingsCounted].GetComponent<RectTransform>().sizeDelta));
@@ -284,7 +369,7 @@ public class Scoring : MonoBehaviour
                         resultsNextStar += scoreGoal / 3;
                         resultsNextStar = FlattenTheNumber(resultsNextStar);
                     }
-                    
+
                 }
 
                 yield return wait;
@@ -292,7 +377,7 @@ public class Scoring : MonoBehaviour
             }
 
         }
-        else if(previousValue > p_newValue)
+        else if (previousValue > p_newValue)
         {
             while (previousValue > p_newValue)
             {
@@ -328,7 +413,7 @@ public class Scoring : MonoBehaviour
                 yield return wait;
 
             }
-           
+
         }
         else if (previousValue == p_newValue)
         {
@@ -343,16 +428,25 @@ public class Scoring : MonoBehaviour
             GameObject spawnedFallingStarParticleFX = Instantiate(fallingStarFXPrefab, selectedStar.transform);
             spawnedFallingStarParticleFX.transform.position = selectedStar.transform.position;
             Destroy(spawnedFallingStarParticleFX, 3f);
-           
-            
-           
+
+
+
         }
 
         //If passing
         if (resultStars.Count >= 1)
         {
-            backgroundImage.sprite = levelComplete;
-            levelText.text = "Level    Complete";
+            textPassOrFail.text = "Complete!";
+            
+            dayImage.sprite = passTitleSprite;
+            continueButton.GetComponent<Image>().sprite = passButtonSprite;
+            quitButton.GetComponent<Image>().sprite = passButtonSprite;
+            restartButton.GetComponent<Image>().sprite = passButtonSprite;
+            
+            levelText.gameObject.SetActive(true);
+            textPassOrFail.gameObject.SetActive(true);
+            dayImage.gameObject.SetActive(true);
+   
             AudioManager.instance.playSound(4);
             //If perfect, do confetti
             if (resultStars.Count >= 3)
@@ -369,7 +463,7 @@ public class Scoring : MonoBehaviour
             //if it's not 0
             if (score > 0)
             {
-               
+
                 //check if there are highscores
                 //if there is high scores
                 if (highscores != null)
@@ -456,11 +550,31 @@ public class Scoring : MonoBehaviour
         else
         {
             //  failPrompt.SetActive(true);
-           
-            levelText.text = "Level Failed";
-         
+
+            if (!isSkip)
+            {
+                levelText.text = "Level Failed";
+                AudioManager.instance.playSound(5);
+                backgroundImage.sprite = failImage;
+            }
+            else
+            {
+                levelText.text = "Level Skip";
+            }
             resultDayText.text = "";
-            backgroundImage.sprite = failImage;
+            textPassOrFail.text = "Failed!";
+
+            dayImage.sprite = failTitleSprite;
+ 
+         
+            resultDayText.text = (round + 1).ToString();
+            continueButton.GetComponent<Image>().sprite = failButtonSprite;
+            quitButton.GetComponent<Image>().sprite = failButtonSprite;
+            restartButton.GetComponent<Image>().sprite = failButtonSprite;
+            levelText.gameObject.SetActive(true);
+            textPassOrFail.gameObject.SetActive(true);
+            dayImage.gameObject.SetActive(true);
+
             AudioManager.instance.playSound(5);
             StartCoroutine(ShowPerformanceStats());
         }
@@ -476,11 +590,11 @@ public class Scoring : MonoBehaviour
         yield return new WaitForSeconds(4.5f);
         newHighscoreUI.SetActive(false);
         //enterHighscoreUI.SetActive(true);
-        
+
         StartCoroutine(ShowPerformanceStats());
     }
 
-   
+
 
     public void ShowPerformance(Text p_perfromanceTitle, string p_performanceValue)
     {
@@ -512,7 +626,7 @@ public class Scoring : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             string currentWrongAnswersForOperatorString = PerformanceManager.instance.GetOperatorCount((MathProblemOperator)i, false);
-            int addWrongAnswerAmount= 0;
+            int addWrongAnswerAmount = 0;
             if (int.TryParse(currentWrongAnswersForOperatorString, out int currentWrongAnswersForOperatorInt)) // convert string to float
             {
                 addWrongAnswerAmount = currentWrongAnswersForOperatorInt;
@@ -523,7 +637,19 @@ public class Scoring : MonoBehaviour
 
 
         yield return new WaitForSeconds(1.0f);
-
+        if (AudioManager.instance.BGM[0].musicFile.isPlaying)
+        {
+            AudioManager.instance.stopMusic(0);
+        }
+        else if (AudioManager.instance.BGM[1].musicFile.isPlaying)
+        {
+            AudioManager.instance.stopMusic(1);
+        }
+        else if (AudioManager.instance.BGM[3].musicFile.isPlaying)
+        {
+            AudioManager.instance.stopMusic(3);
+        }
+ 
         AudioManager.instance.playMusic(2);
 
         //Addition
@@ -552,7 +678,7 @@ public class Scoring : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         //if passed
-        if (resultStars.Count >= 1)
+        if (resultStars.Count >= 1 || isSkip)
         {
           
             continueButton.SetActive(true);
@@ -562,9 +688,11 @@ public class Scoring : MonoBehaviour
         }
         else
         {
-            //play timeline (cutscene bankrupted)
-            restartButton.SetActive(true);
-            
+            if (!isSkip)
+            {
+                //play timeline (cutscene bankrupted)
+                restartButton.SetActive(true);
+            }
         }
         quitButton.SetActive(true);
 
@@ -604,9 +732,12 @@ public class Scoring : MonoBehaviour
         //Spawn new star
         Debug.Log("Spawn Star");
         GameObject spawnedStarFill = Instantiate(starFillPrefab, gameStarRatingContainer.transform);
-        spawnedStarFill.transform.position = p_selectedStarSlot.transform.position;
+        Vector2 selectedStarSlotSize = p_selectedStarSlot.GetComponent<RectTransform>().sizeDelta;
+        spawnedStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(45f, 45f);
+
+        spawnedStarFill.GetComponent<RectTransform>().anchoredPosition = p_selectedStarSlot.GetComponent<RectTransform>().anchoredPosition;//transform.position = p_selectedStarSlot.transform.position;
         //Set size of new star (smaller)
-        
+
         gameStars.Add(spawnedStarFill);
         return spawnedStarFill;
     }
@@ -615,17 +746,17 @@ public class Scoring : MonoBehaviour
     {
         //Spawn new star
         GameObject spawnedStarFill = Instantiate(starFillPrefab, starRatingContainer.transform);
-        spawnedStarFill.transform.position = p_selectedStarSlot.transform.position;
+        spawnedStarFill.GetComponent<RectTransform>().anchoredPosition = p_selectedStarSlot.GetComponent<RectTransform>().anchoredPosition;
         resultStars.Add(spawnedStarFill);
         //Reference the selected star slot's size
         Vector2 selectedStarSlotSize = p_selectedStarSlot.GetComponent<RectTransform>().sizeDelta;
 
         //Set the spawned star's size to 3x the selected star slot's size
-        spawnedStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(selectedStarSlotSize.x*3f, selectedStarSlotSize.y*3f);
+        spawnedStarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(selectedStarSlotSize.x-(selectedStarSlotSize.x*0.2f), selectedStarSlotSize.y - (selectedStarSlotSize.y * 0.2f));
         
         //Set transparency/Opacity of new star
         var desiredColor = spawnedStarFill.GetComponent<Image>().color;
-        desiredColor.a = 0f;
+        desiredColor.a = 1f;
         spawnedStarFill.GetComponent<Image>().color = desiredColor;
 
 
@@ -846,13 +977,13 @@ public class Scoring : MonoBehaviour
         {
             instance = this;
         }
-        if (debriefingInfo != null)
+        if (timesUpFrame != null)
         {
-            var desiredColor = debriefingInfo.GetComponent<Image>().color;
+            var desiredColor = timesUpFrame.GetComponent<Image>().color;
             desiredColor.a = 0;
-            debriefingInfo.GetComponent<Image>().color = desiredColor;
+            timesUpFrame.GetComponent<Image>().color = desiredColor;
           
-            debriefingInfo.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
+            timesUpFrame.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
         }
 
         defaultScoreFloaterPos = scoreFloater.GetComponent<RectTransform>().anchoredPosition;
@@ -922,8 +1053,8 @@ public class Scoring : MonoBehaviour
 
     void OnGameEnded()
     {
-        
-        
+
+
 
     }
     public void starCheck()
@@ -955,6 +1086,13 @@ public class Scoring : MonoBehaviour
         multiplicationEvaluation.gameObject.SetActive(false);
         divisionSolvingTime.gameObject.SetActive(false);
         divisionEvaluation.gameObject.SetActive(false);
+
+        levelText.gameObject.SetActive(false);
+        textPassOrFail.gameObject.SetActive(false);
+        dayImage.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
         resultDayText.text = (round+1).ToString();
         continueButton.SetActive(false);
         quitButton.SetActive(false);
@@ -997,6 +1135,7 @@ public class Scoring : MonoBehaviour
 
     IEnumerator ScoreFloating(float p_duration, int p_gainedScore)
     {
+        scoreFloater.GetComponent<RectTransform>().anchoredPosition = defaultScoreFloaterPos;
         Sequence sequence = DOTween.Sequence();
         scoreFloater.SetActive(true);
         //Transform floatingScoreTransform = scoreFloater.transform;
@@ -1006,7 +1145,7 @@ public class Scoring : MonoBehaviour
         sequence.Append(scoreFloater.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.x, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.y + 58f, scoreFloater.GetComponent<RectTransform>().anchoredPosition3D.z), p_duration + 0.5f));//(modifiedScale, sizeTweenSpeed).SetEase(Ease.Linear)).Append(timeValueUI.transform.DOScale(OriginalScale, 0.2f).SetEase(Ease.Linear));
 
         //FadeIn
-        sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, p_duration * 0.05f));
+      //  sequence.Append(scoreFloater.GetComponent<Text>().DOFade(0.0f, 0.15f)); //2
         sequence.Play();
         //yield return new WaitForSeconds(p_duration *0.5f);
         scoreFloater.GetComponent<Text>().DOFade(1.0f, p_duration * 0.45f);
