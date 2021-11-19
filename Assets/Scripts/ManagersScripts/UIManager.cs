@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.Video;
+using DG.Tweening;
+
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
@@ -25,7 +28,14 @@ public class UIManager : MonoBehaviour
 
     public GameObject dayBackGround;
     public GameObject nightBackGround;
+    public GameObject introStoryUI;
+    public GameObject outroStoryUI;
+    public VideoPlayer introStoryVideo;
+    public VideoPlayer outroStoryVideo;
 
+    public GameObject backToMenuConfirmUI;
+
+    public Image Fade;
 
     public GameObject quitConfirmTSCopy;
 
@@ -34,7 +44,7 @@ public class UIManager : MonoBehaviour
     public bool quitConfirmationGoTitleScreen = true;
     public bool quitConfirmationOpen = false;
     public bool canSkip;
-    
+
     //public List<GameObject> tutorialUIs = new List<GameObject>();
 
     private void Awake()
@@ -58,14 +68,97 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameStart -= OnGameStarted;
     }
 
+    public void InitialStart()
+    {
+        UIManager.instance.ActivateGameObjects(UIManager.instance.titleScreenUI.name);
+        StartCoroutine(Co_Initial());
+    }
+
+    public IEnumerator Co_Initial()
+    {
+        //set up
+        Fade.gameObject.SetActive(true);
+        var desiredColor = Fade.color;
+        desiredColor.a = 1f;
+        Fade.color = desiredColor;
+
+        Fade.DOFade(0f, 0.5f);
+
+        yield return new WaitForSeconds(0.5f); //how long video
+        Fade.gameObject.SetActive(false);
+    }
     void OnGameStarted()
     {
         //? means null checker
         ActivateGameObjects(inGameUI.name);
     }
 
-    
-   
+    public void PlayIntro()
+    {
+        StartCoroutine(Intro());
+
+    }
+
+    public void PlayOutro()
+    {
+        StartCoroutine(Outro());
+
+    }
+
+    public void StartGame()
+    {
+
+        GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
+    }
+    IEnumerator Intro()
+    {
+        //set up
+        Fade.gameObject.SetActive(true);
+        var desiredColor = Fade.color;
+        desiredColor.a = 1f;
+        Fade.color = desiredColor;
+        Fade.DOFade(0f, 2f);
+
+        introStoryUI.SetActive(true);
+        introStoryVideo.Play();
+        yield return new WaitForSeconds(0.2f);
+        introStoryVideo.Pause();
+        //smooth transitio nto video
+        yield return new WaitForSeconds(1f); //how long video
+
+        introStoryVideo.Play();
+        yield return new WaitForSeconds(13f); //how long video
+        Fade.DOFade(1f, 0.5f);
+        UIManager.instance.StartCoroutine(Scoring.instance.ShutterDownEffect(introStoryUI,StartGame ));
+
+        yield return new WaitForSeconds(1f); //how long video
+        Fade.gameObject.SetActive(false);
+        introStoryUI.SetActive(false);
+    }
+
+    IEnumerator Outro()
+    {
+        //set up
+        Fade.gameObject.SetActive(true);
+        var desiredColor = Fade.color;
+        desiredColor.a = 1f;
+        Fade.color = desiredColor;
+
+        Fade.DOFade(0f, 0.5f);
+        outroStoryUI.SetActive(true);
+        outroStoryVideo.Play();
+        yield return new WaitForSeconds(0.2f);
+        outroStoryVideo.Pause();
+        yield return new WaitForSeconds(1f);
+        outroStoryVideo.Play();
+        yield return new WaitForSeconds(5f);
+        Fade.DOFade(1f, 0.5f);
+        UIManager.instance.StartCoroutine(Scoring.instance.ShutterDownEffect(outroStoryUI, StartGame));
+        yield return new WaitForSeconds(1f); //how long video
+        Fade.gameObject.SetActive(false);
+        outroStoryUI.SetActive(false);
+    }
+
     public void OpenQuitConfirmation()
     {
         //? means null checker
@@ -94,6 +187,38 @@ public class UIManager : MonoBehaviour
         {
             ActivateGameObjects(pauseGameUI.name);
         }
+    }
+
+    public void OpenBackToMenuConfirmation()
+    {
+        //? means null checker
+        ActivateGameObjects(backToMenuConfirmUI.name);
+    }
+
+    public void BackToMenuConfirmationGoBack()
+    {
+
+        ActivateGameObjects(endGameUI.name);
+    }
+
+    public void BackToMenuConfirmation()
+    {
+
+        StartCoroutine(ReloadGame());
+    }
+
+    public IEnumerator ReloadGame()
+    {
+        //set up
+        Fade.gameObject.SetActive(true);
+        var desiredColor = Fade.color;
+        desiredColor.a = 0f;
+        Fade.color = desiredColor;
+
+        Fade.DOFade(1f, 0.5f);
+
+        yield return new WaitForSeconds(0.5f); //how long video\
+        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex));
     }
 
     // Update is called once per frame
@@ -184,6 +309,7 @@ public class UIManager : MonoBehaviour
         tutorialUI.SetActive(tutorialUI.name.Equals(nameOfGameObject));
         highscoreUI.SetActive(highscoreUI.name.Equals(nameOfGameObject));
         creditsUI.SetActive(creditsUI.name.Equals(nameOfGameObject));
+        backToMenuConfirmUI.SetActive(backToMenuConfirmUI.name.Equals(nameOfGameObject));
         if (titleScreenUI.name.Equals(nameOfGameObject))
         {
             if (!AudioManager.instance.BGM[0].musicFile.isPlaying)
@@ -239,9 +365,22 @@ public class UIManager : MonoBehaviour
     public void Continue() // Open Upgrade
     {
 
-        ActivateGameObjects(upgradeUI.name);
-      
-        Upgrades.instance.getUpgradeItem();
+        
+        if (Upgrades.instance.newItems.Count == 0)
+        {
+            //GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
+            //SceneManager.LoadScene("EndGame");
+            //NO MORE UPGRADES
+            //OUTRO CUTSCENE PLAY
+            //GO BACK
+            UIManager.instance.StartCoroutine(Scoring.instance.QuickShutterEffect(UIManager.instance.endGameUI, UIManager.instance.PlayOutro));
+        }
+        else
+        {
+            ActivateGameObjects(upgradeUI.name);
+            Upgrades.instance.getUpgradeItem();
+     
+        }
         InteractableManager.instances.SpawnController(true);
         //Debug.Log("Continue");
     }
@@ -261,8 +400,8 @@ public class UIManager : MonoBehaviour
     {
         if (!quitConfirmationOpen)
         {
-            //ActivateGameObjects(tutorialUI.name);
-            StartCoroutine(Scoring.instance.ShutterEffect(titleScreenUI, tutorialUI));
+            ActivateGameObjects(tutorialUI.name);
+            //StartCoroutine(Scoring.instance.ShutterEffect(titleScreenUI, tutorialUI));
 
         }
         

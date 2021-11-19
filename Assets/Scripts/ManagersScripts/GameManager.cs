@@ -71,12 +71,12 @@ public class GameManager : MonoBehaviour
             UIManager.instance.quitConfirmationGoTitleScreen = false;
 
             //ActivateGameObjects(tutorialUI.name);
-            StartCoroutine(Scoring.instance.ShutterEffect(UIManager.instance.tutorialUI, UIManager.instance.playerNameUI));
+            //StartCoroutine(Scoring.instance.ShutterEffect(UIManager.instance.tutorialUI, UIManager.instance.playerNameUI));
 
             
            
             
-           //UIManager.instance.ActivateGameObjects(UIManager.instance.playerNameUI.name);
+           UIManager.instance.ActivateGameObjects(UIManager.instance.playerNameUI.name);
         }
         else
         {
@@ -229,8 +229,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            UIManager.instance.ActivateGameObjects(UIManager.instance.titleScreenUI.name);
-           
+            UIManager.instance.InitialStart();
         }
 
 

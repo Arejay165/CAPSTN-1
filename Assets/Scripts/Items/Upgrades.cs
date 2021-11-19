@@ -129,7 +129,11 @@ public class Upgrades : MonoBehaviour
         if (newItems.Count == 0)
         {
             //GameManager.instance.StartCoroutine(GameManager.instance.DayStart());
-            SceneManager.LoadScene("EndGame");
+            //SceneManager.LoadScene("EndGame");
+            //NO MORE UPGRADES
+            //OUTRO CUTSCENE PLAY
+            //GO BACK
+           // UIManager.instance.StartCoroutine(Scoring.instance.QuickShutterEffect(UIManager.instance.upgradeUI, UIManager.instance.PlayOutro));
         }
         else
         {

@@ -35,6 +35,7 @@ public class CheatManager : MonoBehaviour
             Scoring.instance.isSkip = true;
             AudioManager.instance.stopMusic(1);
             AudioManager.instance.stopMusic(3);
+        
             GameManager.instance.StartCoroutine(GameManager.instance.DayEnd());
         }
         else

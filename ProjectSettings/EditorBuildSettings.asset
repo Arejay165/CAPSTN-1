@@ -8,15 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 016ad7a75650d464a8b86f1ea9299b67
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Intro.unity
     guid: efbcd6c5fc36bae45b3c908c87ef9f9b
   - enabled: 0
     path: Assets/Scenes/ArjayScene.unity
     guid: acbdb438676df6041b6ec5a012eb89cf
   - enabled: 0
-    path: Assets/Scenes/JACE/Protoype_JACE4.unity
-    guid: 9863f60ad84004d41bde06590afde604
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Tutorial/Tutorial.unity
     guid: 2c54fe86563759642b92ce305b7c509e

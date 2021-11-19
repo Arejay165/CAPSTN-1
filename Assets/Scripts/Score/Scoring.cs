@@ -153,7 +153,28 @@ public class Scoring : MonoBehaviour
      
         
     }
+    public IEnumerator QuickShutterEffect(GameObject p_initialUI, Action p_afterAction)
+    {
+        //Set up
+        //shutter.SetActive(true);
+        shutter.SetActive(true);
+        shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1500, 0);
 
+        //Shutter Down
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(1.5f);
+        p_afterAction.Invoke();
+        yield return new WaitForSeconds(0.5f);
+        //Shutter Up
+        p_initialUI.SetActive(false);
+        //End result
+        //shutter.SetActive(false);
+        //p_targetUI.SetActive(true);
+       
+
+        shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+
+    }
     public IEnumerator ShutterEffect(GameObject p_initialUI, Action p_afterAction)
     {
         //Set up
@@ -163,12 +184,12 @@ public class Scoring : MonoBehaviour
 
         //Shutter Down
         shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         //Shutter Up
         p_initialUI.SetActive(false);
         shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         //End result
         //shutter.SetActive(false);
@@ -186,13 +207,13 @@ public class Scoring : MonoBehaviour
         
         //Shutter Down
         shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 0, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         //Shutter Up
         p_initialUI.SetActive(false);
         p_targetUI.SetActive(true);
         shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         if (p_afterAction != null)
         {
             p_afterAction.Invoke();
