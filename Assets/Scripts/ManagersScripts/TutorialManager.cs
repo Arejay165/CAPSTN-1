@@ -78,21 +78,11 @@ public class TutorialManager : MonoBehaviour
             tutorialPhrase = TutorialPhrase.ArrowOnGlowingItemTutorial;
             NextMessage();
 
-            counter = 0;
+           counter = 0;
 
         }
     }
-    private void OnEnable()
-    {
-        if (canTutorial)
-        {
-            NextMessage();
-
-            counter = 0;
-        }
-    }
-
-
+ 
 
     public void DisableInGameUI()
     {
