@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
 
     public void playSound(int index)
     {
-        if (index > sounds.Length)
+        if (index < sounds.Length)
         {
             if (sounds[index] != null)
             {
