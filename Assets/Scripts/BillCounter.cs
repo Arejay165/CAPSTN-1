@@ -99,17 +99,20 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
     }
     private void OnMouseOver()
     {
-       
+
 
         //If the item is clicked
         //Spawn one at a time
-        if (GameManager.instance.isPlaying)
+        if (GameManager.instance.sheetOpen == false)
         {
-            HighlightItem();
-            if (!CursorManager.instance.isLooping)
+            if (GameManager.instance.isPlaying)
             {
+                HighlightItem();
+                if (!CursorManager.instance.isLooping)
+                {
 
-                CursorManager.instance.PlayCursorAnimation(CursorType.HoverItem);
+                    CursorManager.instance.PlayCursorAnimation(CursorType.HoverItem);
+                }
             }
         }
     }
@@ -123,6 +126,7 @@ public class BillCounter : MonoBehaviour, IPointerDownHandler
 
     void HighlightItem()
     {
+
         //Sprite change to highlighted 
 
         //Change the current sprite to the highlighted sprite 

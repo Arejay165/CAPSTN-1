@@ -27,7 +27,14 @@ public class AudioManager : MonoBehaviour
 
     public void playSound(int index)
     {
-        sounds[index].sound.Play();  
+        if (index > sounds.Length)
+        {
+            if (sounds[index] != null)
+            {
+                sounds[index].sound.Play();
+            }
+        }
+
     }
 
     public void playMusic(int index)

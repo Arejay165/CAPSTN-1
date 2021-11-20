@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     public bool isPlaying = false;
     public bool isFirstTime = true;
-
+    public bool sheetOpen = false;
     public static Action OnGameStart;
     public static Action OnGameEnd;
     private void Awake()
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayStart()
     {
-     
+        GameManager.instance.sheetOpen = false;
         UIManager.instance.isIngame = true;
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
         UIManager.instance.ActivateGameObjects(UIManager.instance.roundBriefingUI.name);

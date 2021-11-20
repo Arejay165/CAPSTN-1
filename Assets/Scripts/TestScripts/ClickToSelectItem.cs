@@ -66,54 +66,58 @@ public class ClickToSelectItem : MonoBehaviour
 
         //If the item is clicked
         //Spawn one at a time
-        if (GameManager.instance.isPlaying)
+        if (GameManager.instance.sheetOpen == false)
         {
-            HighlightItem();
-            if (!CursorManager.instance.isLooping)
+            if (GameManager.instance.isPlaying)
             {
-            
-                CursorManager.instance.PlayCursorAnimation(CursorType.HoverItem);
-            }
-       
-            if (Input.GetMouseButtonDown(0) && canSpawn)
-            {
-               
-                Debug.Log("Item clicked");
-
-                //CursorManager.instance.PlayCursorAnimation(CursorType.ClickItem, CursorType.Arrow);
-                if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf && !TransitionManager.instances.changeTransform.gameObject.activeSelf)
+                HighlightItem();
+                if (!CursorManager.instance.isLooping)
                 {
-                    SpawnItem();
-                    canSpawn = false;
-                    StartCoroutine(Cooldown());
+
+                    CursorManager.instance.PlayCursorAnimation(CursorType.HoverItem);
                 }
-                
-                //canSpawn = false;
 
-                //if (TutorialManager.instance)
+                if (Input.GetMouseButtonDown(0) && canSpawn)
+                {
+
+                    Debug.Log("Item clicked");
+
+                    //CursorManager.instance.PlayCursorAnimation(CursorType.ClickItem, CursorType.Arrow);
+                    if (!TransitionManager.instances.noteBookTransform.gameObject.activeSelf && !TransitionManager.instances.changeTransform.gameObject.activeSelf)
+                    {
+                        SpawnItem();
+                        canSpawn = false;
+                        StartCoroutine(Cooldown());
+                    }
+
+                    //canSpawn = false;
+
+                    //if (TutorialManager.instance)
+                    //{
+                    //    if (TutorialManager.instance.tutorialQuestActive && TutorialManager.instance.canTutorial)
+                    //    {
+                    //        if (TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 4)
+                    //        {
+                    //            TutorialManager.instance.ToggleTutorialQuest();
+                    //            TutorialManager.instance.StartTimeline();
+                    //        }
+
+                    //    }
+                    //}
+
+
+
+
+
+                }
+                //if (Input.GetMouseButtonUp(0) && !canSpawn && !TutorialManager.instance.tutorial.gameObject.activeSelf)
                 //{
-                //    if (TutorialManager.instance.tutorialQuestActive && TutorialManager.instance.canTutorial)
-                //    {
-                //        if (TutorialManager.instance.tutorials.IndexOf(TutorialManager.instance.currentTutorial) == 4)
-                //        {
-                //            TutorialManager.instance.ToggleTutorialQuest();
-                //            TutorialManager.instance.StartTimeline();
-                //        }
-
-                //    }
+                //    canSpawn = true;
                 //}
-                
-                
-               
-                
-             
+
             }
-            //if (Input.GetMouseButtonUp(0) && !canSpawn && !TutorialManager.instance.tutorial.gameObject.activeSelf)
-            //{
-            //    canSpawn = true;
-            //}
-         
         }
+       
 
 
     }

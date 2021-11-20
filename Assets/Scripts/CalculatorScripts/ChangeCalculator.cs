@@ -28,6 +28,7 @@ public class ChangeCalculator : MonoBehaviour
     }
     private void OnEnable()
     {
+        GameManager.instance.sheetOpen = true;
         //Test for whole number answer for Division 
         //dividend / divisor = quotient (answer of player)
         // Reverse the division to multiplication
@@ -210,6 +211,7 @@ public class ChangeCalculator : MonoBehaviour
             //Disable customer bubble
             StartCoroutine(GameManager.instance.customer.ThoughtBubbleDisappear());
 
+
             //Disable customer mood bar
             GameManager.instance.customer.moodPanel.SetActive(false);
             //animation
@@ -235,6 +237,7 @@ public class ChangeCalculator : MonoBehaviour
 
         }
 
+        GameManager.instance.sheetOpen = false;
         yield return new WaitForSeconds(2f);
         isFinished = false; 
         //ChangeOrderFinish();

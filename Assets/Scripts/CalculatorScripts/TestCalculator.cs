@@ -81,8 +81,8 @@ public class TestCalculator : MonoBehaviour
     private void OnEnable()
     {
         isFinished = false;
-        
-        
+        GameManager.instance.sheetOpen = true;
+
         ////Register OnGameStart Event in GameManager
         //GameManager.OnGameStart += OnGameStarted;
         //foreach (InputField selectedAnswerField in answerFields)
@@ -314,6 +314,15 @@ public class TestCalculator : MonoBehaviour
     {
 
         yield return new WaitForEndOfFrame();
+        if (index < answerFields.Count)
+        {
+            int indexLeft = answerFields.Count - index;
+            for (int i = 0; i < answerFields.Count - indexLeft; i++) 
+            {
+                answerFields[i].enabled = false;
+                answerFields[i].GetComponent<Image>().color = new Color(0f, 255f, 0f); // grewn
+            }
+        }
         p_selectedInputField.enabled = true;
         p_selectedInputField.Select();
         p_selectedInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
@@ -572,6 +581,7 @@ public class TestCalculator : MonoBehaviour
                         ShowChangeText();
                         RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, true);
                         StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect, OnTotalPriceCorrect));
+                        
 
 
                     }
@@ -637,6 +647,7 @@ public class TestCalculator : MonoBehaviour
                         //add bonus mood time
                         MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                         mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
+                        GameManager.instance.sheetOpen = false;
                         //changeAnswerField.DeactivateInputField();
                         StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
 
