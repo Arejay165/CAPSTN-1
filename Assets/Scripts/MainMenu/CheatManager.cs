@@ -17,6 +17,12 @@ public class CheatManager : MonoBehaviour
     private void Start()
     {
         inputfield.onSubmit.AddListener(CheatEntered);
+       
+    }
+
+    public void OnEnable()
+    {
+        inputfield.Select();
     }
 
     public void CheatEntered(string input)
