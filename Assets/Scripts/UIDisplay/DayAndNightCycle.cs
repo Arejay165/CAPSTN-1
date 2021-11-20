@@ -8,7 +8,7 @@ public class DayAndNightCycle : MonoBehaviour
     int         days;
     // Internal game clock in seconds
     [SerializeField]
-    float       gameTime;
+    public float       gameTime;
     // End time for the game in seconds 
     [SerializeField]
     float       endTime;

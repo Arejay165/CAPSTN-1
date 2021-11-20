@@ -883,8 +883,9 @@ public class Scoring : MonoBehaviour
     public void ModifyMultiplier(float p_modifyingValue)
     {
 
-        //multiplier = Mathf.Clamp(multiplier + p_modifyingValue, 1, maxMultiplier);
+       
         multiplier = multiplier + p_modifyingValue;
+        multiplier = Mathf.Clamp(multiplier, 1, maxMultiplier);
         gameMultiplierText.text = multiplier.ToString() + "x";
         
     }

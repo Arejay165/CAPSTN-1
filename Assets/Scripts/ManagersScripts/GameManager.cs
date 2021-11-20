@@ -126,17 +126,19 @@ public class GameManager : MonoBehaviour
                    Debug.Log("EULER ANGLE : " + AnalogueClock.instance.clockHandTransform.eulerAngles);
                 Debug.Log("LOCAL EULER ANGLE : " + AnalogueClock.instance.clockHandTransform.localEulerAngles);
             }
+            
         }
         else
         {
             Debug.Log("WASNMT FOUND");
         }
-
+       
         if (DayAndNightCycle.instance != null)
         {
             DayAndNightCycle.instance.isStoreClosed = false;
             DayAndNightCycle.instance.isMorning = true;
             DayAndNightCycle.instance.isRushHour = false;
+            DayAndNightCycle.instance.gameTime = 0;
         }
         else
         {

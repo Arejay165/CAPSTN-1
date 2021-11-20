@@ -467,7 +467,14 @@ public class TestCalculator : MonoBehaviour
         {
             if (TutorialManager.instance.enabled == true)
                 TutorialManager.instance.ItemMasksActivator(3);
-
+            if (answerFields.Count > 0)
+            {
+                foreach (TMP_InputField selectedItemUI in answerFields)
+                {
+                    selectedItemUI.enabled = false;
+                }
+            
+            }
             totalPriceAnswerField.enabled = true;
             
            //totalPriceAnswerField.Select();
@@ -665,29 +672,29 @@ public class TestCalculator : MonoBehaviour
                     {
                         playerInputValue = inputVal;
 
-                }
-                if (playerInputValue != -1 && isFinished == false)
-                {
-                    answerAttempts++;
-                    if (playerInputValue == changeCorrectAnswer)
+                    }
+                    if (playerInputValue != -1 && isFinished == false)
                     {
-                        RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
-                        isFinished = true;
-                       
-                        //add bonus mood time
-                        if (GameManager.instance.customer)
+                        answerAttempts++;
+                        if (playerInputValue == changeCorrectAnswer)
                         {
-                            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                            if (mc)
+                            RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
+                            isFinished = true;
+                       
+                            //add bonus mood time
+                            if (GameManager.instance.customer)
                             {
+                                MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                                if (mc)
+                                {
                                 
-                                mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
+                                    mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
+                                }
                             }
-                        }
                         
-                        GameManager.instance.sheetOpen = false;
-                        //changeAnswerField.DeactivateInputField();
-                        StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
+                            GameManager.instance.sheetOpen = false;
+                            //changeAnswerField.DeactivateInputField();
+                            StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
 
 
 

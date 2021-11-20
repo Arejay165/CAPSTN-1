@@ -48,6 +48,7 @@ public class AnalogueClock : MonoBehaviour
     void OnGameStarted()
     {
         timeFill.fillAmount = 1f;
+        currentGameTime = 0;
         clockHandTransform.eulerAngles = new Vector3(0, 0, 90f); //86f);
     }
 
@@ -61,6 +62,11 @@ public class AnalogueClock : MonoBehaviour
 
     private void Update()
     {
+        if (currentGameTime <= 0)
+        {
+            timeFill.fillAmount = 1f;
+            clockHandTransform.eulerAngles = new Vector3(0, 0, 90f); //86f);
+        }
         if(!DayAndNightCycle.instance.GetIsStoreClosed())
         {
             currentGameTime += timeScale * timeSpeed * Time.deltaTime;
