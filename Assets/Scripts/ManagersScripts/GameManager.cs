@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         StartRound();
         AudioManager.instance.playMusic(1);
 
-        yield return new WaitForSeconds(DayAndNightCycle.instance.GetEndTime()-DayAndNightCycle.instance.nightTime);
+        yield return new WaitForSeconds(DayAndNightCycle.instance.nightTime);
         if (DayAndNightCycle.instance.GetIsMorning() == false)
         {
             AudioManager.instance.stopMusic(1);

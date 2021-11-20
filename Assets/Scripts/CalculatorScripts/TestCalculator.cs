@@ -651,20 +651,29 @@ public class TestCalculator : MonoBehaviour
                     {
                         playerInputValue = inputVal;
 
-                    }
-                    if (playerInputValue != -1 && isFinished == false)
+                }
+                if (playerInputValue != -1 && isFinished == false)
+                {
+                    answerAttempts++;
+                    if (playerInputValue == changeCorrectAnswer)
                     {
-                        answerAttempts++;
-                        if (playerInputValue == changeCorrectAnswer)
+                        RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
+                        isFinished = true;
+                       
+                        //add bonus mood time
+                        if (GameManager.instance.customer)
                         {
-                            RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
-                            isFinished = true;
-                            //add bonus mood time
                             MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                            mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
-                            GameManager.instance.sheetOpen = false;
-                            //changeAnswerField.DeactivateInputField();
-                            StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
+                            if (mc)
+                            {
+                                
+                                mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
+                            }
+                        }
+                        
+                        GameManager.instance.sheetOpen = false;
+                        //changeAnswerField.DeactivateInputField();
+                        StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
 
 
 
