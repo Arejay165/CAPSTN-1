@@ -38,6 +38,7 @@ public class AnalogueClock : MonoBehaviour
     void OnGameStarted()
     {
         timeFill.fillAmount = 1f;
+        clockHandTransform.eulerAngles = new Vector3(0, 0, 90f); //86f);
     }
 
     void OnGameEnded()
