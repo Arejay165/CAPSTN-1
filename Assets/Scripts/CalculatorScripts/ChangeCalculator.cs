@@ -95,7 +95,7 @@ public class ChangeCalculator : MonoBehaviour
         tmpChangeInputField.onValidateInput -= delegate (string input, int charIndex, char addedChar) { return MyValidate(validCharacters, addedChar); };
         tmpChangeInputField.text = "";
         tmpChangeInputField.Select();
-
+        enteredAnswer = false;
         AudioManager.instance.playSound(10);
     }
 
@@ -193,6 +193,10 @@ public class ChangeCalculator : MonoBehaviour
 
 
                     }
+                    else
+                    {
+                        enteredAnswer = false;
+                    }
                 }
             }
         }
@@ -200,7 +204,7 @@ public class ChangeCalculator : MonoBehaviour
 
     IEnumerator SheetCompleted(TMP_InputField p_inputField)
     {
-        enteredAnswer = false;
+        
         int blinkCount = 0;
         while (blinkCount < 3)
         {
@@ -245,7 +249,7 @@ public class ChangeCalculator : MonoBehaviour
             TutorialManager.instance.itemMask.SetActive(false);
 
         }
-
+        enteredAnswer = false;
         GameManager.instance.sheetOpen = false;
         yield return new WaitForSeconds(2f);
         isFinished = false; 
@@ -254,7 +258,7 @@ public class ChangeCalculator : MonoBehaviour
 
     IEnumerator WrongInputted(TMP_InputField p_inputField)
     {
-        enteredAnswer = false;
+        
         //PlayerManager.instance.Shake(Camera.main.gameObject,0.15f, 0.05f, 0.25f);
         AudioManager.instance.playSound(1);
         PlayerManager.instance.Shake(gameObject, 0.2f, 3.5f, 1.5f);
@@ -272,7 +276,7 @@ public class ChangeCalculator : MonoBehaviour
         p_inputField.text = "";
         p_inputField.ActivateInputField();
         tmpChangeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
-        
+        enteredAnswer = false;
     }
     public void RecordAnswerResult(MathProblemOperator p_mathOperator, bool p_isCorrect)
     {

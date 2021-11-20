@@ -112,6 +112,36 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DayStart()
     {
+        if (AnalogueClock.instance != null)
+        {
+            if (AnalogueClock.instance.timeFill != null)
+            {
+                AnalogueClock.instance.timeFill.fillAmount = 1f;
+            }
+
+            if (AnalogueClock.instance.clockHandTransform != null)
+            {
+             
+                AnalogueClock.instance.clockHandTransform.localEulerAngles = new Vector3(0, 0, 90f); //86f);
+                   Debug.Log("EULER ANGLE : " + AnalogueClock.instance.clockHandTransform.eulerAngles);
+                Debug.Log("LOCAL EULER ANGLE : " + AnalogueClock.instance.clockHandTransform.localEulerAngles);
+            }
+        }
+        else
+        {
+            Debug.Log("WASNMT FOUND");
+        }
+
+        if (DayAndNightCycle.instance != null)
+        {
+            DayAndNightCycle.instance.isStoreClosed = false;
+            DayAndNightCycle.instance.isMorning = true;
+            DayAndNightCycle.instance.isRushHour = false;
+        }
+        else
+        {
+            Debug.Log("WASNMT FOUND");
+        }
         GameManager.instance.sheetOpen = false;
         UIManager.instance.isIngame = true;
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);

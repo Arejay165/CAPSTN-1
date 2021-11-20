@@ -4,16 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 public class AnalogueClock : MonoBehaviour
 {
-
+    public static AnalogueClock instance;
     [SerializeField] private float realSecondsInGameDay = 0;
-    [SerializeField] private Transform clockHandTransform;
-    [SerializeField] private Image timeFill;
+    [SerializeField] public Transform clockHandTransform;
+    [SerializeField] public Image timeFill;
     [SerializeField] float timeSpeed = 1f;
  
     [SerializeField] float currentGameTime = 0;
     float timeScale = 0f;
     public Image timeImage;
     public Sprite[] sunAndMoon;
+
+    private void Awake()
+    {
+        if (instance == null)
+        { 
+            instance = this;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +36,7 @@ public class AnalogueClock : MonoBehaviour
 
         GameManager.OnGameStart += OnGameStarted;
         GameManager.OnGameEnd += OnGameEnded;
+   
     }
     public void OnDisable()
     {

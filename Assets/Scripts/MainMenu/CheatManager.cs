@@ -32,6 +32,7 @@ public class CheatManager : MonoBehaviour
         {
             Debug.Log("You've guessed correctly");
             //Day closed proceed to day 2 
+            DayAndNightCycle.instance.isStoreClosed = true;
             Scoring.instance.isSkip = true;
             AudioManager.instance.stopMusic(1);
             AudioManager.instance.stopMusic(3);
@@ -55,6 +56,7 @@ public class CheatManager : MonoBehaviour
         if(playerInputString == cheatCode)
         {
             Debug.Log("You've guessed correctly");
+            DayAndNightCycle.instance.isStoreClosed = true;
             //Day closed proceed to day 2 
             Scoring.instance.isSkip = true;
             AudioManager.instance.stopMusic(1);

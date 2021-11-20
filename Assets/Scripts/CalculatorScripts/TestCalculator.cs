@@ -83,7 +83,8 @@ public class TestCalculator : MonoBehaviour
         enteredAnswer = false;
         isFinished = false;
         GameManager.instance.sheetOpen = true;
-
+        totalPriceAnswerField.enabled = true;
+        changeAnswerField.enabled = true;
         ////Register OnGameStart Event in GameManager
         //GameManager.OnGameStart += OnGameStarted;
         //foreach (InputField selectedAnswerField in answerFields)
@@ -180,6 +181,7 @@ public class TestCalculator : MonoBehaviour
     private void OnDisable()
     {
         //clears answerfields
+        enteredAnswer = false;
         if (answerFields.Count > 0)
         {
             foreach (TMP_InputField selectedItemUI in answerFields)
@@ -430,7 +432,7 @@ public class TestCalculator : MonoBehaviour
                     {
                         //   Debug.Log("Invalid Input, retry again");
                         // StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
-
+                        enteredAnswer = false;
 
 
                     }
@@ -565,6 +567,7 @@ public class TestCalculator : MonoBehaviour
             TutorialManager.instance.ItemMasksActivator(4);
 
         enteredAnswer = false;
+        totalPriceAnswerField.enabled = false;
         changeAnswers.Add(randomExtraMoney);
         changeAnswers.Add(totalPriceCorrectAnswer);
     }
@@ -621,7 +624,7 @@ public class TestCalculator : MonoBehaviour
                     {
                         Debug.Log("Invalid Input, retry again");
                         //                StartCoroutine(WrongInputted(totalPriceAnswerField));
-
+                        enteredAnswer = false;
 
                     }
                 }
@@ -636,6 +639,7 @@ public class TestCalculator : MonoBehaviour
         // changeAnswerField.DeactivateInputField();
         OrderSheetFinish();
         index = 0;
+        changeAnswerField.enabled = false;
     }
 
     public void OnChangeWrong()
@@ -702,7 +706,7 @@ public class TestCalculator : MonoBehaviour
                     else
                     {
                         Debug.Log("Invalid Input, retry again");
-
+                        enteredAnswer = false;
                         //    StartCoroutine(WrongInputted(changeAnswerField));
 
 

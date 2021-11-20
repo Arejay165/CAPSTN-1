@@ -17,9 +17,9 @@ public class DayAndNightCycle : MonoBehaviour
 
     // Used to stop the gameTime and Clock Display 
     [SerializeField]
-    bool        isStoreClosed = true;
+    public bool        isStoreClosed = true;
     [SerializeField]
-    bool        isMorning = true;
+    public bool        isMorning = true;
 
     // Just like in UNREAL, Event Dispatcher, going to be brodcasted 
     public OnDayChange dayChanged;
