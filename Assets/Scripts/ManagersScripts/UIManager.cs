@@ -120,6 +120,7 @@ public class UIManager : MonoBehaviour
         Fade.DOFade(0f, 2f);
 
         introStoryUI.SetActive(true);
+        AudioManager.instance.stopMusic(0);
         introStoryVideo.Play();
         yield return new WaitForSeconds(0.2f);
         introStoryVideo.Pause();
@@ -127,23 +128,23 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(1f); //how long video
 
         introStoryVideo.Play();
-        yield return new WaitForSeconds(13f); //how long video
+        yield return new WaitForSeconds(35f); //how long video
         Fade.DOFade(1f, 0.5f);
-        if (TutorialManager.instance.canTutorial)
-        {
-            UIManager.instance.StartCoroutine(Scoring.instance.ShutterDownEffect(introStoryUI, LoadTutorial));
-            yield return new WaitForSeconds(1f); //how long video
-            Fade.gameObject.SetActive(false);
-            introStoryUI.SetActive(false);
-        }
-        else
-        {
+        //if (TutorialManager.instance.canTutorial)
+        //{
+        //    UIManager.instance.StartCoroutine(Scoring.instance.ShutterDownEffect(introStoryUI, LoadTutorial));
+        //    yield return new WaitForSeconds(1f); //how long video
+        //    Fade.gameObject.SetActive(false);
+        //    introStoryUI.SetActive(false);
+        //}
+        //else
+        //{
             UIManager.instance.StartCoroutine(Scoring.instance.ShutterDownEffect(introStoryUI, StartGame));
 
             yield return new WaitForSeconds(1f); //how long video
             Fade.gameObject.SetActive(false);
             introStoryUI.SetActive(false);
-        }
+       // }
   
 
     }
@@ -158,12 +159,13 @@ public class UIManager : MonoBehaviour
 
         Fade.DOFade(0f, 0.5f);
         outroStoryUI.SetActive(true);
+        AudioManager.instance.stopMusic(2);
         outroStoryVideo.Play();
         yield return new WaitForSeconds(0.2f);
         outroStoryVideo.Pause();
         yield return new WaitForSeconds(1f);
         outroStoryVideo.Play();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(31f);
         Fade.DOFade(1f, 0.5f);
         UIManager.instance.StartCoroutine(Scoring.instance.ShutterDownEffect(outroStoryUI, StartGame));
         yield return new WaitForSeconds(1f); //how long video
@@ -402,7 +404,8 @@ public class UIManager : MonoBehaviour
 
         //StartCoroutine(Scoring.instance.ShutterEffect(tutorialUI, playerNameUI, LoadTutorial));
         TutorialManager.instance.canTutorial = true;
-        UIManager.instance.StartCoroutine(Scoring.instance.QuickShutterEffect(tutorialUI, UIManager.instance.PlayIntro));
+        //UIManager.instance.StartCoroutine(Scoring.instance.QuickShutterEffect(tutorialUI, UIManager.instance.PlayIntro));
+        UIManager.instance.StartCoroutine(Scoring.instance.QuickShutterEffect(tutorialUI, UIManager.instance.LoadTutorial));
 
 
     }

@@ -76,10 +76,7 @@ public class CursorManager : MonoBehaviour
 
         }
         
-      
-        if (Input.GetKeyDown(KeyCode.T)) SetActiveCursorAnimation(CursorType.Arrow);
-        if (Input.GetKeyDown(KeyCode.Y)) SetActiveCursorAnimation(CursorType.HoverItem);
-        if (Input.GetKeyDown(KeyCode.U)) PlayCursorAnimation(CursorType.ClickItem, CursorType.Arrow);
+     
     }
 
      public CursorAnimation GetCursorAnimation(CursorType p_cursorType)

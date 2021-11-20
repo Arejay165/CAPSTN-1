@@ -67,32 +67,35 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
+        
+    }
+
+    public void TutorialStart()
+    {
+        DisableInGameUI();
         if (canTutorial)
         {
             tutorialPhrase = TutorialPhrase.ArrowOnGlowingItemTutorial;
             NextMessage();
-          
-          //  counter = 0;
-    
+
+            counter = 0;
+
         }
     }
+    private void OnEnable()
+    {
+        if (canTutorial)
+        {
+            NextMessage();
 
-    //private void OnEnable()
-    //{
-    //    if (canTutorial)
-    //    {
-    //        NextMessage();
-
-    //        counter = 1;
-    //    }
-    //}
+            counter = 0;
+        }
+    }
 
 
 
     public void DisableInGameUI()
     {
-        // Put coroutine here 
-        // transition shutter down to up 
         GameManager.instance.isPlaying = true;
         UIManager.instance.inGameUI.SetActive(false);
     }

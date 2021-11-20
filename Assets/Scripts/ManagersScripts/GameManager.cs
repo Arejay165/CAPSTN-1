@@ -224,8 +224,7 @@ public class GameManager : MonoBehaviour
         isPlaying = false;
         if (TutorialManager.instance.canTutorial)
         {
-            //   UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
-            TutorialManager.instance.DisableInGameUI();
+            StartCoroutine(Co_Start());
         }
         else
         {
@@ -236,6 +235,26 @@ public class GameManager : MonoBehaviour
 
     }
 
+    IEnumerator Co_Start()
+    {
+        //   UIManager.instance.ActivateGameObjects(UIManager.instance.inGameUI.name);
+        //Set up
+        //shutter.SetActive(true);
+        Scoring.instance.shutter.SetActive(true);
+        Scoring.instance.shutter.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 0);
+
+        //Shutter Down
+        Scoring.instance.shutter.GetComponent<RectTransform>().DOAnchorPos3D(new Vector3(Scoring.instance.shutter.GetComponent<RectTransform>().anchoredPosition3D.x, 1500, Scoring.instance.shutter.GetComponent<RectTransform>().anchoredPosition3D.z), 1f, false);
+        yield return new WaitForSeconds(1f);
+
+        Scoring.instance.shutter.SetActive(false);
+
+        //End result
+        //shutter.SetActive(false);
+        //p_targetUI.SetActive(true);
+
+        TutorialManager.instance.TutorialStart();
+    }
     private void OnDisable()
     {
 
