@@ -22,7 +22,7 @@ public class TestCalculator : MonoBehaviour
     public int answerAttempts;
     public int perfectAttempts;
     public bool isFinished = false;
- 
+    public bool enteredAnswer = false;
     public List<ItemUIClass> itemUIClassList = new List<ItemUIClass>(); // Datas for the Item UIs that will be in the answer pad
     public List<float> itemsAnswer = new List<float>();
     public List<float> changeAnswers = new List<float>();
@@ -80,6 +80,7 @@ public class TestCalculator : MonoBehaviour
 
     private void OnEnable()
     {
+        enteredAnswer = false;
         isFinished = false;
         GameManager.instance.sheetOpen = true;
 
@@ -336,6 +337,7 @@ public class TestCalculator : MonoBehaviour
        
 
         index++;
+        enteredAnswer = false;
         if (index < answerFields.Count)
         {
             //   Debug.Log("List still has inputfield");
@@ -370,55 +372,60 @@ public class TestCalculator : MonoBehaviour
         {
             if (GameManager.instance.isPlaying)
             {
-                int itemOrderIndex = IdentifyAnswerfieldIndex(p_playerInputString); //Finding which inputfield is being used to write
-                float playerInputValue = -1;
-
-                if (float.TryParse(p_playerInputString, out float inputVal)) // convert string to float
+                if (enteredAnswer == false)
                 {
-                    playerInputValue = inputVal;
-                }
+                    enteredAnswer = true;
+                    int itemOrderIndex = IdentifyAnswerfieldIndex(p_playerInputString); //Finding which inputfield is being used to write
+                    float playerInputValue = -1;
 
-
-
-                if (playerInputValue != -1) // If input is valid (any number)
-                {
-                    //If it matches, it is correct
-                    if (playerInputValue == itemUIClassList[itemOrderIndex].totalPriceAnswer)
+                    if (float.TryParse(p_playerInputString, out float inputVal)) // convert string to float
                     {
-                        // Debug.Log("Correct");
-                        RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, true);
-                        //add bonus mood
-                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                        mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
-                        InitializedInputField();
-                        StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect, OnPriceCorrect));
+                        playerInputValue = inputVal;
+                    }
 
+
+
+                    if (playerInputValue != -1) // If input is valid (any number)
+                    {
+                        //If it matches, it is correct
+                        if (playerInputValue == itemUIClassList[itemOrderIndex].totalPriceAnswer)
+                        {
+                            // Debug.Log("Correct");
+                            RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, true);
+                            //add bonus mood
+                            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                            mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
+                            InitializedInputField();
+                            StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect, OnPriceCorrect));
+
+
+
+
+                        }
+                        //If it doesnt match its wrong
+                        else
+                        {
+                            Debug.Log("Wrong");
+                            RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, false);
+                            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                            mc.DeductCurrentMoodAmount(mc.penaltyTime);
+                            StartCoroutine(WrongInputted(answerFields[itemOrderIndex], OnPriceWrong));
+
+
+                        }
+                        answerAttempts++;
+
+                    }
+                    else //If input is invalid (not a number)
+                    {
+                        //   Debug.Log("Invalid Input, retry again");
+                        // StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
 
 
 
                     }
-                    //If it doesnt match its wrong
-                    else
-                    {
-                        Debug.Log("Wrong");
-                        RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, false);
-                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                        mc.DeductCurrentMoodAmount(mc.penaltyTime);
-                        StartCoroutine(WrongInputted(answerFields[itemOrderIndex], OnPriceWrong));
-
-
-                    }
-                    answerAttempts++;
-
                 }
-                else //If input is invalid (not a number)
-                {
-                    //   Debug.Log("Invalid Input, retry again");
-                    // StartCoroutine(WrongInputted(answerFields[itemOrderIndex]));
-
-
-
-                }
+                
             }
                
       
@@ -546,8 +553,8 @@ public class TestCalculator : MonoBehaviour
     {
         if (TutorialManager.instance.enabled == true)
             TutorialManager.instance.ItemMasksActivator(4);
-   
 
+        enteredAnswer = false;
         changeAnswers.Add(randomExtraMoney);
         changeAnswers.Add(totalPriceCorrectAnswer);
     }
@@ -562,46 +569,50 @@ public class TestCalculator : MonoBehaviour
         {
             if (GameManager.instance.isPlaying)
             {
-                string playerInputString = p_playerInputString;
-
-                float playerInputValue = -1;
-
-
-                if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
+                if (enteredAnswer == false)
                 {
+                    enteredAnswer = true;
+                    string playerInputString = p_playerInputString;
 
-                    playerInputValue = inputVal;
+                    float playerInputValue = -1;
 
 
-                }
-                if (playerInputValue != -1)
-                {
-                    if (playerInputValue == totalPriceCorrectAnswer) // Answer is correct
+                    if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
                     {
-                        ShowChangeText();
-                        RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, true);
-                        StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect, OnTotalPriceCorrect));
-                        
+
+                        playerInputValue = inputVal;
 
 
                     }
-                    else // Answer is wrong
+                    if (playerInputValue != -1)
                     {
-                        Debug.Log("RIGHT ANSWER IS : " + totalPriceCorrectAnswer);
-                        RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, false);
-                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                        mc.DeductCurrentMoodAmount(mc.penaltyTime);
-                        StartCoroutine(WrongInputted(totalPriceAnswerField, OnTotalPriceWrong));
+                        if (playerInputValue == totalPriceCorrectAnswer) // Answer is correct
+                        {
+                            ShowChangeText();
+                            RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, true);
+                            StartCoroutine(CorrectInputted(totalPriceAnswerField, totalPriceIsCorrect, OnTotalPriceCorrect));
+
+
+
+                        }
+                        else // Answer is wrong
+                        {
+                            Debug.Log("RIGHT ANSWER IS : " + totalPriceCorrectAnswer);
+                            RecordAnswerResult(totalPriceCorrectAnswer, MathProblemOperator.addition, false);
+                            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                            mc.DeductCurrentMoodAmount(mc.penaltyTime);
+                            StartCoroutine(WrongInputted(totalPriceAnswerField, OnTotalPriceWrong));
+
+                        }
+                        answerAttempts++;
+                    }
+                    else
+                    {
+                        Debug.Log("Invalid Input, retry again");
+                        //                StartCoroutine(WrongInputted(totalPriceAnswerField));
+
 
                     }
-                    answerAttempts++;
-                }
-                else
-                {
-                    Debug.Log("Invalid Input, retry again");
-                    //                StartCoroutine(WrongInputted(totalPriceAnswerField));
-
-
                 }
             }
                 
@@ -610,8 +621,8 @@ public class TestCalculator : MonoBehaviour
 
     public void OnChangeCorrect()
     {
-
-       // changeAnswerField.DeactivateInputField();
+        enteredAnswer = false;
+        // changeAnswerField.DeactivateInputField();
         OrderSheetFinish();
         index = 0;
     }
@@ -627,51 +638,55 @@ public class TestCalculator : MonoBehaviour
         {
             if (GameManager.instance.isPlaying)
             {
-                string playerInputString = p_playerInputString;
-                float playerInputValue = -1;
-
-
-
-                if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
+                if (enteredAnswer == false)
                 {
-                    playerInputValue = inputVal;
+                    enteredAnswer = true;
+                    string playerInputString = p_playerInputString;
+                    float playerInputValue = -1;
 
-                }
-                if (playerInputValue != -1 && isFinished == false)
-                {
-                    answerAttempts++;
-                    if (playerInputValue == changeCorrectAnswer)
+
+
+                    if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
                     {
-                        RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
-                        isFinished = true;
-                        //add bonus mood time
-                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                        mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
-                        GameManager.instance.sheetOpen = false;
-                        //changeAnswerField.DeactivateInputField();
-                        StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
+                        playerInputValue = inputVal;
 
+                    }
+                    if (playerInputValue != -1 && isFinished == false)
+                    {
+                        answerAttempts++;
+                        if (playerInputValue == changeCorrectAnswer)
+                        {
+                            RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
+                            isFinished = true;
+                            //add bonus mood time
+                            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                            mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
+                            GameManager.instance.sheetOpen = false;
+                            //changeAnswerField.DeactivateInputField();
+                            StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
+
+
+
+                        }
+                        else// Answer is wrong
+                        {
+
+                            RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, false);
+                            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                            mc.DeductCurrentMoodAmount(mc.penaltyTime);
+                            StartCoroutine(WrongInputted(changeAnswerField, OnChangeWrong));
+
+                        }
+
+                    }
+                    else
+                    {
+                        Debug.Log("Invalid Input, retry again");
+
+                        //    StartCoroutine(WrongInputted(changeAnswerField));
 
 
                     }
-                    else// Answer is wrong
-                    {
-
-                        RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, false);
-                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                        mc.DeductCurrentMoodAmount(mc.penaltyTime);
-                        StartCoroutine(WrongInputted(changeAnswerField, OnChangeWrong));
-
-                    }
-
-                }
-                else
-                {
-                    Debug.Log("Invalid Input, retry again");
-
-                    //    StartCoroutine(WrongInputted(changeAnswerField));
-
-
                 }
             }
             

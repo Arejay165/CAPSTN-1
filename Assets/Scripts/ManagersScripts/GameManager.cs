@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public bool isPlaying = false;
     public bool isFirstTime = true;
     public bool sheetOpen = false;
+
     public static Action OnGameStart;
     public static Action OnGameEnd;
     private void Awake()

@@ -21,13 +21,14 @@ public class ChangeCalculator : MonoBehaviour
 
     public int answerAttempts;
     public int perfectAttempts;
-
+    public bool enteredAnswer = false;
     public void Start()
     {
         tmpChangeInputField.onSubmit.AddListener(OnPriceInputted);
     }
     private void OnEnable()
     {
+        enteredAnswer = false;
         GameManager.instance.sheetOpen = true;
         //Test for whole number answer for Division 
         //dividend / divisor = quotient (answer of player)
@@ -141,51 +142,58 @@ public class ChangeCalculator : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-            tmpChangeInputField.Select();
-           
-            string playerInputString = tmpChangeInputField.text;
-
-            float playerInputValue = -1;
-
-            if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
-            {
-
-                playerInputValue = inputVal;
-            }
-            if (playerInputValue != -1 && isFinished == false)
-            {
-
-                if (playerInputValue == MathProblemManager.instance.cash.denValue)
+            if (GameManager.instance.isPlaying)
+            { 
+                if (enteredAnswer == false)
                 {
-                    //Answer is correct
-                    StartCoroutine(SheetCompleted(tmpChangeInputField));
+                    enteredAnswer = true;
+                    tmpChangeInputField.Select();
 
-                    answerAttempts++;
-                    isFinished = true;
+                    string playerInputString = tmpChangeInputField.text;
 
-                    Scoring.instance.addScore((int)(100 * Scoring.instance.multiplier));
-                    if (answerAttempts == perfectAttempts)
+                    float playerInputValue = -1;
+
+                    if (float.TryParse(playerInputString, out float inputVal)) // convert string to float
                     {
-                        Scoring.instance.ModifyMultiplier(1f);
+
+                        playerInputValue = inputVal;
                     }
-                    RecordAnswerResult(MathProblemOperator.division, true);
+                    if (playerInputValue != -1 && isFinished == false)
+                    {
 
-                    AudioManager.instance.playSound(0);
-                   // Debug.Log("Is Correct");
+                        if (playerInputValue == MathProblemManager.instance.cash.denValue)
+                        {
+                            //Answer is correct
+                            StartCoroutine(SheetCompleted(tmpChangeInputField));
+
+                            answerAttempts++;
+                            isFinished = true;
+
+                            Scoring.instance.addScore((int)(100 * Scoring.instance.multiplier));
+                            if (answerAttempts == perfectAttempts)
+                            {
+                                Scoring.instance.ModifyMultiplier(1f);
+                            }
+                            RecordAnswerResult(MathProblemOperator.division, true);
+
+                            AudioManager.instance.playSound(0);
+                            // Debug.Log("Is Correct");
 
 
+                        }
+                        else
+                        {
+                            //Debug.Log("Isincorrect");
+                            StartCoroutine(WrongInputted(tmpChangeInputField));
+                            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                            mc.DeductCurrentMoodAmount(mc.penaltyTime);
+                            RecordAnswerResult(MathProblemOperator.division, false);
+                            Scoring.instance.ResetMultiplier();
+                        }
+
+
+                    }
                 }
-                else
-                {
-                    //Debug.Log("Isincorrect");
-                    StartCoroutine(WrongInputted(tmpChangeInputField));
-                    MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                    mc.DeductCurrentMoodAmount(mc.penaltyTime);
-                    RecordAnswerResult(MathProblemOperator.division, false);
-                    Scoring.instance.ResetMultiplier();
-                }
-
-
             }
         }
      }
