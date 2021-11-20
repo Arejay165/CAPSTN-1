@@ -129,11 +129,23 @@ public class UIManager : MonoBehaviour
         introStoryVideo.Play();
         yield return new WaitForSeconds(13f); //how long video
         Fade.DOFade(1f, 0.5f);
-        UIManager.instance.StartCoroutine(Scoring.instance.ShutterDownEffect(introStoryUI,StartGame ));
+        if (TutorialManager.instance.canTutorial)
+        {
+            UIManager.instance.StartCoroutine(Scoring.instance.ShutterDownEffect(introStoryUI, LoadTutorial));
+            yield return new WaitForSeconds(1f); //how long video
+            Fade.gameObject.SetActive(false);
+            introStoryUI.SetActive(false);
+        }
+        else
+        {
+            UIManager.instance.StartCoroutine(Scoring.instance.ShutterDownEffect(introStoryUI, StartGame));
 
-        yield return new WaitForSeconds(1f); //how long video
-        Fade.gameObject.SetActive(false);
-        introStoryUI.SetActive(false);
+            yield return new WaitForSeconds(1f); //how long video
+            Fade.gameObject.SetActive(false);
+            introStoryUI.SetActive(false);
+        }
+  
+
     }
 
     IEnumerator Outro()
@@ -387,8 +399,11 @@ public class UIManager : MonoBehaviour
 
     public void Tutorial()
     {
-        StartCoroutine(Scoring.instance.ShutterEffect(tutorialUI, playerNameUI, LoadTutorial));
-      
+
+        //StartCoroutine(Scoring.instance.ShutterEffect(tutorialUI, playerNameUI, LoadTutorial));
+        TutorialManager.instance.canTutorial = true;
+        UIManager.instance.StartCoroutine(Scoring.instance.QuickShutterEffect(tutorialUI, UIManager.instance.PlayIntro));
+
 
     }
 

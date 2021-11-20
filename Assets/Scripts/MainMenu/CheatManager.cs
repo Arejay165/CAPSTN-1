@@ -14,7 +14,7 @@ public class CheatManager : MonoBehaviour
     public string playerInputString;
    // public AudioSource ingame
 
-    private void OnEnable()
+    private void Start()
     {
         inputfield.onSubmit.AddListener(CheatEntered);
     }
@@ -22,6 +22,24 @@ public class CheatManager : MonoBehaviour
     public void CheatEntered(string input)
     {
         playerInputString = input;
+        if (playerInputString == cheatCode)
+        {
+            Debug.Log("You've guessed correctly");
+            //Day closed proceed to day 2 
+            Scoring.instance.isSkip = true;
+            AudioManager.instance.stopMusic(1);
+            AudioManager.instance.stopMusic(3);
+
+            GameManager.instance.StartCoroutine(GameManager.instance.DayEnd());
+        }
+        else
+        {
+            //GameManager.instance.
+            UIManager.instance.Resume();
+        }
+
+        playerInputString = "";
+        inputfield.text = "";
     }
 
     public void EnterCheatCode()

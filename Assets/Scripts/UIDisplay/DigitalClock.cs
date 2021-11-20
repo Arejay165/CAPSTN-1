@@ -13,11 +13,12 @@ public class DigitalClock : MonoBehaviour
     float defaultSize;
 
 
+    Vector3 OriginalScale;
     // Start is called before the first frame update
     void Start()
     {
          defaultColor = timeValueUI.color;
-        
+        OriginalScale = timeValueUI.transform.localScale;
     }
     private void OnEnable()
     {
@@ -57,8 +58,7 @@ public class DigitalClock : MonoBehaviour
     IEnumerator Countdown()
     {
         float descendingTime = DayAndNightCycle.instance.GetEndTime() - DayAndNightCycle.instance.GetGameTime();
-       
-        Vector3 OriginalScale = timeValueUI.transform.localScale;
+
         Vector3 modifiedScale;
         float sizeTweenSpeed;
         float colorTweenSpeed;

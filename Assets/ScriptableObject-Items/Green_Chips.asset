@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312bb433636322942b248909e5ad3b5e, type: 3}
   m_Name: Green_Chips
   m_EditorClassIdentifier: 
-  itemName: Chips_Green
+  itemName: Sour Cream Chips
   price: 5
   numValue: 0
   denValue: 0
   itemSprite: {fileID: 21300000, guid: 2a040e2da4668084e866b90b068760e0, type: 3}
   quantity: 1
-  minRangePrice: 5
-  maxRangePrice: 15
+  minRangePrice: 10
+  maxRangePrice: 50
