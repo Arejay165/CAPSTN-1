@@ -61,7 +61,7 @@ public class ChangeCalculator : MonoBehaviour
         tmpChangeInputField.Select();
     
         numeratorText.text = MathProblemManager.instance.cash.numValue.ToString();
-        denominatorText.text = MathProblemManager.instance.cash.price.ToString();
+        denominatorText.text = MathProblemManager.instance.cash.denValue.ToString();
         isCountingTime = true;
         perfectAttempts = 1;
         StartCoroutine(InputFieldSelect());
@@ -161,7 +161,7 @@ public class ChangeCalculator : MonoBehaviour
                     if (playerInputValue != -1 && isFinished == false)
                     {
 
-                        if (playerInputValue == MathProblemManager.instance.cash.denValue)
+                        if (playerInputValue == MathProblemManager.instance.cash.price)
                         {
                             //Answer is correct
                             StartCoroutine(SheetCompleted(tmpChangeInputField));
