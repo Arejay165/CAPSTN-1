@@ -207,6 +207,7 @@ public class MoodComponent : MonoBehaviour
 
                                 if (currentMoodAmount <= 0)
                                 {
+                                    GameManager.instance.sheetOpen = false;
                                     //If order sheet is active
                                     if (TransitionManager.instances.noteBookTransform.gameObject.activeSelf)
                                     {
