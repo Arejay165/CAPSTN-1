@@ -277,6 +277,7 @@ public class ChangeCalculator : MonoBehaviour
         p_inputField.ActivateInputField();
         tmpChangeInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
         enteredAnswer = false;
+        tmpChangeInputField.Select();
     }
     public void RecordAnswerResult(MathProblemOperator p_mathOperator, bool p_isCorrect)
     {
