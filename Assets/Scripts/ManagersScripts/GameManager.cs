@@ -286,7 +286,8 @@ public class GameManager : MonoBehaviour
         //shutter.SetActive(false);
         //p_targetUI.SetActive(true);
 
-        TutorialManager.instance.TutorialStart();
+        //  TutorialManager.instance.TutorialStart();
+        TutorialManager.instance.DisableInGameUI();
     }
     private void OnDisable()
     {

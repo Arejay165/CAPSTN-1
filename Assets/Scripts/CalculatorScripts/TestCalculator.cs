@@ -409,7 +409,7 @@ public class TestCalculator : MonoBehaviour
                             mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
                             InitializedInputField();
                             StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect, OnPriceCorrect));
-
+                           // answerFields[itemOrderIndex].text = itemUIClassList[itemOrderIndex].totalPriceAnswer.ToString();
 
 
 
@@ -466,7 +466,11 @@ public class TestCalculator : MonoBehaviour
         if(answerFields.Count == index)
         {
             if (TutorialManager.instance.enabled == true)
+            {
                 TutorialManager.instance.ItemMasksActivator(3);
+
+            }
+             
             if (answerFields.Count > 0)
             {
                 foreach (TMP_InputField selectedItemUI in answerFields)
@@ -502,7 +506,7 @@ public class TestCalculator : MonoBehaviour
         {
             p_postFunction.Invoke();
         }
-       
+      
     }
 
     IEnumerator WrongInputted(TMP_InputField p_inputField, Action p_postFunction)
