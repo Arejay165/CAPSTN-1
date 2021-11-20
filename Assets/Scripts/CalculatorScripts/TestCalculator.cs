@@ -644,9 +644,18 @@ public class TestCalculator : MonoBehaviour
                     {
                         RecordAnswerResult(changeCorrectAnswer, MathProblemOperator.subtraction, true);
                         isFinished = true;
+                       
                         //add bonus mood time
-                        MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
-                        mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
+                        if (GameManager.instance.customer)
+                        {
+                            MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
+                            if (mc)
+                            {
+                                
+                                mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
+                            }
+                        }
+                        
                         GameManager.instance.sheetOpen = false;
                         //changeAnswerField.DeactivateInputField();
                         StartCoroutine(CorrectInputted(changeAnswerField, changeIsCorrect, OnChangeCorrect));
