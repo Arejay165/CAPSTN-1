@@ -362,7 +362,7 @@ public class TestCalculator : MonoBehaviour
     public void OnPriceWrong()
     {
 
-
+        enteredAnswer = false;
         Scoring.instance.ResetMultiplier();
     }
 
@@ -561,6 +561,7 @@ public class TestCalculator : MonoBehaviour
 
     public void OnTotalPriceWrong()
     {
+        enteredAnswer = false;
         Scoring.instance.ResetMultiplier();
     }
     public void OnTotalPriceInputted(string p_playerInputString)
@@ -629,7 +630,7 @@ public class TestCalculator : MonoBehaviour
 
     public void OnChangeWrong()
     {
-
+        enteredAnswer = false;
         Scoring.instance.ResetMultiplier();
     }
     public void OnChangeInputted(string p_playerInputString)

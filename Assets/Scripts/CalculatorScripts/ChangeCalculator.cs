@@ -200,6 +200,7 @@ public class ChangeCalculator : MonoBehaviour
 
     IEnumerator SheetCompleted(TMP_InputField p_inputField)
     {
+        enteredAnswer = false;
         int blinkCount = 0;
         while (blinkCount < 3)
         {
@@ -253,6 +254,7 @@ public class ChangeCalculator : MonoBehaviour
 
     IEnumerator WrongInputted(TMP_InputField p_inputField)
     {
+        enteredAnswer = false;
         //PlayerManager.instance.Shake(Camera.main.gameObject,0.15f, 0.05f, 0.25f);
         AudioManager.instance.playSound(1);
         PlayerManager.instance.Shake(gameObject, 0.2f, 3.5f, 1.5f);
