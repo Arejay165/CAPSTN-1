@@ -145,13 +145,18 @@ public class TestCalculator : MonoBehaviour
 
         
 
-        if(answerFields.Count > 0)
+
+        isCountingTime = true;
+        foreach (TMP_InputField selectedField in answerFields)
         {
+            selectedField.enabled = false;
+        }
+        if (answerFields.Count > 0)
+        {
+            answerFields[0].enabled = true;
             answerFields[0].Select();
             answerFields[0].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
         }
-        isCountingTime = true;
-
         if (TutorialManager.instance.enabled == true)
         {
             TutorialManager.instance.text.text = "Multiple the item’s price to it’s quantity";
@@ -318,12 +323,17 @@ public class TestCalculator : MonoBehaviour
         if (index < answerFields.Count)
         {
             int indexLeft = answerFields.Count - index;
+
             for (int i = 0; i < answerFields.Count - indexLeft; i++) 
             {
+               
                 answerFields[i].enabled = false;
                 answerFields[i].GetComponent<Image>().color = new Color(0f, 255f, 0f); // grewn
+                
+ 
             }
         }
+   
         p_selectedInputField.enabled = true;
         p_selectedInputField.Select();
         p_selectedInputField.GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
