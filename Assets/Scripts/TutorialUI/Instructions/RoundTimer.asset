@@ -15,7 +15,7 @@ MonoBehaviour:
   instructions:
   - Good job answering everything!
   - When you start the game, a timer will appear.
-  - The round will end when the timer reaches 0
+  - The level will end when the timer reaches 0
   - You should atleast reach 1 star to complete the level
   - The level will restart when you didn't reach enough stars
   hasArrow: 0000010000

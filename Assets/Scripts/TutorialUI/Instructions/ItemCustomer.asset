@@ -16,7 +16,7 @@ MonoBehaviour:
   - Customers will give you coins if you solve their problem
   - The Jar will be filled whenever you gain coins
   - The stars will also filled up whenever you answer correctly!
-  - Let's do our best to get Three Stars each and every round!
+  - Let's do our best to get Three Stars to each level
   hasArrow: 00000000
   canSpawnCustomers: 1
   canSpawnButtons: 0
