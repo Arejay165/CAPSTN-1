@@ -197,7 +197,7 @@ public class TutorialManager : MonoBehaviour
            
             arrows[arrowIndex].SetActive(true);
 
-            Debug.Log("Counter: " + counter + " " + " Index: " + index + " Tutorial Phase " + tutorialPhrase);
+           // Debug.Log("Counter: " + counter + " " + " Index: " + index + " Tutorial Phase " + tutorialPhrase);
             ActivateGlowItems(arrowIndex);
             arrowIndex++;
             tutorialPhrase++;
@@ -214,7 +214,7 @@ public class TutorialManager : MonoBehaviour
 
     void DisableTutorialObjects()
     {
-        Debug.Log("Disable");
+       // Debug.Log("Disable");
         foreach (GameObject obj in highlightedImage)
         {
             obj.SetActive(false);
