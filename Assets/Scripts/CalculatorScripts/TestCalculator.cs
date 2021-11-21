@@ -161,7 +161,7 @@ public class TestCalculator : MonoBehaviour
         }
         if (TutorialManager.instance.enabled == true)
         {
-            TutorialManager.instance.text.text = "Multiple the item’s price to it’s quantity";
+            TutorialManager.instance.text.text = "Multiple the item’s price to its quantity";
             TutorialManager.instance.dialogueBox.anchoredPosition = TutorialManager.instance.convoTransform[2].anchoredPosition;
             UIManager.instance.inGameUI.SetActive(false);
             TutorialManager.instance.tutorial.SetActive(true);
@@ -362,7 +362,7 @@ public class TestCalculator : MonoBehaviour
             if (TutorialManager.instance.enabled == true)
             {
                 TutorialManager.instance.ItemMasksActivator(index);
-                StartCoroutine(ReTextAnswers(index,answerFields[index]));
+                //StartCoroutine(ReTextAnswers(index - 1,answerFields[index - 1]));
             }
           
         }
@@ -470,6 +470,7 @@ public class TestCalculator : MonoBehaviour
     IEnumerator ReTextAnswers(int index, TMP_InputField p_inputField)
     {
         yield return new WaitForEndOfFrame();
+        Debug.Log(index);
         p_inputField.text = itemUIClassList[index].totalPriceAnswer.ToString(); 
     }
 
