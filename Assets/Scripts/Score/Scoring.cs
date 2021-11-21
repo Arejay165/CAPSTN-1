@@ -1077,7 +1077,7 @@ public class Scoring : MonoBehaviour
         scoreFloater.SetActive(false);
         scoreFloater.GetComponent<RectTransform>().anchoredPosition = defaultScoreFloaterPos;
         scoreFloater.GetComponent<Text>().color = new Color(scoreFloater.GetComponent<Text>().color.r, scoreFloater.GetComponent<Text>().color.g, scoreFloater.GetComponent<Text>().color.b, 100f);
-        gameDayText.text = "Day: " + (round + 1).ToString();
+        gameDayText.text = "Level " + (round + 1).ToString();
         //scoreGoal = 1000 + ((round - 1) * (250)); //LAT
 
        
