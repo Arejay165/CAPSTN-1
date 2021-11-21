@@ -67,7 +67,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        
+        TutorialStart();
     }
 
     public void TutorialStart()
@@ -78,7 +78,7 @@ public class TutorialManager : MonoBehaviour
             tutorialPhrase = TutorialPhrase.ArrowOnGlowingItemTutorial;
             NextMessage();
 
-           counter = 0;
+        //   counter = 0;
 
         }
     }
