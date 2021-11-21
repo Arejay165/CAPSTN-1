@@ -19,7 +19,7 @@ public class Customer : MonoBehaviour
     public bool saved = false;
     public bool disappearing = false;
     public Vector2 savedSize;
-    
+    public bool canAcceptItem;
     //public bool willBuy;
 
     //private int maxInventory;
@@ -134,6 +134,7 @@ public class Customer : MonoBehaviour
         panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = false;
 
    
+  
 
         foreach (Image selectedImage in itemsImage)
         {
@@ -186,8 +187,8 @@ public class Customer : MonoBehaviour
             panel.gameObject.GetComponent<ContentSizeFitter>().enabled = true;
             panel.gameObject.GetComponent<HorizontalLayoutGroup>().enabled = true;
         }
-      
 
+        canAcceptItem = true;
 
     }
     public IEnumerator ThoughtBubbleDisappear()
@@ -221,7 +222,8 @@ public class Customer : MonoBehaviour
         {
             disappearing = true;
         }
-     
+
+        canAcceptItem = false;
         yield return new WaitForSeconds(duration);
       
     }

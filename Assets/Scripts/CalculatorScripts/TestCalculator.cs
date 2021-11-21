@@ -45,6 +45,7 @@ public class TestCalculator : MonoBehaviour
     public bool isCountingTime;
     public float timeSpent;
     public int index;
+
     ItemUIClass CreateItemUI(Item p_item)
     {
         
@@ -359,7 +360,11 @@ public class TestCalculator : MonoBehaviour
             //answerFields[index].GetComponent<Image>().color = new Color(0.0f, 0.6f, 0.9f);
 
             if (TutorialManager.instance.enabled == true)
+            {
                 TutorialManager.instance.ItemMasksActivator(index);
+                StartCoroutine(ReTextAnswers(index,answerFields[index]));
+            }
+          
         }
         else
         {
@@ -403,14 +408,15 @@ public class TestCalculator : MonoBehaviour
                         if (playerInputValue == itemUIClassList[itemOrderIndex].totalPriceAnswer)
                         {
                             // Debug.Log("Correct");
+                         
                             RecordAnswerResult(itemUIClassList[itemOrderIndex].totalPriceAnswer, MathProblemOperator.multiplication, true);
                             //add bonus mood
                             MoodComponent mc = GameManager.instance.customer.GetComponent<MoodComponent>();
                             mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 4);
                             InitializedInputField();
                             StartCoroutine(CorrectInputted(answerFields[itemOrderIndex], itemUIClassList[itemOrderIndex].isCorrect, OnPriceCorrect));
-                           // answerFields[itemOrderIndex].text = itemUIClassList[itemOrderIndex].totalPriceAnswer.ToString();
-
+                            // answerFields[itemOrderIndex].text = itemUIClassList[itemOrderIndex].totalPriceAnswer.ToString();
+                            
 
 
                         }
@@ -461,6 +467,12 @@ public class TestCalculator : MonoBehaviour
         }
     }
 
+    IEnumerator ReTextAnswers(int index, TMP_InputField p_inputField)
+    {
+        yield return new WaitForEndOfFrame();
+        p_inputField.text = itemUIClassList[index].totalPriceAnswer.ToString(); 
+    }
+
     public void SpawnAnswerField()
     {
         if(answerFields.Count == index)
@@ -506,7 +518,11 @@ public class TestCalculator : MonoBehaviour
         {
             p_postFunction.Invoke();
         }
-      
+
+        //   ReTextAnswers(index, p_inputField);
+
+     ///   StartCoroutine(ReTextAnswers(index, p_inputField));
+
     }
 
     IEnumerator WrongInputted(TMP_InputField p_inputField, Action p_postFunction)

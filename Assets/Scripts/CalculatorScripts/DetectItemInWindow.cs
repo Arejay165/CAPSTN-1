@@ -37,7 +37,8 @@ public class DetectItemInWindow : MonoBehaviour
                     {
                         if (itemInCounter.item.itemName == MathProblemManager.instance.GetItemInCurrentItemsWanted(i).itemName)
                         {
-
+                        if (GameManager.instance.customer.canAcceptItem)
+                        {
                             mc.IncreaseCurrentMoodAmount(mc.correctBonusTime * 2);// 1 second
                             GameManager.instance.customer.itemsImage[i].color = global::GameManager.instance.window.darkenImage;
                             GameManager.instance.customer.itemsImage.RemoveAt(i);
@@ -60,8 +61,10 @@ public class DetectItemInWindow : MonoBehaviour
                             //    Debug.Log("DESTROYING THRU DETECT CORRECT");
                             PlayerManager.instance.lastItemSpawner = null;
                             break;
-                        
-                       
+
+                        }
+
+
                     }
                     i++;
                     if (i >= MathProblemManager.instance.GetCurrentItemsWanted().Count)
