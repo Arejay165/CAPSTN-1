@@ -154,6 +154,10 @@ public class MoodComponent : MonoBehaviour
         yield return myTween.WaitForCompletion(); // Wait to finish
       
         currentMoodAmount += p_increaseAmount;
+        if (currentMoodAmount > 100)
+        {
+            currentMoodAmount = 100;
+        }
         ChangeCustomerMoodSprite();
         dcm.moodImage.fillAmount = currentMoodAmount / maxMoodAmount;
         dcm.delayedMoodImage.fillAmount = currentMoodAmount / maxMoodAmount;
