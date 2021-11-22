@@ -230,8 +230,8 @@ public class UIManager : MonoBehaviour
         Fade.color = desiredColor;
 
         Fade.DOFade(1f, 0.5f);
-
-        yield return new WaitForSeconds(0.5f); //how long video\
+        Time.timeScale = 1f;
+        yield return new WaitForSecondsRealtime(0.5f); //how long video\
         SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex));
     }
 
