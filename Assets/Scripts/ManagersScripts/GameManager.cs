@@ -144,6 +144,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("WASNMT FOUND");
         }
+        UIManager.instance.gameBackToMenu = true;
+        UIManager.instance.resultBackToMenu = false;
         GameManager.instance.sheetOpen = false;
         UIManager.instance.isIngame = true;
         CursorManager.instance.PlayCursorAnimation(CursorType.Arrow);
@@ -179,7 +181,8 @@ public class GameManager : MonoBehaviour
     {
         UIManager.instance.Resume();
         UIManager.instance.isIngame = false;
-
+        UIManager.instance.resultBackToMenu = true;
+        UIManager.instance.gameBackToMenu = false;
         OnGameEnd.Invoke();
         TogglePlaying();
         GameManager.instance.isPlaying = false;

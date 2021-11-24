@@ -43,6 +43,8 @@ public class UIManager : MonoBehaviour
     private bool isPause; //for demo purposes
     public bool quitConfirmationGoTitleScreen = true;
     public bool quitConfirmationOpen = false;
+    public bool gameBackToMenu = false;
+    public bool resultBackToMenu = false;
     public bool canSkip;
 
     //public List<GameObject> tutorialUIs = new List<GameObject>();
@@ -212,7 +214,17 @@ public class UIManager : MonoBehaviour
     public void BackToMenuConfirmationGoBack()
     {
 
-        ActivateGameObjects(endGameUI.name);
+        if (resultBackToMenu == true)
+        {
+
+            ActivateGameObjects(endGameUI.name);
+
+        }
+        else if (gameBackToMenu == true)
+        {
+            ActivateGameObjects(pauseGameUI.name);
+        }
+  
     }
 
     public void BackToMenuConfirmation()

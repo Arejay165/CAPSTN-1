@@ -292,6 +292,7 @@ public class Scoring : MonoBehaviour
     }
     private void ShowResults(int p_newValue, int p_Value = 0)
     {
+
         if (GameManager.instance.customer != null)
         {
             Destroy(GameManager.instance.customer.gameObject);
@@ -326,7 +327,7 @@ public class Scoring : MonoBehaviour
         {
             StopCoroutine(countingCoroutine);
         }
-
+     
 
 
         //Day Failed if score is less than half of score goal
