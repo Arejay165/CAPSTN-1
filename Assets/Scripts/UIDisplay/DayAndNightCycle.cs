@@ -111,6 +111,18 @@ public class DayAndNightCycle : MonoBehaviour
                         if (isMorning)
                         {
                             isMorning = false;
+                            if (DayAndNightCycle.instance.GetIsMorning() == false)
+                            {
+                                if (AudioManager.instance.BGM[1].musicFile.isPlaying)
+                                {
+                                    AudioManager.instance.stopMusic(1);
+                                }
+                                if (AudioManager.instance.BGM[3].musicFile.isPlaying)
+                                {
+                                    AudioManager.instance.stopMusic(3);
+                                }
+                                AudioManager.instance.playMusic(3);
+                            }
                         }
 
                     }

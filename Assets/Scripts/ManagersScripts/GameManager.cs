@@ -171,7 +171,14 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(DayAndNightCycle.instance.nightTime);
         if (DayAndNightCycle.instance.GetIsMorning() == false)
         {
-            AudioManager.instance.stopMusic(1);
+            if (AudioManager.instance.BGM[1].musicFile.isPlaying)
+            {
+                AudioManager.instance.stopMusic(1);
+            }
+            if (AudioManager.instance.BGM[3].musicFile.isPlaying)
+            {
+                AudioManager.instance.stopMusic(3);
+            }
             AudioManager.instance.playMusic(3);
         }
         //yield return new WaitForSeconds(3f);
